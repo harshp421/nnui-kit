@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NNUI-KIT — Platform-Native, Three-Tier Light-DOM UI Architecture</title>
+  <meta name="description" content="Universal Light-DOM UI component system for React 19, Vue 3, Svelte 5, and server-rendered HTML with zero framework wrappers.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./src/styles/index.css">
+  <link rel="stylesheet" href="./playground/docs.css">
+  <link rel="stylesheet" href="./playground/home.css">
+</head>
+<body class="docs-page">
+
+  <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="./index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Light-DOM</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="./docs.html" class="docs-nav-link">Documentation</a>
+        <a href="./components.html" class="docs-nav-link">Components</a>
+        <a href="./llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button id="home-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="./docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Get Started →
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section (Shadcn Style) -->
+  <section class="hero-section">
+    <a href="./docs.html" class="hero-announcement">
+      <span>✨ Platform-Native Light-DOM Architecture is live</span>
+      <span>→</span>
+    </a>
+
+    <h1 class="hero-title">
+      Build your universal design system with zero framework wrappers.
+    </h1>
+
+    <p class="hero-subtitle">
+      Accessible, customizable, sub-4KB Light-DOM components. Works identically in React 19, Vue 3, Svelte 5, Astro, and backend SSR templates without Shadow DOM traps.
+    </p>
+
+    <div class="hero-actions">
+      <a href="./docs.html" class="hero-btn-primary">
+        Get Started
+      </a>
+      <a href="./components.html" class="hero-btn-secondary">
+        Browse Components
+      </a>
+      <div class="hero-install-pill" id="copy-install-pill" title="Click to copy">
+        <span>$ npm install nnui-kit</span>
+        <span id="copy-pill-icon">📋</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Bento Grid Showcase (Shadcn Style) -->
+  <section class="bento-showcase">
+    
+    <!-- 1. Tabs Component Bento Card -->
+    <div class="bento-card bento-col-7">
+      <div class="bento-card-header">
+        <a href="./components/tabs.html" class="docs-logo-badge" style="margin-bottom: 0.5rem; display: inline-block; text-decoration: none;">Tabs Documentation →</a>
+        <h3 class="bento-card-title"><a href="./components/tabs.html" style="color: inherit; text-decoration: none;">Roving Tabindex Navigation</a></h3>
+        <p class="bento-card-desc">Tabs coordinate focus and selection with keyboard arrows. Zero Shadow DOM boundaries breaking ID references.</p>
+      </div>
+
+      <div style="background-color: var(--ui-bg-canvas); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.5rem;">
+        <nnui-tabs value="overview">
+          <div data-part="tablist" role="tablist">
+            <button data-part="tab" data-value="overview">Overview</button>
+            <button data-part="tab" data-value="analytics">Analytics</button>
+            <button data-part="tab" data-value="settings">Settings</button>
+          </div>
+          <div data-part="tabpanel" data-value="overview">
+            <p style="margin: 0; font-size: 0.85rem; color: var(--ui-text-secondary); line-height: 1.5;">
+              Components live directly in the host document DOM. Standard ARIA relationship attributes resolve natively across all assistive technologies.
+            </p>
+          </div>
+          <div data-part="tabpanel" data-value="analytics">
+            <p style="margin: 0; font-size: 0.85rem; color: var(--ui-text-secondary); line-height: 1.5;">
+              Zero framework wrapper tax. Accept standard lowercase native DOM events (<code style="color: var(--ui-color-accent-400);">change</code>, <code style="color: var(--ui-color-accent-400);">input</code>).
+            </p>
+          </div>
+          <div data-part="tabpanel" data-value="settings">
+            <p style="margin: 0; font-size: 0.85rem; color: var(--ui-text-secondary); line-height: 1.5;">
+              Sub-4KB total core runtime. Delegated layout to CSS Anchor Positioning and browser top-layer primitives.
+            </p>
+          </div>
+        </nnui-tabs>
+      </div>
+    </div>
+
+    <!-- 2. Combobox Autocomplete Bento Card -->
+    <div class="bento-card bento-col-5">
+      <div class="bento-card-header">
+        <a href="./components/combobox.html" class="docs-logo-badge" style="margin-bottom: 0.5rem; display: inline-block; text-decoration: none;">Combobox Documentation →</a>
+        <h3 class="bento-card-title"><a href="./components/combobox.html" style="color: inherit; text-decoration: none;">Active-Descendant Combobox</a></h3>
+        <p class="bento-card-desc">Tolerant queries, filter coordination, and arrow key cycling without mutating child nodes.</p>
+      </div>
+
+      <div style="background-color: var(--ui-bg-canvas); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.5rem;">
+        <nnui-combobox>
+          <div data-part="input-wrapper">
+            <input data-part="input" placeholder="Search stack...">
+            <span data-part="toggle-icon">▼</span>
+          </div>
+          <ul data-part="listbox">
+            <li data-part="option" data-value="react">React 19</li>
+            <li data-part="option" data-value="nextjs">Next.js 15</li>
+            <li data-part="option" data-value="vue">Vue 3</li>
+            <li data-part="option" data-value="svelte">Svelte 5</li>
+            <li data-part="option" data-value="astro">Astro</li>
+          </ul>
+        </nnui-combobox>
+      </div>
+    </div>
+
+    <!-- 3. Form Associated Select Bento Card -->
+    <div class="bento-card bento-col-4">
+      <div class="bento-card-header">
+        <a href="./components/select.html" class="docs-logo-badge" style="margin-bottom: 0.5rem; display: inline-block; text-decoration: none;">Select Documentation →</a>
+        <h3 class="bento-card-title"><a href="./components/select.html" style="color: inherit; text-decoration: none;">Native Form Select</a></h3>
+        <p class="bento-card-desc">Submits native FormData and participates in HTML constraint validation lifecycles.</p>
+      </div>
+
+      <div style="background-color: var(--ui-bg-canvas); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.25rem;">
+        <nnui-select name="role">
+          <button type="button" data-part="trigger">
+            <span data-part="value">Select role...</span>
+            <span>▾</span>
+          </button>
+          <ul data-part="listbox">
+            <li data-part="option" data-value="architect">Software Architect</li>
+            <li data-part="option" data-value="engineer">Frontend Engineer</li>
+            <li data-part="option" data-value="designer">Design Systems Lead</li>
+          </ul>
+        </nnui-select>
+      </div>
+    </div>
+
+    <!-- 4. Dialog Modal Bento Card -->
+    <div class="bento-card bento-col-4">
+      <div class="bento-card-header">
+        <a href="./components/dialog.html" class="docs-logo-badge" style="margin-bottom: 0.5rem; display: inline-block; text-decoration: none;">Dialog Documentation →</a>
+        <h3 class="bento-card-title"><a href="./components/dialog.html" style="color: inherit; text-decoration: none;">Top-Layer Modal</a></h3>
+        <p class="bento-card-desc">Zero 50KB focus-trap runtimes. Rendered in the browser top-layer with backdrop blur.</p>
+      </div>
+
+      <div style="background-color: var(--ui-bg-canvas); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.25rem; display: flex; align-items: center; justify-content: center;">
+        <button class="ui-button" onclick="const m = document.getElementById('bento-dialog-demo'); m?.showModal ? m.showModal(this) : m?.querySelector('dialog')?.showModal()">
+          Open Dialog
+        </button>
+
+        <nnui-dialog id="bento-dialog-demo">
+          <dialog>
+            <div data-part="dialog-content">
+              <h3 style="margin-top: 0; font-size: 1.25rem;">Browser Top Layer</h3>
+              <p style="color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.5;">
+                Esc dismissal and backdrop dismiss are handled by the native browser engine.
+              </p>
+              <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+                <button class="ui-button ui-button--secondary" data-part="dialog-close">Cancel</button>
+                <button class="ui-button" data-part="dialog-close">Confirm</button>
+              </div>
+            </div>
+          </dialog>
+        </nnui-dialog>
+      </div>
+    </div>
+
+    <!-- 5. Semantic Base Tier 0 Bento Card -->
+    <div class="bento-card bento-col-4">
+      <div class="bento-card-header">
+        <a href="./components/button.html" class="docs-logo-badge" style="margin-bottom: 0.5rem; display: inline-block; text-decoration: none;">Primitives →</a>
+        <h3 class="bento-card-title"><a href="./components/button.html" style="color: inherit; text-decoration: none;">Base Controls</a></h3>
+        <p class="bento-card-desc">Pure HTML & CSS switches, buttons, and badges that paint instantly before hydration.</p>
+      </div>
+
+      <div style="background-color: var(--ui-bg-canvas); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="ui-button" data-size="sm">Button</button>
+          <button class="ui-button ui-button--secondary" data-size="sm">Secondary</button>
+          <button class="ui-button ui-button--outline" data-size="sm">Outline</button>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <label data-ui="switch">
+            <input type="checkbox" checked>
+            <span style="font-size: 0.85rem;">Notifications</span>
+          </label>
+          <span class="ui-badge" data-variant="success">Active</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Three-Tier Architectural Pillars -->
+  <section style="max-width: 1200px; margin: 0 auto 6rem auto; padding: 0 2rem;">
+    <div style="border-top: 1px solid var(--ui-border-default); padding-top: 4rem;">
+      <h2 style="font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 1rem 0; text-align: center;">
+        Inverting the Universal Component Stack
+      </h2>
+      <p style="color: var(--ui-text-secondary); text-align: center; max-width: 700px; margin: 0 auto 3rem auto; line-height: 1.6;">
+        Why settle for Shadow DOM accessibility traps or maintaining 5 separate framework adapter packages?
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+        <div class="bento-card">
+          <h4 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--ui-text-primary);">Tier 0: Pure Semantic HTML</h4>
+          <p style="font-size: 0.9rem; color: var(--ui-text-secondary); line-height: 1.6; margin: 0;">
+            Zero-JS first paint. Every control renders standard semantic HTML that search engine crawlers index immediately. Scoped cascade layers (<code style="color: var(--ui-color-accent-400);">@layer ui.tokens, ui.reset, ui.base</code>) guarantee consumer utility classes override without <code style="color: var(--ui-color-accent-400);">!important</code>.
+          </p>
+        </div>
+
+        <div class="bento-card">
+          <h4 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--ui-text-primary);">Tier 1: Platform Primitives</h4>
+          <p style="font-size: 0.9rem; color: var(--ui-text-secondary); line-height: 1.6; margin: 0;">
+            Replaces 50KB+ third-party layout engines (Floating UI / Popper) with the browser's native C++ layout engine: CSS Anchor Positioning, HTML Popover API, and native <code style="color: var(--ui-color-accent-400);">&lt;dialog&gt;</code> top-layer rendering.
+          </p>
+        </div>
+
+        <div class="bento-card">
+          <h4 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--ui-text-primary);">Tier 2: Micro-Enhancers (&lt; 4KB)</h4>
+          <p style="font-size: 0.9rem; color: var(--ui-text-secondary); line-height: 1.6; margin: 0;">
+            Enforces the strict <strong style="color: var(--ui-text-primary);">"Mutate Attributes, Never Nodes"</strong> invariant. Coordinates state via attributes so React 19, Vue 3, and Svelte 5 virtual DOM reconcilers never suffer hydration mismatches.
+          </p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 2.5rem;">
+        <a href="./docs.html#architecture" class="hero-btn-secondary" style="display: inline-flex;">
+          Read Complete Architecture & Invariants Documentation →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="border-top: 1px solid var(--ui-border-default); padding: 3rem 2rem; background-color: var(--ui-bg-surface-elevated); text-align: center; font-size: 0.85rem; color: var(--ui-text-muted);">
+    <p style="margin: 0 0 0.5rem 0;">
+      Built with Platform-Native Light-DOM Architecture. Inspired by modern open-source design systems.
+    </p>
+    <p style="margin: 0;">
+      <a href="./docs.html" style="color: var(--ui-text-secondary); text-decoration: none; margin: 0 0.5rem;">Documentation</a> •
+      <a href="./components.html" style="color: var(--ui-text-secondary); text-decoration: none; margin: 0 0.5rem;">Components</a> •
+      <a href="./llms.txt" target="_blank" style="color: var(--ui-text-secondary); text-decoration: none; margin: 0 0.5rem;">llms.txt</a> •
+      MIT License
+    </p>
+  </footer>
+
+  <script type="module">
+    import './src/index.js';
+
+    // Theme toggle
+    const themeBtn = document.getElementById('home-theme-btn');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        themeBtn.textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
+      });
+    }
+
+    // Install command pill click-to-copy
+    const pill = document.getElementById('copy-install-pill');
+    const pillIcon = document.getElementById('copy-pill-icon');
+    if (pill && pillIcon) {
+      pill.addEventListener('click', () => {
+        navigator.clipboard.writeText('npm install nnui-kit').then(() => {
+          pillIcon.textContent = '✓';
+          pill.style.borderColor = 'var(--ui-color-success-500)';
+          setTimeout(() => {
+            pillIcon.textContent = '📋';
+            pill.style.borderColor = '';
+          }, 2000);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

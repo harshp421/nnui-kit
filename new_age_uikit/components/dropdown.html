@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Menu — NNUI-KIT</title>
+  <meta name="description" content="Accessible action menu with keyboard navigation, shortcuts, separators, and destructive actions.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+    <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-table.html" class="sidebar-item">Data Table</a>
+          <a href="./calendar.html" class="sidebar-item">Calendar</a>
+          <a href="./date-picker.html" class="sidebar-item">Date Picker</a>
+          <a href="./dropdown.html" class="sidebar-item active">Dropdown Menu</a>
+          <a href="./toast.html" class="sidebar-item">Toast / Toaster</a>
+          <a href="./combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./select.html" class="sidebar-item">Select</a>
+          <a href="./accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./popover.html" class="sidebar-item">Popover</a>
+          <a href="./tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./command.html" class="sidebar-item">Command Palette</a>
+          <a href="./sheet.html" class="sidebar-item">Sheet / Drawer</a>
+          <a href="./slider.html" class="sidebar-item">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <div id="overview" class="component-view-header">
+        <div class="docs-breadcrumb">
+          <a href="../components.html" style="color: var(--ui-text-muted); text-decoration: none;">Components</a>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Dropdown Menu</span>
+        </div>
+        <h1 class="component-view-title">Dropdown Menu</h1>
+        <p class="component-view-desc">
+          Displays a contextual menu to the user — such as a list of actions or functions — triggered by a button. Built with APG roving tabindex and viewport auto-flip positioning.
+        </p>
+        <div class="component-links-bar">
+          <span class="component-link-badge">Tier 2: Micro-Enhancer</span>
+          <span class="component-link-badge">&lt; 1.5 KB</span>
+          <span class="component-link-badge">WAI-ARIA Menu</span>
+          <span class="component-link-badge">Zero Shadow DOM</span>
+        </div>
+      </div>
+
+      <!-- Preview / Code Card -->
+      <div id="preview" class="preview-card">
+        <div class="preview-card-tabs">
+          <div class="preview-tab-group">
+            <button class="preview-tab-btn active" data-view="preview">Preview</button>
+            <button class="preview-tab-btn" data-view="code">Code</button>
+          </div>
+          <button class="copy-btn">Copy</button>
+        </div>
+
+        <div class="preview-stage" style="display: flex; justify-content: center; align-items: center; min-height: 280px;">
+          <ui-dropdown id="demo-dropdown">
+            <button data-part="trigger" data-ui="button" data-variant="outline">
+              <span>My Account</span>
+              <span style="margin-left: 0.25rem;">▾</span>
+            </button>
+            <div data-part="menu">
+              <div data-part="label">My Account</div>
+              <button data-part="item" data-value="profile">
+                <span data-part="item-main">Profile</span>
+                <span data-part="shortcut">⇧⌘P</span>
+              </button>
+              <button data-part="item" data-value="billing">
+                <span data-part="item-main">Billing</span>
+                <span data-part="shortcut">⌘B</span>
+              </button>
+              <button data-part="item" data-value="settings">
+                <span data-part="item-main">Settings</span>
+                <span data-part="shortcut">⌘S</span>
+              </button>
+              <button data-part="item" data-value="team" disabled>
+                <span data-part="item-main">Team Members (Pro)</span>
+              </button>
+              <div data-part="separator"></div>
+              <button data-part="item" data-value="logout" data-variant="destructive">
+                <span data-part="item-main">Log out</span>
+                <span data-part="shortcut">⇧⌘Q</span>
+              </button>
+            </div>
+          </ui-dropdown>
+        </div>
+
+        <div class="code-stage">
+          <pre><code>&lt;ui-dropdown&gt;
+  &lt;button data-part="trigger" data-ui="button" data-variant="outline"&gt;
+    My Account ▾
+  &lt;/button&gt;
+  &lt;div data-part="menu"&gt;
+    &lt;div data-part="label"&gt;My Account&lt;/div&gt;
+    &lt;button data-part="item" data-value="profile"&gt;
+      &lt;span data-part="item-main"&gt;Profile&lt;/span&gt;
+      &lt;span data-part="shortcut"&gt;⇧⌘P&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button data-part="item" data-value="billing"&gt;
+      &lt;span data-part="item-main"&gt;Billing&lt;/span&gt;
+      &lt;span data-part="shortcut"&gt;⌘B&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button data-part="item" data-value="settings"&gt;
+      &lt;span data-part="item-main"&gt;Settings&lt;/span&gt;
+      &lt;span data-part="shortcut"&gt;⌘S&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div data-part="separator"&gt;&lt;/div&gt;
+    &lt;button data-part="item" data-value="logout" data-variant="destructive"&gt;
+      &lt;span data-part="item-main"&gt;Log out&lt;/span&gt;
+      &lt;span data-part="shortcut"&gt;⇧⌘Q&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/ui-dropdown&gt;
+
+&lt;script&gt;
+  document.querySelector('ui-dropdown').addEventListener('select', (e) =&gt; {
+    console.log('Selected action:', e.detail.value);
+  });
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- Selected State Feedback Live Box -->
+      <div style="margin-top: 1rem; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--ui-border-default); background-color: var(--ui-bg-subtle); display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem;">
+        <span style="color: var(--ui-text-muted);">Last selected action:</span>
+        <span id="demo-dropdown-selected" style="font-family: var(--ui-font-mono); color: var(--ui-color-accent-400); font-weight: 600;">(None)</span>
+      </div>
+
+      <!-- Anatomy Breakdown -->
+      <div style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.35rem; font-weight: 700; color: var(--ui-text-primary); margin-bottom: 0.5rem;">Anatomy</h2>
+        <p style="color: var(--ui-text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Pure Light-DOM markup contract with data-part attributes:
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: 8px; background: var(--ui-bg-surface);">
+            <code style="font-size: 0.85rem; color: var(--ui-color-accent-400); font-weight: 600;">&lt;ui-dropdown&gt;</code>
+            <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--ui-text-secondary);">The root custom element micro-enhancer. Automatically manages focus, outside clicks, and positioning.</p>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: 8px; background: var(--ui-bg-surface);">
+            <code style="font-size: 0.85rem; color: var(--ui-color-accent-400); font-weight: 600;">[data-part="trigger"]</code>
+            <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--ui-text-secondary);">The button element that toggles the dropdown menu. Receives <code style="font-family: monospace;">aria-haspopup="menu"</code> and <code style="font-family: monospace;">aria-expanded</code>.</p>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: 8px; background: var(--ui-bg-surface);">
+            <code style="font-size: 0.85rem; color: var(--ui-color-accent-400); font-weight: 600;">[data-part="menu"]</code>
+            <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--ui-text-secondary);">The floating menu panel. Positioned below or above the trigger with viewport boundary clamping.</p>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: 8px; background: var(--ui-bg-surface);">
+            <code style="font-size: 0.85rem; color: var(--ui-color-accent-400); font-weight: 600;">[data-part="item"]</code>
+            <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--ui-text-secondary);">Interactive menu item. Supports <code style="font-family: monospace;">data-variant="destructive"</code> and <code style="font-family: monospace;">disabled</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- API Reference -->
+      <div style="margin-top: 3.5rem;">
+        <h2 id="api" style="font-size: 1.35rem; font-weight: 700; color: var(--ui-text-primary); margin-bottom: 0.5rem;">API Reference</h2>
+        <div data-part="table-container" style="margin-top: 1rem;">
+          <table data-ui="table">
+            <thead>
+              <tr>
+                <th>Attribute / Property</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>open</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Whether the dropdown menu is currently visible.</td>
+              </tr>
+              <tr>
+                <td><code>.open(focusIndex?)</code></td>
+                <td><code>method</code></td>
+                <td>-</td>
+                <td>Programmatically opens the dropdown, focusing an optional item index.</td>
+              </tr>
+              <tr>
+                <td><code>.close()</code></td>
+                <td><code>method</code></td>
+                <td>-</td>
+                <td>Programmatically closes the dropdown menu and restores focus.</td>
+              </tr>
+              <tr>
+                <td><code>.toggle()</code></td>
+                <td><code>method</code></td>
+                <td>-</td>
+                <td>Toggles the open state of the dropdown menu.</td>
+              </tr>
+              <tr>
+                <td><code>select</code></td>
+                <td><code>event</code></td>
+                <td>-</td>
+                <td>Dispatched when an item is selected. Detail: <code>{ value, label, item }</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Navigation Footer -->
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <a href="./slider.html" style="text-decoration: none; color: var(--ui-text-secondary); font-size: 0.9rem; font-weight: 500;">
+          ← Previous: Slider
+        </a>
+        <a href="./toast.html" style="text-decoration: none; color: var(--ui-text-primary); font-size: 0.9rem; font-weight: 600;">
+          Next: Toaster (Toast) →
+        </a>
+      </div>
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#preview" class="toc-link">Interactive Demo</a>
+        <a href="#code" class="toc-link">Code Snippets</a>
+        <a href="#api" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+  <script type="module">
+    document.getElementById('demo-dropdown')?.addEventListener('select', (e) => {
+      const display = document.getElementById('demo-dropdown-selected');
+      if (display) display.textContent = `${e.detail.label} (value: "${e.detail.value}")`;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/components/tabs/ui-tabs.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "WAI-ARIA APG compliant roving tabindex tabs in Light-DOM",
+          "name": "UiTabs",
+          "tagName": "ui-tabs",
+          "customElement": true,
+          "attributes": [
+            {
+              "name": "value",
+              "type": { "text": "string" },
+              "description": "Currently active tab value"
+            },
+            {
+              "name": "orientation",
+              "type": { "text": "'horizontal' | 'vertical'" },
+              "default": "'horizontal'",
+              "description": "Keyboard navigation direction"
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "description": "Fired when active tab changes",
+              "type": { "text": "CustomEvent<{ value: string, previousValue: string }>" }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-tabs",
+          "declaration": { "name": "UiTabs", "module": "src/components/tabs/ui-tabs.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/combobox/ui-combobox.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "APG active-descendant combobox autocomplete in Light-DOM",
+          "name": "UiCombobox",
+          "tagName": "ui-combobox",
+          "customElement": true,
+          "attributes": [
+            {
+              "name": "value",
+              "type": { "text": "string" },
+              "description": "Selected option value"
+            },
+            {
+              "name": "open",
+              "type": { "text": "boolean" },
+              "description": "Whether dropdown listbox is open"
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "description": "Fired when an option is selected",
+              "type": { "text": "CustomEvent<{ value: string, label: string }>" }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-combobox",
+          "declaration": { "name": "UiCombobox", "module": "src/components/combobox/ui-combobox.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/dialog/ui-dialog.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Native <dialog> wrapper with backdrop dismiss and focus restoration",
+          "name": "UiDialog",
+          "tagName": "ui-dialog",
+          "customElement": true,
+          "attributes": [
+            {
+              "name": "open",
+              "type": { "text": "boolean" },
+              "description": "Controls modal open state"
+            }
+          ],
+          "events": [
+            { "name": "open", "description": "Fired when modal opens" },
+            { "name": "close", "description": "Fired when modal closes" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-dialog",
+          "declaration": { "name": "UiDialog", "module": "src/components/dialog/ui-dialog.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/select/ui-select.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Form-associated select custom element using ElementInternals",
+          "name": "UiSelect",
+          "tagName": "ui-select",
+          "customElement": true,
+          "attributes": [
+            { "name": "name", "type": { "text": "string" }, "description": "Form field name" },
+            { "name": "value", "type": { "text": "string" }, "description": "Selected value" },
+            { "name": "required", "type": { "text": "boolean" }, "description": "Native form constraint" },
+            { "name": "disabled", "type": { "text": "boolean" }, "description": "Disables interaction" }
+          ],
+          "events": [
+            { "name": "change", "description": "Fired when value changes" },
+            { "name": "input", "description": "Fired when value inputs" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-select",
+          "declaration": { "name": "UiSelect", "module": "src/components/select/ui-select.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/accordion/ui-accordion.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "APG compliant accordion with single/multi disclosure",
+          "name": "UiAccordion",
+          "tagName": "ui-accordion",
+          "customElement": true,
+          "attributes": [
+            { "name": "type", "type": { "text": "'single' | 'multiple'" }, "default": "'single'" },
+            { "name": "collapsible", "type": { "text": "boolean" }, "default": "true" }
+          ],
+          "events": [
+            { "name": "change", "description": "Fired when an item expands or collapses" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-accordion",
+          "declaration": { "name": "UiAccordion", "module": "src/components/accordion/ui-accordion.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/command/ui-command.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Fast instant-filtered command menu with active-descendant navigation and keyboard shortcuts",
+          "name": "UiCommand",
+          "tagName": "ui-command",
+          "customElement": true,
+          "attributes": [
+            { "name": "open", "type": { "text": "boolean" }, "description": "Whether palette modal is open" },
+            { "name": "modal", "type": { "text": "boolean" }, "description": "When true renders as top-layer dialog modal" },
+            { "name": "placeholder", "type": { "text": "string" }, "description": "Search input placeholder" },
+            { "name": "hotkey", "type": { "text": "string" }, "default": "'k'", "description": "Shortcut key triggered with Meta or Ctrl" }
+          ],
+          "events": [
+            { "name": "select", "description": "Fired when an item is selected via Enter or click" },
+            { "name": "open", "description": "Fired when command dialog opens" },
+            { "name": "close", "description": "Fired when command dialog closes" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-command",
+          "declaration": { "name": "UiCommand", "module": "src/components/command/ui-command.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/sheet/ui-sheet.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Native dialog edge-sliding sheet/drawer supporting 4 directions",
+          "name": "UiSheet",
+          "tagName": "ui-sheet",
+          "customElement": true,
+          "attributes": [
+            { "name": "open", "type": { "text": "boolean" }, "description": "Whether sheet is open" },
+            { "name": "side", "type": { "text": "'right' | 'left' | 'bottom' | 'top'" }, "default": "'right'", "description": "Sliding edge position" },
+            { "name": "modal", "type": { "text": "boolean" }, "default": "true", "description": "Whether to use showModal() with backdrop" }
+          ],
+          "events": [
+            { "name": "open", "description": "Fired when sheet opens" },
+            { "name": "close", "description": "Fired when sheet closes" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-sheet",
+          "declaration": { "name": "UiSheet", "module": "src/components/sheet/ui-sheet.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/slider/ui-slider.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Form-associated range slider micro-enhancer with pointer capture and step snapping",
+          "name": "UiSlider",
+          "tagName": "ui-slider",
+          "customElement": true,
+          "attributes": [
+            { "name": "value", "type": { "text": "number" }, "default": "0", "description": "Current numeric value" },
+            { "name": "min", "type": { "text": "number" }, "default": "0", "description": "Minimum value" },
+            { "name": "max", "type": { "text": "number" }, "default": "100", "description": "Maximum value" },
+            { "name": "step", "type": { "text": "number" }, "default": "1", "description": "Stepping granularity" },
+            { "name": "name", "type": { "text": "string" }, "description": "Form submission field name" },
+            { "name": "disabled", "type": { "text": "boolean" }, "default": "false", "description": "Disables interaction and form submission" }
+          ],
+          "events": [
+            { "name": "input", "description": "Fired continuously during drag or keyboard adjustment" },
+            { "name": "change", "description": "Fired when user commits final value" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-slider",
+          "declaration": { "name": "UiSlider", "module": "src/components/slider/ui-slider.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/dropdown/ui-dropdown.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Accessible roving keyboard navigation dropdown menu in Light-DOM",
+          "name": "UiDropdown",
+          "tagName": "ui-dropdown",
+          "customElement": true,
+          "attributes": [
+            { "name": "open", "type": { "text": "boolean" }, "default": "false", "description": "Whether dropdown menu is open" }
+          ],
+          "events": [
+            { "name": "open", "description": "Fired when dropdown menu opens" },
+            { "name": "close", "description": "Fired when dropdown menu closes" },
+            { "name": "select", "description": "Fired when an item is selected", "type": { "text": "CustomEvent<{ value: string, item: HTMLElement }>" } }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-dropdown",
+          "declaration": { "name": "UiDropdown", "module": "src/components/dropdown/ui-dropdown.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/toast/ui-toast.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Stacked toast notifications micro-enhancer with auto-dismiss and toast() helper",
+          "name": "UiToaster",
+          "tagName": "ui-toaster",
+          "customElement": true,
+          "attributes": [
+            { "name": "position", "type": { "text": "'bottom-right' | 'bottom-left' | 'bottom-center' | 'top-right' | 'top-left' | 'top-center'" }, "default": "'bottom-right'", "description": "Viewport placement corner" },
+            { "name": "duration", "type": { "text": "number" }, "default": "4000", "description": "Default timeout in milliseconds before auto-dismiss" }
+          ],
+          "events": [
+            { "name": "toast-show", "description": "Fired when a toast is shown", "type": { "text": "CustomEvent<{ id: string, title: string }>" } },
+            { "name": "toast-dismiss", "description": "Fired when a toast is dismissed", "type": { "text": "CustomEvent<{ id: string }>" } }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-toaster",
+          "declaration": { "name": "UiToaster", "module": "src/components/toast/ui-toast.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/data-table/ui-data-table.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "High-performance Light-DOM data table with sorting, search filter, and slice pagination",
+          "name": "UiDataTable",
+          "tagName": "ui-data-table",
+          "customElement": true,
+          "attributes": [
+            { "name": "page-size", "type": { "text": "number" }, "default": "10", "description": "Number of rows per page slice" },
+            { "name": "page", "type": { "text": "number" }, "default": "1", "description": "Current active page" },
+            { "name": "sort-key", "type": { "text": "string" }, "description": "Column identifier being sorted" },
+            { "name": "sort-dir", "type": { "text": "'asc' | 'desc'" }, "description": "Sort direction" },
+            { "name": "search", "type": { "text": "string" }, "description": "Client search filter query" }
+          ],
+          "events": [
+            { "name": "sort", "description": "Fired when column sort is toggled" },
+            { "name": "filter", "description": "Fired when search query filters rows" },
+            { "name": "page-change", "description": "Fired when pagination page changes" },
+            { "name": "selection-change", "description": "Fired when selected rows change" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-data-table",
+          "declaration": { "name": "UiDataTable", "module": "src/components/data-table/ui-data-table.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/calendar/ui-calendar.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "WAI-ARIA APG Calendar Date Picker grid with roving keyboard focus and form association",
+          "name": "UiCalendar",
+          "tagName": "ui-calendar",
+          "customElement": true,
+          "attributes": [
+            { "name": "value", "type": { "text": "string" }, "description": "Selected date formatted as YYYY-MM-DD" },
+            { "name": "month", "type": { "text": "number" }, "description": "Current viewed month (1-12)" },
+            { "name": "year", "type": { "text": "number" }, "description": "Current viewed year" },
+            { "name": "min", "type": { "text": "string" }, "description": "Earliest selectable date" },
+            { "name": "max", "type": { "text": "string" }, "description": "Latest selectable date" },
+            { "name": "disabled", "type": { "text": "boolean" }, "default": "false", "description": "Disables interaction" }
+          ],
+          "events": [
+            { "name": "change", "description": "Fired when a date is selected" },
+            { "name": "month-change", "description": "Fired when viewing month changes" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-calendar",
+          "declaration": { "name": "UiCalendar", "module": "src/components/calendar/ui-calendar.js" }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/date-picker/ui-date-picker.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Composed popover trigger button with calendar grid and form association",
+          "name": "UiDatePicker",
+          "tagName": "ui-date-picker",
+          "customElement": true,
+          "attributes": [
+            { "name": "value", "type": { "text": "string" }, "description": "Selected date in YYYY-MM-DD format" },
+            { "name": "placeholder", "type": { "text": "string" }, "default": "'Pick a date...'", "description": "Trigger label before date is selected" },
+            { "name": "open", "type": { "text": "boolean" }, "default": "false", "description": "Whether floating calendar popover is open" },
+            { "name": "disabled", "type": { "text": "boolean" }, "default": "false", "description": "Disables opening date picker" },
+            { "name": "name", "type": { "text": "string" }, "description": "Form submission field name" }
+          ],
+          "events": [
+            { "name": "change", "description": "Fired when date is selected" },
+            { "name": "open", "description": "Fired when popover opens" },
+            { "name": "close", "description": "Fired when popover closes" }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "ui-date-picker",
+          "declaration": { "name": "UiDatePicker", "module": "src/components/date-picker/ui-date-picker.js" }
+        }
+      ]
+    }
+  ]
+}

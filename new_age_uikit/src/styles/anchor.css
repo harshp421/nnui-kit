@@ -1,0 +1,171 @@
+@layer ui.components {
+  /* =========================================================================
+     Tier 1: Platform Primitives (Native Browser Top-Layer & Anchor Engine)
+     ========================================================================= */
+
+  /* Native Popovers */
+  [popover] {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    overflow: visible;
+    /* Smooth entrance/exit transitions using CSS transition-behavior: allow-discrete */
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity var(--ui-transition-fast), transform var(--ui-transition-fast), display var(--ui-transition-fast) allow-discrete, overlay var(--ui-transition-fast) allow-discrete;
+  }
+
+  [popover]:popover-open {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @starting-style {
+    [popover]:popover-open {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  /* Popover Panel styling */
+  [data-ui="popover-content"],
+  [data-part="popover-panel"],
+  ui-popover [popover],
+  nnui-popover [popover],
+  ui-popover [data-part="content"],
+  nnui-popover [data-part="content"] {
+    background-color: var(--ui-bg-surface-elevated);
+    color: var(--ui-text-primary);
+    border: 1px solid var(--ui-border-default);
+    border-radius: var(--ui-radius-lg);
+    box-shadow: var(--ui-shadow-popover);
+    padding: var(--ui-space-4);
+    min-width: 14rem;
+    max-width: min(90vw, 24rem);
+    z-index: 1000;
+  }
+
+  /* CSS Anchor Positioning Specification (Modern Chrome & Standards) */
+  @supports (position-area: bottom span-right) or (inset-area: bottom span-right) {
+    [data-anchor-target] {
+      position: fixed;
+      position-anchor: var(--anchor-name);
+      position-area: bottom span-right;
+      inset-area: bottom span-right;
+      position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+      margin-top: 8px;
+    }
+  }
+
+  /* Native HTML Dialog Primitive */
+  dialog[data-ui="dialog"],
+  dialog[data-part="dialog"],
+  ui-dialog dialog,
+  nnui-dialog dialog,
+  [data-part="dialog-modal"] {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    padding: var(--ui-space-6);
+    border: 1px solid var(--ui-border-default);
+    border-radius: var(--ui-radius-xl);
+    background-color: var(--ui-bg-surface-elevated);
+    max-width: min(90vw, 32rem);
+    width: 100%;
+    color: var(--ui-text-primary);
+    box-shadow: var(--ui-shadow-xl);
+    opacity: 0;
+    transform: scale(0.94) translateY(8px);
+    transition: opacity var(--ui-transition-base), transform var(--ui-transition-base), display var(--ui-transition-base) allow-discrete, overlay var(--ui-transition-base) allow-discrete;
+  }
+
+  dialog[data-ui="dialog"][open],
+  dialog[data-part="dialog"][open],
+  ui-dialog dialog[open],
+  nnui-dialog dialog[open],
+  [data-part="dialog-modal"][open] {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  @starting-style {
+    dialog[data-ui="dialog"][open],
+    dialog[data-part="dialog"][open],
+    ui-dialog dialog[open],
+    nnui-dialog dialog[open],
+    [data-part="dialog-modal"][open] {
+      opacity: 0;
+      transform: scale(0.94) translateY(8px);
+    }
+  }
+
+  /* Native Dialog Backdrop */
+  dialog[data-ui="dialog"]::backdrop,
+  dialog[data-part="dialog"]::backdrop,
+  ui-dialog dialog::backdrop,
+  nnui-dialog dialog::backdrop,
+  [data-part="dialog-modal"]::backdrop {
+    background-color: rgba(9, 13, 22, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity var(--ui-transition-base), display var(--ui-transition-base) allow-discrete, overlay var(--ui-transition-base) allow-discrete;
+  }
+
+  dialog[data-ui="dialog"][open]::backdrop,
+  dialog[data-part="dialog"][open]::backdrop,
+  ui-dialog dialog[open]::backdrop,
+  nnui-dialog dialog[open]::backdrop,
+  [data-part="dialog-modal"][open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    dialog[data-ui="dialog"][open]::backdrop,
+    dialog[data-part="dialog"][open]::backdrop,
+    ui-dialog dialog[open]::backdrop,
+    nnui-dialog dialog[open]::backdrop,
+    [data-part="dialog-modal"][open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  /* Dialog Inner Structure */
+  [data-part="dialog-header"] {
+    margin-bottom: var(--ui-space-4);
+  }
+
+  [data-part="dialog-title"] {
+    font-size: var(--ui-font-size-lg);
+    font-weight: 600;
+    color: var(--ui-text-primary);
+    margin: 0;
+    letter-spacing: -0.015em;
+  }
+
+  [data-part="dialog-description"] {
+    font-size: var(--ui-font-size-sm);
+    color: var(--ui-text-muted);
+    margin: 0.35rem 0 0;
+    line-height: 1.45;
+  }
+
+  [data-part="dialog-body"] {
+    margin-bottom: var(--ui-space-6);
+  }
+
+  [data-part="dialog-footer"] {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--ui-space-3);
+  }
+
+  [data-part="dialog-content"] {
+    background-color: var(--ui-bg-surface-elevated);
+    border-radius: var(--ui-radius-xl);
+    overflow: hidden;
+  }
+}

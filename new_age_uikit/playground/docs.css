@@ -1,0 +1,415 @@
+@import './components.css';
+
+/* Shadcn-Inspired Documentation Theme & Layout */
+
+:root {
+  --docs-sidebar-w: 260px;
+  --docs-toc-w: 220px;
+  --docs-max-w: 1440px;
+}
+
+body.docs-page {
+  margin: 0;
+  padding: 0;
+  font-family: var(--ui-font-sans);
+  background-color: var(--ui-bg-canvas);
+  color: var(--ui-text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Docs Header - Pixel-perfect alignment with 1440px container */
+.docs-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--ui-glass-bg);
+  backdrop-filter: var(--ui-glass-blur);
+  border-bottom: 1px solid var(--ui-border-default);
+  height: 60px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 calc(max(1.5rem, (100% - var(--docs-max-w)) / 2 + 1.5rem));
+}
+
+.docs-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.docs-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ui-text-primary);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.docs-logo-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  background: var(--ui-bg-subtle);
+  border: 1px solid var(--ui-border-default);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--ui-radius-full);
+  color: var(--ui-text-muted);
+}
+
+.docs-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.docs-nav-link {
+  font-size: var(--ui-font-size-sm);
+  color: var(--ui-text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--ui-transition-fast);
+}
+
+.docs-nav-link:hover,
+.docs-nav-link.active {
+  color: var(--ui-text-primary);
+}
+
+.docs-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* 3-Column Unified Layout Grid */
+.docs-wrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: var(--docs-max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  align-items: stretch;
+}
+
+/* Left Sidebar - Rock-solid pinned alignment across all pages */
+.docs-sidebar {
+  width: var(--docs-sidebar-w);
+  min-width: var(--docs-sidebar-w);
+  flex-shrink: 0;
+  padding: 2rem 1.25rem 2rem 0;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  border-right: 1px solid var(--ui-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+.sidebar-group-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ui-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sidebar-item {
+  font-size: var(--ui-font-size-sm);
+  color: var(--ui-text-secondary);
+  text-decoration: none;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--ui-radius-md);
+  transition: all var(--ui-transition-fast);
+}
+
+.sidebar-item:hover {
+  color: var(--ui-text-primary);
+  background-color: var(--ui-bg-subtle);
+}
+
+.sidebar-item.active {
+  color: var(--ui-color-brand-400);
+  background-color: rgba(99, 102, 241, 0.1);
+  font-weight: 600;
+}
+
+/* Center Content */
+.docs-main-container {
+  flex: 1;
+  min-width: 0;
+  max-width: 960px;
+  padding: 2.25rem 2.5rem 5rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.docs-wrapper:not(:has(.docs-toc)) .docs-main-container,
+body.components-page .docs-main-container {
+  max-width: 1150px;
+}
+
+.docs-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--ui-font-size-xs);
+  color: var(--ui-text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.docs-breadcrumb span {
+  color: var(--ui-text-primary);
+}
+
+.docs-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.75rem 0;
+}
+
+.docs-subtitle {
+  font-size: 1.1rem;
+  color: var(--ui-text-secondary);
+  line-height: 1.6;
+  margin: 0 0 2.5rem 0;
+}
+
+/* Framework Selector Tabs (Shadcn style) */
+.framework-selector-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--ui-border-default);
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.framework-tab-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 2px solid transparent;
+  color: var(--ui-text-muted);
+  font-size: var(--ui-font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: all var(--ui-transition-fast);
+}
+
+.framework-tab-item:hover {
+  color: var(--ui-text-primary);
+}
+
+.framework-tab-item.active {
+  color: var(--ui-color-brand-400);
+  border-bottom-color: var(--ui-color-brand-400);
+}
+
+/* Stepper (Numbered Installation Steps) */
+.docs-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  position: relative;
+  border-left: 1px solid var(--ui-border-default);
+  padding-left: 2rem;
+  margin-left: 1rem;
+}
+
+.step-node {
+  position: relative;
+}
+
+.step-number {
+  position: absolute;
+  left: -2.75rem;
+  top: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: var(--ui-bg-surface-elevated);
+  border: 1px solid var(--ui-border-strong);
+  color: var(--ui-text-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-header {
+  margin-bottom: 0.75rem;
+}
+
+.step-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem 0;
+  color: var(--ui-text-primary);
+}
+
+.step-description {
+  font-size: 0.9rem;
+  color: var(--ui-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Code Snippet Box (Shadcn Style with File Header & Copy Button) */
+.code-container {
+  margin-top: 1rem;
+  background-color: var(--ui-bg-surface);
+  border: 1px solid var(--ui-border-default);
+  border-radius: var(--ui-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--ui-shadow-sm);
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: var(--ui-bg-surface-elevated);
+  border-bottom: 1px solid var(--ui-border-subtle);
+  font-size: 0.75rem;
+  font-family: var(--ui-font-mono);
+  color: var(--ui-text-muted);
+}
+
+.code-filename {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.copy-btn {
+  background: transparent;
+  border: 1px solid var(--ui-border-default);
+  color: var(--ui-text-secondary);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--ui-radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all var(--ui-transition-fast);
+}
+
+.copy-btn:hover {
+  background: var(--ui-bg-hover);
+  color: var(--ui-text-primary);
+}
+
+.code-pre {
+  margin: 0;
+  padding: 1.25rem;
+  font-family: var(--ui-font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: var(--ui-text-primary);
+}
+
+/* Alert / Callout Box */
+.docs-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--ui-radius-md);
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  background-color: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: var(--ui-text-secondary);
+}
+
+.docs-callout-icon {
+  font-size: 1.15rem;
+}
+
+/* Right TOC */
+.docs-toc {
+  width: var(--docs-toc-w);
+  min-width: var(--docs-toc-w);
+  flex-shrink: 0;
+  padding: 2.25rem 0 2.25rem 1.5rem;
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin-left: auto;
+}
+
+.toc-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--ui-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.toc-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.toc-link {
+  font-size: 0.8rem;
+  color: var(--ui-text-muted);
+  text-decoration: none;
+  transition: color var(--ui-transition-fast);
+  line-height: 1.4;
+  border-left: 2px solid transparent;
+  padding-left: 0.5rem;
+}
+
+.toc-link:hover {
+  color: var(--ui-text-primary);
+}
+
+.toc-link.active {
+  color: var(--ui-color-brand-400);
+  border-left-color: var(--ui-color-brand-400);
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .docs-toc {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .docs-sidebar {
+    display: none;
+  }
+  .docs-main-container {
+    padding: 1.5rem;
+  }
+}

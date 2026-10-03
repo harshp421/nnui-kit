@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — NNUI-KIT</title>
+  <meta name="description" content="Comprehensive guide to installing, configuring, and architecting universal Light-DOM components with NNUI-KIT.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./src/styles/index.css">
+  <link rel="stylesheet" href="./playground/docs.css">
+</head>
+<body class="docs-page">
+
+  <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="./index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Docs</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="./docs.html" class="docs-nav-link active">Documentation</a>
+        <a href="./components.html" class="docs-nav-link">Components</a>
+        <a href="./index.html" class="docs-nav-link">Home</a>
+        <a href="./llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="docs-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="./components.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Components →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+    <!-- Left Navigation Sidebar -->
+    <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="#installation" class="sidebar-item active">Installation</a>
+          <a href="#cdn-backend" class="sidebar-item">CDN & Backend (HTMX / Django / Rails)</a>
+          <a href="#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="#architecture" class="sidebar-item">Architecture</a>
+          <a href="#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="./components.html" class="sidebar-item">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./components/button.html" class="sidebar-item">Button</a>
+          <a href="./components/badge.html" class="sidebar-item">Badge</a>
+          <a href="./components/input.html" class="sidebar-item">Input & Field</a>
+          <a href="./components/checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./components/switch.html" class="sidebar-item">Switch</a>
+          <a href="./components/card.html" class="sidebar-item">Card</a>
+          <a href="./components/avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./components/alert.html" class="sidebar-item">Alert</a>
+          <a href="./components/progress.html" class="sidebar-item">Progress</a>
+          <a href="./components/table.html" class="sidebar-item">Table</a>
+          <a href="./components/skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./components/separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./components/data-table.html" class="sidebar-item">Data Table</a>
+          <a href="./components/calendar.html" class="sidebar-item">Calendar</a>
+          <a href="./components/date-picker.html" class="sidebar-item">Date Picker</a>
+          <a href="./components/dropdown.html" class="sidebar-item">Dropdown Menu</a>
+          <a href="./components/toast.html" class="sidebar-item">Toast / Toaster</a>
+          <a href="./components/combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./components/tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./components/dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./components/select.html" class="sidebar-item">Select</a>
+          <a href="./components/accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./components/popover.html" class="sidebar-item">Popover</a>
+          <a href="./components/tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./components/command.html" class="sidebar-item">Command Palette</a>
+          <a href="./components/sheet.html" class="sidebar-item">Sheet / Drawer</a>
+          <a href="./components/slider.html" class="sidebar-item">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Center Area -->
+    <main class="docs-main-container">
+
+      <!-- ======================================================== -->
+      <!-- 1. INSTALLATION SECTION                                  -->
+      <!-- ======================================================== -->
+      <section id="installation" style="margin-bottom: 5rem;">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Installation</span>
+        </div>
+
+        <h1 class="docs-title">Installation</h1>
+        <p class="docs-subtitle">
+          How to install dependencies and structure your application with NNUI-KIT across Next.js, Vite, Astro, or plain HTML.
+        </p>
+
+        <!-- Framework Pickers (Shadcn Style) -->
+        <div class="framework-selector-tabs" style="flex-wrap: wrap;">
+          <button class="framework-tab-item active" data-framework="nextjs">
+            <span>▲</span> Next.js
+          </button>
+          <button class="framework-tab-item" data-framework="vite">
+            <span>⚡</span> Vite (React / Vue)
+          </button>
+          <button class="framework-tab-item" data-framework="astro">
+            <span>🚀</span> Astro
+          </button>
+          <button class="framework-tab-item" data-framework="htmx">
+            <span>⚡</span> HTMX
+          </button>
+          <button class="framework-tab-item" data-framework="django">
+            <span>🐍</span> Django
+          </button>
+          <button class="framework-tab-item" data-framework="rails">
+            <span>💎</span> Rails
+          </button>
+          <button class="framework-tab-item" data-framework="html">
+            <span>🌐</span> CDN / HTML
+          </button>
+        </div>
+
+        <!-- Callout: Light-DOM Invariant -->
+        <div class="docs-callout">
+          <div class="docs-callout-icon">💡</div>
+          <div>
+            <strong>Zero Framework Wrappers:</strong> NNUI-KIT runs directly on native Light-DOM Web Components. You write standard JSX / template tags without needing 5 separate adapter packages.
+          </div>
+        </div>
+
+        <!-- Stepper: 5 Numbered Steps -->
+        <div class="docs-stepper">
+          
+          <!-- Step 1 -->
+          <div class="step-node" id="step-1">
+            <div class="step-number">1</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-1-title">Create Project</h3>
+              <p class="step-description" id="step-1-desc">Start by creating a new project with your framework of choice.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-1-file">Terminal</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-1-code">npx create-next-app@latest my-app --typescript --tailwind --eslint</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-node" id="step-2">
+            <div class="step-number">2</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-2-title">Install NNUI-KIT</h3>
+              <p class="step-description" id="step-2-desc">Add the core universal package to your project.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-2-file">Terminal</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-2-code">npm install nnui-kit</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-node" id="step-3">
+            <div class="step-number">3</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-3-title">Configure Global Styles</h3>
+              <p class="step-description" id="step-3-desc">Import the universal CSS and micro-enhancers in your app layout.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-3-file">app/layout.tsx</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-3-code">import 'nnui-kit/css';
+import 'nnui-kit';</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-node" id="step-4">
+            <div class="step-number">4</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-4-title">Configure Cascade Layers</h3>
+              <p class="step-description" id="step-4-desc">Tailwind utilities override defaults cleanly without !important.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-4-file">app/globals.css</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-4-code">@import 'nnui-kit/css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="step-node" id="step-5">
+            <div class="step-number">5</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-5-title">Add Your First Component</h3>
+              <p class="step-description" id="step-5-desc">Render any component with native events and attributes.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-5-file">app/page.tsx</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-5-code">export default function Page() {
+  return (
+    <nnui-tabs value="tab-1">
+      <div data-part="tablist">
+        <button data-part="tab" data-value="tab-1">Overview</button>
+      </div>
+      <div data-part="tabpanel" data-value="tab-1">Welcome to NNUI-KIT</div>
+    </nnui-tabs>
+  );
+}</code></pre>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- IDE Autocomplete -->
+        <div style="margin-top: 3.5rem;" id="ide-setup">
+          <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">IDE Autocomplete (VS Code & Cursor)</h2>
+          <p style="color: var(--ui-text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+            To enable autocompletion for all <code>&lt;nnui-*&gt;</code> tags and <code>data-part</code> attributes in VS Code or Cursor:
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-filename">.vscode/settings.json</span>
+              <button class="copy-btn">📋 Copy</button>
+            </div>
+            <pre class="code-pre"><code>{
+  "html.customData": [
+    "./node_modules/nnui-kit/custom-elements.json"
+  ]
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 2. CDN & BACKEND QUICKSTART SECTION                      -->
+      <!-- ======================================================== -->
+      <section id="cdn-backend" style="margin-bottom: 5rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-default);">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">CDN & Backend Quickstart</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Zero-Build CDN & Backend Quickstart</h2>
+        <p class="docs-subtitle">
+          Pure Light-DOM web components engineered specifically for backend templates (HTMX, Django, Ruby on Rails, Laravel, and Alpine.js) with zero Node.js build step or hydration lag.
+        </p>
+
+        <!-- Direct CDN Embed -->
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin: 2rem 0 0.5rem 0;">1. Universal CDN Quickstart</h3>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+          Paste these two lines into the <code>&lt;head&gt;</code> of any HTML document or server-side template to instantly unlock all 24 components:
+        </p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">HTML &lt;head&gt; CDN Links</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- NNUI-KIT Universal Stylesheet (Cascade Layered + Shadcn Zinc Tokens) --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nnui-kit/dist/index.css"&gt;
+
+&lt;!-- NNUI-KIT Light-DOM Runtime (&lt; 4KB, Registers &lt;ui-*&gt; and &lt;nnui-*&gt; elements) --&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/nnui-kit/dist/index.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <!-- HTMX Integration Deep Dive -->
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin: 3rem 0 0.5rem 0;">2. HTMX Hypermedia Integration</h3>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+          Because NNUI-KIT components operate entirely in the <strong>Light DOM</strong> and adhere to the strict <em>"Mutate Attributes, Never Nodes"</em> invariant, HTMX swaps (<code>hx-swap="outerHTML"</code> or <code>innerHTML</code>) work flawlessly without losing focus or breaking Shadow DOM hydration.
+        </p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">templates/users.html (HTMX)</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- 1. Mount toaster once in base template --&gt;
+&lt;ui-toaster position="bottom-right"&gt;&lt;/ui-toaster&gt;
+
+&lt;!-- 2. Form submission with custom elements submitting natively --&gt;
+&lt;form hx-post="/users/create" hx-target="#user-table" hx-swap="beforeend"&gt;
+  &lt;div data-ui="field"&gt;
+    &lt;label data-ui="label" for="role"&gt;User Role&lt;/label&gt;
+    &lt;ui-select id="role" name="role" required&gt;
+      &lt;button type="button" data-part="trigger"&gt;
+        &lt;span data-part="value"&gt;Select role...&lt;/span&gt;
+        &lt;span&gt;▾&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;ul data-part="listbox"&gt;
+        &lt;li data-part="option" data-value="admin"&gt;Administrator&lt;/li&gt;
+        &lt;li data-part="option" data-value="editor"&gt;Editor&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/ui-select&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" data-ui="button"&gt;Add User&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;!-- 3. Server response trigger for Toast notification --&gt;
+&lt;!-- Server returns HTTP Header: HX-Trigger: {"showToast": "User added successfully"} --&gt;
+&lt;script&gt;
+  document.body.addEventListener('showToast', (e) =&gt; {
+    toast.success(e.detail.value || 'Operation completed');
+  });
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <!-- Python / Django Integration -->
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin: 3rem 0 0.5rem 0;">3. Python & Django Templates Integration</h3>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+          In Django, custom elements utilize standard <code>ElementInternals</code> form association. Inputs serialize directly into <code>request.POST</code> just like native <code>&lt;input&gt;</code> tags:
+        </p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">templates/profile.html (Django)</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>{% extends "base.html" %}
+
+{% block content %}
+&lt;form method="POST" action="{% url 'update_profile' %}"&gt;
+  {% csrf_token %}
+  
+  &lt;div data-ui="field"&gt;
+    &lt;label data-ui="label"&gt;Account Notification Volume&lt;/label&gt;
+    &lt;ui-slider name="volume" value="75" min="0" max="100"&gt;&lt;/ui-slider&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" data-ui="button"&gt;Save Preferences&lt;/button&gt;
+&lt;/form&gt;
+
+{% if messages %}
+&lt;script type="module"&gt;
+  import { toast } from 'https://cdn.jsdelivr.net/npm/nnui-kit/dist/index.js';
+  {% for message in messages %}
+    toast.{{ message.tags|default:"info" }}("{{ message|escapejs }}");
+  {% endfor %}
+&lt;/script&gt;
+{% endif %}
+{% endblock %}</code></pre>
+        </div>
+
+        <!-- Ruby on Rails Integration -->
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin: 3rem 0 0.5rem 0;">4. Ruby on Rails & Hotwire Turbo Integration</h3>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+          Rails Turbo Frames and Turbo Streams can dynamically stream server-rendered drawers, modals, and toasts:
+        </p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">app/views/orders/create.turbo_stream.erb (Rails)</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Append new order to list --&gt;
+&lt;%= turbo_stream.prepend "orders_list", partial: "order", locals: { order: @order } %&gt;
+
+&lt;!-- Trigger instant client-side toast --&gt;
+&lt;script type="module"&gt;
+  import { toast } from 'https://cdn.jsdelivr.net/npm/nnui-kit/dist/index.js';
+  toast.success("Order #&lt;%= @order.id %&gt; placed successfully!");
+&lt;/script&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 3. CLI REGISTRY SECTION                                  -->
+      <!-- ======================================================== -->
+      <section id="cli-registry" style="margin-bottom: 5rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-default);">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">CLI Registry</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Component Registry & CLI (npx nnui)</h2>
+        <p class="docs-subtitle">
+          Just like shadcn/ui: install components directly into your own project source code. You own the code—zero black-box node_modules traps.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem; margin-top: 1.5rem;">
+          <div>
+            <h4 style="font-size: 1.1rem; margin: 0 0 0.5rem 0;">1. Explore Available Components</h4>
+            <div class="code-container">
+              <div class="code-header"><span class="code-filename">Terminal</span><button class="copy-btn">📋 Copy</button></div>
+              <pre class="code-pre"><code>npx nnui list</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 1.1rem; margin: 0 0 0.5rem 0;">2. Initialize in Your Project</h4>
+            <p style="color: var(--ui-text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">
+              Creates your <code>components/ui/</code> directory, base element utilities, and CSS tokens:
+            </p>
+            <div class="code-container">
+              <div class="code-header"><span class="code-filename">Terminal</span><button class="copy-btn">📋 Copy</button></div>
+              <pre class="code-pre"><code>npx nnui init</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 1.1rem; margin: 0 0 0.5rem 0;">3. Add Specific Components</h4>
+            <p style="color: var(--ui-text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">
+              Download and configure components with automatic dependency resolution:
+            </p>
+            <div class="code-container">
+              <div class="code-header"><span class="code-filename">Terminal</span><button class="copy-btn">📋 Copy</button></div>
+              <pre class="code-pre"><code># Install specific components
+npx nnui add dropdown toast dialog tabs
+
+# Or install the entire 24-component portfolio
+npx nnui add --all</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 4. ARCHITECTURE SECTION                                  -->
+      <!-- ======================================================== -->
+      <section id="architecture" style="margin-bottom: 5rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-default);">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Architecture</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Three-Tier Light-DOM Architecture</h2>
+        <p class="docs-subtitle">
+          Why traditional component libraries hit an architectural dead end, and how NNUI-KIT inverts the stack into pure platform primitives.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          <div class="code-container">
+            <div class="code-header">
+              <span>Platform Tier Hierarchy</span>
+            </div>
+            <pre class="code-pre"><code>+-------------------------------------------------------------------------+
+| Tier 2: Micro-Enhancers (Light-DOM Custom Elements, &lt; 4 KB JS)          |
+| Focus management, APG roving tabindex, ElementInternals (Tabs, Combobox)|
++-------------------------------------------------------------------------+
+| Tier 1: Platform Primitives (Native Browser Layout Engine)              |
+| Popover API, &lt;dialog&gt;, CSS Anchor Positioning, Viewport Top-Layer       |
++-------------------------------------------------------------------------+
+| Tier 0: Pure Semantic HTML + Tokenized Scoped CSS                       |
+| Zero-JS first paint, 100% crawlable, @layer and @scope isolation       |
++-------------------------------------------------------------------------+</code></pre>
+          </div>
+
+          <h3 style="font-size: 1.35rem; font-weight: 700; margin: 1rem 0 0.5rem 0;">The 4 Core Engineering Invariants</h3>
+
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div style="border-left: 2px solid var(--ui-color-accent-400); padding-left: 1.25rem;">
+              <h4 style="margin: 0 0 0.35rem 0; font-size: 1.05rem;">1. Zero Shadow DOM</h4>
+              <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                <code>attachShadow()</code> is strictly forbidden. All nodes reside in the document DOM. ID references (<code>aria-labelledby</code>, <code>for</code>, <code>aria-controls</code>) resolve natively across all screen readers (VoiceOver, NVDA, JAWS) with zero polyfills.
+              </p>
+            </div>
+
+            <div style="border-left: 2px solid var(--ui-color-success-500); padding-left: 1.25rem;">
+              <h4 style="margin: 0 0 0.35rem 0; font-size: 1.05rem;">2. Mutate Attributes, Never Nodes</h4>
+              <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                Custom elements track state exclusively by toggling attributes (<code>data-state</code>, <code>aria-selected</code>, <code>tabindex</code>). Enhancers never call <code>appendChild()</code> or remove nodes, preventing reconciliation crashes in React 19, Vue 3, and Svelte 5.
+              </p>
+            </div>
+
+            <div style="border-left: 2px solid var(--ui-color-warning-500); padding-left: 1.25rem;">
+              <h4 style="margin: 0 0 0.35rem 0; font-size: 1.05rem;">3. Defensive Cascade Layers (@layer)</h4>
+              <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                All library CSS is declared in <code>@layer ui.tokens, ui.reset, ui.base, ui.components, ui.overrides;</code>. Consumer utility classes (Tailwind, UnoCSS) automatically win the cascade cleanly without ever needing <code>!important</code>.
+              </p>
+            </div>
+
+            <div style="border-left: 2px solid #818cf8; padding-left: 1.25rem;">
+              <h4 style="margin: 0 0 0.35rem 0; font-size: 1.05rem;">4. Sub-4KB Core Runtime</h4>
+              <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                By delegating overlays to the browser's top layer (<code>popover</code>, <code>&lt;dialog&gt;</code>) and positioning to CSS Anchor Positioning, main-thread JavaScript handles only state coordination and keyboard navigation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 3. THEMING SECTION                                       -->
+      <!-- ======================================================== -->
+      <section id="theming" style="margin-bottom: 5rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-default);">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Theming</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Theming & Dark Mode</h2>
+        <p class="docs-subtitle">
+          Built with an authentic high-contrast Zinc color scale, customized through CSS custom properties.
+        </p>
+
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          NNUI-KIT automatically respects system dark mode preferences via <code>@media (prefers-color-scheme: dark)</code>. To force a theme programmatically, set the <code>data-theme</code> attribute on your root <code>&lt;html&gt;</code> element:
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>index.html</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Force Dark Theme --&gt;
+&lt;html data-theme="dark"&gt;
+
+&lt;!-- Force Light Theme --&gt;
+&lt;html data-theme="light"&gt;</code></pre>
+        </div>
+
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.5rem 0;">Tailwind CSS Integration</h3>
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          Because NNUI-KIT is styled inside <code>@layer ui.components</code>, any Tailwind utility applied to component elements overrides library styles with zero specificity conflicts:
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Example Component</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Tailwind classes (bg-zinc-800, text-emerald-400, rounded-2xl) win effortlessly --&gt;
+&lt;button class="ui-button bg-zinc-800 text-emerald-400 rounded-2xl"&gt;
+  Custom Styled Button
+&lt;/button&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 4. AI MANIFEST SECTION                                   -->
+      <!-- ======================================================== -->
+      <section id="ai-manifest" style="margin-bottom: 5rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-default);">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">AI Manifest</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">AI Coding Assistant Support (llms.txt)</h2>
+        <p class="docs-subtitle">
+          Standardized specifications that allow Cursor, Copilot, ChatGPT, and Claude to generate 100% accurate, zero-hallucination markup.
+        </p>
+
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          NNUI-KIT includes a standardized <code>llms.txt</code> file at the root of the project. AI coding assistants consume this plain-text manifest to understand exact tag names, required semantic child parts (<code>data-part="input"</code>, <code>data-part="listbox"</code>), and event formats.
+        </p>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <a href="./llms.txt" target="_blank" class="ui-button" style="text-decoration: none;">
+            View Raw llms.txt Specification ↗
+          </a>
+          <a href="./components.html" class="ui-button ui-button--secondary" style="text-decoration: none;">
+            Browse All Components →
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents (Shadcn Style) -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#installation" class="toc-link">Installation</a>
+        <a href="#step-1" class="toc-link" style="padding-left: 0.75rem;">1. Create Project</a>
+        <a href="#step-2" class="toc-link" style="padding-left: 0.75rem;">2. Install Package</a>
+        <a href="#step-3" class="toc-link" style="padding-left: 0.75rem;">3. Global Styles</a>
+        <a href="#step-4" class="toc-link" style="padding-left: 0.75rem;">4. Cascade Layers</a>
+        <a href="#step-5" class="toc-link" style="padding-left: 0.75rem;">5. First Component</a>
+        <a href="#ide-setup" class="toc-link">IDE Autocomplete</a>
+        <a href="#architecture" class="toc-link">Architecture</a>
+        <a href="#theming" class="toc-link">Theming & Layers</a>
+        <a href="#ai-manifest" class="toc-link">AI Manifest</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="./playground/docs.js"></script>
+</body>
+</html>

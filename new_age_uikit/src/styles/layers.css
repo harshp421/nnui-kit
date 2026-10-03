@@ -1,0 +1,3 @@
+/* Cascade Layer Specification for Platform-Native Architecture */
+/* Guarantees that consumer styles/utilities (Tailwind, UnoCSS, custom CSS) can override defaults cleanly without !important */
+@layer ui.tokens, ui.reset, ui.base, ui.components, ui.overrides;

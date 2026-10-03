@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toaster & Toast — NNUI-KIT</title>
+  <meta name="description" content="Succinct message notifications with auto-dismiss, action buttons, pause-on-hover, and accessible live regions.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+  <ui-toaster position="bottom-right"></ui-toaster>
+
+    <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-table.html" class="sidebar-item">Data Table</a>
+          <a href="./calendar.html" class="sidebar-item">Calendar</a>
+          <a href="./date-picker.html" class="sidebar-item">Date Picker</a>
+          <a href="./dropdown.html" class="sidebar-item">Dropdown Menu</a>
+          <a href="./toast.html" class="sidebar-item active">Toast / Toaster</a>
+          <a href="./combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./select.html" class="sidebar-item">Select</a>
+          <a href="./accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./popover.html" class="sidebar-item">Popover</a>
+          <a href="./tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./command.html" class="sidebar-item">Command Palette</a>
+          <a href="./sheet.html" class="sidebar-item">Sheet / Drawer</a>
+          <a href="./slider.html" class="sidebar-item">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <div id="overview" class="component-view-header">
+        <div class="docs-breadcrumb">
+          <a href="../components.html" style="color: var(--ui-text-muted); text-decoration: none;">Components</a>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Toaster</span>
+        </div>
+        <h1 class="component-view-title">Toaster & Toast</h1>
+        <p class="component-view-desc">
+          A stacked, animated notification toast manager inspired by Sonner. Features auto-dismiss, action buttons, pause-on-hover, and screen reader announcements.
+        </p>
+        <div class="component-links-bar">
+          <span class="component-link-badge">Tier 2: Micro-Enhancer</span>
+          <span class="component-link-badge">&lt; 1.8 KB</span>
+          <span class="component-link-badge">Sonner-Style Stack</span>
+          <span class="component-link-badge">Global API</span>
+        </div>
+      </div>
+
+      <!-- Preview / Code Card -->
+      <div id="preview" class="preview-card">
+        <div class="preview-card-tabs">
+          <div class="preview-tab-group">
+            <button class="preview-tab-btn active" data-view="preview">Preview</button>
+            <button class="preview-tab-btn" data-view="code">Code</button>
+          </div>
+          <button class="copy-btn">Copy</button>
+        </div>
+
+        <div class="preview-stage" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; min-height: 240px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
+            <button id="btn-toast-default" class="ui-button ui-button--secondary">Default Toast</button>
+            <button id="btn-toast-success" class="ui-button">Success Toast</button>
+            <button id="btn-toast-error" class="ui-button ui-button--destructive">Error Toast</button>
+            <button id="btn-toast-warning" class="ui-button ui-button--outline">Warning Toast</button>
+            <button id="btn-toast-action" class="ui-button ui-button--secondary">With Action</button>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--ui-text-muted); margin: 0;">Click any button above to trigger live toast notifications (bottom-right).</p>
+        </div>
+
+        <div class="code-stage">
+          <pre><code>&lt;!-- 1. Include the toaster element in your page (optional: auto-injected if omitted) --&gt;
+&lt;ui-toaster position="bottom-right"&gt;&lt;/ui-toaster&gt;
+
+&lt;!-- 2. Trigger toasts from any framework or script --&gt;
+&lt;script type="module"&gt;
+  import { toast } from 'nnui-kit';
+
+  // Default Toast
+  toast('Your event has been scheduled.');
+
+  // Success Toast with description
+  toast.success('Changes saved', {
+    description: 'All workspace preferences updated.',
+  });
+
+  // Error Toast
+  toast.error('Could not complete request', {
+    description: 'Please check your connection and retry.',
+  });
+
+  // Toast with interactive Action button
+  toast('File archived', {
+    description: 'Moved to trash folder.',
+    action: {
+      label: 'Undo',
+      onClick: () =&gt; toast.success('Action undone!'),
+    },
+  });
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- Features Grid -->
+      <div style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.35rem; font-weight: 700; color: var(--ui-text-primary); margin-bottom: 1rem;">Features</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+          <div style="padding: 1.25rem; border: 1px solid var(--ui-border-default); border-radius: 8px; background: var(--ui-bg-surface);">
+            <div style="font-weight: 600; color: var(--ui-text-primary); margin-bottom: 0.25rem;">⏱ Auto-Dismiss & Pause</div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.45;">Dismisses after a default 4s duration. Automatically pauses the countdown when the user hovers over the toast.</p>
+          </div>
+          <div style="padding: 1.25rem; border: 1px solid var(--ui-border-default); border-radius: 8px; background: var(--ui-bg-surface);">
+            <div style="font-weight: 600; color: var(--ui-text-primary); margin-bottom: 0.25rem;">📍 6 Viewport Positions</div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.45;">Supports <code style="font-family: monospace;">bottom-right</code>, <code style="font-family: monospace;">bottom-left</code>, <code style="font-family: monospace;">bottom-center</code>, <code style="font-family: monospace;">top-right</code>, <code style="font-family: monospace;">top-left</code>, and <code style="font-family: monospace;">top-center</code>.</p>
+          </div>
+          <div style="padding: 1.25rem; border: 1px solid var(--ui-border-default); border-radius: 8px; background: var(--ui-bg-surface);">
+            <div style="font-weight: 600; color: var(--ui-text-primary); margin-bottom: 0.25rem;">♿ Native Live Region</div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.45;">Implements <code style="font-family: monospace;">role="status"</code> and <code style="font-family: monospace;">aria-live="polite"</code> (or <code style="font-family: monospace;">alert</code> for errors) for assistive technologies.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- API Reference -->
+      <div style="margin-top: 3.5rem;">
+        <h2 id="api" style="font-size: 1.35rem; font-weight: 700; color: var(--ui-text-primary); margin-bottom: 0.5rem;">API Reference</h2>
+        <div data-part="table-container" style="margin-top: 1rem;">
+          <table data-ui="table">
+            <thead>
+              <tr>
+                <th>Method / Option</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>toast(title, options?)</code></td>
+                <td><code>function</code></td>
+                <td>-</td>
+                <td>Dispatches a standard notification. Returns <code>{ id, dismiss }</code>.</td>
+              </tr>
+              <tr>
+                <td><code>toast.success(title, options?)</code></td>
+                <td><code>function</code></td>
+                <td>-</td>
+                <td>Dispatches a success notification with green checkmark icon.</td>
+              </tr>
+              <tr>
+                <td><code>toast.error(title, options?)</code></td>
+                <td><code>function</code></td>
+                <td>-</td>
+                <td>Dispatches an error alert with red cross icon and assertive ARIA.</td>
+              </tr>
+              <tr>
+                <td><code>toast.warning(title, options?)</code></td>
+                <td><code>function</code></td>
+                <td>-</td>
+                <td>Dispatches a warning notification with yellow icon.</td>
+              </tr>
+              <tr>
+                <td><code>toast.info(title, options?)</code></td>
+                <td><code>function</code></td>
+                <td>-</td>
+                <td>Dispatches an informational notification.</td>
+              </tr>
+              <tr>
+                <td><code>toast.dismiss(id?)</code></td>
+                <td><code>function</code></td>
+                <td>-</td>
+                <td>Dismisses a toast by ID, or dismisses all active toasts if no ID is passed.</td>
+              </tr>
+              <tr>
+                <td><code>options.description</code></td>
+                <td><code>string</code></td>
+                <td>-</td>
+                <td>Secondary text displayed beneath the title.</td>
+              </tr>
+              <tr>
+                <td><code>options.duration</code></td>
+                <td><code>number</code></td>
+                <td><code>4000</code></td>
+                <td>Auto-dismiss timer in milliseconds. Use <code>Infinity</code> to keep open.</td>
+              </tr>
+              <tr>
+                <td><code>options.action</code></td>
+                <td><code>object</code></td>
+                <td>-</td>
+                <td>Action button config: <code>{ label: string, onClick: Function }</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Navigation Footer -->
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <a href="./dropdown.html" style="text-decoration: none; color: var(--ui-text-secondary); font-size: 0.9rem; font-weight: 500;">
+          ← Previous: Dropdown Menu
+        </a>
+        <a href="../components.html" style="text-decoration: none; color: var(--ui-text-primary); font-size: 0.9rem; font-weight: 600;">
+          All Components Directory →
+        </a>
+      </div>
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#preview" class="toc-link">Interactive Demo</a>
+        <a href="#code" class="toc-link">Code Snippets</a>
+        <a href="#api" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+  <script type="module">
+    import { toast } from '../src/index.js';
+
+    document.getElementById('btn-toast-default')?.addEventListener('click', () => {
+      toast('Event has been scheduled', {
+        description: 'Scheduled for Friday, 3:00 PM.',
+      });
+    });
+
+    document.getElementById('btn-toast-success')?.addEventListener('click', () => {
+      toast.success('Payment succeeded', {
+        description: 'Invoice #1092 sent to your email.',
+      });
+    });
+
+    document.getElementById('btn-toast-error')?.addEventListener('click', () => {
+      toast.error('Failed to export dataset', {
+        description: 'Rate limit exceeded. Please wait 60 seconds.',
+      });
+    });
+
+    document.getElementById('btn-toast-warning')?.addEventListener('click', () => {
+      toast.warning('Storage limit approaching', {
+        description: '88% of workspace quota consumed.',
+      });
+    });
+
+    document.getElementById('btn-toast-action')?.addEventListener('click', () => {
+      toast('Draft discarded', {
+        description: 'Post removed from your queue.',
+        action: {
+          label: 'Undo',
+          onClick: () => toast.success('Draft restored to queue!'),
+        },
+      });
+    });
+  </script>
+</body>
+</html>

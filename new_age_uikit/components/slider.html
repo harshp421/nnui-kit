@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider — NNUI-KIT</title>
+  <meta name="description" content="An input where the user selects a value from a given range, fully accessible with pointer drag and keyboard arrows.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+    <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-table.html" class="sidebar-item">Data Table</a>
+          <a href="./calendar.html" class="sidebar-item">Calendar</a>
+          <a href="./date-picker.html" class="sidebar-item">Date Picker</a>
+          <a href="./dropdown.html" class="sidebar-item">Dropdown Menu</a>
+          <a href="./toast.html" class="sidebar-item">Toast / Toaster</a>
+          <a href="./combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./select.html" class="sidebar-item">Select</a>
+          <a href="./accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./popover.html" class="sidebar-item">Popover</a>
+          <a href="./tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./command.html" class="sidebar-item">Command Palette</a>
+          <a href="./sheet.html" class="sidebar-item">Sheet / Drawer</a>
+          <a href="./slider.html" class="sidebar-item active">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <div id="overview" class="component-view-header">
+        <div class="docs-breadcrumb">
+          <a href="../components.html" style="color: var(--ui-text-muted); text-decoration: none;">Components</a>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Slider</span>
+        </div>
+        <h1 class="component-view-title">Slider</h1>
+        <p class="component-view-desc">
+          Accessible range slider component supporting mouse dragging, touch gestures, keyboard arrows (ArrowLeft/ArrowRight), step snapping, and ElementInternals form association.
+        </p>
+        <div class="component-links-bar">
+          <span class="component-link-badge">Tier 2: Micro-Enhancer</span>
+          <span class="component-link-badge">Form Associated</span>
+          <span class="component-link-badge">Touch & Pointer Safe</span>
+        </div>
+      </div>
+
+      <!-- Preview / Code Card -->
+      <div id="preview" class="preview-card">
+        <div class="preview-card-tabs">
+          <div class="preview-tab-group">
+            <button class="preview-tab-btn active" data-view="preview">Preview</button>
+            <button class="preview-tab-btn" data-view="code">Code</button>
+          </div>
+          <button class="copy-btn">Copy</button>
+        </div>
+
+        <div class="preview-stage" style="display: flex; flex-direction: column; width: 100%; max-width: 440px; margin: 0 auto; gap: 2rem;">
+          <!-- Default Slider -->
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--ui-text-primary);">
+              <span>Volume</span>
+              <span id="slider-vol-val" style="font-weight: 600;">50</span>
+            </div>
+            <ui-slider id="vol-slider" min="0" max="100" step="1" value="50">
+              <div data-part="track">
+                <div data-part="range"></div>
+              </div>
+              <div data-part="thumb"></div>
+            </ui-slider>
+          </div>
+
+          <!-- Stepped Slider with Value Display -->
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--ui-text-primary);">
+              <span>Temperature (°C)</span>
+              <span id="slider-temp-val" style="font-weight: 600;">22</span>
+            </div>
+            <ui-slider id="temp-slider" min="15" max="30" step="0.5" value="22">
+              <div data-part="track">
+                <div data-part="range"></div>
+              </div>
+              <div data-part="thumb"></div>
+            </ui-slider>
+          </div>
+
+          <!-- Disabled Slider -->
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--ui-text-muted);">
+              <span>Brightness (Locked)</span>
+              <span>75</span>
+            </div>
+            <ui-slider min="0" max="100" value="75" disabled>
+              <div data-part="track">
+                <div data-part="range"></div>
+              </div>
+              <div data-part="thumb"></div>
+            </ui-slider>
+          </div>
+        </div>
+
+        <div class="code-stage">
+          <pre><code>&lt;!-- Range Slider with Live Value Tracking --&gt;
+&lt;ui-slider name="volume" min="0" max="100" step="1" value="50"&gt;
+  &lt;div data-part="track"&gt;
+    &lt;div data-part="range"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div data-part="thumb"&gt;&lt;/div&gt;
+&lt;/ui-slider&gt;
+
+&lt;script&gt;
+  const slider = document.querySelector('ui-slider');
+  slider.addEventListener('input', (e) => {
+    console.log('Current value:', e.detail.value);
+  });
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- API Reference -->
+      <h2 id="api" style="font-size: 1.5rem; font-weight: 700; margin: 2.5rem 0 1rem 0; color: var(--ui-text-primary);">API Reference</h2>
+      <div data-part="table-container">
+        <table data-ui="table">
+          <thead>
+            <tr>
+              <th>Attribute / Part</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>value</code></td>
+              <td><code>number</code></td>
+              <td><code>min</code></td>
+              <td>Current value of the slider. Synchronizes with <code>FormData</code>.</td>
+            </tr>
+            <tr>
+              <td><code>min / max</code></td>
+              <td><code>number</code></td>
+              <td><code>0 / 100</code></td>
+              <td>Minimum and maximum permitted range.</td>
+            </tr>
+            <tr>
+              <td><code>step</code></td>
+              <td><code>number</code></td>
+              <td><code>1</code></td>
+              <td>Granular step snapping amount.</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Disables interaction and removes thumb from tab order.</td>
+            </tr>
+            <tr>
+              <td><code>onInput / onChange</code></td>
+              <td><code>event</code></td>
+              <td>—</td>
+              <td>Dispatched while dragging (<code>input</code>) and upon release (<code>change</code>) with <code>e.detail: { value }</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <a href="./sheet.html" style="text-decoration: none; color: var(--ui-text-secondary); font-size: 0.9rem; font-weight: 500;">
+          ← Previous: Sheet / Drawer
+        </a>
+        <a href="../components.html" style="text-decoration: none; color: var(--ui-text-primary); font-size: 0.9rem; font-weight: 600;">
+          All Components Overview →
+        </a>
+      </div>
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#preview" class="toc-link">Interactive Demo</a>
+        <a href="#code" class="toc-link">Code Snippets</a>
+        <a href="#api" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+  <script>
+    // Quick script to update live value labels
+    const volSlider = document.getElementById('vol-slider');
+    const volVal = document.getElementById('slider-vol-val');
+    if (volSlider && volVal) {
+      volSlider.addEventListener('input', (e) => {
+        volVal.textContent = e.detail.value;
+      });
+    }
+
+    const tempSlider = document.getElementById('temp-slider');
+    const tempVal = document.getElementById('slider-temp-val');
+    if (tempSlider && tempVal) {
+      tempSlider.addEventListener('input', (e) => {
+        tempVal.textContent = e.detail.value;
+      });
+    }
+  </script>
+</body>
+</html>

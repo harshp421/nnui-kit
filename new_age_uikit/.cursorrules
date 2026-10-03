@@ -1,0 +1,23 @@
+# Cursor Rules for NNUI-KIT
+
+You are an expert front-end architect working with NNUI-KIT.
+Follow these rules strictly when generating or editing component code:
+
+1. ARCHITECTURE:
+   - NNUI-KIT is a Platform-Native, Three-Tier Light-DOM UI architecture.
+   - NEVER call `attachShadow()`. All elements live in Light-DOM.
+   - NEVER remove or reorder child DOM nodes inside custom element enhancers. Always coordinate state via attributes (`aria-*`, `data-state`).
+
+2. TAG NAMES:
+   - Use `<nnui-*>` or `<ui-*>` custom element tags (e.g. `<nnui-combobox>`, `<nnui-tabs>`, `<nnui-dialog>`, `<nnui-select>`, `<nnui-accordion>`).
+
+3. CSS & STYLES:
+   - All styles are scoped via `@layer ui.tokens, ui.reset, ui.base, ui.components, ui.overrides;`.
+   - Never use `!important` when overriding components.
+   - Use CSS custom properties like `var(--ui-color-brand-500)`, `var(--ui-font-sans)`, `var(--ui-radius-md)`.
+
+4. COMPONENT PARTS:
+   - Tabs: `[data-part="tablist"]`, `[data-part="tab"]` (with `data-value`), `[data-part="tabpanel"]` (with `data-value`).
+   - Combobox: `[data-part="input-wrapper"]`, `[data-part="input"]`, `[data-part="listbox"]`, `[data-part="option"]` (with `data-value`).
+   - Select: `[data-part="trigger"]`, `[data-part="value"]`, `[data-part="listbox"]`, `[data-part="option"]`.
+   - Dialog: wraps standard HTML `<dialog>`, close buttons use `[data-part="dialog-close"]`.

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Table — NNUI-KIT</title>
+  <meta name="description" content="High-performance, accessible Light-DOM Data Table with type-aware column sorting, client search filter, slice pagination, and row selection.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+    <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-table.html" class="sidebar-item active">Data Table</a>
+          <a href="./calendar.html" class="sidebar-item">Calendar</a>
+          <a href="./date-picker.html" class="sidebar-item">Date Picker</a>
+          <a href="./dropdown.html" class="sidebar-item">Dropdown Menu</a>
+          <a href="./toast.html" class="sidebar-item">Toast / Toaster</a>
+          <a href="./combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./select.html" class="sidebar-item">Select</a>
+          <a href="./accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./popover.html" class="sidebar-item">Popover</a>
+          <a href="./tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./command.html" class="sidebar-item">Command Palette</a>
+          <a href="./sheet.html" class="sidebar-item">Sheet / Drawer</a>
+          <a href="./slider.html" class="sidebar-item">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <section id="overview" class="component-view-header">
+        <div class="docs-breadcrumb">
+          <a href="../components.html" style="color: var(--ui-text-muted); text-decoration: none;">Components</a>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Data Table</span>
+        </div>
+        <h1 class="component-view-title">Data Table</h1>
+        <p class="component-view-desc">
+          Powerful Light-DOM table micro-enhancer providing type-aware column sorting, instant client search filtering, slice pagination, and row selection with indeterminate checkbox states.
+        </p>
+        <div class="component-links-bar">
+          <span class="component-link-badge">Tier 2: Micro-Enhancer</span>
+          <span class="component-link-badge">&lt; 2.5 KB</span>
+          <span class="component-link-badge">Zero Shadow DOM</span>
+          <span class="component-link-badge">A11y Table</span>
+        </div>
+      </section>
+
+      <!-- Preview / Code Card -->
+      <section id="preview">
+        <div class="preview-card">
+          <div class="preview-card-tabs">
+            <div class="preview-tab-group">
+              <button class="preview-tab-btn active" data-view="preview">Preview</button>
+              <button class="preview-tab-btn" data-view="code">Code</button>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="preview-stage" style="display: flex; flex-direction: column; width: 100%; padding: 2rem;">
+            <ui-data-table id="demo-table" page-size="4" sortable filterable selectable>
+              <div data-part="toolbar">
+                <input data-part="search" data-ui="input" placeholder="Search invoices, clients, roles...">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span data-part="selection-count">0 of 8 selected</span>
+                </div>
+              </div>
+
+              <div data-part="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width: 40px;"><input type="checkbox" data-part="select-all" aria-label="Select all rows"></th>
+                      <th data-sortable="true" data-sort-key="invoice">Invoice <span data-part="sort-icon">⇅</span></th>
+                      <th data-sortable="true" data-sort-key="status">Status <span data-part="sort-icon">⇅</span></th>
+                      <th data-sortable="true" data-sort-key="client">Client <span data-part="sort-icon">⇅</span></th>
+                      <th data-sortable="true" data-sort-key="amount">Amount <span data-part="sort-icon">⇅</span></th>
+                    </tr>
+                  </thead>
+                  <tbody data-part="tbody">
+                    <tr data-row-id="INV-001">
+                      <td><input type="checkbox" data-part="row-select"></td>
+                      <td style="font-family: var(--ui-font-mono); font-weight: 600;">INV-001</td>
+                      <td><span data-ui="badge" data-variant="success">Paid</span></td>
+                      <td>Acme Corp</td>
+                      <td>$2,450.00</td>
+                    </tr>
+                    <tr data-row-id="INV-002">
+                      <td><input type="checkbox" data-part="row-select"></td>
+                      <td style="font-family: var(--ui-font-mono); font-weight: 600;">INV-002</td>
+                      <td><span data-ui="badge" data-variant="warning">Pending</span></td>
+                      <td>Global Media</td>
+                      <td>$850.00</td>
+                    </tr>
+                    <tr data-row-id="INV-003">
+                      <td><input type="checkbox" data-part="row-select"></td>
+                      <td style="font-family: var(--ui-font-mono); font-weight: 600;">INV-003</td>
+                      <td><span data-ui="badge" data-variant="danger">Overdue</span></td>
+                      <td>Stripe Partners</td>
+                      <td>$1,200.00</td>
+                    </tr>
+                    <tr data-row-id="INV-004">
+                      <td><input type="checkbox" data-part="row-select"></td>
+                      <td style="font-family: var(--ui-font-mono); font-weight: 600;">INV-004</td>
+                      <td><span data-ui="badge" data-variant="success">Paid</span></td>
+                      <td>Vercel Inc</td>
+                      <td>$4,600.00</td>
+                    </tr>
+                    <tr data-row-id="INV-005">
+                      <td><input type="checkbox" data-part="row-select"></td>
+                      <td style="font-family: var(--ui-font-mono); font-weight: 600;">INV-005</td>
+                      <td><span data-ui="badge" data-variant="brand">Processing</span></td>
+                      <td>Supabase Co</td>
+                      <td>$3,150.00</td>
+                    </tr>
+                    <tr data-row-id="INV-006">
+                      <td><input type="checkbox" data-part="row-select"></td>
+                      <td style="font-family: var(--ui-font-mono); font-weight: 600;">INV-006</td>
+                      <td><span data-ui="badge" data-variant="success">Paid</span></td>
+                      <td>Linear App</td>
+                      <td>$920.00</td>
+                    </tr>
+                    <tr data-row-id="INV-007">
+                      <td><input type="checkbox" data-part="row-select"></td>
+                      <td style="font-family: var(--ui-font-mono); font-weight: 600;">INV-007</td>
+                      <td><span data-ui="badge" data-variant="warning">Pending</span></td>
+                      <td>Raycast Ltd</td>
+                      <td>$1,780.00</td>
+                    </tr>
+                    <tr data-row-id="INV-008">
+                      <td><input type="checkbox" data-part="row-select"></td>
+                      <td style="font-family: var(--ui-font-mono); font-weight: 600;">INV-008</td>
+                      <td><span data-ui="badge" data-variant="success">Paid</span></td>
+                      <td>Tailwind Labs</td>
+                      <td>$5,200.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div data-part="pagination">
+                <span data-part="pagination-info">Showing 1 to 4 of 8 rows</span>
+                <div data-part="pagination-buttons">
+                  <button data-part="prev-btn" data-ui="button" data-variant="outline" data-size="sm">Previous</button>
+                  <button data-part="next-btn" data-ui="button" data-variant="outline" data-size="sm">Next</button>
+                </div>
+              </div>
+            </ui-data-table>
+          </div>
+
+          <div class="code-stage">
+            <pre><code>&lt;ui-data-table page-size="4" sortable filterable selectable&gt;
+  &lt;div data-part="toolbar"&gt;
+    &lt;input data-part="search" data-ui="input" placeholder="Search rows..."&gt;
+    &lt;span data-part="selection-count"&gt;0 selected&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div data-part="table-container"&gt;
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;&lt;input type="checkbox" data-part="select-all"&gt;&lt;/th&gt;
+          &lt;th data-sortable="true" data-sort-key="invoice"&gt;Invoice &lt;span data-part="sort-icon"&gt;⇅&lt;/span&gt;&lt;/th&gt;
+          &lt;th data-sortable="true" data-sort-key="status"&gt;Status &lt;span data-part="sort-icon"&gt;⇅&lt;/span&gt;&lt;/th&gt;
+          &lt;th data-sortable="true" data-sort-key="client"&gt;Client &lt;span data-part="sort-icon"&gt;⇅&lt;/span&gt;&lt;/th&gt;
+          &lt;th data-sortable="true" data-sort-key="amount"&gt;Amount &lt;span data-part="sort-icon"&gt;⇅&lt;/span&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody data-part="tbody"&gt;
+        &lt;tr data-row-id="1"&gt;
+          &lt;td&gt;&lt;input type="checkbox" data-part="row-select"&gt;&lt;/td&gt;
+          &lt;td&gt;INV-001&lt;/td&gt;
+          &lt;td&gt;Paid&lt;/td&gt;
+          &lt;td&gt;Acme Corp&lt;/td&gt;
+          &lt;td&gt;$2,450.00&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+
+  &lt;div data-part="pagination"&gt;
+    &lt;span data-part="pagination-info"&gt;&lt;/span&gt;
+    &lt;button data-part="prev-btn" data-ui="button" data-variant="outline" data-size="sm"&gt;Previous&lt;/button&gt;
+    &lt;button data-part="next-btn" data-ui="button" data-variant="outline" data-size="sm"&gt;Next&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/ui-data-table&gt;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Features Section -->
+      <section id="features" style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--ui-text-primary);">Features & Architecture</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+          <div style="padding: 1.25rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-weight: 700; margin-bottom: 0.35rem; color: var(--ui-text-primary);">⚡ Type-Aware Sorting</div>
+            <div style="font-size: 0.85rem; color: var(--ui-text-secondary); line-height: 1.5;">Automatically recognizes integers, decimals, currency values, dates, and strings. Sets <code>aria-sort</code> natively.</div>
+          </div>
+          <div style="padding: 1.25rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-weight: 700; margin-bottom: 0.35rem; color: var(--ui-text-primary);">🔍 Fast Client Search</div>
+            <div style="font-size: 0.85rem; color: var(--ui-text-secondary); line-height: 1.5;">Indexes row contents into a cached memory array on load for sub-millisecond filtering across thousands of records.</div>
+          </div>
+          <div style="padding: 1.25rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-weight: 700; margin-bottom: 0.35rem; color: var(--ui-text-primary);">📄 Slice Pagination</div>
+            <div style="font-size: 0.85rem; color: var(--ui-text-secondary); line-height: 1.5;">Toggles <code>[hidden]</code> attribute on out-of-slice rows without destroying DOM nodes, keeping framework virtual DOMs perfectly safe.</div>
+          </div>
+          <div style="padding: 1.25rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-weight: 700; margin-bottom: 0.35rem; color: var(--ui-text-primary);">☑ Tri-State Row Selection</div>
+            <div style="font-size: 0.85rem; color: var(--ui-text-secondary); line-height: 1.5;">Header checkbox automatically computes indeterminate state when some rows are selected, with instant count updates.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- API Reference -->
+      <section id="api" style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--ui-text-primary);">API Reference</h2>
+        <div class="api-table-wrapper">
+          <table class="api-table">
+            <thead>
+              <tr><th>Attribute / Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>page-size</code></td><td>number</td><td><code>10</code></td><td>Number of rows visible per pagination slice.</td></tr>
+              <tr><td><code>page</code></td><td>number</td><td><code>1</code></td><td>Current active page index (1-based).</td></tr>
+              <tr><td><code>sort-key</code></td><td>string</td><td>—</td><td>Active column identifier being sorted.</td></tr>
+              <tr><td><code>sort-dir</code></td><td>'asc' | 'desc'</td><td>—</td><td>Direction of active column sort.</td></tr>
+              <tr><td><code>search</code></td><td>string</td><td>—</td><td>Active client search filter query.</td></tr>
+              <tr><td><code>sortable</code></td><td>boolean</td><td><code>false</code></td><td>Enables column header click sorting.</td></tr>
+              <tr><td><code>filterable</code></td><td>boolean</td><td><code>false</code></td><td>Enables input-based text filtering.</td></tr>
+              <tr><td><code>selectable</code></td><td>boolean</td><td><code>false</code></td><td>Enables checkbox row selection and counters.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#preview" class="toc-link">Interactive Demo</a>
+        <a href="#features" class="toc-link">Features</a>
+        <a href="#api" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+</body>
+</html>

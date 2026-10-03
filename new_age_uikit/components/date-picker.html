@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Picker — NNUI-KIT</title>
+  <meta name="description" content="A composed Light-DOM date picker combining Popover API and Calendar grid with automatic formatting and form association.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+    <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-table.html" class="sidebar-item">Data Table</a>
+          <a href="./calendar.html" class="sidebar-item">Calendar</a>
+          <a href="./date-picker.html" class="sidebar-item active">Date Picker</a>
+          <a href="./dropdown.html" class="sidebar-item">Dropdown Menu</a>
+          <a href="./toast.html" class="sidebar-item">Toast / Toaster</a>
+          <a href="./combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./select.html" class="sidebar-item">Select</a>
+          <a href="./accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./popover.html" class="sidebar-item">Popover</a>
+          <a href="./tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./command.html" class="sidebar-item">Command Palette</a>
+          <a href="./sheet.html" class="sidebar-item">Sheet / Drawer</a>
+          <a href="./slider.html" class="sidebar-item">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <section id="overview" class="component-view-header">
+        <div class="docs-breadcrumb">
+          <a href="../components.html" style="color: var(--ui-text-muted); text-decoration: none;">Components</a>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Date Picker</span>
+        </div>
+        <h1 class="component-view-title">Date Picker</h1>
+        <p class="component-view-desc">
+          A composed date picker component combining a trigger button with HTML Popover API and an interactive Calendar grid. Fully form-associated via ElementInternals.
+        </p>
+        <div class="component-links-bar">
+          <span class="component-link-badge">Tier 2: Micro-Enhancer</span>
+          <span class="component-link-badge">Popover API</span>
+          <span class="component-link-badge">ElementInternals</span>
+          <span class="component-link-badge">Zero Shadow DOM</span>
+        </div>
+      </section>
+
+      <!-- Preview / Code Card -->
+      <section id="preview">
+        <div class="preview-card">
+          <div class="preview-card-tabs">
+            <div class="preview-tab-group">
+              <button class="preview-tab-btn active" data-view="preview">Preview</button>
+              <button class="preview-tab-btn" data-view="code">Code</button>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="preview-stage" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; min-height: 380px;">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+              <button type="button" class="ui-button ui-button--secondary ui-button--sm" id="picker-btn-today">Pick Today</button>
+              <button type="button" class="ui-button ui-button--secondary ui-button--sm" id="picker-btn-nextweek">+7 Days</button>
+              <button type="button" class="ui-button ui-button--outline ui-button--sm" id="picker-btn-clear">Clear</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 280px;">
+              <label data-ui="label" for="demo-date-picker" style="font-size: 0.85rem; font-weight: 500; color: var(--ui-text-primary);">Event Date</label>
+              <ui-date-picker id="demo-date-picker" name="event_date" placeholder="Select an event date..."></ui-date-picker>
+            </div>
+
+            <div style="font-size: 0.85rem; color: var(--ui-text-muted); display: flex; align-items: center; gap: 0.5rem;">
+              <span>Selected Value:</span>
+              <span id="picker-selected-val" class="ui-badge ui-badge--brand" style="font-family: var(--ui-font-mono);">None</span>
+            </div>
+          </div>
+
+          <div class="code-stage">
+            <pre><code>&lt;!-- Native Form-Associated Date Picker --&gt;
+&lt;div data-ui="field"&gt;
+  &lt;label data-ui="label"&gt;Appointment Date&lt;/label&gt;
+  &lt;ui-date-picker name="appointment" placeholder="Pick a date..."&gt;&lt;/ui-date-picker&gt;
+&lt;/div&gt;
+
+&lt;script type="module"&gt;
+  const picker = document.querySelector('ui-date-picker');
+  picker.addEventListener('change', (e) =&gt; {
+    console.log('Selected date:', e.detail.value);
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Examples Section -->
+      <section id="examples" style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--ui-text-primary);">Interactive Scenarios</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+          <!-- Date Boundaries -->
+          <div style="padding: 1.5rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+              <div style="font-weight: 600; font-size: 0.95rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">Min / Max Boundary Limits</div>
+              <div style="font-size: 0.8rem; color: var(--ui-text-muted);">Constrained between Oct 5 and Oct 25, 2026.</div>
+            </div>
+            <ui-date-picker min="2026-10-05" max="2026-10-25" placeholder="Select between Oct 5-25..."></ui-date-picker>
+          </div>
+
+          <!-- Pre-selected Value -->
+          <div style="padding: 1.5rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+              <div style="font-weight: 600; font-size: 0.95rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">Pre-selected Date</div>
+              <div style="font-size: 0.8rem; color: var(--ui-text-muted);">Initialized with an ISO date string and clear action.</div>
+            </div>
+            <ui-date-picker value="2026-10-18"></ui-date-picker>
+          </div>
+
+          <!-- Disabled State -->
+          <div style="padding: 1.5rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+              <div style="font-weight: 600; font-size: 0.95rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">Disabled State</div>
+              <div style="font-size: 0.8rem; color: var(--ui-text-muted);">Non-interactive state preventing popover toggle.</div>
+            </div>
+            <ui-date-picker disabled placeholder="Disabled date picker..."></ui-date-picker>
+          </div>
+
+          <!-- Native Form Submit -->
+          <div style="padding: 1.5rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+              <div style="font-weight: 600; font-size: 0.95rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">Form Submission</div>
+              <div style="font-size: 0.8rem; color: var(--ui-text-muted);">Submits standard FormData via ElementInternals.</div>
+            </div>
+            <form id="picker-form-demo" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <ui-date-picker name="flight_date" placeholder="Flight departure date..."></ui-date-picker>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <button type="submit" class="ui-button ui-button--sm">Submit Booking</button>
+                <span id="picker-form-status" style="font-size: 0.8rem; color: var(--ui-color-brand-500); font-weight: 500;"></span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Architecture Section -->
+      <section id="features" style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--ui-text-primary);">Design & Composition</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-weight: 700; margin-bottom: 0.25rem; color: var(--ui-text-primary);">Native Popover API</div>
+            <div style="font-size: 0.8rem; color: var(--ui-text-secondary); line-height: 1.5;">Promoted directly to top-layer using <code>popover="auto"</code> with native outside click and Escape dismissal.</div>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-weight: 700; margin-bottom: 0.25rem; color: var(--ui-text-primary);">Composed Calendar</div>
+            <div style="font-size: 0.8rem; color: var(--ui-text-secondary); line-height: 1.5;">Reuses <code>&lt;ui-calendar&gt;</code> with full APG roving focus inside the floating overlay.</div>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-weight: 700; margin-bottom: 0.25rem; color: var(--ui-text-primary);">Form-Associated</div>
+            <div style="font-size: 0.8rem; color: var(--ui-text-secondary); line-height: 1.5;">Integrates with HTML standard <code>FormData</code> and form validation via <code>ElementInternals</code>.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- API Reference -->
+      <section id="api" style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--ui-text-primary);">API Reference</h2>
+        <div class="api-table-wrapper">
+          <table class="api-table">
+            <thead>
+              <tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>value</code></td><td>string</td><td>—</td><td>Selected date formatted as <code>YYYY-MM-DD</code>.</td></tr>
+              <tr><td><code>placeholder</code></td><td>string</td><td>'Pick a date...'</td><td>Trigger button label before date is chosen.</td></tr>
+              <tr><td><code>open</code></td><td>boolean</td><td><code>false</code></td><td>Whether the floating popover calendar is visible.</td></tr>
+              <tr><td><code>disabled</code></td><td>boolean</td><td><code>false</code></td><td>Disables opening the date picker.</td></tr>
+              <tr><td><code>min</code></td><td>string</td><td>—</td><td>Earliest selectable date boundary (<code>YYYY-MM-DD</code>).</td></tr>
+              <tr><td><code>max</code></td><td>string</td><td>—</td><td>Latest selectable date boundary (<code>YYYY-MM-DD</code>).</td></tr>
+              <tr><td><code>name</code></td><td>string</td><td>—</td><td>Form field submission identifier.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#preview" class="toc-link">Interactive Demo</a>
+        <a href="#examples" class="toc-link">Interactive Scenarios</a>
+        <a href="#features" class="toc-link">Design & Architecture</a>
+        <a href="#api" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+  <script type="module">
+    const picker = document.getElementById('demo-date-picker');
+    const out = document.getElementById('picker-selected-val');
+    const btnToday = document.getElementById('picker-btn-today');
+    const btnNextWeek = document.getElementById('picker-btn-nextweek');
+    const btnClear = document.getElementById('picker-btn-clear');
+
+    if (picker && out) {
+      picker.addEventListener('change', (e) => {
+        out.textContent = e.detail.value || 'None';
+      });
+    }
+
+    btnToday?.addEventListener('click', () => {
+      const now = new Date();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      picker.value = `${now.getFullYear()}-${m}-${d}`;
+      picker.dispatchEvent(new CustomEvent('change', { bubbles: true, detail: { value: picker.value } }));
+    });
+
+    btnNextWeek?.addEventListener('click', () => {
+      const target = new Date();
+      target.setDate(target.getDate() + 7);
+      const m = String(target.getMonth() + 1).padStart(2, '0');
+      const d = String(target.getDate()).padStart(2, '0');
+      picker.value = `${target.getFullYear()}-${m}-${d}`;
+      picker.dispatchEvent(new CustomEvent('change', { bubbles: true, detail: { value: picker.value } }));
+    });
+
+    btnClear?.addEventListener('click', () => {
+      picker.clear();
+    });
+
+    const form = document.getElementById('picker-form-demo');
+    const status = document.getElementById('picker-form-status');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const val = data.get('flight_date');
+      if (status) {
+        status.textContent = val ? `Confirmed: ${val}` : 'Please pick a date';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Components Directory — NNUI-KIT</title>
+  <meta name="description" content="Explore and test universal Light-DOM components built with pure semantic HTML, CSS Anchor Positioning, and Micro-Enhancers.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./src/styles/index.css">
+  <link rel="stylesheet" href="./playground/docs.css">
+  <link rel="stylesheet" href="./playground/components.css">
+  <style>
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .gallery-card {
+      border: 1px solid var(--ui-border-default);
+      border-radius: var(--ui-radius-lg);
+      background-color: var(--ui-bg-surface);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--ui-transition-fast);
+      text-decoration: none;
+      color: inherit;
+    }
+    .gallery-card:hover {
+      border-color: var(--ui-border-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--ui-shadow-md);
+    }
+    .gallery-stage {
+      padding: 2.25rem 1.5rem;
+      background-color: var(--ui-bg-subtle);
+      border-bottom: 1px solid var(--ui-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+    }
+    .gallery-content {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .gallery-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.35rem;
+    }
+    .gallery-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ui-text-primary);
+      margin: 0;
+    }
+    .gallery-desc {
+      font-size: 0.85rem;
+      color: var(--ui-text-secondary);
+      line-height: 1.45;
+      margin: 0 0 1rem 0;
+      flex: 1;
+    }
+    .gallery-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ui-color-accent-400);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  </style>
+</head>
+<body class="docs-page">
+
+  <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="./index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="./docs.html" class="docs-nav-link">Documentation</a>
+        <a href="./components.html" class="docs-nav-link active">Components</a>
+        <a href="./index.html" class="docs-nav-link">Home</a>
+        <a href="./llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="./docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+    <!-- Left Navigation Sidebar -->
+    <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="./docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="./docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="./docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="./docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="./docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="./docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="./components.html" class="sidebar-item active">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./components/button.html" class="sidebar-item">Button</a>
+          <a href="./components/badge.html" class="sidebar-item">Badge</a>
+          <a href="./components/input.html" class="sidebar-item">Input & Field</a>
+          <a href="./components/checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./components/switch.html" class="sidebar-item">Switch</a>
+          <a href="./components/card.html" class="sidebar-item">Card</a>
+          <a href="./components/avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./components/alert.html" class="sidebar-item">Alert</a>
+          <a href="./components/progress.html" class="sidebar-item">Progress</a>
+          <a href="./components/table.html" class="sidebar-item">Table</a>
+          <a href="./components/skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./components/separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./components/data-table.html" class="sidebar-item">Data Table</a>
+          <a href="./components/calendar.html" class="sidebar-item">Calendar</a>
+          <a href="./components/date-picker.html" class="sidebar-item">Date Picker</a>
+          <a href="./components/dropdown.html" class="sidebar-item">Dropdown Menu</a>
+          <a href="./components/toast.html" class="sidebar-item">Toast / Toaster</a>
+          <a href="./components/combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./components/tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./components/dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./components/select.html" class="sidebar-item">Select</a>
+          <a href="./components/accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./components/popover.html" class="sidebar-item">Popover</a>
+          <a href="./components/tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./components/command.html" class="sidebar-item">Command Palette</a>
+          <a href="./components/sheet.html" class="sidebar-item">Sheet / Drawer</a>
+          <a href="./components/slider.html" class="sidebar-item">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="docs-main-container">
+
+      <div class="component-view-header">
+        <div class="docs-breadcrumb">
+          <span>Documentation</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Components Directory</span>
+        </div>
+        <h1 class="component-view-title">Components Directory</h1>
+        <p class="component-view-desc">
+          Explore all 27 universal Light-DOM components. Click on any component to view its dedicated interactive playground, anatomy breakdown, code snippets, and complete API table.
+        </p>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- TIER 0 PRIMITIVES SECTION                                -->
+      <!-- ======================================================== -->
+      <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--ui-text-primary); margin: 0;">Tier 0: Pure Semantic Primitives</h2>
+          <p style="font-size: 0.875rem; color: var(--ui-text-secondary); margin: 0.25rem 0 0 0;">Zero-JS first paint controls styled with defensive cascade layers (@layer ui.base).</p>
+        </div>
+        <span class="component-link-badge">12 Components</span>
+      </div>
+
+      <div class="component-grid">
+        <!-- Button -->
+        <a href="./components/button.html" class="gallery-card">
+          <div class="gallery-stage">
+            <button data-ui="button">Button</button>
+            <button data-ui="button" data-variant="secondary" style="margin-left: 0.5rem;">Secondary</button>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Button</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Multiple variants, sizes, icon buttons, states, and accessible link buttons.</p>
+            <span class="gallery-link">Explore Button →</span>
+          </div>
+        </a>
+
+        <!-- Badge -->
+        <a href="./components/badge.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.5rem;">
+            <span data-ui="badge" data-variant="brand">Brand</span>
+            <span data-ui="badge" data-variant="success"><span data-part="badge-dot"></span> Active</span>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Badge</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Compact status badges, tags, and categorical indicators with live dot options.</p>
+            <span class="gallery-link">Explore Badge →</span>
+          </div>
+        </a>
+
+        <!-- Input & Field -->
+        <a href="./components/input.html" class="gallery-card">
+          <div class="gallery-stage" style="width: 100%;">
+            <input data-ui="input" placeholder="Type something..." style="max-width: 200px;">
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Input & Field</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Semantic text inputs, textareas, icon groups, and form validation states.</p>
+            <span class="gallery-link">Explore Input & Field →</span>
+          </div>
+        </a>
+
+        <!-- Checkbox & Radio -->
+        <a href="./components/checkbox.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 1.5rem;">
+            <label data-ui="checkbox"><input type="checkbox" checked> <span>Check</span></label>
+            <label data-ui="radio"><input type="radio" checked> <span>Radio</span></label>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Checkbox & Radio</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Binary check and single-selection radio controls with custom zinc checkmarks.</p>
+            <span class="gallery-link">Explore Checkbox & Radio →</span>
+          </div>
+        </a>
+
+        <!-- Switch -->
+        <a href="./components/switch.html" class="gallery-card">
+          <div class="gallery-stage">
+            <label data-ui="switch"><input type="checkbox" checked> <span>Toggle</span></label>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Switch</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Smooth toggle switch powered by pure CSS transitions and semantic checkboxes.</p>
+            <span class="gallery-link">Explore Switch →</span>
+          </div>
+        </a>
+
+        <!-- Card -->
+        <a href="./components/card.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div data-ui="card" style="padding: 0.75rem 1rem; width: 180px; text-align: center;">
+              <strong style="font-size: 0.85rem; color: var(--ui-text-primary);">Card Preview</strong>
+              <div style="font-size: 0.75rem; color: var(--ui-text-muted); margin-top: 0.25rem;">Content container</div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Card</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Structured content container with header, title, body content, and action footer.</p>
+            <span class="gallery-link">Explore Card →</span>
+          </div>
+        </a>
+
+        <!-- Avatar -->
+        <a href="./components/avatar.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 1rem;">
+            <div data-ui="avatar"><span data-part="avatar-fallback">HP</span><span data-part="avatar-status"></span></div>
+            <div data-ui="avatar" data-size="sm"><span data-part="avatar-fallback">AI</span></div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Avatar</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">User avatars with initials fallback, online/busy status dots, and group stacking.</p>
+            <span class="gallery-link">Explore Avatar →</span>
+          </div>
+        </a>
+
+        <!-- Alert -->
+        <a href="./components/alert.html" class="gallery-card">
+          <div class="gallery-stage" style="width: 100%;">
+            <div data-ui="alert" data-variant="success" style="margin: 0; width: 100%; max-width: 240px; padding: 0.5rem 0.75rem;">
+              <span data-part="alert-icon">✓</span>
+              <div data-part="alert-content">
+                <span data-part="alert-title" style="font-size: 0.8rem;">Live Alert</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Alert</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Callouts and feedback banners for default, success, warning, and destructive notices.</p>
+            <span class="gallery-link">Explore Alert →</span>
+          </div>
+        </a>
+
+        <!-- Progress -->
+        <a href="./components/progress.html" class="gallery-card">
+          <div class="gallery-stage" style="width: 100%; padding: 0 2rem;">
+            <div data-ui="progress" style="width: 100%;">
+              <div data-part="progress-bar" style="width: 70%;"></div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Progress</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Accessible completion indicators using native HTML &lt;progress&gt; and custom bars.</p>
+            <span class="gallery-link">Explore Progress →</span>
+          </div>
+        </a>
+
+        <!-- Table -->
+        <a href="./components/table.html" class="gallery-card">
+          <div class="gallery-stage" style="width: 100%; padding: 0.75rem;">
+            <table data-ui="table" style="font-size: 0.75rem; width: 100%;">
+              <thead><tr><th>Item</th><th style="text-align: right;">Price</th></tr></thead>
+              <tbody><tr><td>Pro License</td><td style="text-align: right;">$49</td></tr></tbody>
+            </table>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Table</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">High-contrast zinc tables with hover rows, headers, and responsive wrapper.</p>
+            <span class="gallery-link">Explore Table →</span>
+          </div>
+        </a>
+
+        <!-- Skeleton -->
+        <a href="./components/skeleton.html" class="gallery-card">
+          <div class="gallery-stage" style="display: flex; gap: 0.75rem; align-items: center; width: 100%; max-width: 200px;">
+            <div data-ui="skeleton" data-shape="circle" style="width: 32px; height: 32px; flex-shrink: 0;"></div>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 0.35rem;">
+              <div data-ui="skeleton" style="height: 12px; width: 80%;"></div>
+              <div data-ui="skeleton" style="height: 10px; width: 50%;"></div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Skeleton</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Shimmering placeholder lines and shapes for loading state UI hydration.</p>
+            <span class="gallery-link">Explore Skeleton →</span>
+          </div>
+        </a>
+
+        <!-- Separator -->
+        <a href="./components/separator.html" class="gallery-card">
+          <div class="gallery-stage" style="width: 100%; flex-direction: column; gap: 0.5rem; padding: 0 2rem;">
+            <span style="font-size: 0.75rem; color: var(--ui-text-muted);">Section A</span>
+            <hr data-ui="separator" style="margin: 0; width: 100%;">
+            <span style="font-size: 0.75rem; color: var(--ui-text-muted);">Section B</span>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Separator</h3>
+              <span data-ui="badge">Zero JS</span>
+            </div>
+            <p class="gallery-desc">Horizontal, vertical, and labeled dividers separating content sections.</p>
+            <span class="gallery-link">Explore Separator →</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- TIER 2 MICRO-ENHANCERS SECTION                           -->
+      <!-- ======================================================== -->
+      <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--ui-text-primary); margin: 0;">Tier 2: Interactive Micro-Enhancers</h2>
+          <p style="font-size: 0.875rem; color: var(--ui-text-secondary); margin: 0.25rem 0 0 0;">Light-DOM custom elements enforcing "Mutate Attributes, Never Nodes".</p>
+        </div>
+        <span class="component-link-badge">10 Components</span>
+      </div>
+
+      <div class="component-grid">
+        <!-- Combobox -->
+        <a href="./components/combobox.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div style="width: 180px; padding: 0.4rem 0.6rem; border: 1px solid var(--ui-border-default); border-radius: 6px; background: var(--ui-bg-surface); font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-muted);">
+              <span>Search...</span>
+              <span>▼</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Combobox</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">WAI-ARIA APG active-descendant autocomplete with arrow-key navigation.</p>
+            <span class="gallery-link">Explore Combobox →</span>
+          </div>
+        </a>
+
+        <!-- Tabs -->
+        <a href="./components/tabs.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div style="display: flex; gap: 0.25rem; background: var(--ui-bg-surface); padding: 0.25rem; border-radius: 6px; border: 1px solid var(--ui-border-default);">
+              <span style="font-size: 0.75rem; padding: 0.2rem 0.6rem; background: var(--ui-bg-subtle); border-radius: 4px; font-weight: 600; color: var(--ui-text-primary);">Tab 1</span>
+              <span style="font-size: 0.75rem; padding: 0.2rem 0.6rem; color: var(--ui-text-muted);">Tab 2</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Tabs</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Accessible layered tab panels with roving tabindex and horizontal/vertical modes.</p>
+            <span class="gallery-link">Explore Tabs →</span>
+          </div>
+        </a>
+
+        <!-- Dialog -->
+        <a href="./components/dialog.html" class="gallery-card">
+          <div class="gallery-stage">
+            <button data-ui="button" data-size="sm">Open Dialog</button>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Dialog</h3>
+              <span class="component-link-badge">Tier 1 & 2</span>
+            </div>
+            <p class="gallery-desc">Browser-native &lt;dialog&gt; modal with backdrop blur, focus trap, and Esc dismiss.</p>
+            <span class="gallery-link">Explore Dialog →</span>
+          </div>
+        </a>
+
+        <!-- Select -->
+        <a href="./components/select.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div style="width: 160px; padding: 0.4rem 0.6rem; border: 1px solid var(--ui-border-default); border-radius: 6px; background: var(--ui-bg-surface); font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-primary);">
+              <span>Select option</span>
+              <span>▾</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Select</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Form-associated select dropdown using ElementInternals with native form submit.</p>
+            <span class="gallery-link">Explore Select →</span>
+          </div>
+        </a>
+
+        <!-- Accordion -->
+        <a href="./components/accordion.html" class="gallery-card">
+          <div class="gallery-stage" style="width: 100%; padding: 0 1.5rem;">
+            <div style="border: 1px solid var(--ui-border-default); border-radius: 6px; width: 100%; background: var(--ui-bg-surface); padding: 0.5rem 0.75rem; font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-primary);">
+              <span>Accordion Item</span>
+              <span>›</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Accordion</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Expandable disclosure system with single or multiple expand modes.</p>
+            <span class="gallery-link">Explore Accordion →</span>
+          </div>
+        </a>
+
+        <!-- Popover -->
+        <a href="./components/popover.html" class="gallery-card">
+          <div class="gallery-stage">
+            <button data-ui="button" data-variant="outline" data-size="sm">Toggle Popover</button>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Popover</h3>
+              <span class="component-link-badge">Tier 1</span>
+            </div>
+            <p class="gallery-desc">Top-layer floating menu using HTML Popover API and CSS Anchor Positioning.</p>
+            <span class="gallery-link">Explore Popover →</span>
+          </div>
+        </a>
+
+        <!-- Tooltip -->
+        <a href="./components/tooltip.html" class="gallery-card">
+          <div class="gallery-stage">
+            <span data-ui="badge" data-variant="outline">Hover for Tooltip</span>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Tooltip</h3>
+              <span class="component-link-badge">Tier 1</span>
+            </div>
+            <p class="gallery-desc">Anchored hover and focus hint bubble with automatic aria-describedby binding.</p>
+            <span class="gallery-link">Explore Tooltip →</span>
+          </div>
+        </a>
+
+        <!-- Command Palette -->
+        <a href="./components/command.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-surface); border: 1px solid var(--ui-border); padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.75rem; color: var(--ui-text-muted);">
+              <span>⌘K</span>
+              <span>Search actions...</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Command Palette</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Fast instant-filtered command menu with active-descendant keyboard navigation.</p>
+            <span class="gallery-link">Explore Command →</span>
+          </div>
+        </a>
+
+        <!-- Sheet / Drawer -->
+        <a href="./components/sheet.html" class="gallery-card">
+          <div class="gallery-stage">
+            <button data-ui="button" data-variant="outline" data-size="sm">Open Drawer</button>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Sheet / Drawer</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Native dialog sliding panel supporting 4 directions (right, left, bottom, top).</p>
+            <span class="gallery-link">Explore Sheet →</span>
+          </div>
+        </a>
+
+        <!-- Slider -->
+        <a href="./components/slider.html" class="gallery-card">
+          <div class="gallery-stage" style="width: 80%; padding: 0 1rem;">
+            <div style="width: 100%; height: 6px; background: var(--ui-border); border-radius: 9999px; position: relative;">
+              <div style="width: 60%; height: 100%; background: var(--ui-primary); border-radius: 9999px;"></div>
+              <div style="width: 14px; height: 14px; border-radius: 50%; background: #ffffff; position: absolute; left: calc(60% - 7px); top: -4px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Slider</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Form-associated range slider with pointer capture and smooth step snapping.</p>
+            <span class="gallery-link">Explore Slider →</span>
+          </div>
+        </a>
+
+        <!-- Dropdown Menu -->
+        <a href="./components/dropdown.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
+            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); padding: 0.5rem 0.85rem; font-size: 0.8rem; box-shadow: var(--ui-shadow-md); display: flex; align-items: center; justify-content: space-between; width: 140px;">
+              <span>Options</span>
+              <span style="font-size: 0.65rem; opacity: 0.6;">▼</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Dropdown Menu</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Accessible roving keyboard navigation menu with items, shortcuts, and separators.</p>
+            <span class="gallery-link">Explore Dropdown →</span>
+          </div>
+        </a>
+
+        <!-- Toast / Notifications -->
+        <a href="./components/toast.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
+            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); padding: 0.5rem 0.85rem; font-size: 0.75rem; box-shadow: var(--ui-shadow-lg); display: flex; align-items: center; gap: 0.5rem;">
+              <span style="color: var(--ui-color-success-500); font-size: 0.85rem;">✓</span>
+              <span>Changes saved</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Toast / Toaster</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Stacked notification system with imperative toast() helper, actions, and auto-dismiss.</p>
+            <span class="gallery-link">Explore Toast →</span>
+          </div>
+        </a>
+
+        <!-- Data Table -->
+        <a href="./components/data-table.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column; width: 85%;">
+            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 4px; overflow: hidden; width: 100%;">
+              <div style="background: var(--ui-bg-surface-elevated); padding: 0.25rem 0.5rem; font-size: 0.65rem; border-bottom: 1px solid var(--ui-border-default); display: flex; justify-content: space-between;">
+                <span>Invoice ⇅</span>
+                <span>Amount ⇅</span>
+              </div>
+              <div style="padding: 0.25rem 0.5rem; font-size: 0.65rem; display: flex; justify-content: space-between;">
+                <span>INV-001</span>
+                <span>$2,450.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Data Table</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Column sorting, instant search filter, slice pagination, and row selection.</p>
+            <span class="gallery-link">Explore Data Table →</span>
+          </div>
+        </a>
+
+        <!-- Calendar -->
+        <a href="./components/calendar.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
+            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.4rem 0.6rem; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+              <span style="font-weight: 600; font-size: 0.75rem;">Oct 2026</span>
+              <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; font-size: 0.6rem; opacity: 0.7;">
+                <span>1</span><span>2</span><span style="background: var(--ui-color-brand-600); color: var(--ui-text-inverted); border-radius: 2px; padding: 0 2px;">3</span><span>4</span><span>5</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Calendar</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">WAI-ARIA APG date picker grid with month navigation and keyboard roving focus.</p>
+            <span class="gallery-link">Explore Calendar →</span>
+          </div>
+        </a>
+
+        <!-- Date Picker -->
+        <a href="./components/date-picker.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
+            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.45rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.4rem; box-shadow: var(--ui-shadow-sm);">
+              <span>📅</span>
+              <span>Oct 3, 2026</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Date Picker</h3>
+              <span class="component-link-badge">Tier 2</span>
+            </div>
+            <p class="gallery-desc">Composed popover trigger button with calendar grid and form association.</p>
+            <span class="gallery-link">Explore Date Picker →</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="./playground/components.js"></script>
+</body>
+</html>

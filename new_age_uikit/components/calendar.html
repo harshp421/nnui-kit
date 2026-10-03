@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar — NNUI-KIT</title>
+  <meta name="description" content="Accessible Light-DOM calendar date picker grid following the WAI-ARIA APG pattern with keyboard roving focus and form association.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+    <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-table.html" class="sidebar-item">Data Table</a>
+          <a href="./calendar.html" class="sidebar-item active">Calendar</a>
+          <a href="./date-picker.html" class="sidebar-item">Date Picker</a>
+          <a href="./dropdown.html" class="sidebar-item">Dropdown Menu</a>
+          <a href="./toast.html" class="sidebar-item">Toast / Toaster</a>
+          <a href="./combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./select.html" class="sidebar-item">Select</a>
+          <a href="./accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./popover.html" class="sidebar-item">Popover</a>
+          <a href="./tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./command.html" class="sidebar-item">Command Palette</a>
+          <a href="./sheet.html" class="sidebar-item">Sheet / Drawer</a>
+          <a href="./slider.html" class="sidebar-item">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <section id="overview" class="component-view-header">
+        <div class="docs-breadcrumb">
+          <a href="../components.html" style="color: var(--ui-text-muted); text-decoration: none;">Components</a>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Calendar</span>
+        </div>
+        <h1 class="component-view-title">Calendar</h1>
+        <p class="component-view-desc">
+          A date field component that allows users to enter and edit date values using an accessible grid, month navigation buttons, and APG roving keyboard focus.
+        </p>
+        <div class="component-links-bar">
+          <span class="component-link-badge">Tier 2: Micro-Enhancer</span>
+          <span class="component-link-badge">&lt; 2 KB</span>
+          <span class="component-link-badge">WAI-ARIA Grid</span>
+          <span class="component-link-badge">ElementInternals</span>
+        </div>
+      </section>
+
+      <!-- Preview / Code Card -->
+      <section id="preview">
+        <div class="preview-card">
+          <div class="preview-card-tabs">
+            <div class="preview-tab-group">
+              <button class="preview-tab-btn active" data-view="preview">Preview</button>
+              <button class="preview-tab-btn" data-view="code">Code</button>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+
+          <div class="preview-stage" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.25rem; min-height: 420px;">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+              <button type="button" class="ui-button ui-button--secondary ui-button--sm" id="cal-set-today">Jump to Today</button>
+              <button type="button" class="ui-button ui-button--secondary ui-button--sm" id="cal-set-nextweek">+7 Days</button>
+              <button type="button" class="ui-button ui-button--outline ui-button--sm" id="cal-set-clear">Clear</button>
+            </div>
+            
+            <ui-calendar id="demo-calendar" value="2026-10-03" month="10" year="2026"></ui-calendar>
+            
+            <div style="font-size: 0.85rem; color: var(--ui-text-muted); display: flex; align-items: center; gap: 0.5rem;">
+              <span>Selected Date:</span>
+              <span id="cal-selected-val" class="ui-badge ui-badge--brand" style="font-family: var(--ui-font-mono);">2026-10-03</span>
+            </div>
+          </div>
+
+          <div class="code-stage">
+            <pre><code>&lt;!-- Standalone Form-Associated Calendar --&gt;
+&lt;ui-calendar value="2026-10-03" name="appointment_date"&gt;&lt;/ui-calendar&gt;
+
+&lt;script type="module"&gt;
+  const cal = document.querySelector('ui-calendar');
+  cal.addEventListener('change', (e) =&gt; {
+    console.log('Selected date:', e.detail.value);
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Examples Section -->
+      <section id="examples" style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--ui-text-primary);">Examples & Boundaries</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+          <!-- Min/Max Range Constrained -->
+          <div style="padding: 1.5rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <div style="width: 100%;">
+              <div style="font-weight: 600; font-size: 0.95rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">Date Boundary Constraints</div>
+              <div style="font-size: 0.8rem; color: var(--ui-text-muted);">Selectable only between October 5 and October 25, 2026. Out-of-range dates are disabled.</div>
+            </div>
+            <ui-calendar min="2026-10-05" max="2026-10-25" month="10" year="2026" value="2026-10-12"></ui-calendar>
+          </div>
+
+          <!-- Form Association Demo -->
+          <div style="padding: 1.5rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+              <div style="font-weight: 600; font-size: 0.95rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">Native Form Association</div>
+              <div style="font-size: 0.8rem; color: var(--ui-text-muted);">Standard FormData integration without any hidden input elements.</div>
+            </div>
+            <form id="cal-form-demo" style="display: flex; flex-direction: column; align-items: center; gap: 1rem; width: 100%;">
+              <ui-calendar name="event_date" month="10" year="2026" value="2026-10-18"></ui-calendar>
+              <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 280px;">
+                <button type="submit" class="ui-button ui-button--sm">Book Date</button>
+                <span id="cal-form-feedback" style="font-size: 0.8rem; color: var(--ui-color-brand-500); font-weight: 500;"></span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Keyboard Navigation Section -->
+      <section id="keyboard" style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--ui-text-primary);">Keyboard Navigation (WAI-ARIA APG)</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-family: var(--ui-font-mono); font-weight: 700; font-size: 0.85rem; color: var(--ui-color-accent-400); margin-bottom: 0.25rem;">← / →</div>
+            <div style="font-size: 0.8rem; color: var(--ui-text-secondary);">Move focus to previous or next day</div>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-family: var(--ui-font-mono); font-weight: 700; font-size: 0.85rem; color: var(--ui-color-accent-400); margin-bottom: 0.25rem;">↑ / ↓</div>
+            <div style="font-size: 0.8rem; color: var(--ui-text-secondary);">Move focus up or down by one week</div>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-family: var(--ui-font-mono); font-weight: 700; font-size: 0.85rem; color: var(--ui-color-accent-400); margin-bottom: 0.25rem;">PageUp / PageDn</div>
+            <div style="font-size: 0.8rem; color: var(--ui-text-secondary);">Switch to previous or next month</div>
+          </div>
+          <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+            <div style="font-family: var(--ui-font-mono); font-weight: 700; font-size: 0.85rem; color: var(--ui-color-accent-400); margin-bottom: 0.25rem;">Enter / Space</div>
+            <div style="font-size: 0.8rem; color: var(--ui-text-secondary);">Select the focused date</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- API Reference -->
+      <section id="api" style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--ui-text-primary);">API Reference</h2>
+        <div class="api-table-wrapper">
+          <table class="api-table">
+            <thead>
+              <tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>value</code></td><td>string</td><td>—</td><td>Selected date in ISO format (<code>YYYY-MM-DD</code>).</td></tr>
+              <tr><td><code>month</code></td><td>number</td><td>current</td><td>Month currently viewed (1-12).</td></tr>
+              <tr><td><code>year</code></td><td>number</td><td>current</td><td>Year currently viewed.</td></tr>
+              <tr><td><code>min</code></td><td>string</td><td>—</td><td>Earliest selectable date boundary.</td></tr>
+              <tr><td><code>max</code></td><td>string</td><td>—</td><td>Latest selectable date boundary.</td></tr>
+              <tr><td><code>disabled</code></td><td>boolean</td><td><code>false</code></td><td>Disables user interaction and keyboard navigation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#preview" class="toc-link">Interactive Demo</a>
+        <a href="#examples" class="toc-link">Examples & Boundaries</a>
+        <a href="#keyboard" class="toc-link">Keyboard Shortcuts</a>
+        <a href="#api" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+  <script type="module">
+    const cal = document.getElementById('demo-calendar');
+    const out = document.getElementById('cal-selected-val');
+    const btnToday = document.getElementById('cal-set-today');
+    const btnNextWeek = document.getElementById('cal-set-nextweek');
+    const btnClear = document.getElementById('cal-set-clear');
+
+    if (cal && out) {
+      cal.addEventListener('change', (e) => {
+        out.textContent = e.detail.value || 'None';
+      });
+    }
+
+    btnToday?.addEventListener('click', () => {
+      const now = new Date();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      cal.selectDate(`${now.getFullYear()}-${m}-${d}`);
+    });
+
+    btnNextWeek?.addEventListener('click', () => {
+      const target = new Date();
+      target.setDate(target.getDate() + 7);
+      const m = String(target.getMonth() + 1).padStart(2, '0');
+      const d = String(target.getDate()).padStart(2, '0');
+      cal.selectDate(`${target.getFullYear()}-${m}-${d}`);
+    });
+
+    btnClear?.addEventListener('click', () => {
+      cal.clear();
+    });
+
+    const form = document.getElementById('cal-form-demo');
+    const feedback = document.getElementById('cal-form-feedback');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      if (feedback) {
+        feedback.textContent = `Booked: ${data.get('event_date') || 'None'}`;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+# NNUI-KIT — AI Coding Assistant Specification (llms.txt)
+
+> Standard Reference for LLMs, Cursor, Copilot, Claude, and AI Agents generating UI code with NNUI-KIT.
+
+---
+
+## 1. Core Invariants (MUST FOLLOW)
+
+When generating markup for NNUI-KIT:
+1. **Light-DOM First**: Never attempt to attach Shadow DOM. All child elements are regular Light-DOM elements.
+2. **Mutate Attributes, Never Nodes**: Components toggle `data-state`, `aria-selected`, `aria-expanded`, and `tabindex`. Reconcilers (React 19, Vue 3, Svelte 5) manage the DOM nodes.
+3. **No Wrapper Packages**: Write direct HTML/JSX custom element tags (`<nnui-tabs>`, `<nnui-combobox>`, etc.).
+4. **Standard Events**: All components dispatch lowercase standard events (`change`, `input`, `toggle`) with `event.detail.value`.
+
+---
+
+## 2. Component Markup Contracts
+
+### A. Combobox / Autocomplete (`<nnui-combobox>`)
+```html
+<nnui-combobox>
+  <div data-part="input-wrapper">
+    <input data-part="input" placeholder="Search..." autocomplete="off">
+    <span data-part="toggle-icon">▼</span>
+  </div>
+  <ul data-part="listbox">
+    <li data-part="option" data-value="val-1">Item 1</li>
+    <li data-part="option" data-value="val-2">Item 2</li>
+  </ul>
+</nnui-combobox>
+```
+* Tag: `<nnui-combobox>` or `<ui-combobox>`
+* Parts: `[data-part="input"]`, `[data-part="listbox"]`, `[data-part="option"]` (with `data-value`)
+* Events: `change` (`e.detail.value`, `e.detail.label`)
+
+---
+
+### B. Tabs (`<nnui-tabs>`)
+```html
+<nnui-tabs value="tab-1" orientation="horizontal">
+  <div data-part="tablist">
+    <button data-part="tab" data-value="tab-1">Tab 1</button>
+    <button data-part="tab" data-value="tab-2">Tab 2</button>
+  </div>
+  <div data-part="tabpanel" data-value="tab-1">Panel 1 Content</div>
+  <div data-part="tabpanel" data-value="tab-2">Panel 2 Content</div>
+</nnui-tabs>
+```
+* Tag: `<nnui-tabs>` or `<ui-tabs>`
+* Attributes: `value`, `orientation="horizontal" | "vertical"`
+* Parts: `[data-part="tablist"]`, `[data-part="tab"]` (with `data-value`), `[data-part="tabpanel"]` (with matching `data-value`)
+* Events: `change` (`e.detail.value`, `e.detail.previousValue`)
+
+---
+
+### C. Dialog / Modal (`<nnui-dialog>`)
+```html
+<button class="ui-button" onclick="document.getElementById('my-modal').showModal()">Open</button>
+
+<nnui-dialog id="my-modal">
+  <dialog>
+    <div data-part="dialog-content">
+      <h3>Modal Title</h3>
+      <p>Modal body content.</p>
+      <button data-part="dialog-close" class="ui-button">Close</button>
+    </div>
+  </dialog>
+</nnui-dialog>
+```
+* Tag: `<nnui-dialog>` or `<ui-dialog>`
+* Contains: Standard `<dialog>` element.
+* Methods: `.showModal()`, `.close()`
+* Close triggers: elements with `data-part="dialog-close"` or clicking the backdrop.
+
+---
+
+### D. Select / Form Associated (`<nnui-select>`)
+```html
+<form>
+  <nnui-select name="country" required>
+    <button type="button" data-part="trigger">
+      <span data-part="value">Select country...</span>
+      <span>▾</span>
+    </button>
+    <ul data-part="listbox">
+      <li data-part="option" data-value="us">United States</li>
+      <li data-part="option" data-value="ca">Canada</li>
+    </ul>
+  </nnui-select>
+  <button type="submit" class="ui-button">Submit</button>
+</form>
+```
+* Tag: `<nnui-select>` or `<ui-select>`
+* Attributes: `name`, `value`, `required`, `disabled`
+* Form Integration: Uses `ElementInternals`. Native form submissions (`FormData`) include this field.
+
+---
+
+### E. Accordion (`<nnui-accordion>`)
+```html
+<nnui-accordion type="single" collapsible="true">
+  <div data-part="item" data-value="item-1">
+    <button data-part="trigger">
+      <span>Question 1</span>
+      <span data-part="icon">▾</span>
+    </button>
+    <div data-part="content">Answer 1</div>
+  </div>
+</nnui-accordion>
+```
+* Tag: `<nnui-accordion>` or `<ui-accordion>`
+* Attributes: `type="single" | "multiple"`, `collapsible="true" | "false"`
+
+---
+
+### F. Tooltip (`<nnui-tooltip>`)
+```html
+<nnui-tooltip delay="150">
+  <button data-part="trigger" class="ui-button">Hover me</button>
+  <div data-part="content">Tooltip message</div>
+</nnui-tooltip>
+```
+
+---
+
+### G. Command Palette (`<nnui-command>`)
+```html
+<!-- Modal triggered via Meta+K or button -->
+<button class="ui-button" onclick="document.getElementById('cmd-dialog').showModal()">⌘K Search</button>
+
+<nnui-command id="cmd-dialog" modal hotkey="k">
+  <dialog>
+    <div data-part="header">
+      <input data-part="input" placeholder="Type a command or search..." autofocus>
+      <button data-part="close-btn" class="ui-button ui-button--ghost">Esc</button>
+    </div>
+    <div data-part="list">
+      <div data-part="empty" hidden>No matching actions found.</div>
+      <div data-part="group" data-group-name="Navigation">
+        <div data-part="group-heading">Navigation</div>
+        <div data-part="item" data-value="dashboard" data-keywords="home stats">Go to Dashboard</div>
+        <div data-part="item" data-value="settings">Account Settings</div>
+      </div>
+    </div>
+  </dialog>
+</nnui-command>
+```
+* Tag: `<nnui-command>` or `<ui-command>`
+* Attributes: `modal`, `open`, `hotkey="k"`
+* Events: `select` (`e.detail.value`, `e.detail.item`), `open`, `close`
+
+---
+
+### H. Sheet / Drawer (`<nnui-sheet>`)
+```html
+<button class="ui-button" onclick="document.getElementById('sheet-profile').showModal()">Edit Profile</button>
+
+<nnui-sheet id="sheet-profile" side="right" modal>
+  <dialog>
+    <div data-part="header">
+      <h3 data-part="title">Edit Profile</h3>
+      <p data-part="description">Update your personal preferences.</p>
+    </div>
+    <div data-part="body">
+      <!-- Sheet Body Form or Controls -->
+    </div>
+    <div data-part="footer">
+      <button data-part="close-btn" class="ui-button">Done</button>
+    </div>
+  </dialog>
+</nnui-sheet>
+```
+* Tag: `<nnui-sheet>` or `<ui-sheet>`
+* Attributes: `side="right" | "left" | "bottom" | "top"`, `open`, `modal`
+* Methods: `.showModal()`, `.close()`
+* Events: `open`, `close`
+
+---
+
+### I. Range Slider (`<nnui-slider>`)
+```html
+<form>
+  <label for="volume">Output Volume: <span id="vol-val">50%</span></label>
+  <nnui-slider id="volume" name="volume" value="50" min="0" max="100" step="1">
+    <div data-part="track">
+      <div data-part="range"></div>
+      <div data-part="thumb"></div>
+    </div>
+  </nnui-slider>
+</form>
+```
+* Tag: `<nnui-slider>` or `<ui-slider>`
+* Attributes: `value`, `min`, `max`, `step`, `name`, `disabled`
+* Form Integration: Form-associated via `ElementInternals`
+* Events: `input` (`e.detail.value`), `change` (`e.detail.value`)
+
+---
+
+### J. Dropdown Menu (`<nnui-dropdown>`)
+```html
+<nnui-dropdown>
+  <button type="button" data-part="trigger" data-ui="button">
+    <span>Options</span>
+    <span>▾</span>
+  </button>
+  <div data-part="menu" role="menu">
+    <div data-part="menu-item" role="menuitem" data-value="profile">
+      <span>Profile</span>
+      <span data-part="shortcut">⇧⌘P</span>
+    </div>
+    <div data-part="menu-separator"></div>
+    <div data-part="menu-item" role="menuitem" data-value="delete" data-destructive="true">
+      <span>Delete Account</span>
+    </div>
+  </div>
+</nnui-dropdown>
+```
+* Tag: `<nnui-dropdown>` or `<ui-dropdown>`
+* Keyboard: `ArrowDown`/`ArrowUp` roving focus, `Home`/`End`, `Enter`/`Space` activate, `Escape` closes
+* Events: `select` (`e.detail.value`, `e.detail.item`), `open`, `close`
+
+---
+
+### K. Toaster Notifications (`<nnui-toaster>` & `toast()`)
+```html
+<!-- Place once near top or root of document -->
+<nnui-toaster position="bottom-right"></nnui-toaster>
+
+<script type="module">
+  import { toast } from '@nnui/core';
+
+  toast.success('Project deployed successfully', {
+    description: 'Version 2.4.0 is now live worldwide.',
+    action: { label: 'View', onClick: () => console.log('Viewing...') }
+  });
+  // Or: toast.error(), toast.warning(), toast.info()
+</script>
+```
+* Tag: `<nnui-toaster>` or `<ui-toaster>`
+* Attributes: `position` (`bottom-right`, `bottom-left`, `bottom-center`, `top-right`, `top-left`, `top-center`), `duration` (ms)
+* API: `toast(message, opts)`, `toast.success()`, `toast.error()`, `toast.warning()`, `toast.info()`, `toast.dismiss(id)`
+
+---
+
+### L. Data Table (`<nnui-data-table>`)
+```html
+<nnui-data-table page-size="10" sortable filterable selectable>
+  <div data-part="toolbar">
+    <input data-part="search" data-ui="input" placeholder="Search rows...">
+    <span data-part="selection-count">0 selected</span>
+  </div>
+  <div data-part="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th><input type="checkbox" data-part="select-all"></th>
+          <th data-sortable="true" data-sort-key="name">Name <span data-part="sort-icon">⇅</span></th>
+          <th data-sortable="true" data-sort-key="amount">Amount <span data-part="sort-icon">⇅</span></th>
+        </tr>
+      </thead>
+      <tbody data-part="tbody">
+        <tr data-row-id="1">
+          <td><input type="checkbox" data-part="row-select"></td>
+          <td>Alice Johnson</td>
+          <td>$1,250.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div data-part="pagination">
+    <span data-part="pagination-info">Showing 1 to 1 of 1</span>
+    <button data-part="prev-btn" data-ui="button" data-variant="outline" data-size="sm">Previous</button>
+    <button data-part="next-btn" data-ui="button" data-variant="outline" data-size="sm">Next</button>
+  </div>
+</nnui-data-table>
+```
+* Tag: `<nnui-data-table>` or `<ui-data-table>`
+* Attributes: `page-size`, `page`, `sort-key`, `sort-dir`, `search`
+* Events: `sort`, `filter`, `page-change`, `selection-change`
+
+---
+
+### M. Calendar (`<nnui-calendar>`)
+```html
+<nnui-calendar value="2026-10-03" month="10" year="2026"></nnui-calendar>
+```
+* Tag: `<nnui-calendar>` or `<ui-calendar>`
+* Attributes: `value` (`YYYY-MM-DD`), `month` (1-12), `year`, `min`, `max`, `disabled`
+* Form Integration: Form-associated via `ElementInternals`
+* Events: `change` (`e.detail.value`, `e.detail.date`), `month-change`
+
+---
+
+### N. Date Picker (`<nnui-date-picker>`)
+```html
+<form>
+  <nnui-date-picker name="dob" placeholder="Select your birthdate..."></nnui-date-picker>
+  <button type="submit" data-ui="button">Submit</button>
+</form>
+```
+* Tag: `<nnui-date-picker>` or `<ui-date-picker>`
+* Attributes: `value`, `placeholder`, `open`, `disabled`, `name`
+* Events: `change`, `open`, `close`
+
+---
+
+### O. Tier 0 Semantic Base Controls (Pure HTML + CSS, Zero-JS)
+```html
+<!-- Buttons -->
+<button data-ui="button">Primary</button>
+<button data-ui="button" data-variant="secondary">Secondary</button>
+<button data-ui="button" data-variant="outline">Outline</button>
+<button data-ui="button" data-variant="ghost">Ghost</button>
+<button data-ui="button" data-variant="destructive">Destructive</button>
+<button data-ui="button" data-size="xs | sm | lg | icon">Sized Button</button>
+
+<!-- Badges -->
+<span data-ui="badge">Default</span>
+<span data-ui="badge" data-variant="brand">Brand</span>
+<span data-ui="badge" data-variant="success"><span data-part="badge-dot"></span> Active</span>
+
+<!-- Form Field & Input/Textarea -->
+<div data-ui="field">
+  <label data-ui="label" for="username" data-required="true">Username</label>
+  <input data-ui="input" id="username" placeholder="john_doe">
+  <span data-ui="hint">Choose a unique handle.</span>
+</div>
+
+<!-- Checkbox & Radio -->
+<label data-ui="checkbox"><input type="checkbox" checked> <span>I agree</span></label>
+<div data-ui="radio-group">
+  <label data-ui="radio"><input type="radio" name="plan" value="a" checked> <span>Option A</span></label>
+  <label data-ui="radio"><input type="radio" name="plan" value="b"> <span>Option B</span></label>
+</div>
+
+<!-- Switch / Toggle -->
+<label data-ui="switch"><input type="checkbox" checked> <span>Enable Feature</span></label>
+
+<!-- Card -->
+<div data-ui="card" data-hoverable="true">
+  <div data-part="card-header">
+    <h3 data-part="card-title">Card Title</h3>
+    <p data-part="card-description">Subtitle info</p>
+  </div>
+  <div data-part="card-content">Card Body Content</div>
+  <div data-part="card-footer"><button data-ui="button">Action</button></div>
+</div>
+
+<!-- Avatar -->
+<div data-ui="avatar"><span data-part="avatar-fallback">HP</span><span data-part="avatar-status"></span></div>
+
+<!-- Alert -->
+<div data-ui="alert" data-variant="success" role="status">
+  <span data-part="alert-icon">✓</span>
+  <div data-part="alert-content">
+    <h5 data-part="alert-title">Success</h5>
+    <p data-part="alert-desc">Task completed successfully.</p>
+  </div>
+</div>
+
+<!-- Progress -->
+<div data-ui="progress"><div data-part="progress-bar" style="width: 75%;"></div></div>
+
+<!-- Table -->
+<div data-part="table-container">
+  <table data-ui="table">
+    <thead><tr><th>Name</th><th>Role</th></tr></thead>
+    <tbody><tr><td>Harsh</td><td>Architect</td></tr></tbody>
+  </table>
+</div>
+
+<!-- Skeleton -->
+<div data-ui="skeleton" style="height: 20px; width: 100%;"></div>
+
+<!-- Separator -->
+<hr data-ui="separator">
+<div data-part="separator-wrapper"><span data-part="separator-label">OR</span></div>
+```
+
+---
+
+## 3. Framework Usage Quick Reference
+
+### React 19 JSX
+```jsx
+<nnui-combobox onChange={(e) => setVal(e.detail.value)}>
+  ...
+</nnui-combobox>
+```
+
+### Vue 3
+```html
+<nnui-tabs :value="tab" @change="tab = $event.detail.value">
+  ...
+</nnui-tabs>
+```
+
+### Svelte 5
+```html
+<nnui-select name="category" onchange={(e) => cat = e.detail.value}>
+  ...
+</nnui-select>
+```

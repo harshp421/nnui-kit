@@ -1,0 +1,72 @@
+{
+  "name": "nnui-kit",
+  "version": "1.0.0",
+  "description": "NNUI-KIT: Platform-Native, Three-Tier Light-DOM Universal UI Architecture with Zero Shadow DOM A11y Traps",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/index.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./css": "./dist/index.css",
+    "./tokens": "./src/styles/tokens.css",
+    "./custom-elements.json": "./custom-elements.json",
+    "./llms.txt": "./llms.txt",
+    "./registry.json": "./registry.json",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "nnui": "./bin/nnui.js"
+  },
+  "files": [
+    "dist",
+    "src",
+    "bin",
+    "registry.json",
+    "custom-elements.json",
+    "llms.txt",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build:lib": "vite build --config vite.lib.config.js",
+    "build:docs": "vite build",
+    "build:registry": "node scripts/build-registry.js",
+    "build": "npm run build:registry && npm run build:lib && npm run build:docs",
+    "prepublishOnly": "npm run build:lib",
+    "pack:check": "npm pack --dry-run",
+    "test": "node tests/components.test.js && node tests/framework-snippets.test.js && node tests/theme-customizer.test.js && node tests/cli.test.js",
+    "preview": "vite preview --outDir dist-docs"
+  },
+  "customElements": "custom-elements.json",
+  "keywords": [
+    "nnui-kit",
+    "web-components",
+    "light-dom",
+    "zero-shadow-dom",
+    "shadcn",
+    "accessibility",
+    "css-anchor-positioning",
+    "popover-api",
+    "dialog",
+    "react-19",
+    "vue-3",
+    "svelte-5",
+    "astro",
+    "htmx",
+    "ui-kit"
+  ],
+  "author": "NNUI-KIT Authors",
+  "license": "MIT",
+  "devDependencies": {
+    "happy-dom": "^20.14.5",
+    "vite": "^6.2.0"
+  }
+}

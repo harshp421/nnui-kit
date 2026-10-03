@@ -1,0 +1,194 @@
+/* Shadcn Landing Page Styles */
+
+.hero-section {
+  padding: 5.5rem 2rem 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-announcement {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background-color: var(--ui-bg-surface-elevated);
+  border: 1px solid var(--ui-border-default);
+  border-radius: var(--ui-radius-full);
+  font-size: var(--ui-font-size-xs);
+  font-weight: 500;
+  color: var(--ui-text-secondary);
+  text-decoration: none;
+  margin-bottom: 1.75rem;
+  transition: all var(--ui-transition-fast);
+}
+
+.hero-announcement:hover {
+  border-color: var(--ui-border-strong);
+  color: var(--ui-text-primary);
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  max-width: 900px;
+  margin: 0 0 1.5rem 0;
+  color: var(--ui-text-primary);
+}
+
+.hero-subtitle {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--ui-text-secondary);
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0 0 2.5rem 0;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--ui-radius-md);
+  background-color: var(--ui-color-brand-600);
+  color: var(--ui-text-inverted);
+  text-decoration: none;
+  box-shadow: var(--ui-shadow-sm);
+  transition: all var(--ui-transition-fast);
+}
+
+.hero-btn-primary:hover {
+  background-color: var(--ui-color-brand-500);
+  transform: translateY(-1px);
+}
+
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--ui-radius-md);
+  background-color: var(--ui-bg-surface-elevated);
+  border: 1px solid var(--ui-border-default);
+  color: var(--ui-text-primary);
+  text-decoration: none;
+  transition: all var(--ui-transition-fast);
+}
+
+.hero-btn-secondary:hover {
+  background-color: var(--ui-bg-hover);
+  border-color: var(--ui-border-strong);
+}
+
+.hero-install-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1.1rem;
+  font-size: 0.85rem;
+  font-family: var(--ui-font-mono);
+  background-color: var(--ui-bg-surface);
+  border: 1px solid var(--ui-border-default);
+  border-radius: var(--ui-radius-md);
+  color: var(--ui-text-secondary);
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--ui-transition-fast);
+}
+
+.hero-install-pill:hover {
+  border-color: var(--ui-border-strong);
+  color: var(--ui-text-primary);
+}
+
+/* Bento Showcase Grid (Shadcn Home) */
+.bento-showcase {
+  max-width: 1200px;
+  margin: 2rem auto 5rem auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+.bento-card {
+  background-color: var(--ui-bg-surface);
+  border: 1px solid var(--ui-border-default);
+  border-radius: var(--ui-radius-xl);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--ui-shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--ui-transition-fast);
+}
+
+.bento-card:hover {
+  border-color: var(--ui-border-strong);
+}
+
+.bento-card-header {
+  margin-bottom: 1.5rem;
+}
+
+.bento-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem 0;
+  color: var(--ui-text-primary);
+}
+
+.bento-card-desc {
+  font-size: 0.85rem;
+  color: var(--ui-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.bento-col-7 {
+  grid-column: span 7;
+}
+
+.bento-col-5 {
+  grid-column: span 5;
+}
+
+.bento-col-4 {
+  grid-column: span 4;
+}
+
+.bento-col-8 {
+  grid-column: span 8;
+}
+
+.bento-col-12 {
+  grid-column: span 12;
+}
+
+@media (max-width: 900px) {
+  .bento-col-7,
+  .bento-col-5,
+  .bento-col-4,
+  .bento-col-8 {
+    grid-column: span 12;
+  }
+}

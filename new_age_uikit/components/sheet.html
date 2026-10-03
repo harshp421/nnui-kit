@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sheet / Drawer — NNUI-KIT</title>
+  <meta name="description" content="Extends the Dialog component to display content that complements the main screen surface, sliding in from any viewport edge.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+    <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <aside class="docs-sidebar">
+      <div>
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item">All Components</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-table.html" class="sidebar-item">Data Table</a>
+          <a href="./calendar.html" class="sidebar-item">Calendar</a>
+          <a href="./date-picker.html" class="sidebar-item">Date Picker</a>
+          <a href="./dropdown.html" class="sidebar-item">Dropdown Menu</a>
+          <a href="./toast.html" class="sidebar-item">Toast / Toaster</a>
+          <a href="./combobox.html" class="sidebar-item">Combobox</a>
+          <a href="./tabs.html" class="sidebar-item">Tabs</a>
+          <a href="./dialog.html" class="sidebar-item">Dialog</a>
+          <a href="./select.html" class="sidebar-item">Select</a>
+          <a href="./accordion.html" class="sidebar-item">Accordion</a>
+          <a href="./popover.html" class="sidebar-item">Popover</a>
+          <a href="./tooltip.html" class="sidebar-item">Tooltip</a>
+          <a href="./command.html" class="sidebar-item">Command Palette</a>
+          <a href="./sheet.html" class="sidebar-item active">Sheet / Drawer</a>
+          <a href="./slider.html" class="sidebar-item">Slider</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <div id="overview" class="component-view-header">
+        <div class="docs-breadcrumb">
+          <a href="../components.html" style="color: var(--ui-text-muted); text-decoration: none;">Components</a>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Sheet / Drawer</span>
+        </div>
+        <h1 class="component-view-title">Sheet / Drawer</h1>
+        <p class="component-view-desc">
+          Slide-out panel overlaid on the viewport edge (right, left, bottom, top) with native browser focus trapping and backdrop blur.
+        </p>
+        <div class="component-links-bar">
+          <span class="component-link-badge">Tier 2: Micro-Enhancer</span>
+          <span class="component-link-badge">4 Edge Sides</span>
+          <span class="component-link-badge">Native &lt;dialog&gt;</span>
+        </div>
+      </div>
+
+      <!-- Preview / Code Card -->
+      <div id="preview" class="preview-card">
+        <div class="preview-card-tabs">
+          <div class="preview-tab-group">
+            <button class="preview-tab-btn active" data-view="preview">Preview</button>
+            <button class="preview-tab-btn" data-view="code">Code</button>
+          </div>
+          <button class="copy-btn">Copy</button>
+        </div>
+
+        <div class="preview-stage" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center;">
+          <!-- Right Sheet (Default) -->
+          <ui-sheet side="right">
+            <button data-part="trigger" data-ui="button">Open Right Sheet</button>
+            <dialog data-part="dialog">
+              <div data-part="sheet-content">
+                <div data-part="sheet-header">
+                  <h3 data-part="sheet-title">Edit Configuration</h3>
+                  <p data-part="sheet-description">Configure cloud deployment tokens and cluster instances.</p>
+                </div>
+                <div data-part="sheet-body">
+                  <div data-ui="field">
+                    <label data-ui="label">Cluster Name</label>
+                    <input data-ui="input" value="production-us-east">
+                  </div>
+                  <div data-ui="field">
+                    <label data-ui="label">Node Memory (GB)</label>
+                    <input data-ui="input" type="number" value="16">
+                  </div>
+                  <div data-ui="field">
+                    <label data-ui="label">Auto-scaling</label>
+                    <label data-ui="switch" style="margin-top: 0.5rem;">
+                      <input type="checkbox" checked>
+                      <span>Enable horizontal pod autoscaler</span>
+                    </label>
+                  </div>
+                </div>
+                <div data-part="sheet-footer">
+                  <button type="button" data-part="close" data-ui="button" data-variant="secondary">Cancel</button>
+                  <button type="button" data-part="close" data-ui="button">Save Changes</button>
+                </div>
+              </div>
+            </dialog>
+          </ui-sheet>
+
+          <!-- Left Sheet -->
+          <ui-sheet side="left">
+            <button data-part="trigger" data-ui="button" data-variant="secondary">Open Left Sheet</button>
+            <dialog data-part="dialog">
+              <div data-part="sheet-content">
+                <div data-part="sheet-header">
+                  <h3 data-part="sheet-title">Navigation Menu</h3>
+                  <p data-part="sheet-description">Quick access to documentation sections.</p>
+                </div>
+                <div data-part="sheet-body">
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="./button.html" style="color: var(--ui-text-primary); text-decoration: none; font-weight: 500;">Button</a></li>
+                    <li><a href="./tabs.html" style="color: var(--ui-text-primary); text-decoration: none; font-weight: 500;">Tabs</a></li>
+                    <li><a href="./combobox.html" style="color: var(--ui-text-primary); text-decoration: none; font-weight: 500;">Combobox</a></li>
+                  </ul>
+                </div>
+                <div data-part="sheet-footer">
+                  <button type="button" data-part="close" data-ui="button" data-variant="outline">Close Menu</button>
+                </div>
+              </div>
+            </dialog>
+          </ui-sheet>
+
+          <!-- Bottom Sheet (Mobile Drawer) -->
+          <ui-sheet side="bottom">
+            <button data-part="trigger" data-ui="button" data-variant="outline">Open Bottom Drawer</button>
+            <dialog data-part="dialog">
+              <div data-part="sheet-content">
+                <div data-part="sheet-header">
+                  <h3 data-part="sheet-title">Mobile Actions</h3>
+                  <p data-part="sheet-description">Share or export your project artifacts.</p>
+                </div>
+                <div data-part="sheet-body" style="display: flex; gap: 1rem; justify-content: center; padding: 1rem 0;">
+                  <button data-ui="button" data-variant="outline">Share Link</button>
+                  <button data-ui="button" data-variant="outline">Download JSON</button>
+                </div>
+                <div data-part="sheet-footer">
+                  <button type="button" data-part="close" data-ui="button">Done</button>
+                </div>
+              </div>
+            </dialog>
+          </ui-sheet>
+        </div>
+
+        <div class="code-stage">
+          <pre><code>&lt;!-- Slide-out Sheet (Right Side) --&gt;
+&lt;ui-sheet side="right"&gt;
+  &lt;button data-part="trigger" data-ui="button"&gt;Open Sheet&lt;/button&gt;
+  &lt;dialog data-part="dialog"&gt;
+    &lt;div data-part="sheet-content"&gt;
+      &lt;div data-part="sheet-header"&gt;
+        &lt;h3 data-part="sheet-title"&gt;Edit Configuration&lt;/h3&gt;
+        &lt;p data-part="sheet-description"&gt;Configure cluster instances.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div data-part="sheet-body"&gt;
+        &lt;!-- Form fields --&gt;
+      &lt;/div&gt;
+      &lt;div data-part="sheet-footer"&gt;
+        &lt;button data-part="close" data-ui="button" data-variant="secondary"&gt;Cancel&lt;/button&gt;
+        &lt;button data-part="close" data-ui="button"&gt;Save Changes&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/dialog&gt;
+&lt;/ui-sheet&gt;</code></pre>
+        </div>
+      </div>
+
+      <!-- API Reference -->
+      <h2 id="api" style="font-size: 1.5rem; font-weight: 700; margin: 2.5rem 0 1rem 0; color: var(--ui-text-primary);">API Reference</h2>
+      <div data-part="table-container">
+        <table data-ui="table">
+          <thead>
+            <tr>
+              <th>Attribute / Part</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>side</code></td>
+              <td><code>"right" | "left" | "top" | "bottom"</code></td>
+              <td><code>"right"</code></td>
+              <td>Edge from which the drawer slides into view.</td>
+            </tr>
+            <tr>
+              <td><code>open</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Controls sheet visibility.</td>
+            </tr>
+            <tr>
+              <td><code>showModal() / close()</code></td>
+              <td><code>method</code></td>
+              <td>—</td>
+              <td>Opens with top-layer focus trap or closes with slide-out animation.</td>
+            </tr>
+            <tr>
+              <td><code>[data-part="trigger"]</code></td>
+              <td><code>element</code></td>
+              <td>Optional</td>
+              <td>Clicking automatically invokes <code>showModal()</code>.</td>
+            </tr>
+            <tr>
+              <td><code>[data-part="close"]</code></td>
+              <td><code>element</code></td>
+              <td>Optional</td>
+              <td>Clicking automatically triggers dismiss transition.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--ui-border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <a href="./command.html" style="text-decoration: none; color: var(--ui-text-secondary); font-size: 0.9rem; font-weight: 500;">
+          ← Previous: Command Palette
+        </a>
+        <a href="./slider.html" style="text-decoration: none; color: var(--ui-text-primary); font-size: 0.9rem; font-weight: 600;">
+          Next: Slider →
+        </a>
+      </div>
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#overview" class="toc-link">Overview</a>
+        <a href="#preview" class="toc-link">Interactive Demo</a>
+        <a href="#code" class="toc-link">Code Snippets</a>
+        <a href="#api" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+</body>
+</html>
