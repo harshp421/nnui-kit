@@ -48,6 +48,13 @@ export class UiDataTable extends BaseLightElement {
     this._nextBtn = this.querySelector('[data-part="next-btn"]');
     this._pageInfo = this.querySelector('[data-part="pagination-info"], [data-part="page-info"]');
     this._selectionCount = this.querySelector('[data-part="selection-count"]');
+    this._bulkActions = this.querySelector('[data-part="bulk-actions"], [data-part="selection-bar"]');
+    this._bulkCount = this.querySelector('[data-part="bulk-count"]');
+    this._exportBtn = this.querySelector('[data-part="export-csv"], [data-action="export-csv"]');
+
+    if (this._exportBtn) {
+      this._exportBtn.addEventListener('click', () => this.exportCsv());
+    }
 
     if (!this._tbody) return;
 
@@ -342,6 +349,20 @@ export class UiDataTable extends BaseLightElement {
       this._selectionCount.textContent = `${count} of ${total} row(s) selected`;
     }
 
+    if (this._bulkActions) {
+      if (count > 0) {
+        this._bulkActions.removeAttribute('hidden');
+        this._bulkActions.setAttribute('data-visible', 'true');
+      } else {
+        this._bulkActions.setAttribute('hidden', '');
+        this._bulkActions.removeAttribute('data-visible');
+      }
+    }
+
+    if (this._bulkCount) {
+      this._bulkCount.textContent = String(count);
+    }
+
     this.dispatchEvent(new CustomEvent('selection-change', {
       bubbles: true,
       detail: {
@@ -349,6 +370,53 @@ export class UiDataTable extends BaseLightElement {
         selectedCount: count
       }
     }));
+  }
+
+  /**
+   * Export table contents (selected rows or all matching filtered rows) to CSV
+   * @param {string} filename 
+   */
+  exportCsv(filename = 'export-table.csv') {
+    if (!this._allRows || this._allRows.length === 0) return;
+
+    // Determine data rows: either selected rows, or all filtered rows
+    const rowsToExport = this._selectedIds.size > 0
+      ? this._allRows.filter((r) => this._selectedIds.has(r.getAttribute('data-row-id')))
+      : this._filteredRows;
+
+    if (rowsToExport.length === 0) return;
+
+    // Extract headers (exclude checkbox column if any)
+    const ths = this._thead ? Array.from(this._thead.querySelectorAll('th')) : [];
+    const colIndices = [];
+    const headerLabels = [];
+
+    ths.forEach((th, idx) => {
+      // Skip checkbox column
+      if (th.querySelector('input[type="checkbox"]')) return;
+      colIndices.push(idx);
+      headerLabels.push(`"${(th.textContent || '').trim().replace(/"/g, '""')}"`);
+    });
+
+    const rowsCsv = rowsToExport.map((tr) => {
+      return colIndices.map((idx) => {
+        const cell = tr.children[idx];
+        const text = cell ? cell.textContent.trim() : '';
+        return `"${text.replace(/"/g, '""')}"`;
+      }).join(',');
+    });
+
+    const csvContent = [headerLabels.join(','), ...rowsCsv].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   }
 
   // Public Methods

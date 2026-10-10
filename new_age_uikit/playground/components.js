@@ -2,6 +2,7 @@ import '../src/index.js';
 import { htmlToReact, htmlToVue, htmlToSvelte, formatHtml } from './framework-snippets.js';
 import { initThemeCustomizer } from './theme-customizer.js';
 import { initGlobalSearch } from './command-search.js';
+import { initHudInspector } from './hud-inspector.js';
 
 const STORAGE_FRAMEWORK_KEY = 'nnui_framework';
 
@@ -24,7 +25,8 @@ function setPreferredFramework(fw) {
 // Setup Preview vs Code tab switching & Multi-framework snippet tabs
 function setupPreviewCodeTabs() {
   const cards = document.querySelectorAll('.preview-card');
-  const pageTitle = document.querySelector('.component-view-title')?.textContent?.trim() || 'Component';
+  const titleEl = document.querySelector('.component-view-title, .docs-title, h1');
+  const pageTitle = titleEl ? (titleEl.childNodes[0]?.textContent?.trim() || titleEl.textContent?.trim() || 'Component') : 'Component';
 
   let currentFramework = getPreferredFramework();
 
@@ -76,11 +78,23 @@ function setupPreviewCodeTabs() {
 
     if (!previewBtn || !codeBtn || !previewStage || !codeStage) return;
 
+    // Initialize display state
+    if (codeBtn.classList.contains('active')) {
+      previewStage.style.display = 'none';
+      codeStage.style.display = 'block';
+      codeStage.classList.add('active');
+    } else {
+      previewStage.style.display = '';
+      codeStage.style.display = 'none';
+      codeStage.classList.remove('active');
+    }
+
     // Toggle Preview vs Code
     previewBtn.addEventListener('click', () => {
       previewBtn.classList.add('active');
       codeBtn.classList.remove('active');
-      previewStage.style.display = 'flex';
+      previewStage.style.display = '';
+      codeStage.style.display = 'none';
       codeStage.classList.remove('active');
     });
 
@@ -88,6 +102,7 @@ function setupPreviewCodeTabs() {
       codeBtn.classList.add('active');
       previewBtn.classList.remove('active');
       previewStage.style.display = 'none';
+      codeStage.style.display = 'block';
       codeStage.classList.add('active');
     });
 
@@ -136,14 +151,61 @@ function setupPreviewCodeTabs() {
   });
 }
 
+// Setup Framework Code Cards (#framework-code-tabs / .framework-code-card)
+function setupFrameworkCodeCards() {
+  document.querySelectorAll('.framework-code-card').forEach((card) => {
+    const tabs = card.querySelectorAll('.framework-tab-btn');
+    const snippets = {
+      react: card.querySelector('#code-snippet-react') || card.querySelector('[data-snippet="react"]'),
+      vue: card.querySelector('#code-snippet-vue') || card.querySelector('[data-snippet="vue"]'),
+      svelte: card.querySelector('#code-snippet-svelte') || card.querySelector('[data-snippet="svelte"]'),
+      html: card.querySelector('#code-snippet-html') || card.querySelector('[data-snippet="html"]')
+    };
+
+    tabs.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const fw = btn.getAttribute('data-framework');
+        tabs.forEach((b) => {
+          b.classList.remove('active');
+          b.style.border = '1px solid transparent';
+          b.style.background = 'transparent';
+          b.style.color = 'var(--ui-text-muted)';
+        });
+        btn.classList.add('active');
+        btn.style.border = '1px solid var(--ui-border-default)';
+        btn.style.background = 'var(--ui-bg-surface)';
+        btn.style.color = 'var(--ui-text-primary)';
+
+        Object.values(snippets).forEach((snip) => {
+          if (snip) snip.style.display = 'none';
+        });
+        if (snippets[fw]) {
+          snippets[fw].style.display = 'block';
+        }
+      });
+    });
+  });
+}
+
 // Setup Copy Buttons
 function setupCopyButtons() {
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('.copy-btn');
     if (!btn) return;
 
-    const container = btn.closest('.code-stage') || btn.closest('.code-container') || btn.closest('.preview-card');
-    const codeEl = container?.querySelector('pre code') || container?.querySelector('pre');
+    let codeEl = null;
+    const fwCard = btn.closest('.framework-code-card');
+    if (fwCard) {
+      const visibleSnippets = Array.from(fwCard.querySelectorAll('.framework-snippet')).filter(
+        (el) => window.getComputedStyle(el).display !== 'none'
+      );
+      const activeSnippet = visibleSnippets[0] || fwCard.querySelector('.framework-snippet');
+      codeEl = activeSnippet?.querySelector('pre code') || activeSnippet?.querySelector('pre') || fwCard.querySelector('pre code');
+    } else {
+      const container = btn.closest('.code-stage') || btn.closest('.code-container') || btn.closest('.preview-card');
+      codeEl = container?.querySelector('pre code') || container?.querySelector('pre');
+    }
+
     if (!codeEl) return;
 
     navigator.clipboard.writeText(codeEl.textContent.trim()).then(() => {
@@ -206,11 +268,19 @@ function setupScrollspy() {
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+function initAll() {
   initThemeCustomizer();
   initGlobalSearch();
+  initHudInspector();
   setupPreviewCodeTabs();
+  setupFrameworkCodeCards();
   setupCopyButtons();
   setupThemeToggle();
   setupScrollspy();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAll);
+} else {
+  initAll();
+}

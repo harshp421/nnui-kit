@@ -1,6 +1,7 @@
 import '../src/index.js';
 import { initThemeCustomizer } from './theme-customizer.js';
 import { initGlobalSearch } from './command-search.js';
+import { initHudInspector } from './hud-inspector.js';
 
 /**
  * Documentation Interactive Logic (Shadcn Style)
@@ -18,10 +19,10 @@ const FRAMEWORK_STEPS = {
     step2Code: 'npm install nnui-kit',
     step2File: 'Terminal',
 
-    step3Title: 'Import Styles in Root Layout',
-    step3Desc: 'Add the universal stylesheet and custom element registration in app/layout.tsx.',
+    step3Title: 'Import Styles & SSR-Safe Client Entry',
+    step3Desc: 'Add universal styles and the SSR-safe client entry in app/layout.tsx.',
     step3Code: `import 'nnui-kit/css';
-import 'nnui-kit'; // Auto-registers <nnui-*> and <ui-*> custom elements
+import 'nnui-kit/client'; // Safe for Node SSR & Server Components
 import './globals.css';
 
 export const metadata = {
@@ -30,7 +31,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <body>{children}</body>
     </html>
   );
@@ -46,10 +47,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 @tailwind utilities;`,
     step4File: 'app/globals.css',
 
-    step5Title: 'Use Your First Component',
-    step5Desc: 'Use standard JSX custom element tags with zero wrapper overhead.',
+    step5Title: 'Use First-Class React Components',
+    step5Desc: 'Import typed wrapper components from nnui-kit/react or use native custom elements.',
     step5Code: `'use client';
 import { useState } from 'react';
+import { Tabs, DataGrid } from 'nnui-kit/react';
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -58,20 +60,67 @@ export default function Page() {
     <div className="p-8 max-w-xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
       
-      <nnui-tabs value={activeTab} onChange={(e: any) => setActiveTab(e.detail.value)}>
+      <Tabs value={activeTab} onChange={(e: any) => setActiveTab(e.detail.value)}>
         <div data-part="tablist">
           <button data-part="tab" data-value="overview">Overview</button>
           <button data-part="tab" data-value="analytics">Analytics</button>
-          <button data-part="tab" data-value="settings">Settings</button>
         </div>
         <div data-part="tabpanel" data-value="overview">Overview content goes here.</div>
         <div data-part="tabpanel" data-value="analytics">Analytics telemetry goes here.</div>
-        <div data-part="tabpanel" data-value="settings">Settings preferences go here.</div>
-      </nnui-tabs>
+      </Tabs>
     </div>
   );
 }`,
     step5File: 'app/page.tsx'
+  },
+
+  svelte: {
+    step1Title: 'Create SvelteKit / Svelte 5 Project',
+    step1Desc: 'Start with modern Svelte 5 runes.',
+    step1Code: 'npx sv create my-app',
+    step1File: 'Terminal',
+
+    step2Title: 'Install NNUI-KIT',
+    step2Desc: 'Install the universal package.',
+    step2Code: 'npm install nnui-kit',
+    step2File: 'Terminal',
+
+    step3Title: 'Import Styles in Layout',
+    step3Desc: 'Import universal styles and client entry in src/routes/+layout.svelte.',
+    step3Code: `<script>
+  import 'nnui-kit/css';
+  import 'nnui-kit/client';
+  let { children } = $props();
+</script>
+
+{@render children()}`,
+    step3File: 'src/routes/+layout.svelte',
+
+    step4Title: 'Native Custom Element Support',
+    step4Desc: 'Svelte 5 supports custom elements natively with zero extra configuration.',
+    step4Code: `// svelte.config.js - Zero compiler options needed!
+import adapter from '@sveltejs/adapter-auto';
+
+export default {
+  kit: { adapter: adapter() }
+};`,
+    step4File: 'svelte.config.js',
+
+    step5Title: 'Render with Runes',
+    step5Desc: 'Bind reactive runes directly to custom element attributes and events.',
+    step5Code: `<script>
+  let activeTab = $state('blotter');
+</script>
+
+<ui-tabs value={activeTab} onchange={(e) => activeTab = e.detail.value}>
+  <div data-part="tablist">
+    <button data-part="tab" data-value="blotter">Blotter</button>
+    <button data-part="tab" data-value="analytics">Analytics</button>
+  </div>
+  <div data-part="tabpanel" data-value="blotter">Real-Time Blotter Content</div>
+  <div data-part="tabpanel" data-value="analytics">Analytics Telemetry</div>
+</ui-tabs>`,
+    step5File: 'src/routes/+page.svelte'
   },
 
   vite: {
@@ -518,7 +567,7 @@ function setupThemeToggle() {
 
 function setupScrollspy() {
   const sections = document.querySelectorAll('section[id], [id].scroll-target');
-  const navItems = document.querySelectorAll('.docs-sidebar .sidebar-item[href^="#"]');
+  const navItems = document.querySelectorAll('.docs-sidebar .sidebar-item');
   const tocItems = document.querySelectorAll('.docs-toc .toc-link');
 
   function onScroll() {
@@ -536,19 +585,22 @@ function setupScrollspy() {
     if (currentId) {
       navItems.forEach((item) => {
         const href = item.getAttribute('href') || '';
-        item.classList.toggle('active', href === `#${currentId}`);
+        if (href.includes('#')) {
+          item.classList.toggle('active', href.endsWith(`#${currentId}`));
+        }
       });
       tocItems.forEach((item) => {
         const href = item.getAttribute('href') || '';
-        item.classList.toggle('active', href === `#${currentId}`);
+        item.classList.toggle('active', href.endsWith(`#${currentId}`));
       });
     }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+function initDocs() {
   initThemeCustomizer();
   initGlobalSearch();
   setupCopyButtons();
@@ -556,4 +608,11 @@ window.addEventListener('DOMContentLoaded', () => {
   setupThemeToggle();
   setupScrollspy();
   renderFramework('nextjs');
-});
+  initHudInspector();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initDocs);
+} else {
+  initDocs();
+}

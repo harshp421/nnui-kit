@@ -20,6 +20,19 @@ import { UiToaster, toast } from './components/toast/ui-toast.js';
 import { UiDataTable } from './components/data-table/ui-data-table.js';
 import { UiCalendar } from './components/calendar/ui-calendar.js';
 import { UiDatePicker } from './components/date-picker/ui-date-picker.js';
+import { UiDataGrid } from './components/data-grid/ui-data-grid.js';
+import { UiDateRangePicker } from './components/date-range-picker/ui-date-range-picker.js';
+import { UiTagsInput } from './components/tags-input/ui-tags-input.js';
+import { UiSegmentedControl } from './components/segmented-control/ui-segmented-control.js';
+import { UiOtpInput } from './components/otp-input/ui-otp-input.js';
+import { UiStepper } from './components/stepper/ui-stepper.js';
+import { UiResizable } from './components/resizable/ui-resizable.js';
+import { UiFileUpload } from './components/file-upload/ui-file-upload.js';
+import { UiContextMenu } from './components/context-menu/ui-context-menu.js';
+import { UiNavigationMenu } from './components/navigation-menu/ui-navigation-menu.js';
+import { UiTreeView } from './components/tree-view/ui-tree-view.js';
+import { UiAiPromptBox } from './components/ai-prompt-box/ui-ai-prompt-box.js';
+import { UiColorPicker } from './components/color-picker/ui-color-picker.js';
 
 export {
   BaseLightElement,
@@ -38,11 +51,25 @@ export {
   UiDataTable,
   UiCalendar,
   UiDatePicker,
+  UiDataGrid,
+  UiDateRangePicker,
+  UiTagsInput,
+  UiSegmentedControl,
+  UiOtpInput,
+  UiStepper,
+  UiResizable,
+  UiFileUpload,
+  UiContextMenu,
+  UiNavigationMenu,
+  UiTreeView,
+  UiAiPromptBox,
+  UiColorPicker,
   toast,
 };
 
 export * from './utils/a11y.js';
 export * from './utils/anchor-fallback.js';
+export * from './utils/persistence.js';
 
 export const elements = {
   'ui-tabs': UiTabs,
@@ -60,6 +87,19 @@ export const elements = {
   'ui-data-table': UiDataTable,
   'ui-calendar': UiCalendar,
   'ui-date-picker': UiDatePicker,
+  'ui-data-grid': UiDataGrid,
+  'ui-date-range-picker': UiDateRangePicker,
+  'ui-tags-input': UiTagsInput,
+  'ui-segmented-control': UiSegmentedControl,
+  'ui-otp-input': UiOtpInput,
+  'ui-stepper': UiStepper,
+  'ui-resizable': UiResizable,
+  'ui-file-upload': UiFileUpload,
+  'ui-context-menu': UiContextMenu,
+  'ui-navigation-menu': UiNavigationMenu,
+  'ui-tree-view': UiTreeView,
+  'ui-ai-prompt-box': UiAiPromptBox,
+  'ui-color-picker': UiColorPicker,
 };
 
 /**

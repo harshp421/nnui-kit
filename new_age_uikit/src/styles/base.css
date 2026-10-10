@@ -748,6 +748,7 @@
     0% {
       background-position: -200% 0;
     }
+
     100% {
       background-position: 200% 0;
     }
@@ -755,12 +756,10 @@
 
   [data-ui="skeleton"] {
     display: block;
-    background: linear-gradient(
-      90deg,
-      var(--ui-bg-subtle) 25%,
-      var(--ui-bg-hover) 37%,
-      var(--ui-bg-subtle) 63%
-    );
+    background: linear-gradient(90deg,
+        var(--ui-bg-subtle) 25%,
+        var(--ui-bg-hover) 37%,
+        var(--ui-bg-subtle) 63%);
     background-size: 400% 100%;
     animation: ui-skeleton-shimmer 1.8s ease-in-out infinite;
     border-radius: var(--ui-radius-md);
@@ -989,5 +988,321 @@
     border-top: 1px solid var(--ui-border-subtle);
     color: var(--ui-text-secondary);
     font-size: var(--ui-font-size-sm);
+  }
+
+  /* -------------------------------------------------------------------------
+     16. DESIGN SYSTEM LAYOUT PRIMITIVES (Zero-JS)
+     ------------------------------------------------------------------------- */
+  /* Container Primitive */
+  [data-ui="container"],
+  .ui-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--ui-space-4);
+    padding-right: var(--ui-space-4);
+    box-sizing: border-box;
+  }
+
+  [data-ui="container"][data-size="sm"],
+  .ui-container--sm {
+    max-width: 640px;
+  }
+
+  [data-ui="container"][data-size="md"],
+  .ui-container--md {
+    max-width: 768px;
+  }
+
+  [data-ui="container"][data-size="lg"],
+  .ui-container--lg {
+    max-width: 1024px;
+  }
+
+  [data-ui="container"][data-size="xl"],
+  .ui-container--xl {
+    max-width: 1280px;
+  }
+
+  [data-ui="container"][data-size="full"],
+  .ui-container--full {
+    max-width: 100%;
+  }
+
+  /* Stack / Flex Primitive */
+  [data-ui="stack"],
+  .ui-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ui-space-4);
+    box-sizing: border-box;
+  }
+
+  [data-ui="stack"][data-direction="row"],
+  .ui-stack--row {
+    flex-direction: row;
+  }
+
+  [data-ui="stack"][data-gap="none"] {
+    gap: 0;
+  }
+
+  [data-ui="stack"][data-gap="xs"] {
+    gap: var(--ui-space-1);
+  }
+
+  [data-ui="stack"][data-gap="sm"] {
+    gap: var(--ui-space-2);
+  }
+
+  [data-ui="stack"][data-gap="md"] {
+    gap: var(--ui-space-4);
+  }
+
+  [data-ui="stack"][data-gap="lg"] {
+    gap: var(--ui-space-6);
+  }
+
+  [data-ui="stack"][data-gap="xl"] {
+    gap: var(--ui-space-8);
+  }
+
+  [data-ui="stack"][data-align="center"] {
+    align-items: center;
+  }
+
+  [data-ui="stack"][data-align="start"] {
+    align-items: flex-start;
+  }
+
+  [data-ui="stack"][data-align="end"] {
+    align-items: flex-end;
+  }
+
+  [data-ui="stack"][data-justify="between"] {
+    justify-content: space-between;
+  }
+
+  [data-ui="stack"][data-justify="center"] {
+    justify-content: center;
+  }
+
+  [data-ui="stack"][data-wrap="true"] {
+    flex-wrap: wrap;
+  }
+
+  /* Responsive Grid Primitive */
+  [data-ui="grid"],
+  .ui-grid {
+    display: grid;
+    gap: var(--ui-space-4);
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    box-sizing: border-box;
+  }
+
+  [data-ui="grid"][data-cols="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  [data-ui="grid"][data-cols="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  [data-ui="grid"][data-cols="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  [data-ui="grid"][data-cols="auto-fit"] {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  [data-ui="grid"][data-gap="sm"] {
+    gap: var(--ui-space-2);
+  }
+
+  [data-ui="grid"][data-gap="md"] {
+    gap: var(--ui-space-4);
+  }
+
+  [data-ui="grid"][data-gap="lg"] {
+    gap: var(--ui-space-6);
+  }
+
+  /* -------------------------------------------------------------------------
+     17. FEEDBACK & STATUS PRIMITIVES
+     ------------------------------------------------------------------------- */
+  /* Spinner Loader */
+  [data-ui="spinner"],
+  .ui-spinner {
+    display: inline-block;
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 2px solid var(--ui-border-default);
+    border-top-color: var(--ui-color-brand-500);
+    border-radius: var(--ui-radius-full);
+    animation: uiSpin 650ms linear infinite;
+    box-sizing: border-box;
+    vertical-align: middle;
+  }
+
+  [data-ui="spinner"][data-size="xs"] {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-width: 1.5px;
+  }
+
+  [data-ui="spinner"][data-size="sm"] {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  [data-ui="spinner"][data-size="lg"] {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-width: 3px;
+  }
+
+  @keyframes uiSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Empty State Pattern */
+  [data-ui="empty"],
+  .ui-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--ui-space-8) var(--ui-space-4);
+    border: 1px dashed var(--ui-border-default);
+    border-radius: var(--ui-radius-lg);
+    background-color: var(--ui-bg-subtle);
+    color: var(--ui-text-muted);
+  }
+
+  [data-ui="empty"] [data-part="empty-icon"] {
+    font-size: 2rem;
+    margin-bottom: var(--ui-space-2);
+    opacity: 0.6;
+  }
+
+  [data-ui="empty"] [data-part="empty-title"] {
+    font-size: var(--ui-font-size-base);
+    font-weight: 600;
+    color: var(--ui-text-primary);
+    margin: 0 0 0.25rem 0;
+  }
+
+  [data-ui="empty"] [data-part="empty-desc"] {
+    font-size: var(--ui-font-size-sm);
+    color: var(--ui-text-muted);
+    max-width: 24rem;
+    margin: 0 0 var(--ui-space-4) 0;
+    line-height: 1.5;
+  }
+
+  /* -------------------------------------------------------------------------
+     18. TYPOGRAPHY SYSTEM PRIMITIVES
+     ------------------------------------------------------------------------- */
+  [data-ui="heading"],
+  .ui-heading {
+    color: var(--ui-text-primary);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    margin: 0 0 0.5rem 0;
+  }
+
+  [data-ui="heading"][data-size="3xl"] {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+  }
+
+  [data-ui="heading"][data-size="2xl"] {
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  [data-ui="heading"][data-size="xl"] {
+    font-size: 1.35rem;
+    font-weight: 600;
+  }
+
+  [data-ui="heading"][data-size="lg"] {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  [data-ui="text"],
+  .ui-text {
+    color: var(--ui-text-primary);
+    font-size: var(--ui-font-size-base);
+    line-height: 1.6;
+    margin: 0 0 0.75rem 0;
+  }
+
+  [data-ui="text"][data-variant="lead"] {
+    font-size: 1.125rem;
+    color: var(--ui-text-secondary);
+    line-height: 1.7;
+  }
+
+  [data-ui="text"][data-variant="muted"] {
+    font-size: var(--ui-font-size-sm);
+    color: var(--ui-text-muted);
+  }
+
+  [data-ui="text"][data-variant="small"] {
+    font-size: var(--ui-font-size-xs);
+  }
+
+  /* -------------------------------------------------------------------------
+     19. FORM SYSTEM ENHANCEMENTS (Error, Hint, Fieldset)
+     ------------------------------------------------------------------------- */
+  [data-ui="field-hint"] {
+    font-size: var(--ui-font-size-xs);
+    color: var(--ui-text-muted);
+    margin-top: 0.25rem;
+  }
+
+  [data-ui="field-error"] {
+    font-size: var(--ui-font-size-xs);
+    color: var(--ui-color-danger-500);
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+
+  [data-ui="fieldset"] {
+    border: 1px solid var(--ui-border-default);
+    border-radius: var(--ui-radius-lg);
+    padding: var(--ui-space-4);
+    margin: 0 0 var(--ui-space-4) 0;
+  }
+
+  [data-ui="legend"] {
+    font-size: var(--ui-font-size-sm);
+    font-weight: 600;
+    color: var(--ui-text-primary);
+    padding: 0 0.5rem;
+  }
+
+  /* -------------------------------------------------------------------------
+     20. ACCESSIBILITY UTILITIES
+     ------------------------------------------------------------------------- */
+  .ui-sr-only,
+  [data-ui="sr-only"] {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
   }
 }

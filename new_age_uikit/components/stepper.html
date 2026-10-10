@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stepper — NNUI-KIT</title>
+  <meta name="description" content="Accessible multi-step workflow progress indicator and panel synchronizer in Light-DOM.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+    <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../tokens.html" class="docs-nav-link">Design Tokens</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <!-- Left Navigation Sidebar (Unified Canonical) -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#introduction" class="sidebar-item">Introduction</a>
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#form-validation" class="sidebar-item">Form Validation (RHF/Zod)</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Design System & Tokens</div>
+        <div class="sidebar-items">
+          <a href="../tokens.html" class="sidebar-item"><span>Design Tokens Studio</span> <span class="sidebar-badge-new">Live</span></a>
+          <a href="../docs.html#design-tokens" class="sidebar-item">Tokens & DTCG Standard</a>
+          <a href="../docs.html#color-palettes" class="sidebar-item">Color Palettes</a>
+          <a href="../docs.html#layout-primitives" class="sidebar-item">Layout (Stack, Grid)</a>
+          <a href="../docs.html#typography-system" class="sidebar-item">Typography System</a>
+          <a href="../docs.html#feedback-primitives" class="sidebar-item">Feedback & Status</a>
+          <a href="../docs.html#accessibility-standards" class="sidebar-item">Accessibility & Motion</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Components Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item"><span>All Components Gallery</span> <span class="sidebar-badge-counter">30</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-grid.html" class="sidebar-item"><span>Virtualized Data Grid</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./date-range-picker.html" class="sidebar-item"><span>Date Range Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./tags-input.html" class="sidebar-item"><span>Tags Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./segmented-control.html" class="sidebar-item"><span>Segmented Control</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./otp-input.html" class="sidebar-item"><span>OTP / PIN Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./stepper.html" class="sidebar-item active"><span>Stepper / Wizard</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./resizable.html" class="sidebar-item"><span>Resizable Split Pane</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./file-upload.html" class="sidebar-item"><span>File Upload & Dropzone</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./context-menu.html" class="sidebar-item"><span>Context Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./navigation-menu.html" class="sidebar-item"><span>Navigation Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./tree-view.html" class="sidebar-item"><span>Tree View</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./ai-prompt-box.html" class="sidebar-item"><span>AI Prompt Box</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./color-picker.html" class="sidebar-item"><span>Color Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./data-table.html" class="sidebar-item"><span>Data Table</span></a>
+          <a href="./calendar.html" class="sidebar-item"><span>Calendar</span></a>
+          <a href="./date-picker.html" class="sidebar-item"><span>Date Picker</span></a>
+          <a href="./dropdown.html" class="sidebar-item"><span>Dropdown Menu</span></a>
+          <a href="./toast.html" class="sidebar-item"><span>Toast / Toaster</span></a>
+          <a href="./combobox.html" class="sidebar-item"><span>Combobox</span></a>
+          <a href="./tabs.html" class="sidebar-item"><span>Tabs</span></a>
+          <a href="./dialog.html" class="sidebar-item"><span>Dialog</span></a>
+          <a href="./select.html" class="sidebar-item"><span>Select</span></a>
+          <a href="./accordion.html" class="sidebar-item"><span>Accordion</span></a>
+          <a href="./popover.html" class="sidebar-item"><span>Popover</span></a>
+          <a href="./tooltip.html" class="sidebar-item"><span>Tooltip</span></a>
+          <a href="./command.html" class="sidebar-item"><span>Command Palette</span></a>
+          <a href="./sheet.html" class="sidebar-item"><span>Sheet / Drawer</span></a>
+          <a href="./slider.html" class="sidebar-item"><span>Slider</span></a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <div class="docs-breadcrumb">
+        <span>Components</span>
+        <span>/</span>
+        <span>Tier 2: Micro-Enhancers</span>
+        <span>/</span>
+        <span style="color: var(--ui-text-primary); font-weight: 500;">Stepper / Wizard</span>
+      </div>
+
+      <div style="display: flex; align-items: baseline; gap: 1rem; margin-top: 0.5rem;">
+        <h1 class="docs-title" style="margin: 0;">Stepper / Wizard</h1>
+        <span data-ui="badge" data-variant="secondary">Multi-Step Pipeline</span>
+      </div>
+      <p class="docs-subtitle">
+        Accessible multi-step workflow progress wizard with panel synchronization, autonomous AI pipelines, and linear gating in 100% Light-DOM.
+      </p>
+
+      <!-- Live Interactive Stage with Preview / Code Tabs -->
+      <section id="interactive-demo" style="margin: 2.5rem 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0;">Interactive Demo (AI Agent Pipeline)</h3>
+          <span style="font-size: 0.8rem; color: var(--ui-text-muted);">Step-by-step progress &amp; panel sync</span>
+        </div>
+
+        <div class="preview-card" style="border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); overflow: hidden; box-shadow: var(--ui-shadow-md);">
+          <div class="preview-card-tabs" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--ui-border-subtle); background: var(--ui-bg-subtle);">
+            <div class="preview-tab-group" style="display: flex; gap: 0.5rem;">
+              <button class="preview-tab-btn active" data-view="preview">Preview</button>
+              <button class="preview-tab-btn" data-view="code">Code</button>
+            </div>
+            <button class="copy-btn" id="stepper-copy-btn">📋 Copy Code</button>
+          </div>
+
+          <!-- Platform Innovations Live Banner -->
+          <div style="background: rgba(99, 102, 241, 0.08); border-bottom: 1px solid rgba(99, 102, 241, 0.2); padding: 0.65rem 1.25rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ui-color-brand-500);"></span>
+              <span style="color: var(--ui-text-primary); font-weight: 600;">Cross-Tab Sync &amp; Local Persistence:</span>
+              <span style="color: var(--ui-text-secondary);"><code style="color: var(--ui-color-brand-400);">persist="local"</code> + <code style="color: var(--ui-color-brand-400);">sync="cross-tab"</code> (Try changing steps &amp; opening in another tab!)</span>
+            </div>
+            <button type="button" class="ui-button ui-button--secondary" onclick="window.nnuiInspect(document.getElementById('demo-stepper'))" style="padding: 0.2rem 0.6rem; font-size: 0.75rem; height: 26px;">
+              🤖 Inspect AI Schema
+            </button>
+          </div>
+
+          <!-- Preview Stage -->
+          <div class="preview-stage" style="display: block; padding: 2.5rem 2rem;">
+            <ui-stepper id="demo-stepper" active-step="1" persist="local" sync="cross-tab">
+              <ol data-part="steplist">
+                <li data-part="step" data-step="1">
+                  <div data-part="indicator">1</div>
+                  <div data-part="content">
+                    <div data-part="title">Model &amp; Persona</div>
+                    <div data-part="description">LLM backbone</div>
+                  </div>
+                </li>
+                <li data-part="step" data-step="2">
+                  <div data-part="indicator">2</div>
+                  <div data-part="content">
+                    <div data-part="title">Tools &amp; MCP</div>
+                    <div data-part="description">Agent capabilities</div>
+                  </div>
+                </li>
+                <li data-part="step" data-step="3">
+                  <div data-part="indicator">3</div>
+                  <div data-part="content">
+                    <div data-part="title">Safety &amp; Limits</div>
+                    <div data-part="description">Budget &amp; approvals</div>
+                  </div>
+                </li>
+                <li data-part="step" data-step="4">
+                  <div data-part="indicator">4</div>
+                  <div data-part="content">
+                    <div data-part="title">Launch Pipeline</div>
+                    <div data-part="description">Deploy cluster</div>
+                  </div>
+                </li>
+              </ol>
+
+              <!-- Panel 1: Model & Persona -->
+              <div data-part="panel" data-step="1">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                  <div>
+                    <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--ui-text-primary);">Step 1: AI Foundation Model &amp; Persona</h3>
+                    <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--ui-text-muted);">Select the core LLM reasoning backbone and initialize system instructions.</p>
+                  </div>
+                  <span data-ui="badge" data-variant="secondary">Stage 1 of 4</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                  <div>
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--ui-text-primary);">Agent Identifier</label>
+                    <input data-ui="input" id="agent-name-input" value="Sentinel-Autonomous-Core" style="width: 100%; max-width: 480px; font-family: var(--ui-font-mono, monospace);">
+                  </div>
+
+                  <div>
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--ui-text-primary);">Reasoning Engine Backbone</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+                      <label class="model-select-card active" style="border: 1px solid var(--ui-color-brand-500); background: rgba(99, 102, 241, 0.08); border-radius: var(--ui-radius-md); padding: 0.875rem 1rem; cursor: pointer; display: flex; align-items: flex-start; gap: 0.75rem; transition: all var(--ui-transition-fast);">
+                        <input type="radio" name="ai-model" value="gemini-2.5-pro" checked style="margin-top: 0.25rem;">
+                        <div>
+                          <div style="font-weight: 600; font-size: 0.875rem; color: var(--ui-text-primary);">Gemini 2.5 Pro</div>
+                          <div style="font-size: 0.75rem; color: var(--ui-text-muted);">2M token context &amp; deep reasoning</div>
+                        </div>
+                      </label>
+                      <label class="model-select-card" style="border: 1px solid var(--ui-border-default); background: var(--ui-bg-surface); border-radius: var(--ui-radius-md); padding: 0.875rem 1rem; cursor: pointer; display: flex; align-items: flex-start; gap: 0.75rem; transition: all var(--ui-transition-fast);">
+                        <input type="radio" name="ai-model" value="claude-3.7-sonnet" style="margin-top: 0.25rem;">
+                        <div>
+                          <div style="font-weight: 600; font-size: 0.875rem; color: var(--ui-text-primary);">Claude 3.7 Sonnet</div>
+                          <div style="font-size: 0.75rem; color: var(--ui-text-muted);">Hybrid thinking &amp; agentic loops</div>
+                        </div>
+                      </label>
+                      <label class="model-select-card" style="border: 1px solid var(--ui-border-default); background: var(--ui-bg-surface); border-radius: var(--ui-radius-md); padding: 0.875rem 1rem; cursor: pointer; display: flex; align-items: flex-start; gap: 0.75rem; transition: all var(--ui-transition-fast);">
+                        <input type="radio" name="ai-model" value="deepseek-r1" style="margin-top: 0.25rem;">
+                        <div>
+                          <div style="font-weight: 600; font-size: 0.875rem; color: var(--ui-text-primary);">DeepSeek R1</div>
+                          <div style="font-size: 0.75rem; color: var(--ui-text-muted);">Open-weights math &amp; code logic</div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--ui-text-primary);">System Instructions &amp; Role Definition</label>
+                    <textarea data-ui="input" style="width: 100%; height: 75px; padding: 0.65rem 0.75rem; font-size: 0.85rem; resize: vertical;">You are an autonomous pair-programmer and security reviewer. You inspect pull requests, detect vulnerabilities, write regression tests, and execute fixes.</textarea>
+                  </div>
+
+                  <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem; padding-top: 1.25rem; border-top: 1px solid var(--ui-border-subtle);">
+                    <button type="button" class="ui-button" onclick="document.getElementById('demo-stepper').next()">
+                      Continue to Tools &amp; MCP →
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 2: Tools & MCP Capabilities -->
+              <div data-part="panel" data-step="2">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                  <div>
+                    <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--ui-text-primary);">Step 2: Tools &amp; MCP Capabilities</h3>
+                    <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--ui-text-muted);">Activate sandbox tools and integrations this agent is permitted to execute.</p>
+                  </div>
+                  <span data-ui="badge" data-variant="secondary">Stage 2 of 4</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                      <span style="font-size: 1.25rem;">🌐</span>
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.85rem; color: var(--ui-text-primary);">Live Web Grounding</div>
+                        <div style="font-size: 0.75rem; color: var(--ui-text-muted);">Real-time search verification</div>
+                      </div>
+                    </div>
+                    <label data-ui="switch"><input type="checkbox" checked></label>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                      <span style="font-size: 1.25rem;">⚡</span>
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.85rem; color: var(--ui-text-primary);">Container Sandbox</div>
+                        <div style="font-size: 0.75rem; color: var(--ui-text-muted);">Isolated Python &amp; Bash execution</div>
+                      </div>
+                    </div>
+                    <label data-ui="switch"><input type="checkbox" checked></label>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                      <span style="font-size: 1.25rem;">🔌</span>
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.85rem; color: var(--ui-text-primary);">GitHub MCP Server</div>
+                        <div style="font-size: 0.75rem; color: var(--ui-text-muted);">PR read/write and repository ops</div>
+                      </div>
+                    </div>
+                    <label data-ui="switch"><input type="checkbox" checked></label>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                      <span style="font-size: 1.25rem;">🧠</span>
+                      <div>
+                        <div style="font-weight: 600; font-size: 0.85rem; color: var(--ui-text-primary);">Vector Memory Store</div>
+                        <div style="font-size: 0.75rem; color: var(--ui-text-muted);">Persistent RAG semantic recall</div>
+                      </div>
+                    </div>
+                    <label data-ui="switch"><input type="checkbox" checked></label>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; gap: 0.75rem; padding-top: 1.25rem; border-top: 1px solid var(--ui-border-subtle);">
+                  <button type="button" class="ui-button ui-button--secondary" onclick="document.getElementById('demo-stepper').prev()">
+                    ← Back
+                  </button>
+                  <button type="button" class="ui-button" onclick="document.getElementById('demo-stepper').next()">
+                    Continue to Safety &amp; Limits →
+                  </button>
+                </div>
+              </div>
+
+              <!-- Panel 3: Safety & Limits -->
+              <div data-part="panel" data-step="3">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                  <div>
+                    <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--ui-text-primary);">Step 3: Guardrails &amp; Resource Limits</h3>
+                    <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--ui-text-muted);">Define execution bounds, token quotas, and human approval checkpoints.</p>
+                  </div>
+                  <span data-ui="badge" data-variant="secondary">Stage 3 of 4</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 1.5rem;">
+                  <div style="padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                      <span style="font-size: 0.85rem; font-weight: 600; color: var(--ui-text-primary);">Max Token Quota per Invocation</span>
+                      <span style="font-family: var(--ui-font-mono, monospace); font-size: 0.85rem; font-weight: 600; color: var(--ui-color-brand-500);">65,536 tokens</span>
+                    </div>
+                    <input type="range" min="8000" max="128000" step="4000" value="65536" style="width: 100%; accent-color: var(--ui-color-brand-600);">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.725rem; color: var(--ui-text-muted); margin-top: 0.35rem;">
+                      <span>8K (Economical)</span>
+                      <span>65K (Recommended)</span>
+                      <span>128K (Deep Analysis)</span>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.85rem; color: var(--ui-text-primary);">Require Human Approval for Git Commits</div>
+                      <div style="font-size: 0.75rem; color: var(--ui-text-muted);">Agent pauses and requests manual confirmation before publishing changes</div>
+                    </div>
+                    <label data-ui="switch"><input type="checkbox" checked></label>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface);">
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.85rem; color: var(--ui-text-primary);">Self-Healing Execution Retry Loop</div>
+                      <div style="font-size: 0.75rem; color: var(--ui-text-muted);">Automatically attempts error self-correction up to 3 times</div>
+                    </div>
+                    <label data-ui="switch"><input type="checkbox" checked></label>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; gap: 0.75rem; padding-top: 1.25rem; border-top: 1px solid var(--ui-border-subtle);">
+                  <button type="button" class="ui-button ui-button--secondary" onclick="document.getElementById('demo-stepper').prev()">
+                    ← Back
+                  </button>
+                  <button type="button" class="ui-button" onclick="document.getElementById('demo-stepper').next()">
+                    Review &amp; Deploy Pipeline →
+                  </button>
+                </div>
+              </div>
+
+              <!-- Panel 4: Deploy Pipeline -->
+              <div data-part="panel" data-step="4">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                  <div>
+                    <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--ui-text-primary);">Step 4: Review &amp; Launch Pipeline</h3>
+                    <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: var(--ui-text-muted);">Confirm configuration parameters and instantiate your autonomous AI agent cluster.</p>
+                  </div>
+                  <span data-ui="badge" data-variant="default" style="background: var(--ui-color-brand-600); color: #ffffff;">Final Stage</span>
+                </div>
+
+                <div id="deployment-summary" style="padding: 1.25rem 1.5rem; border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); background: var(--ui-bg-surface); margin-bottom: 1.5rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--ui-border-subtle);">
+                    <div style="display: flex; align-items: center; gap: 0.6rem;">
+                      <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--ui-color-success-500); box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);"></span>
+                      <strong style="color: var(--ui-text-primary); font-size: 0.95rem;">Sentinel-Autonomous-Core</strong>
+                    </div>
+                    <span data-ui="badge" data-variant="secondary" style="font-family: var(--ui-font-mono, monospace);">v2.0-rc3</span>
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; font-size: 0.8rem;">
+                    <div>
+                      <div style="color: var(--ui-text-muted);">Foundation Model</div>
+                      <div style="font-weight: 600; color: var(--ui-text-primary); margin-top: 0.2rem;">Gemini 2.5 Pro</div>
+                    </div>
+                    <div>
+                      <div style="color: var(--ui-text-muted);">Active Capabilities</div>
+                      <div style="font-weight: 600; color: var(--ui-text-primary); margin-top: 0.2rem;">Web, Bash Sandbox, GitHub MCP, RAG</div>
+                    </div>
+                    <div>
+                      <div style="color: var(--ui-text-muted);">Token Quota</div>
+                      <div style="font-weight: 600; color: var(--ui-text-primary); margin-top: 0.2rem;">65,536 tokens / run</div>
+                    </div>
+                    <div>
+                      <div style="color: var(--ui-text-muted);">Safety Gate</div>
+                      <div style="font-weight: 600; color: var(--ui-color-success-500); margin-top: 0.2rem;">Human Approval Required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="deployment-success" style="display: none; padding: 1.5rem; border: 1px solid var(--ui-color-success-500); border-radius: var(--ui-radius-md); background: rgba(16, 185, 129, 0.08); margin-bottom: 1.5rem; text-align: center;">
+                  <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎉</div>
+                  <h4 style="margin: 0; color: var(--ui-text-primary); font-size: 1.1rem; font-weight: 700;">Agent Cluster Deployed Successfully!</h4>
+                  <p style="margin: 0.35rem 0 1rem 0; font-size: 0.85rem; color: var(--ui-text-secondary);">Your autonomous agent pipeline is now live and listening to registered webhooks.</p>
+                  <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.75rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-sm); font-family: var(--ui-font-mono, monospace); font-size: 0.8rem; color: var(--ui-text-primary);">
+                    <span>https://api.nnui.dev/v1/agents/sentinel-prime</span>
+                    <button type="button" class="copy-endpoint-btn" style="border: none; background: none; cursor: pointer; color: var(--ui-color-brand-500); font-weight: 600;" title="Copy Endpoint">📋</button>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; gap: 0.75rem; padding-top: 1.25rem; border-top: 1px solid var(--ui-border-subtle);">
+                  <button type="button" class="ui-button ui-button--secondary" onclick="document.getElementById('demo-stepper').prev()">
+                    ← Back to Safety
+                  </button>
+                  <button type="button" class="ui-button" id="deploy-agent-btn" style="background: var(--ui-color-brand-600); color: white;">
+                    Deploy Autonomous Agent 🚀
+                  </button>
+                  <button type="button" class="ui-button ui-button--outline" id="restart-stepper-btn" style="display: none;">
+                    ↺ Re-run Wizard
+                  </button>
+                </div>
+              </div>
+            </ui-stepper>
+          </div>
+
+          <!-- Code Stage -->
+          <div class="code-stage">
+            <pre><code>&lt;!-- Universal Light-DOM Stepper Wizard with Cross-Tab Sync --&gt;
+&lt;ui-stepper id="agent-wizard" active-step="1" persist="local" sync="cross-tab"&gt;
+  &lt;!-- Step Header Bar with Connecting Tracks --&gt;
+  &lt;ol data-part="steplist"&gt;
+    &lt;li data-part="step" data-step="1"&gt;
+      &lt;div data-part="indicator"&gt;1&lt;/div&gt;
+      &lt;div data-part="content"&gt;
+        &lt;div data-part="title"&gt;Model &amp;amp; Persona&lt;/div&gt;
+        &lt;div data-part="description"&gt;LLM backbone&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li data-part="step" data-step="2"&gt;
+      &lt;div data-part="indicator"&gt;2&lt;/div&gt;
+      &lt;div data-part="content"&gt;
+        &lt;div data-part="title"&gt;Tools &amp;amp; MCP&lt;/div&gt;
+        &lt;div data-part="description"&gt;Capabilities&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li data-part="step" data-step="3"&gt;
+      &lt;div data-part="indicator"&gt;3&lt;/div&gt;
+      &lt;div data-part="content"&gt;
+        &lt;div data-part="title"&gt;Safety &amp;amp; Limits&lt;/div&gt;
+        &lt;div data-part="description"&gt;Budget caps&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li data-part="step" data-step="4"&gt;
+      &lt;div data-part="indicator"&gt;4&lt;/div&gt;
+      &lt;div data-part="content"&gt;
+        &lt;div data-part="title"&gt;Launch Pipeline&lt;/div&gt;
+        &lt;div data-part="description"&gt;Deploy cluster&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;!-- Synchronized Content Panels --&gt;
+  &lt;div data-part="panel" data-step="1"&gt;
+    &lt;h4&gt;Configure AI Model&lt;/h4&gt;
+    &lt;p&gt;Select LLM engine and prompt directives.&lt;/p&gt;
+    &lt;button type="button" class="ui-button" onclick="document.getElementById('agent-wizard').next()"&gt;Next Step →&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div data-part="panel" data-step="2"&gt;
+    &lt;h4&gt;Configure Capabilities&lt;/h4&gt;
+    &lt;p&gt;Toggle sandbox permissions and tools.&lt;/p&gt;
+    &lt;button type="button" class="ui-button" onclick="document.getElementById('agent-wizard').next()"&gt;Next Step →&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div data-part="panel" data-step="3"&gt;
+    &lt;h4&gt;Safety &amp;amp; Token Budget&lt;/h4&gt;
+    &lt;p&gt;Define token limits and human checkpoints.&lt;/p&gt;
+    &lt;button type="button" class="ui-button" onclick="document.getElementById('agent-wizard').next()"&gt;Next Step →&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div data-part="panel" data-step="4"&gt;
+    &lt;h4&gt;Verify &amp;amp; Launch&lt;/h4&gt;
+    &lt;p&gt;Cluster initialized and live.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/ui-stepper&gt;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Variants Showcase Section -->
+      <section id="variants" style="margin: 3.5rem 0;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--ui-text-primary);">Variants &amp; Layout Modes</h2>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 2rem;">
+          Configure vertical orientations for sidebar wizards or enable linear validation gating.
+        </p>
+
+        <!-- Vertical Orientation Showcase -->
+        <div style="margin-bottom: 2.5rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--ui-text-primary);">Vertical Stepper (Sidebar / Multi-Column)</h3>
+          <p style="font-size: 0.875rem; color: var(--ui-text-muted); margin-bottom: 1rem;">
+            Use <code>orientation="vertical"</code> to display steps as a vertical timeline with side-by-side content panels.
+          </p>
+
+          <div style="border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); padding: 2rem;">
+            <ui-stepper id="vertical-stepper" active-step="2" orientation="vertical">
+              <ol data-part="steplist">
+                <li data-part="step" data-step="1">
+                  <div data-part="indicator">1</div>
+                  <div data-part="content">
+                    <div data-part="title">Workspace Init</div>
+                    <div data-part="description">Git repository linked</div>
+                  </div>
+                </li>
+                <li data-part="step" data-step="2">
+                  <div data-part="indicator">2</div>
+                  <div data-part="content">
+                    <div data-part="title">Dependency Analysis</div>
+                    <div data-part="description">Scanning lockfiles</div>
+                  </div>
+                </li>
+                <li data-part="step" data-step="3">
+                  <div data-part="indicator">3</div>
+                  <div data-part="content">
+                    <div data-part="title">Container Build</div>
+                    <div data-part="description">Deploying preview</div>
+                  </div>
+                </li>
+              </ol>
+
+              <div data-part="panel" data-step="1">
+                <h4 style="margin-top: 0;">Step 1: Workspace Linked</h4>
+                <p style="color: var(--ui-text-muted);">Repository `nnui-kit/main` cloned and verified.</p>
+                <button type="button" class="ui-button" onclick="document.getElementById('vertical-stepper').next()">Next →</button>
+              </div>
+
+              <div data-part="panel" data-step="2">
+                <h4 style="margin-top: 0;">Step 2: Dependency Analysis in Progress</h4>
+                <p style="color: var(--ui-text-muted);">45 custom elements detected with zero runtime dependencies.</p>
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                  <button type="button" class="ui-button ui-button--secondary" onclick="document.getElementById('vertical-stepper').prev()">← Back</button>
+                  <button type="button" class="ui-button" onclick="document.getElementById('vertical-stepper').next()">Proceed to Build →</button>
+                </div>
+              </div>
+
+              <div data-part="panel" data-step="3">
+                <h4 style="margin-top: 0;">Step 3: Preview Container</h4>
+                <p style="color: var(--ui-text-muted);">Container cluster running on isolated port.</p>
+                <button type="button" class="ui-button ui-button--secondary" onclick="document.getElementById('vertical-stepper').prev()">← Back</button>
+              </div>
+            </ui-stepper>
+          </div>
+        </div>
+
+        <!-- Linear Gating Showcase -->
+        <div>
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--ui-text-primary);">Linear Gating Mode</h3>
+          <p style="font-size: 0.875rem; color: var(--ui-text-muted); margin-bottom: 1rem;">
+            Add the <code>linear</code> boolean attribute to prevent jumping ahead to upcoming steps until intermediate steps are submitted.
+          </p>
+
+          <div style="border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); background: var(--ui-bg-surface); padding: 2rem;">
+            <ui-stepper id="linear-stepper" active-step="1" linear>
+              <ol data-part="steplist">
+                <li data-part="step" data-step="1">
+                  <div data-part="indicator">1</div>
+                  <div data-part="content">
+                    <div data-part="title">KYC Verification</div>
+                    <div data-part="description">Identity documents</div>
+                  </div>
+                </li>
+                <li data-part="step" data-step="2">
+                  <div data-part="indicator">2</div>
+                  <div data-part="content">
+                    <div data-part="title">Compliance Review</div>
+                    <div data-part="description">Automated checks</div>
+                  </div>
+                </li>
+                <li data-part="step" data-step="3">
+                  <div data-part="indicator">3</div>
+                  <div data-part="content">
+                    <div data-part="title">Account Activation</div>
+                    <div data-part="description">Final access grant</div>
+                  </div>
+                </li>
+              </ol>
+
+              <div data-part="panel" data-step="1">
+                <p style="color: var(--ui-text-secondary); margin: 0 0 1rem 0;">In linear mode, clicking step 2 or 3 is strictly disabled until Step 1 is completed.</p>
+                <button type="button" class="ui-button" onclick="document.getElementById('linear-stepper').next()">Complete KYC &amp; Continue →</button>
+              </div>
+              <div data-part="panel" data-step="2">
+                <p style="color: var(--ui-text-secondary); margin: 0 0 1rem 0;">Compliance review verified successfully.</p>
+                <div style="display: flex; gap: 0.5rem;">
+                  <button type="button" class="ui-button ui-button--secondary" onclick="document.getElementById('linear-stepper').prev()">← Back</button>
+                  <button type="button" class="ui-button" onclick="document.getElementById('linear-stepper').next()">Approve Account →</button>
+                </div>
+              </div>
+              <div data-part="panel" data-step="3">
+                <p style="color: var(--ui-text-secondary); margin: 0 0 1rem 0;">Account activated!</p>
+                <button type="button" class="ui-button ui-button--secondary" onclick="document.getElementById('linear-stepper').prev()">← Back</button>
+              </div>
+            </ui-stepper>
+          </div>
+        </div>
+      </section>
+
+      <!-- Anatomy Section -->
+      <section style="margin: 3.5rem 0;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--ui-text-primary);">Component Anatomy</h2>
+        <div class="code-container" style="background: var(--ui-bg-surface-elevated); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.25rem;">
+          <pre style="margin: 0; font-family: var(--ui-font-mono, monospace); font-size: 0.85rem; color: var(--ui-text-primary);"><code>&lt;ui-stepper active-step="1" linear orientation="horizontal|vertical"&gt;
+  &lt;ol data-part="steplist"&gt;
+    &lt;li data-part="step" data-step="[1..N]" data-state="current|completed|upcoming"&gt;
+      &lt;div data-part="indicator"&gt;1&lt;/div&gt;
+      &lt;div data-part="content"&gt;
+        &lt;div data-part="title"&gt;Step Label&lt;/div&gt;
+        &lt;div data-part="description"&gt;Sub-description&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+  &lt;div data-part="panel" data-step="[1..N]" data-state="active|inactive"&gt;
+    Panel view content...
+  &lt;/div&gt;
+&lt;/ui-stepper&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- API Reference -->
+      <section id="api-reference" style="margin: 3.5rem 0;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 0.75rem 0; color: var(--ui-text-primary);">API Reference</h2>
+        <div data-part="table-container">
+          <table data-ui="table">
+            <thead>
+              <tr>
+                <th>Attribute / Prop</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>persist</code></td>
+                <td><code>"local" | "session" | "url"</code></td>
+                <td><code>null</code></td>
+                <td>Declarative state persistence. "local" persists current step index across reloads and tab closes.</td>
+              </tr>
+              <tr>
+                <td><code>sync</code></td>
+                <td><code>"cross-tab" | boolean</code></td>
+                <td><code>false</code></td>
+                <td>Real-time synchronization across browser tabs via BroadcastChannel. Step updates synchronize instantly.</td>
+              </tr>
+              <tr>
+                <td><code>inspectAI()</code></td>
+                <td><code>async () =&gt; Object</code></td>
+                <td>-</td>
+                <td>Returns machine-readable <code>nnui.ai.v1</code> schema, live active step state, and framework snippets.</td>
+              </tr>
+              <tr>
+                <td><code>active-step</code></td>
+                <td><code>number</code></td>
+                <td><code>1</code></td>
+                <td>Currently active step index (1-based index).</td>
+              </tr>
+              <tr>
+                <td><code>linear</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>When enabled, prevents jumping to upcoming steps until current step is completed.</td>
+              </tr>
+              <tr>
+                <td><code>orientation</code></td>
+                <td><code>"horizontal" | "vertical"</code></td>
+                <td><code>"horizontal"</code></td>
+                <td>Layout arrangement of the steplist and panels.</td>
+              </tr>
+              <tr>
+                <td><code>.next()</code></td>
+                <td><code>() =&gt; void</code></td>
+                <td>-</td>
+                <td>Advances to the next sequential step index.</td>
+              </tr>
+              <tr>
+                <td><code>.prev()</code></td>
+                <td><code>() =&gt; void</code></td>
+                <td>-</td>
+                <td>Returns to the previous step index.</td>
+              </tr>
+              <tr>
+                <td><code>.goToStep(n)</code></td>
+                <td><code>(step: number) =&gt; void</code></td>
+                <td>-</td>
+                <td>Programmatically navigates to the specified step index.</td>
+              </tr>
+              <tr>
+                <td><code>change</code></td>
+                <td><code>CustomEvent</code></td>
+                <td>-</td>
+                <td>Dispatched when active step changes: <code>{ step: number, previousStep: number }</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#interactive-demo" class="toc-link">Interactive Demo</a>
+        <a href="#variants" class="toc-link">Variants &amp; Layouts</a>
+        <a href="#api-reference" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const stepper = document.getElementById('demo-stepper');
+      const deployBtn = document.getElementById('deploy-agent-btn');
+      const restartBtn = document.getElementById('restart-stepper-btn');
+      const summaryCard = document.getElementById('deployment-summary');
+      const successCard = document.getElementById('deployment-success');
+
+      if (deployBtn && stepper) {
+        deployBtn.addEventListener('click', () => {
+          deployBtn.disabled = true;
+          deployBtn.innerHTML = 'Instantiating Pipeline... ⚡';
+          setTimeout(() => {
+            deployBtn.style.display = 'none';
+            if (summaryCard) summaryCard.style.display = 'none';
+            if (successCard) successCard.style.display = 'block';
+            if (restartBtn) restartBtn.style.display = 'inline-flex';
+          }, 800);
+        });
+      }
+
+      if (restartBtn && stepper) {
+        restartBtn.addEventListener('click', () => {
+          stepper.goToStep(1);
+          if (summaryCard) summaryCard.style.display = 'block';
+          if (successCard) successCard.style.display = 'none';
+          if (deployBtn) {
+            deployBtn.style.display = 'inline-flex';
+            deployBtn.disabled = false;
+            deployBtn.innerHTML = 'Deploy Autonomous Agent 🚀';
+          }
+          restartBtn.style.display = 'none';
+        });
+      }
+
+      // Framework code tab switcher
+      const fwBtns = document.querySelectorAll('#framework-code-tabs .framework-tab-btn');
+      const fwSnippets = {
+        react: document.getElementById('code-snippet-react'),
+        vue: document.getElementById('code-snippet-vue'),
+        svelte: document.getElementById('code-snippet-svelte'),
+        html: document.getElementById('code-snippet-html')
+      };
+
+      fwBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-framework');
+          fwBtns.forEach(b => {
+            b.classList.remove('active');
+            b.style.border = '1px solid transparent';
+            b.style.background = 'transparent';
+            b.style.color = 'var(--ui-text-muted)';
+          });
+          btn.classList.add('active');
+          btn.style.border = '1px solid var(--ui-border-default)';
+          btn.style.background = 'var(--ui-bg-surface)';
+          btn.style.color = 'var(--ui-text-primary)';
+
+          Object.values(fwSnippets).forEach(snip => {
+            if (snip) snip.style.display = 'none';
+          });
+          if (fwSnippets[target]) {
+            fwSnippets[target].style.display = 'block';
+          }
+        });
+      });
+
+      // Framework copy button
+      const fwCopyBtn = document.getElementById('framework-copy-btn');
+      if (fwCopyBtn) {
+        fwCopyBtn.addEventListener('click', () => {
+          const activeSnippet = document.querySelector('.framework-snippet[style*="display: block"] pre code');
+          if (activeSnippet) {
+            navigator.clipboard.writeText(activeSnippet.textContent);
+            fwCopyBtn.textContent = '✓ Copied!';
+            setTimeout(() => fwCopyBtn.textContent = '📋 Copy', 2000);
+          }
+        });
+      }
+
+      // Interactive demo code copy button
+      const stepperCopyBtn = document.getElementById('stepper-copy-btn');
+      if (stepperCopyBtn) {
+        stepperCopyBtn.addEventListener('click', () => {
+          const codeEl = document.querySelector('.code-stage pre code');
+          if (codeEl) {
+            navigator.clipboard.writeText(codeEl.textContent);
+            stepperCopyBtn.textContent = '✓ Copied!';
+            setTimeout(() => stepperCopyBtn.textContent = '📋 Copy Code', 2000);
+          }
+        });
+      }
+
+      // Model select card radio styling
+      document.querySelectorAll('.model-select-card input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          document.querySelectorAll('.model-select-card').forEach(c => {
+            c.style.borderColor = 'var(--ui-border-default)';
+            c.style.background = 'var(--ui-bg-surface)';
+          });
+          const card = radio.closest('.model-select-card');
+          if (card) {
+            card.style.borderColor = 'var(--ui-color-brand-500)';
+            card.style.background = 'rgba(99, 102, 241, 0.08)';
+          }
+        });
+      });
+
+      // Copy endpoint button
+      document.querySelectorAll('.copy-endpoint-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText('https://api.nnui.dev/v1/agents/sentinel-prime');
+          btn.textContent = '✓';
+          setTimeout(() => btn.textContent = '📋', 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

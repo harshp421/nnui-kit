@@ -9,8 +9,13 @@
 When generating markup for NNUI-KIT:
 1. **Light-DOM First**: Never attempt to attach Shadow DOM. All child elements are regular Light-DOM elements.
 2. **Mutate Attributes, Never Nodes**: Components toggle `data-state`, `aria-selected`, `aria-expanded`, and `tabindex`. Reconcilers (React 19, Vue 3, Svelte 5) manage the DOM nodes.
-3. **No Wrapper Packages**: Write direct HTML/JSX custom element tags (`<nnui-tabs>`, `<nnui-combobox>`, etc.).
-4. **Standard Events**: All components dispatch lowercase standard events (`change`, `input`, `toggle`) with `event.detail.value`.
+3. **SSR & Hydration Safety (`nnui-kit/client`)**: When generating code for Next.js App Router, Remix, Nuxt, or SvelteKit, import `nnui-kit/client`. It safely no-ops during Node.js server pre-rendering and auto-upgrades elements during browser hydration.
+4. **First-Class React 18 & 19 Wrapper (`nnui-kit/react`)**: For idiomatic React code, import typed components directly: `import { Tabs, DataGrid, Stepper, Dialog, toast } from 'nnui-kit/react'`. They forward refs directly and bridge custom DOM events (`onChange`, `onSelectionChange`, `onSort`, `onOpen`, `onClose`).
+5. **Universal Custom Elements**: When not using the React wrapper, write direct HTML/JSX custom element tags (`<nnui-tabs>`, `<ui-tabs>`, `<ui-data-grid>`).
+6. **Standard Events**: All components dispatch lowercase standard events (`change`, `input`, `toggle`) with `event.detail.value`.
+7. **Declarative Persistence & Cross-Tab Sync**: Add `persist="url"` to automatically synchronize state with URL search params (e.g. data grids, tables, filters), `persist="session"` or `persist="local"` for storage persistence, and `sync="cross-tab"` for automatic real-time BroadcastChannel sync across browser tabs!
+8. **AI Introspection Protocol**: Every custom element implements `element.inspectAI()` returning its live schema, current state, and copy-paste ready framework snippets.
+9. **Container Adaptive Morphing**: Components use modern CSS `@container` queries; they automatically adapt between dense desktop layouts and single-column mobile views when placed in narrow containers.
 
 ---
 
@@ -304,7 +309,222 @@ When generating markup for NNUI-KIT:
 
 ---
 
-### O. Tier 0 Semantic Base Controls (Pure HTML + CSS, Zero-JS)
+### O. Virtualized Data Grid (`<nnui-data-grid>`)
+```html
+<nnui-data-grid row-height="40" overscan="6">
+  <div data-part="viewport" style="height: 480px;">
+    <div data-part="runway">
+      <table data-part="grid-table">
+        <thead></thead>
+        <tbody data-part="virtual-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div data-part="footer"></div>
+</nnui-data-grid>
+```
+* Tag: `<nnui-data-grid>` or `<ui-data-grid>`
+* Attributes: `row-height`, `overscan`, `sort-key`, `sort-dir`, `search`, `streaming`
+* JS Methods: `setColumns(cols)`, `setRows(rows)`, `appendRows(newRows)`, `setSearch(query)`, `exportCsv(filename)`
+* Events: `sort`, `selection-change`, `stream-update`
+
+---
+
+### P. Date Range Picker (`<nnui-date-range-picker>`)
+```html
+<nnui-date-range-picker start-date="2026-10-01" end-date="2026-10-15" placeholder="Select travel period..."></nnui-date-range-picker>
+```
+* Tag: `<nnui-date-range-picker>` or `<ui-date-range-picker>`
+* Attributes: `start-date`, `end-date`, `placeholder`, `open`, `disabled`
+* Events: `change` (`e.detail.start`, `e.detail.end`, `e.detail.range`)
+
+---
+
+### Q. Tags Input (`<nnui-tags-input>`)
+```html
+<nnui-tags-input tags="React,TypeScript,Tailwind" max-tags="8" placeholder="Add skill..."></nnui-tags-input>
+```
+* Tag: `<nnui-tags-input>` or `<ui-tags-input>`
+* Attributes: `tags`, `max-tags`, `placeholder`, `disabled`
+* Events: `change` (`e.detail.tags`, `e.detail.added`, `e.detail.removed`)
+
+---
+
+### R. Segmented Control (`<nnui-segmented-control>`)
+```html
+<nnui-segmented-control value="monthly" name="billing">
+  <button data-part="segment" data-value="daily">Daily</button>
+  <button data-part="segment" data-value="weekly">Weekly</button>
+  <button data-part="segment" data-value="monthly">Monthly</button>
+  <button data-part="segment" data-value="yearly">Yearly</button>
+</nnui-segmented-control>
+```
+* Tag: `<nnui-segmented-control>` or `<ui-segmented-control>`
+* Attributes: `value`, `name`, `disabled`
+* Events: `change` (`e.detail.value`, `e.detail.previousValue`)
+
+---
+
+### S. OTP / PIN Input (`<nnui-otp-input>`)
+```html
+<nnui-otp-input length="6" type="number">
+  <div data-part="container">
+    <input data-part="slot" data-index="0" maxlength="1" inputmode="numeric" />
+    <input data-part="slot" data-index="1" maxlength="1" inputmode="numeric" />
+    <input data-part="slot" data-index="2" maxlength="1" inputmode="numeric" />
+    <span data-part="separator">-</span>
+    <input data-part="slot" data-index="3" maxlength="1" inputmode="numeric" />
+    <input data-part="slot" data-index="4" maxlength="1" inputmode="numeric" />
+    <input data-part="slot" data-index="5" maxlength="1" inputmode="numeric" />
+  </div>
+</nnui-otp-input>
+```
+* Tag: `<nnui-otp-input>` or `<ui-otp-input>`
+* Attributes: `length`, `value`, `disabled`, `type`, `mask`
+* Events: `input`, `change` (`e.detail.value`, `e.detail.isComplete`)
+
+---
+
+### T. Stepper / Wizard (`<nnui-stepper>`)
+```html
+<nnui-stepper active-step="1" linear="true">
+  <ol data-part="steplist">
+    <li data-part="step" data-step="1">Account</li>
+    <li data-part="step" data-step="2">Profile</li>
+    <li data-part="step" data-step="3">Confirm</li>
+  </ol>
+  <div data-part="panel" data-step="1">Account credentials...</div>
+  <div data-part="panel" data-step="2">Profile details...</div>
+  <div data-part="panel" data-step="3">Confirmation review...</div>
+</nnui-stepper>
+```
+* Tag: `<nnui-stepper>` or `<ui-stepper>`
+* Attributes: `active-step`, `linear`, `orientation="horizontal|vertical"`
+* Methods: `.next()`, `.prev()`, `.goToStep(n)`
+* Events: `change` (`e.detail.step`, `e.detail.previousStep`)
+
+---
+
+### U. Resizable Split Panes (`<nnui-resizable>`)
+```html
+<nnui-resizable orientation="horizontal" style="height: 350px;">
+  <div data-part="panel" data-size="25">Sidebar navigation</div>
+  <div data-part="handle" role="separator" aria-valuenow="25"></div>
+  <div data-part="panel" data-size="75">Main content editor</div>
+</nnui-resizable>
+```
+* Tag: `<nnui-resizable>` or `<ui-resizable>`
+* Attributes: `orientation="horizontal|vertical"`, `disabled`
+* Events: `resize` (`e.detail.sizes`)
+
+---
+
+### V. File Upload & Dropzone (`<nnui-file-upload>`)
+```html
+<nnui-file-upload accept="image/*,.pdf" max-size="10485760" multiple>
+  <div data-part="dropzone">
+    <p>Drag files here or <button data-part="trigger" type="button">browse files</button></p>
+  </div>
+  <ul data-part="file-list"></ul>
+</nnui-file-upload>
+```
+* Tag: `<nnui-file-upload>` or `<ui-file-upload>`
+* Attributes: `accept`, `multiple`, `max-size`, `disabled`
+* Events: `change` (`e.detail.files`, `e.detail.rejectedFiles`)
+
+---
+
+### W. Context Menu (`<nnui-context-menu>`)
+```html
+<nnui-context-menu>
+  <div data-part="area">Right click anywhere inside this canvas</div>
+  <div data-part="menu" popover>
+    <button data-part="item" data-value="copy">Copy</button>
+    <button data-part="item" data-value="duplicate">Duplicate</button>
+    <button data-part="item" data-value="delete" data-variant="danger">Delete</button>
+  </div>
+</nnui-context-menu>
+```
+* Tag: `<nnui-context-menu>` or `<ui-context-menu>`
+* Attributes: `disabled`
+* Events: `open`, `close`, `select` (`e.detail.value`)
+
+---
+
+### X. Navigation Menu (`<nnui-navigation-menu>`)
+```html
+<nnui-navigation-menu delay="150">
+  <nav data-part="menubar">
+    <div data-part="item">
+      <button data-part="trigger">Solutions</button>
+      <div data-part="content" popover>
+        <a href="/enterprise">Enterprise</a>
+        <a href="/startups">Startups</a>
+      </div>
+    </div>
+  </nav>
+</nnui-navigation-menu>
+```
+* Tag: `<nnui-navigation-menu>` or `<ui-navigation-menu>`
+* Attributes: `delay`, `disabled`
+* Events: `open`, `close`
+
+---
+
+### Y. Tree View (`<nnui-tree-view>`)
+```html
+<nnui-tree-view selection-mode="single">
+  <ul data-part="tree">
+    <li data-part="item" data-value="src">
+      <span data-part="label">📁 src</span>
+      <ul data-part="group">
+        <li data-part="item" data-value="index.js"><span data-part="label">📄 index.js</span></li>
+      </ul>
+    </li>
+  </ul>
+</nnui-tree-view>
+```
+* Tag: `<nnui-tree-view>` or `<ui-tree-view>`
+* Attributes: `selection-mode="single|multiple"`, `disabled`
+* Events: `select` (`e.detail.value`), `toggle` (`e.detail.expanded`)
+
+---
+
+### Z. AI Prompt Box (`<nnui-ai-prompt-box>`)
+```html
+<nnui-ai-prompt-box max-rows="8" placeholder="Ask AI anything...">
+  <textarea data-part="input"></textarea>
+  <div data-part="toolbar">
+    <button data-part="attach-btn" type="button">📎</button>
+    <button data-part="submit-btn" type="button">Send</button>
+    <button data-part="stop-btn" type="button">Stop</button>
+  </div>
+</nnui-ai-prompt-box>
+```
+* Tag: `<nnui-ai-prompt-box>` or `<ui-ai-prompt-box>`
+* Attributes: `max-rows`, `loading`, `disabled`, `placeholder`
+* Events: `submit` (`e.detail.prompt`), `stop`, `input`
+
+---
+
+### AA. Color Picker (`<nnui-color-picker>`)
+```html
+<nnui-color-picker value="#3b82f6" name="theme-color">
+  <div data-part="swatch"></div>
+  <div data-part="popover" popover>
+    <input data-part="hex-input" />
+    <input data-part="hue-slider" type="range" min="0" max="360" />
+    <button data-part="eyedropper-btn" type="button">Pipette</button>
+  </div>
+</nnui-color-picker>
+```
+* Tag: `<nnui-color-picker>` or `<ui-color-picker>`
+* Attributes: `value`, `name`, `format`, `disabled`
+* Events: `change` (`e.detail.value`), `input`
+
+---
+
+### BB. Tier 0 Semantic Base Controls (Pure HTML + CSS, Zero-JS)
 ```html
 <!-- Buttons -->
 <button data-ui="button">Primary</button>
@@ -375,29 +595,129 @@ When generating markup for NNUI-KIT:
 <!-- Separator -->
 <hr data-ui="separator">
 <div data-part="separator-wrapper"><span data-part="separator-label">OR</span></div>
+
+<!-- Layout Primitives -->
+<div data-ui="container" data-size="lg">
+  <div data-ui="stack" data-direction="col" data-gap="4">
+    <div data-ui="grid" data-cols="3" data-gap="4">
+      <div data-ui="card">Grid Item 1</div>
+      <div data-ui="card">Grid Item 2</div>
+      <div data-ui="card">Grid Item 3</div>
+    </div>
+  </div>
+</div>
+
+<!-- Typography Primitives -->
+<h1 data-ui="heading" data-size="2xl">Design System Heading</h1>
+<p data-ui="text" data-variant="lead">Primary paragraph text</p>
+<p data-ui="text" data-variant="muted">Muted secondary text</p>
+<span data-ui="sr-only">Screen reader descriptive announcement</span>
+
+<!-- Feedback & Status Primitives -->
+<div data-ui="spinner" data-size="md" role="status" aria-label="Loading"></div>
+<div data-ui="empty">
+  <div data-ui="empty-icon">📂</div>
+  <h3 data-ui="empty-title">No projects found</h3>
+  <p data-ui="empty-description">Get started by creating your first project.</p>
+</div>
+
+<!-- Form Field Feedback -->
+<div data-ui="stack" data-direction="col" data-gap="1">
+  <label data-ui="label" for="email-in">Email</label>
+  <input data-ui="input" id="email-in" aria-describedby="email-hint" aria-invalid="true">
+  <span data-ui="field-error" id="email-err">Please enter a valid work email address</span>
+  <span data-ui="field-hint" id="email-hint">We will never share your email</span>
+</div>
 ```
 
 ---
 
-## 3. Framework Usage Quick Reference
+## 3. Design System Foundations & DTCG Tokens
 
-### React 19 JSX
+### CSS Native Palettes
+Apply any of the 6 production palettes on `<html>` or any sub-tree with zero JS:
+```html
+<html data-palette="violet" data-theme="dark">
+<!-- Options: "slate" | "violet" | "emerald" | "rose" | "blue" | "orange" -->
+```
+
+### DTCG Design Tokens (`tokens.json`)
+NNUI-KIT exports W3C Design Tokens Community Group specification at `nnui-kit/tokens.json` for bidirectional synchronization with Figma Token Studio, Style Dictionary, and design tooling:
+```json
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "color": { "brand": { "600": { "$type": "color", "$value": "#6366f1" } } }
+}
+```
+
+---
+
+## 4. Framework Usage Quick Reference
+
+### React 18 & 19 (Official Wrapper)
 ```jsx
-<nnui-combobox onChange={(e) => setVal(e.detail.value)}>
-  ...
-</nnui-combobox>
+import 'nnui-kit/client';
+import { toast } from 'nnui-kit';
+import { Tabs, DataGrid, Stepper } from 'nnui-kit/react';
+
+export function Dashboard() {
+  const [tab, setTab] = useState('blotter');
+  return (
+    <Tabs value={tab} onChange={(e) => setTab(e.detail.value)}>
+      <DataGrid row-height="40" persist="url" sync="cross-tab" />
+    </Tabs>
+  );
+}
 ```
 
-### Vue 3
-```html
-<nnui-tabs :value="tab" @change="tab = $event.detail.value">
-  ...
-</nnui-tabs>
+### Svelte 5 (Runes)
+```svelte
+<script>
+  import 'nnui-kit/css';
+  import 'nnui-kit/client';
+  let role = $state('engineer');
+</script>
+
+<ui-select name="role" required onchange={(e) => role = e.detail.value}>
+  <button type="button" data-part="trigger"><span data-part="value">Select...</span></button>
+  <ul data-part="listbox">
+    <li data-part="option" data-value="engineer">Software Engineer</li>
+  </ul>
+</ui-select>
 ```
 
-### Svelte 5
+### Vue 3 (Composition API)
 ```html
-<nnui-select name="category" onchange={(e) => cat = e.detail.value}>
-  ...
-</nnui-select>
+<script setup>
+import 'nnui-kit/css';
+import 'nnui-kit/client';
+import { ref } from 'vue';
+
+const tab = ref('overview');
+</script>
+
+<template>
+  <ui-tabs :value="tab" @change="tab = $event.detail.value">
+    <div data-part="tablist">
+      <button data-part="tab" data-value="overview">Overview</button>
+    </div>
+    <div data-part="tabpanel" data-value="overview">Content</div>
+  </ui-tabs>
+</template>
 ```
+
+### HTMX 2 (Hypermedia Form Swaps)
+```html
+<form hx-post="/api/order" hx-target="#blotter">
+  <ui-select name="venue" required>
+    <button type="button" data-part="trigger"><span data-part="value">Choose...</span></button>
+    <ul data-part="listbox">
+      <li data-part="option" data-value="nasdaq">NASDAQ</li>
+    </ul>
+  </ui-select>
+  <ui-slider name="rate" min="1" max="100" value="10"></ui-slider>
+  <button type="submit" data-ui="button">Submit Order</button>
+</form>
+```
+
+

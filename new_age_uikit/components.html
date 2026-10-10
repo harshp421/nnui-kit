@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Components Directory — NNUI-KIT</title>
-  <meta name="description" content="Explore and test universal Light-DOM components built with pure semantic HTML, CSS Anchor Positioning, and Micro-Enhancers.">
-  
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <meta name="description"
+    content="Explore and test universal Light-DOM components built with pure semantic HTML, CSS Anchor Positioning, and Micro-Enhancers.">
+
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
   <link rel="stylesheet" href="./src/styles/index.css">
   <link rel="stylesheet" href="./playground/docs.css">
   <link rel="stylesheet" href="./playground/components.css">
@@ -21,6 +26,7 @@
       gap: 1.5rem;
       margin-bottom: 3.5rem;
     }
+
     .gallery-card {
       border: 1px solid var(--ui-border-default);
       border-radius: var(--ui-radius-lg);
@@ -32,11 +38,13 @@
       text-decoration: none;
       color: inherit;
     }
+
     .gallery-card:hover {
       border-color: var(--ui-border-strong);
       transform: translateY(-2px);
       box-shadow: var(--ui-shadow-md);
     }
+
     .gallery-stage {
       padding: 2.25rem 1.5rem;
       background-color: var(--ui-bg-subtle);
@@ -46,24 +54,28 @@
       justify-content: center;
       min-height: 140px;
     }
+
     .gallery-content {
       padding: 1.25rem 1.5rem;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
+
     .gallery-title-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.35rem;
     }
+
     .gallery-title {
       font-size: 1.1rem;
       font-weight: 700;
       color: var(--ui-text-primary);
       margin: 0;
     }
+
     .gallery-desc {
       font-size: 0.85rem;
       color: var(--ui-text-secondary);
@@ -71,6 +83,7 @@
       margin: 0 0 1rem 0;
       flex: 1;
     }
+
     .gallery-link {
       font-size: 0.8rem;
       font-weight: 600;
@@ -81,13 +94,15 @@
     }
   </style>
 </head>
+
 <body class="docs-page">
 
   <!-- Top Navigation (Shadcn Style) -->
   <header class="docs-nav">
     <div class="docs-nav-left">
       <a href="./index.html" class="docs-logo">
-        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span
+          style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
         <span>NNUI-KIT</span>
         <span class="docs-logo-badge">Components</span>
       </a>
@@ -95,48 +110,71 @@
       <nav class="docs-nav-links">
         <a href="./docs.html" class="docs-nav-link">Documentation</a>
         <a href="./components.html" class="docs-nav-link active">Components</a>
+        <a href="./tokens.html" class="docs-nav-link">Design Tokens</a>
         <a href="./index.html" class="docs-nav-link">Home</a>
         <a href="./llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
       </nav>
     </div>
 
     <div class="docs-nav-right">
-      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+      <button class="docs-search-btn" type="button"
+        style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
         <span>🔍 Search...</span>
-        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+        <kbd
+          style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
       </button>
-      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+      <button id="components-theme-btn" class="ui-button ui-button--secondary"
+        style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
         ☀️ Light
       </button>
-      <a href="./docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+
+      <a href="./docs.html" class="ui-button"
+        style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
         Getting Started →
       </a>
     </div>
   </header>
 
   <div class="docs-wrapper">
-    <!-- Left Navigation Sidebar -->
+    <!-- Left Navigation Sidebar (Unified Canonical) -->
     <aside class="docs-sidebar">
-      <div>
+      <div class="sidebar-group">
         <div class="sidebar-group-title">Getting Started</div>
         <div class="sidebar-items">
+          <a href="./docs.html#introduction" class="sidebar-item">Introduction</a>
           <a href="./docs.html#installation" class="sidebar-item">Installation</a>
           <a href="./docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
           <a href="./docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
           <a href="./docs.html#architecture" class="sidebar-item">Architecture</a>
           <a href="./docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="./docs.html#form-validation" class="sidebar-item">Form Validation (RHF/Zod)</a>
           <a href="./docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
         </div>
       </div>
 
-      <div>
-        <div class="sidebar-group-title">Overview</div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Design System & Tokens</div>
         <div class="sidebar-items">
-          <a href="./components.html" class="sidebar-item active">All Components</a>
+          <a href="./tokens.html" class="sidebar-item"><span>Design Tokens Studio</span> <span
+              class="sidebar-badge-new">Live</span></a>
+          <a href="./docs.html#design-tokens" class="sidebar-item">Tokens & DTCG Standard</a>
+          <a href="./docs.html#color-palettes" class="sidebar-item">Color Palettes</a>
+          <a href="./docs.html#layout-primitives" class="sidebar-item">Layout (Stack, Grid)</a>
+          <a href="./docs.html#typography-system" class="sidebar-item">Typography System</a>
+          <a href="./docs.html#feedback-primitives" class="sidebar-item">Feedback & Status</a>
+          <a href="./docs.html#accessibility-standards" class="sidebar-item">Accessibility & Motion</a>
         </div>
       </div>
 
-      <div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Components Overview</div>
+        <div class="sidebar-items">
+          <a href="./components.html" class="sidebar-item active"><span>All Components Gallery</span> <span
+              class="sidebar-badge-counter">40</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
         <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
         <div class="sidebar-items">
           <a href="./components/button.html" class="sidebar-item">Button</a>
@@ -154,24 +192,50 @@
         </div>
       </div>
 
-      <div>
+      <div class="sidebar-group">
         <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
         <div class="sidebar-items">
-          <a href="./components/data-table.html" class="sidebar-item">Data Table</a>
-          <a href="./components/calendar.html" class="sidebar-item">Calendar</a>
-          <a href="./components/date-picker.html" class="sidebar-item">Date Picker</a>
-          <a href="./components/dropdown.html" class="sidebar-item">Dropdown Menu</a>
-          <a href="./components/toast.html" class="sidebar-item">Toast / Toaster</a>
-          <a href="./components/combobox.html" class="sidebar-item">Combobox</a>
-          <a href="./components/tabs.html" class="sidebar-item">Tabs</a>
-          <a href="./components/dialog.html" class="sidebar-item">Dialog</a>
-          <a href="./components/select.html" class="sidebar-item">Select</a>
-          <a href="./components/accordion.html" class="sidebar-item">Accordion</a>
-          <a href="./components/popover.html" class="sidebar-item">Popover</a>
-          <a href="./components/tooltip.html" class="sidebar-item">Tooltip</a>
-          <a href="./components/command.html" class="sidebar-item">Command Palette</a>
-          <a href="./components/sheet.html" class="sidebar-item">Sheet / Drawer</a>
-          <a href="./components/slider.html" class="sidebar-item">Slider</a>
+          <a href="./components/data-grid.html" class="sidebar-item"><span>Virtualized Data Grid</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/date-range-picker.html" class="sidebar-item"><span>Date Range Picker</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/tags-input.html" class="sidebar-item"><span>Tags Input</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/segmented-control.html" class="sidebar-item"><span>Segmented Control</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/otp-input.html" class="sidebar-item"><span>OTP / PIN Input</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/stepper.html" class="sidebar-item"><span>Stepper / Wizard</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/resizable.html" class="sidebar-item"><span>Resizable Split Pane</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/file-upload.html" class="sidebar-item"><span>File Upload & Dropzone</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/context-menu.html" class="sidebar-item"><span>Context Menu</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/navigation-menu.html" class="sidebar-item"><span>Navigation Menu</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/tree-view.html" class="sidebar-item"><span>Tree View</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/ai-prompt-box.html" class="sidebar-item"><span>AI Prompt Box</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/color-picker.html" class="sidebar-item"><span>Color Picker</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/data-table.html" class="sidebar-item"><span>Data Table</span></a>
+          <a href="./components/calendar.html" class="sidebar-item"><span>Calendar</span></a>
+          <a href="./components/date-picker.html" class="sidebar-item"><span>Date Picker</span></a>
+          <a href="./components/dropdown.html" class="sidebar-item"><span>Dropdown Menu</span></a>
+          <a href="./components/toast.html" class="sidebar-item"><span>Toast / Toaster</span></a>
+          <a href="./components/combobox.html" class="sidebar-item"><span>Combobox</span></a>
+          <a href="./components/tabs.html" class="sidebar-item"><span>Tabs</span></a>
+          <a href="./components/dialog.html" class="sidebar-item"><span>Dialog</span></a>
+          <a href="./components/select.html" class="sidebar-item"><span>Select</span></a>
+          <a href="./components/accordion.html" class="sidebar-item"><span>Accordion</span></a>
+          <a href="./components/popover.html" class="sidebar-item"><span>Popover</span></a>
+          <a href="./components/tooltip.html" class="sidebar-item"><span>Tooltip</span></a>
+          <a href="./components/command.html" class="sidebar-item"><span>Command Palette</span></a>
+          <a href="./components/sheet.html" class="sidebar-item"><span>Sheet / Drawer</span></a>
+          <a href="./components/slider.html" class="sidebar-item"><span>Slider</span></a>
         </div>
       </div>
     </aside>
@@ -187,7 +251,8 @@
         </div>
         <h1 class="component-view-title">Components Directory</h1>
         <p class="component-view-desc">
-          Explore all 27 universal Light-DOM components. Click on any component to view its dedicated interactive playground, anatomy breakdown, code snippets, and complete API table.
+          Explore all 40 universal Light-DOM components. Click on any component to view its dedicated interactive
+          playground, anatomy breakdown, code snippets, and complete API table.
         </p>
       </div>
 
@@ -196,8 +261,10 @@
       <!-- ======================================================== -->
       <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
         <div>
-          <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--ui-text-primary); margin: 0;">Tier 0: Pure Semantic Primitives</h2>
-          <p style="font-size: 0.875rem; color: var(--ui-text-secondary); margin: 0.25rem 0 0 0;">Zero-JS first paint controls styled with defensive cascade layers (@layer ui.base).</p>
+          <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--ui-text-primary); margin: 0;">Tier 0: Pure
+            Semantic Primitives</h2>
+          <p style="font-size: 0.875rem; color: var(--ui-text-secondary); margin: 0.25rem 0 0 0;">Zero-JS first paint
+            controls styled with defensive cascade layers (@layer ui.base).</p>
         </div>
         <span class="component-link-badge">12 Components</span>
       </div>
@@ -294,7 +361,8 @@
               <h3 class="gallery-title">Card</h3>
               <span data-ui="badge">Zero JS</span>
             </div>
-            <p class="gallery-desc">Structured content container with header, title, body content, and action footer.</p>
+            <p class="gallery-desc">Structured content container with header, title, body content, and action footer.
+            </p>
             <span class="gallery-link">Explore Card →</span>
           </div>
         </a>
@@ -302,7 +370,8 @@
         <!-- Avatar -->
         <a href="./components/avatar.html" class="gallery-card">
           <div class="gallery-stage" style="gap: 1rem;">
-            <div data-ui="avatar"><span data-part="avatar-fallback">HP</span><span data-part="avatar-status"></span></div>
+            <div data-ui="avatar"><span data-part="avatar-fallback">HP</span><span data-part="avatar-status"></span>
+            </div>
             <div data-ui="avatar" data-size="sm"><span data-part="avatar-fallback">AI</span></div>
           </div>
           <div class="gallery-content">
@@ -310,7 +379,8 @@
               <h3 class="gallery-title">Avatar</h3>
               <span data-ui="badge">Zero JS</span>
             </div>
-            <p class="gallery-desc">User avatars with initials fallback, online/busy status dots, and group stacking.</p>
+            <p class="gallery-desc">User avatars with initials fallback, online/busy status dots, and group stacking.
+            </p>
             <span class="gallery-link">Explore Avatar →</span>
           </div>
         </a>
@@ -318,7 +388,8 @@
         <!-- Alert -->
         <a href="./components/alert.html" class="gallery-card">
           <div class="gallery-stage" style="width: 100%;">
-            <div data-ui="alert" data-variant="success" style="margin: 0; width: 100%; max-width: 240px; padding: 0.5rem 0.75rem;">
+            <div data-ui="alert" data-variant="success"
+              style="margin: 0; width: 100%; max-width: 240px; padding: 0.5rem 0.75rem;">
               <span data-part="alert-icon">✓</span>
               <div data-part="alert-content">
                 <span data-part="alert-title" style="font-size: 0.8rem;">Live Alert</span>
@@ -330,7 +401,8 @@
               <h3 class="gallery-title">Alert</h3>
               <span data-ui="badge">Zero JS</span>
             </div>
-            <p class="gallery-desc">Callouts and feedback banners for default, success, warning, and destructive notices.</p>
+            <p class="gallery-desc">Callouts and feedback banners for default, success, warning, and destructive
+              notices.</p>
             <span class="gallery-link">Explore Alert →</span>
           </div>
         </a>
@@ -347,7 +419,8 @@
               <h3 class="gallery-title">Progress</h3>
               <span data-ui="badge">Zero JS</span>
             </div>
-            <p class="gallery-desc">Accessible completion indicators using native HTML &lt;progress&gt; and custom bars.</p>
+            <p class="gallery-desc">Accessible completion indicators using native HTML &lt;progress&gt; and custom bars.
+            </p>
             <span class="gallery-link">Explore Progress →</span>
           </div>
         </a>
@@ -356,8 +429,18 @@
         <a href="./components/table.html" class="gallery-card">
           <div class="gallery-stage" style="width: 100%; padding: 0.75rem;">
             <table data-ui="table" style="font-size: 0.75rem; width: 100%;">
-              <thead><tr><th>Item</th><th style="text-align: right;">Price</th></tr></thead>
-              <tbody><tr><td>Pro License</td><td style="text-align: right;">$49</td></tr></tbody>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th style="text-align: right;">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Pro License</td>
+                  <td style="text-align: right;">$49</td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <div class="gallery-content">
@@ -372,7 +455,8 @@
 
         <!-- Skeleton -->
         <a href="./components/skeleton.html" class="gallery-card">
-          <div class="gallery-stage" style="display: flex; gap: 0.75rem; align-items: center; width: 100%; max-width: 200px;">
+          <div class="gallery-stage"
+            style="display: flex; gap: 0.75rem; align-items: center; width: 100%; max-width: 200px;">
             <div data-ui="skeleton" data-shape="circle" style="width: 32px; height: 32px; flex-shrink: 0;"></div>
             <div style="flex: 1; display: flex; flex-direction: column; gap: 0.35rem;">
               <div data-ui="skeleton" style="height: 12px; width: 80%;"></div>
@@ -412,17 +496,92 @@
       <!-- ======================================================== -->
       <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
         <div>
-          <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--ui-text-primary); margin: 0;">Tier 2: Interactive Micro-Enhancers</h2>
-          <p style="font-size: 0.875rem; color: var(--ui-text-secondary); margin: 0.25rem 0 0 0;">Light-DOM custom elements enforcing "Mutate Attributes, Never Nodes".</p>
+          <h2 style="font-size: 1.4rem; font-weight: 700; color: var(--ui-text-primary); margin: 0;">Tier 2: Interactive
+            Micro-Enhancers</h2>
+          <p style="font-size: 0.875rem; color: var(--ui-text-secondary); margin: 0.25rem 0 0 0;">Light-DOM custom
+            elements enforcing "Mutate Attributes, Never Nodes".</p>
         </div>
-        <span class="component-link-badge">10 Components</span>
+        <span class="component-link-badge">28 Components</span>
       </div>
 
       <div class="component-grid">
+        <!-- Virtualized Data Grid -->
+        <a href="./components/data-grid.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div
+              style="width: 220px; font-size: 0.75rem; border: 1px solid var(--ui-border-default); border-radius: 4px; overflow: hidden; background: var(--ui-bg-surface);">
+              <div
+                style="display: flex; justify-content: space-between; padding: 0.25rem 0.5rem; background: var(--ui-bg-subtle); border-bottom: 1px solid var(--ui-border-subtle); font-weight: 600;">
+                <span>Asset</span><span>Price</span><span>Status</span>
+              </div>
+              <div
+                style="display: flex; justify-content: space-between; padding: 0.25rem 0.5rem; border-bottom: 1px solid var(--ui-border-subtle);">
+                <span>BTC</span><span>$64,250</span><span style="color: var(--ui-color-success-500);">Live</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 0.25rem 0.5rem;">
+                <span>ETH</span><span>$3,420</span><span style="color: var(--ui-color-success-500);">Live</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Virtualized Data Grid</h3>
+              <span class="component-link-badge">&gt;100k Rows</span>
+            </div>
+            <p class="gallery-desc">Enterprise virtualized grid streaming &gt;10,000 rows at 60 FPS with sorting,
+              selection, and CSV export.</p>
+            <span class="gallery-link">Explore Data Grid →</span>
+          </div>
+        </a>
+
+        <!-- Date Range Picker -->
+        <a href="./components/date-range-picker.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div
+              style="display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.65rem; border: 1px solid var(--ui-border-default); border-radius: 6px; background: var(--ui-bg-surface); font-size: 0.75rem;">
+              <span>📅 Oct 01 → Oct 15</span>
+              <span>▾</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Date Range Picker</h3>
+              <span class="component-link-badge">Dual Month</span>
+            </div>
+            <p class="gallery-desc">APG dual-calendar range selector with hover highlight and quick preset shortcuts.
+            </p>
+            <span class="gallery-link">Explore Range Picker →</span>
+          </div>
+        </a>
+
+        <!-- Tags Input -->
+        <a href="./components/tags-input.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div
+              style="display: flex; gap: 0.25rem; flex-wrap: wrap; max-width: 200px; padding: 0.25rem 0.4rem; border: 1px solid var(--ui-border-default); border-radius: 6px; background: var(--ui-bg-surface);">
+              <span
+                style="font-size: 0.7rem; padding: 0.15rem 0.4rem; background: var(--ui-bg-subtle); border-radius: 3px;">React
+                ×</span>
+              <span
+                style="font-size: 0.7rem; padding: 0.15rem 0.4rem; background: var(--ui-bg-subtle); border-radius: 3px;">Vite
+                ×</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Tags Input</h3>
+              <span class="component-link-badge">Chip Editor</span>
+            </div>
+            <p class="gallery-desc">Multi-token tag input with keyboard removal, duplicate validation, and form binding.
+            </p>
+            <span class="gallery-link">Explore Tags Input →</span>
+          </div>
+        </a>
         <!-- Combobox -->
         <a href="./components/combobox.html" class="gallery-card">
           <div class="gallery-stage">
-            <div style="width: 180px; padding: 0.4rem 0.6rem; border: 1px solid var(--ui-border-default); border-radius: 6px; background: var(--ui-bg-surface); font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-muted);">
+            <div
+              style="width: 180px; padding: 0.4rem 0.6rem; border: 1px solid var(--ui-border-default); border-radius: 6px; background: var(--ui-bg-surface); font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-muted);">
               <span>Search...</span>
               <span>▼</span>
             </div>
@@ -440,8 +599,11 @@
         <!-- Tabs -->
         <a href="./components/tabs.html" class="gallery-card">
           <div class="gallery-stage">
-            <div style="display: flex; gap: 0.25rem; background: var(--ui-bg-surface); padding: 0.25rem; border-radius: 6px; border: 1px solid var(--ui-border-default);">
-              <span style="font-size: 0.75rem; padding: 0.2rem 0.6rem; background: var(--ui-bg-subtle); border-radius: 4px; font-weight: 600; color: var(--ui-text-primary);">Tab 1</span>
+            <div
+              style="display: flex; gap: 0.25rem; background: var(--ui-bg-surface); padding: 0.25rem; border-radius: 6px; border: 1px solid var(--ui-border-default);">
+              <span
+                style="font-size: 0.75rem; padding: 0.2rem 0.6rem; background: var(--ui-bg-subtle); border-radius: 4px; font-weight: 600; color: var(--ui-text-primary);">Tab
+                1</span>
               <span style="font-size: 0.75rem; padding: 0.2rem 0.6rem; color: var(--ui-text-muted);">Tab 2</span>
             </div>
           </div>
@@ -450,7 +612,8 @@
               <h3 class="gallery-title">Tabs</h3>
               <span class="component-link-badge">Tier 2</span>
             </div>
-            <p class="gallery-desc">Accessible layered tab panels with roving tabindex and horizontal/vertical modes.</p>
+            <p class="gallery-desc">Accessible layered tab panels with roving tabindex and horizontal/vertical modes.
+            </p>
             <span class="gallery-link">Explore Tabs →</span>
           </div>
         </a>
@@ -465,7 +628,8 @@
               <h3 class="gallery-title">Dialog</h3>
               <span class="component-link-badge">Tier 1 & 2</span>
             </div>
-            <p class="gallery-desc">Browser-native &lt;dialog&gt; modal with backdrop blur, focus trap, and Esc dismiss.</p>
+            <p class="gallery-desc">Browser-native &lt;dialog&gt; modal with backdrop blur, focus trap, and Esc dismiss.
+            </p>
             <span class="gallery-link">Explore Dialog →</span>
           </div>
         </a>
@@ -473,7 +637,8 @@
         <!-- Select -->
         <a href="./components/select.html" class="gallery-card">
           <div class="gallery-stage">
-            <div style="width: 160px; padding: 0.4rem 0.6rem; border: 1px solid var(--ui-border-default); border-radius: 6px; background: var(--ui-bg-surface); font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-primary);">
+            <div
+              style="width: 160px; padding: 0.4rem 0.6rem; border: 1px solid var(--ui-border-default); border-radius: 6px; background: var(--ui-bg-surface); font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-primary);">
               <span>Select option</span>
               <span>▾</span>
             </div>
@@ -491,7 +656,8 @@
         <!-- Accordion -->
         <a href="./components/accordion.html" class="gallery-card">
           <div class="gallery-stage" style="width: 100%; padding: 0 1.5rem;">
-            <div style="border: 1px solid var(--ui-border-default); border-radius: 6px; width: 100%; background: var(--ui-bg-surface); padding: 0.5rem 0.75rem; font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-primary);">
+            <div
+              style="border: 1px solid var(--ui-border-default); border-radius: 6px; width: 100%; background: var(--ui-bg-surface); padding: 0.5rem 0.75rem; font-size: 0.8rem; display: flex; justify-content: space-between; color: var(--ui-text-primary);">
               <span>Accordion Item</span>
               <span>›</span>
             </div>
@@ -539,7 +705,8 @@
         <!-- Command Palette -->
         <a href="./components/command.html" class="gallery-card">
           <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-surface); border: 1px solid var(--ui-border); padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.75rem; color: var(--ui-text-muted);">
+            <div
+              style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-surface); border: 1px solid var(--ui-border); padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.75rem; color: var(--ui-text-muted);">
               <span>⌘K</span>
               <span>Search actions...</span>
             </div>
@@ -572,9 +739,12 @@
         <!-- Slider -->
         <a href="./components/slider.html" class="gallery-card">
           <div class="gallery-stage" style="width: 80%; padding: 0 1rem;">
-            <div style="width: 100%; height: 6px; background: var(--ui-border); border-radius: 9999px; position: relative;">
+            <div
+              style="width: 100%; height: 6px; background: var(--ui-border); border-radius: 9999px; position: relative;">
               <div style="width: 60%; height: 100%; background: var(--ui-primary); border-radius: 9999px;"></div>
-              <div style="width: 14px; height: 14px; border-radius: 50%; background: #ffffff; position: absolute; left: calc(60% - 7px); top: -4px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>
+              <div
+                style="width: 14px; height: 14px; border-radius: 50%; background: #ffffff; position: absolute; left: calc(60% - 7px); top: -4px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">
+              </div>
             </div>
           </div>
           <div class="gallery-content">
@@ -590,7 +760,8 @@
         <!-- Dropdown Menu -->
         <a href="./components/dropdown.html" class="gallery-card">
           <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
-            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); padding: 0.5rem 0.85rem; font-size: 0.8rem; box-shadow: var(--ui-shadow-md); display: flex; align-items: center; justify-content: space-between; width: 140px;">
+            <div
+              style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); padding: 0.5rem 0.85rem; font-size: 0.8rem; box-shadow: var(--ui-shadow-md); display: flex; align-items: center; justify-content: space-between; width: 140px;">
               <span>Options</span>
               <span style="font-size: 0.65rem; opacity: 0.6;">▼</span>
             </div>
@@ -600,7 +771,8 @@
               <h3 class="gallery-title">Dropdown Menu</h3>
               <span class="component-link-badge">Tier 2</span>
             </div>
-            <p class="gallery-desc">Accessible roving keyboard navigation menu with items, shortcuts, and separators.</p>
+            <p class="gallery-desc">Accessible roving keyboard navigation menu with items, shortcuts, and separators.
+            </p>
             <span class="gallery-link">Explore Dropdown →</span>
           </div>
         </a>
@@ -608,7 +780,8 @@
         <!-- Toast / Notifications -->
         <a href="./components/toast.html" class="gallery-card">
           <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
-            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); padding: 0.5rem 0.85rem; font-size: 0.75rem; box-shadow: var(--ui-shadow-lg); display: flex; align-items: center; gap: 0.5rem;">
+            <div
+              style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-md); padding: 0.5rem 0.85rem; font-size: 0.75rem; box-shadow: var(--ui-shadow-lg); display: flex; align-items: center; gap: 0.5rem;">
               <span style="color: var(--ui-color-success-500); font-size: 0.85rem;">✓</span>
               <span>Changes saved</span>
             </div>
@@ -618,7 +791,8 @@
               <h3 class="gallery-title">Toast / Toaster</h3>
               <span class="component-link-badge">Tier 2</span>
             </div>
-            <p class="gallery-desc">Stacked notification system with imperative toast() helper, actions, and auto-dismiss.</p>
+            <p class="gallery-desc">Stacked notification system with imperative toast() helper, actions, and
+              auto-dismiss.</p>
             <span class="gallery-link">Explore Toast →</span>
           </div>
         </a>
@@ -626,8 +800,10 @@
         <!-- Data Table -->
         <a href="./components/data-table.html" class="gallery-card">
           <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column; width: 85%;">
-            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 4px; overflow: hidden; width: 100%;">
-              <div style="background: var(--ui-bg-surface-elevated); padding: 0.25rem 0.5rem; font-size: 0.65rem; border-bottom: 1px solid var(--ui-border-default); display: flex; justify-content: space-between;">
+            <div
+              style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 4px; overflow: hidden; width: 100%;">
+              <div
+                style="background: var(--ui-bg-surface-elevated); padding: 0.25rem 0.5rem; font-size: 0.65rem; border-bottom: 1px solid var(--ui-border-default); display: flex; justify-content: space-between;">
                 <span>Invoice ⇅</span>
                 <span>Amount ⇅</span>
               </div>
@@ -650,10 +826,13 @@
         <!-- Calendar -->
         <a href="./components/calendar.html" class="gallery-card">
           <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
-            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.4rem 0.6rem; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+            <div
+              style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.4rem 0.6rem; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
               <span style="font-weight: 600; font-size: 0.75rem;">Oct 2026</span>
-              <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; font-size: 0.6rem; opacity: 0.7;">
-                <span>1</span><span>2</span><span style="background: var(--ui-color-brand-600); color: var(--ui-text-inverted); border-radius: 2px; padding: 0 2px;">3</span><span>4</span><span>5</span>
+              <div
+                style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; font-size: 0.6rem; opacity: 0.7;">
+                <span>1</span><span>2</span><span
+                  style="background: var(--ui-color-brand-600); color: var(--ui-text-inverted); border-radius: 2px; padding: 0 2px;">3</span><span>4</span><span>5</span>
               </div>
             </div>
           </div>
@@ -670,7 +849,8 @@
         <!-- Date Picker -->
         <a href="./components/date-picker.html" class="gallery-card">
           <div class="gallery-stage" style="gap: 0.5rem; flex-direction: column;">
-            <div style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.45rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.4rem; box-shadow: var(--ui-shadow-sm);">
+            <div
+              style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.45rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.4rem; box-shadow: var(--ui-shadow-sm);">
               <span>📅</span>
               <span>Oct 3, 2026</span>
             </div>
@@ -684,6 +864,213 @@
             <span class="gallery-link">Explore Date Picker →</span>
           </div>
         </a>
+
+        <!-- Segmented Control -->
+        <a href="./components/segmented-control.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div
+              style="display: flex; gap: 0.2rem; background: var(--ui-bg-surface); padding: 0.25rem; border-radius: 6px; border: 1px solid var(--ui-border-default);">
+              <span
+                style="font-size: 0.7rem; padding: 0.2rem 0.5rem; background: var(--ui-bg-subtle); border-radius: 4px; font-weight: 600; color: var(--ui-text-primary);">Day</span>
+              <span style="font-size: 0.7rem; padding: 0.2rem 0.5rem; color: var(--ui-text-muted);">Week</span>
+              <span style="font-size: 0.7rem; padding: 0.2rem 0.5rem; color: var(--ui-text-muted);">Month</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Segmented Control</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Sliding pill iOS/macOS toggle with animated indicator and arrow navigation.</p>
+            <span class="gallery-link">Explore Segmented Control →</span>
+          </div>
+        </a>
+
+        <!-- OTP / PIN Input -->
+        <a href="./components/otp-input.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.35rem;">
+            <span
+              style="width: 28px; height: 32px; border: 1px solid var(--ui-border-default); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; background: var(--ui-bg-surface);">4</span>
+            <span
+              style="width: 28px; height: 32px; border: 1px solid var(--ui-border-default); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; background: var(--ui-bg-surface);">2</span>
+            <span
+              style="width: 28px; height: 32px; border: 1px solid var(--ui-color-brand-500); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; background: var(--ui-bg-surface);">1</span>
+            <span
+              style="width: 28px; height: 32px; border: 1px solid var(--ui-border-default); border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; background: var(--ui-bg-surface);">•</span>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">OTP / PIN Input</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Multi-digit authentication PIN input with auto-advance and clipboard paste.</p>
+            <span class="gallery-link">Explore OTP Input →</span>
+          </div>
+        </a>
+
+        <!-- Stepper / Wizard -->
+        <a href="./components/stepper.html" class="gallery-card">
+          <div class="gallery-stage" style="gap: 0.5rem; align-items: center;">
+            <span
+              style="width: 22px; height: 22px; border-radius: 50%; background: var(--ui-color-success-500); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700;">✓</span>
+            <span style="width: 30px; height: 2px; background: var(--ui-color-success-500);"></span>
+            <span
+              style="width: 22px; height: 22px; border-radius: 50%; background: var(--ui-color-brand-600); color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700;">2</span>
+            <span style="width: 30px; height: 2px; background: var(--ui-border-default);"></span>
+            <span
+              style="width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--ui-border-default); color: var(--ui-text-muted); display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem;">3</span>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Stepper / Wizard</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Linear multi-step wizard with step completion validation and cross-tab sync.</p>
+            <span class="gallery-link">Explore Stepper →</span>
+          </div>
+        </a>
+
+        <!-- Resizable Split Pane -->
+        <a href="./components/resizable.html" class="gallery-card">
+          <div class="gallery-stage" style="width: 80%;">
+            <div
+              style="display: flex; width: 100%; border: 1px solid var(--ui-border-default); border-radius: 6px; overflow: hidden; height: 48px;">
+              <div
+                style="flex: 1; background: var(--ui-bg-surface); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--ui-text-muted);">
+                Pane 1</div>
+              <div style="width: 4px; background: var(--ui-color-brand-500); cursor: col-resize;"></div>
+              <div
+                style="flex: 1.5; background: var(--ui-bg-subtle); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--ui-text-muted);">
+                Pane 2</div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Resizable Split Pane</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Draggable split view layout with min/max constraints and keyboard arrow sizing.</p>
+            <span class="gallery-link">Explore Resizable →</span>
+          </div>
+        </a>
+
+        <!-- File Upload & Dropzone -->
+        <a href="./components/file-upload.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div
+              style="border: 2px dashed var(--ui-border-default); border-radius: 6px; padding: 0.75rem 1.25rem; text-align: center; font-size: 0.75rem; color: var(--ui-text-muted);">
+              📁 Drag &amp; drop files here
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">File Upload &amp; Dropzone</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Drag-and-drop file upload with mime filtering, size validation, and preview cards.
+            </p>
+            <span class="gallery-link">Explore File Upload →</span>
+          </div>
+        </a>
+
+        <!-- Context Menu -->
+        <a href="./components/context-menu.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div
+              style="background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.4rem; font-size: 0.75rem; box-shadow: var(--ui-shadow-md); min-width: 120px;">
+              <div style="padding: 0.2rem 0.4rem; border-radius: 4px; background: var(--ui-bg-subtle);">Inspect ⌘I</div>
+              <div style="padding: 0.2rem 0.4rem; color: var(--ui-text-muted);">Copy Link</div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Context Menu</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Desktop-class right-click contextual action menu anchored to cursor coordinates.</p>
+            <span class="gallery-link">Explore Context Menu →</span>
+          </div>
+        </a>
+
+        <!-- Navigation Menu -->
+        <a href="./components/navigation-menu.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div style="display: flex; gap: 0.75rem; font-size: 0.8rem; font-weight: 500; align-items: center;">
+              <span style="color: var(--ui-color-brand-400);">Products ▾</span>
+              <span style="color: var(--ui-text-muted);">Docs</span>
+              <span style="color: var(--ui-text-muted);">Pricing</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Navigation Menu</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Header navigation with animated mega-menu hover flyouts and delay timers.</p>
+            <span class="gallery-link">Explore Navigation Menu →</span>
+          </div>
+        </a>
+
+        <!-- Tree View -->
+        <a href="./components/tree-view.html" class="gallery-card">
+          <div class="gallery-stage" style="align-items: flex-start; padding: 1rem 1.5rem;">
+            <div style="font-size: 0.75rem; font-family: var(--ui-font-mono); color: var(--ui-text-primary);">
+              <div>▼ 📁 src</div>
+              <div style="padding-left: 1rem; color: var(--ui-text-muted);">▼ 📁 components</div>
+              <div style="padding-left: 2rem; color: var(--ui-color-brand-400);">📄 index.js</div>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Tree View</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Hierarchical folder tree with recursive expansion, multiselect, and arrow roving
+              focus.</p>
+            <span class="gallery-link">Explore Tree View →</span>
+          </div>
+        </a>
+
+        <!-- AI Prompt Box -->
+        <a href="./components/ai-prompt-box.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div
+              style="width: 85%; border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.5rem 0.75rem; background: var(--ui-bg-surface); font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="color: var(--ui-text-muted);">Ask AI anything...</span>
+              <span style="color: var(--ui-color-brand-500); font-weight: 700;">▲</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">AI Prompt Box</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">AI prompt composer with autosizing textarea, file attachments, and draft autosave.
+            </p>
+            <span class="gallery-link">Explore AI Prompt Box →</span>
+          </div>
+        </a>
+
+        <!-- Color Picker -->
+        <a href="./components/color-picker.html" class="gallery-card">
+          <div class="gallery-stage">
+            <div
+              style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.35rem 0.65rem; border-radius: 6px;">
+              <span
+                style="width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(135deg, #6366f1, #ec4899); display: inline-block;"></span>
+              <span style="font-size: 0.75rem; font-family: var(--ui-font-mono);">#6366f1</span>
+            </div>
+          </div>
+          <div class="gallery-content">
+            <div class="gallery-title-row">
+              <h3 class="gallery-title">Color Picker</h3>
+              <span class="sidebar-badge-new">New</span>
+            </div>
+            <p class="gallery-desc">Color selection canvas with hue slider, alpha channel, hex inputs, and eyedropper.
+            </p>
+            <span class="gallery-link">Explore Color Picker →</span>
+          </div>
+        </a>
       </div>
 
     </main>
@@ -691,4 +1078,5 @@
 
   <script type="module" src="./playground/components.js"></script>
 </body>
+
 </html>

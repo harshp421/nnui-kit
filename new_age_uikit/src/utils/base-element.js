@@ -7,7 +7,12 @@
  * 2. Mutate Attributes, Never Nodes: V-DOM safe (React 19, Vue 3, Svelte 5).
  * 3. Lifecycle-safe event listener registration and cleanup.
  */
-export class BaseLightElement extends HTMLElement {
+// SSR-safe fallback when running in Node.js / Next.js Server Components
+const SafeBaseElement = typeof globalThis.HTMLElement !== 'undefined'
+  ? globalThis.HTMLElement
+  : class FakeHTMLElement {};
+
+export class BaseLightElement extends SafeBaseElement {
   constructor() {
     super();
     this._cleanups = [];
@@ -76,7 +81,8 @@ export class BaseLightElement extends HTMLElement {
    * Standardized native lowercase event dispatcher.
    */
   dispatch(type, detail = {}) {
-    const event = new CustomEvent(type, {
+    const CustomEventCtor = this.ownerDocument?.defaultView?.CustomEvent || (typeof window !== 'undefined' && window.CustomEvent) || CustomEvent;
+    const event = new CustomEventCtor(type, {
       bubbles: true,
       composed: true,
       cancelable: true,
@@ -85,18 +91,52 @@ export class BaseLightElement extends HTMLElement {
     return this.dispatchEvent(event);
   }
 
+  dispatchCustomEvent(type, detail = {}) {
+    return this.dispatch(type, detail);
+  }
+
   /**
    * Helper to set attribute without triggering unnecessary DOM thrashing.
+   * Supports both (node, name, value) and (name, value) where node defaults to this.
    */
-  setAttributeSafe(node, name, value) {
-    if (!node) return;
-    if (value === null || value === false) {
-      if (node.hasAttribute(name)) node.removeAttribute(name);
+  setAttributeSafe(nodeOrName, nameOrValue, value) {
+    let node = this;
+    let attrName = nodeOrName;
+    let val = nameOrValue;
+
+    if (value !== undefined) {
+      node = nodeOrName;
+      attrName = nameOrValue;
+      val = value;
+    }
+
+    if (!node || typeof node.setAttribute !== 'function') return;
+    if (val === null || val === false) {
+      if (node.hasAttribute(attrName)) node.removeAttribute(attrName);
     } else {
-      const stringVal = value === true ? '' : String(value);
-      if (node.getAttribute(name) !== stringVal) {
-        node.setAttribute(name, stringVal);
+      const stringVal = val === true ? '' : String(val);
+      if (node.getAttribute(attrName) !== stringVal) {
+        node.setAttribute(attrName, stringVal);
       }
+    }
+  }
+
+  /**
+   * Helper to safely remove attribute without triggering unnecessary DOM thrashing.
+   * Supports both (node, name) and (name) where node defaults to this.
+   */
+  removeAttributeSafe(nodeOrName, name) {
+    let node = this;
+    let attrName = nodeOrName;
+
+    if (name !== undefined) {
+      node = nodeOrName;
+      attrName = name;
+    }
+
+    if (!node || typeof node.removeAttribute !== 'function') return;
+    if (node.hasAttribute(attrName)) {
+      node.removeAttribute(attrName);
     }
   }
 
@@ -111,4 +151,71 @@ export class BaseLightElement extends HTMLElement {
       );
     }
   }
+
+  /**
+   * Machine-Readable AI Component Introspection Protocol
+   * Exposes live schema, ARIA state, attributes, state snapshots, and framework
+   * snippets directly to AI coding agents (Claude, Cursor, Copilot, Antigravity)
+   * and developer tooling.
+   */
+  inspectAI() {
+    const tag = this.tagName.toLowerCase();
+    const observedAttrs = this.constructor.observedAttributes || [];
+
+    // Live attributes
+    const liveAttrs = {};
+    if (this.attributes) {
+      for (const attr of this.attributes) {
+        liveAttrs[attr.name] = attr.value;
+      }
+    }
+
+    // Inspect child parts
+    const parts = Array.from(this.querySelectorAll ? this.querySelectorAll('[data-part]') : []).map(el => el.getAttribute('data-part'));
+    const uniqueParts = Array.from(new Set(parts));
+
+    // Get current state snapshot
+    const state = typeof this.getAiState === 'function' ? this.getAiState() : { ...liveAttrs };
+
+    const result = {
+      protocol: 'nnui.ai.v1',
+      tag,
+      version: '1.0.0',
+      isLightDom: true,
+      schema: {
+        observedAttributes: observedAttrs,
+        parts: uniqueParts,
+        hasPersistence: this.hasAttribute ? this.hasAttribute('persist') : false,
+        persistenceMode: this.getAttribute ? (this.getAttribute('persist') || null) : null,
+        isCrossTabSynced: this.hasAttribute ? this.hasAttribute('sync') : false,
+      },
+      liveState: state,
+      frameworkSnippets: {
+        html: `<${tag}${Object.entries(liveAttrs).map(([k, v]) => ` ${k}="${v}"`).join('')}></${tag}>`,
+        react19: `<${tag}${Object.entries(liveAttrs).map(([k, v]) => ` ${k}="${v}"`).join('')} />`,
+        vue: `<${tag}${Object.entries(liveAttrs).map(([k, v]) => ` ${k}="${v}"`).join('')} />`,
+        svelte: `<${tag}${Object.entries(liveAttrs).map(([k, v]) => ` ${k}="${v}"`).join('')} />`
+      },
+      diagnostics: typeof this.validateAiMarkup === 'function' ? this.validateAiMarkup() : []
+    };
+
+    // Make thenable so both synchronous property access (.protocol) and Promise calls (.then(...)) work
+    result.then = function(onFulfilled, onRejected) {
+      try {
+        const val = typeof onFulfilled === 'function' ? onFulfilled(result) : result;
+        return Promise.resolve(val);
+      } catch (err) {
+        if (typeof onRejected === 'function') {
+          return Promise.resolve(onRejected(err));
+        }
+        return Promise.reject(err);
+      }
+    };
+    result.catch = function(onRejected) {
+      return result.then(null, onRejected);
+    };
+
+    return result;
+  }
 }
+

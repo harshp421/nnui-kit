@@ -115,14 +115,27 @@ async function handleInit(cwd) {
     }
   }
 
-  // Write tokens.css and components.css
+  // Write tokens.css, base.css, and components.css
   const tokensPath = path.join(componentsDir, 'tokens.css');
   fs.writeFileSync(tokensPath, reg.common['tokens.css'], 'utf-8');
   console.log(`  \x1b[32m✓\x1b[0m Created ${path.relative(cwd, tokensPath)}`);
 
+  if (reg.common['base.css']) {
+    const baseCssPath = path.join(componentsDir, 'base.css');
+    fs.writeFileSync(baseCssPath, reg.common['base.css'], 'utf-8');
+    console.log(`  \x1b[32m✓\x1b[0m Created ${path.relative(cwd, baseCssPath)}`);
+  }
+
   const componentsCssPath = path.join(componentsDir, 'components.css');
   fs.writeFileSync(componentsCssPath, reg.common['components.css'], 'utf-8');
   console.log(`  \x1b[32m✓\x1b[0m Created ${path.relative(cwd, componentsCssPath)}`);
+
+  // Write tokens.json (W3C DTCG Specification)
+  if (reg.common['tokens.json']) {
+    const tokensJsonPath = path.join(cwd, 'tokens.json');
+    fs.writeFileSync(tokensJsonPath, reg.common['tokens.json'], 'utf-8');
+    console.log(`  \x1b[32m✓\x1b[0m Created ${path.relative(cwd, tokensJsonPath)} (W3C DTCG Token Specification)`);
+  }
 
   // Write nnui.json
   const configPath = path.join(cwd, 'nnui.json');
@@ -130,7 +143,7 @@ async function handleInit(cwd) {
   console.log(`  \x1b[32m✓\x1b[0m Created ${path.relative(cwd, configPath)}`);
 
   console.log('\n\x1b[32mSuccess!\x1b[0m NNUI-KIT initialized. You can now add components:');
-  console.log('  \x1b[36mnpx nnui add dropdown toast dialog tabs\x1b[0m\n');
+  console.log('  \x1b[36mnpx nnui add dropdown toast dialog tabs stack grid\x1b[0m\n');
 }
 
 // Command: add

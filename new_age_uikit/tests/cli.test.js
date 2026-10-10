@@ -37,6 +37,8 @@ try {
   assert(fs.existsSync(path.join(testProjectDir, 'nnui.json')), 'nnui.json must be created');
   assert(fs.existsSync(path.join(testProjectDir, 'components/ui/utils/base-element.js')), 'base-element.js must be created');
   assert(fs.existsSync(path.join(testProjectDir, 'components/ui/tokens.css')), 'tokens.css must be created');
+  assert(fs.existsSync(path.join(testProjectDir, 'components/ui/base.css')), 'base.css must be created');
+  assert(fs.existsSync(path.join(testProjectDir, 'tokens.json')), 'tokens.json must be created');
   console.log('  ✓ CLI init command passed');
 
   // Test 3: nnui add dropdown toast

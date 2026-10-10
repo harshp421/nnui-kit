@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resizable — NNUI-KIT</title>
+  <meta name="description" content="Accessible resizable panel layout with draggable dividers and keyboard resizing in Light-DOM.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+    <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../tokens.html" class="docs-nav-link">Design Tokens</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+        <!-- Left Navigation Sidebar (Unified Canonical) -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#introduction" class="sidebar-item">Introduction</a>
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#form-validation" class="sidebar-item">Form Validation (RHF/Zod)</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Design System & Tokens</div>
+        <div class="sidebar-items">
+          <a href="../tokens.html" class="sidebar-item"><span>Design Tokens Studio</span> <span class="sidebar-badge-new">Live</span></a>
+          <a href="../docs.html#design-tokens" class="sidebar-item">Tokens & DTCG Standard</a>
+          <a href="../docs.html#color-palettes" class="sidebar-item">Color Palettes</a>
+          <a href="../docs.html#layout-primitives" class="sidebar-item">Layout (Stack, Grid)</a>
+          <a href="../docs.html#typography-system" class="sidebar-item">Typography System</a>
+          <a href="../docs.html#feedback-primitives" class="sidebar-item">Feedback & Status</a>
+          <a href="../docs.html#accessibility-standards" class="sidebar-item">Accessibility & Motion</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Components Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item"><span>All Components Gallery</span> <span class="sidebar-badge-counter">30</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-grid.html" class="sidebar-item"><span>Virtualized Data Grid</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./date-range-picker.html" class="sidebar-item"><span>Date Range Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./tags-input.html" class="sidebar-item"><span>Tags Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./segmented-control.html" class="sidebar-item"><span>Segmented Control</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./otp-input.html" class="sidebar-item"><span>OTP / PIN Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./stepper.html" class="sidebar-item"><span>Stepper / Wizard</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./resizable.html" class="sidebar-item active"><span>Resizable Split Pane</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./file-upload.html" class="sidebar-item"><span>File Upload & Dropzone</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./context-menu.html" class="sidebar-item"><span>Context Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./navigation-menu.html" class="sidebar-item"><span>Navigation Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./tree-view.html" class="sidebar-item"><span>Tree View</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./ai-prompt-box.html" class="sidebar-item"><span>AI Prompt Box</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./color-picker.html" class="sidebar-item"><span>Color Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./data-table.html" class="sidebar-item"><span>Data Table</span></a>
+          <a href="./calendar.html" class="sidebar-item"><span>Calendar</span></a>
+          <a href="./date-picker.html" class="sidebar-item"><span>Date Picker</span></a>
+          <a href="./dropdown.html" class="sidebar-item"><span>Dropdown Menu</span></a>
+          <a href="./toast.html" class="sidebar-item"><span>Toast / Toaster</span></a>
+          <a href="./combobox.html" class="sidebar-item"><span>Combobox</span></a>
+          <a href="./tabs.html" class="sidebar-item"><span>Tabs</span></a>
+          <a href="./dialog.html" class="sidebar-item"><span>Dialog</span></a>
+          <a href="./select.html" class="sidebar-item"><span>Select</span></a>
+          <a href="./accordion.html" class="sidebar-item"><span>Accordion</span></a>
+          <a href="./popover.html" class="sidebar-item"><span>Popover</span></a>
+          <a href="./tooltip.html" class="sidebar-item"><span>Tooltip</span></a>
+          <a href="./command.html" class="sidebar-item"><span>Command Palette</span></a>
+          <a href="./sheet.html" class="sidebar-item"><span>Sheet / Drawer</span></a>
+          <a href="./slider.html" class="sidebar-item"><span>Slider</span></a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <div class="docs-breadcrumb">
+        <span>Components</span>
+        <span>/</span>
+        <span>Tier 2: Micro-Enhancers</span>
+        <span>/</span>
+        <span style="color: var(--ui-text-primary); font-weight: 500;">Resizable Panes</span>
+      </div>
+
+      <div style="display: flex; align-items: baseline; gap: 1rem; margin-top: 0.5rem;">
+        <h1 class="docs-title" style="margin: 0;">Resizable Panes</h1>
+        <span data-ui="badge" data-variant="secondary">Split Layout</span>
+      </div>
+      <p class="docs-subtitle">
+        Accessible multi-panel layout with draggable separator handles, pointer capture, and keyboard resizing in Light-DOM.
+      </p>
+
+      <!-- Live Interactive Stage with Preview/Code Tab Switcher -->
+      <section id="interactive-demo" style="margin: 2.5rem 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0;">Interactive Demo</h3>
+          <span style="font-size: 0.8rem; color: var(--ui-text-muted);">Drag handle or focus and press Left/Right Arrow keys</span>
+        </div>
+
+        <div id="preview" class="preview-card">
+          <div class="preview-card-tabs">
+            <div class="preview-tab-group">
+              <button class="preview-tab-btn active" data-view="preview">Preview</button>
+              <button class="preview-tab-btn" data-view="code">Code</button>
+            </div>
+            <button class="copy-btn" id="resizable-copy-btn">📋 Copy</button>
+          </div>
+
+          <div class="preview-stage" style="padding: 2rem; min-height: 320px; display: block;">
+            <ui-resizable orientation="horizontal" style="height: 280px; width: 100%;">
+              <div data-part="panel" data-size="30" style="background: var(--ui-bg-subtle);">
+                <h4 style="margin-top: 0;">Navigation Panel</h4>
+                <p style="font-size: 0.85rem; color: var(--ui-text-muted);">Folders, explorer tree, and workspace files.</p>
+              </div>
+              <div data-part="handle" title="Drag or use arrow keys"></div>
+              <div data-part="panel" data-size="70">
+                <h4 style="margin-top: 0;">Main Editor Canvas</h4>
+                <p style="font-size: 0.85rem; color: var(--ui-text-muted);">Main viewport content area. Drag the divider to smoothly adjust proportions.</p>
+              </div>
+            </ui-resizable>
+          </div>
+
+          <div class="code-stage">
+            <pre class="code-pre"><code>&lt;!-- Platform-Native Resizable Split Panes --&gt;
+&lt;ui-resizable orientation="horizontal" style="height: 300px;"&gt;
+  &lt;div data-part="panel" data-size="30"&gt;Sidebar&lt;/div&gt;
+  &lt;div data-part="handle"&gt;&lt;/div&gt;
+  &lt;div data-part="panel" data-size="70"&gt;Editor Content&lt;/div&gt;
+&lt;/ui-resizable&gt;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- API Reference -->
+      <section id="api-reference" style="margin: 3rem 0;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">API Reference</h3>
+        <div data-part="table-container">
+          <table data-ui="table">
+            <thead>
+              <tr>
+                <th>Attribute / Prop</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>orientation</code></td>
+                <td><code>"horizontal" | "vertical"</code></td>
+                <td><code>"horizontal"</code></td>
+                <td>Layout splitting axis.</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Disables handle dragging.</td>
+              </tr>
+              <tr>
+                <td><code>onResize</code></td>
+                <td><code>CustomEvent</code></td>
+                <td>-</td>
+                <td>Dispatched on size changes: <code>{ sizes: number[] }</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#interactive-demo" class="toc-link">Interactive Demo</a>
+        <a href="#api-reference" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+</body>
+</html>

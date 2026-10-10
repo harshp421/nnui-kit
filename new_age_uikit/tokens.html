@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-palette="violet">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Tokens & System — NNUI-KIT</title>
+  <meta name="description" content="Interactive Design System & W3C DTCG Token Studio for NNUI-KIT. Test color scales, WCAG 2.1 contrast, typography, layout primitives, and motion curves.">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./src/styles/index.css">
+  <link rel="stylesheet" href="./playground/docs.css">
+  <style>
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .swatch-card {
+      border: 1px solid var(--ui-border-default);
+      border-radius: var(--ui-radius-lg);
+      background: var(--ui-bg-surface);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--ui-transition-fast);
+      cursor: pointer;
+    }
+    .swatch-card:hover {
+      border-color: var(--ui-border-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--ui-shadow-md);
+    }
+    .swatch-preview {
+      height: 90px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .swatch-meta {
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      background: var(--ui-bg-surface);
+    }
+    .contrast-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .contrast-pass {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .contrast-fail {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .physics-track {
+      position: relative;
+      height: 90px;
+      background: var(--ui-bg-subtle);
+      border: 1px solid var(--ui-border-default);
+      border-radius: var(--ui-radius-lg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+    }
+    .physics-ball {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400));
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 0.85rem;
+      transform: translateX(0);
+      will-change: transform;
+    }
+    .spacing-bar {
+      height: 24px;
+      background: var(--ui-color-brand-600);
+      border-radius: 4px;
+      opacity: 0.85;
+      transition: width 0.3s ease;
+    }
+    .elevation-box {
+      background: var(--ui-bg-surface-elevated);
+      border: 1px solid var(--ui-border-default);
+      border-radius: var(--ui-radius-lg);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all var(--ui-transition-fast);
+    }
+    .palette-pill-btn {
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid var(--ui-border-default);
+      background: var(--ui-bg-surface);
+      color: var(--ui-text-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all var(--ui-transition-fast);
+    }
+    .palette-pill-btn.active {
+      border-color: var(--ui-color-brand-600);
+      background: var(--ui-bg-subtle);
+      box-shadow: 0 0 0 2px var(--ui-color-brand-600);
+    }
+    .palette-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body class="docs-page">
+
+        <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="./index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Design Tokens</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="./docs.html" class="docs-nav-link">Documentation</a>
+        <a href="./components.html" class="docs-nav-link">Components</a>
+        <a href="./tokens.html" class="docs-nav-link active">Design Tokens</a>
+        <a href="./index.html" class="docs-nav-link">Home</a>
+        <a href="./llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="tokens-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      
+      <button id="copy-tokens-json-btn" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+        Export tokens.json ↗
+      </button>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+                <!-- Left Navigation Sidebar (Unified Canonical) -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="./docs.html#introduction" class="sidebar-item">Introduction</a>
+          <a href="./docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="./docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="./docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="./docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="./docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="./docs.html#form-validation" class="sidebar-item">Form Validation (RHF/Zod)</a>
+          <a href="./docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Design System & Tokens</div>
+        <div class="sidebar-items">
+          <a href="./tokens.html" class="sidebar-item active"><span>Design Tokens Studio</span> <span class="sidebar-badge-new">Live</span></a>
+          <a href="./docs.html#design-tokens" class="sidebar-item">Tokens & DTCG Standard</a>
+          <a href="./docs.html#color-palettes" class="sidebar-item">Color Palettes</a>
+          <a href="./docs.html#layout-primitives" class="sidebar-item">Layout (Stack, Grid)</a>
+          <a href="./docs.html#typography-system" class="sidebar-item">Typography System</a>
+          <a href="./docs.html#feedback-primitives" class="sidebar-item">Feedback & Status</a>
+          <a href="./docs.html#accessibility-standards" class="sidebar-item">Accessibility & Motion</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Components Overview</div>
+        <div class="sidebar-items">
+          <a href="./components.html" class="sidebar-item"><span>All Components Gallery</span> <span class="sidebar-badge-counter">30</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./components/button.html" class="sidebar-item">Button</a>
+          <a href="./components/badge.html" class="sidebar-item">Badge</a>
+          <a href="./components/input.html" class="sidebar-item">Input & Field</a>
+          <a href="./components/checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./components/switch.html" class="sidebar-item">Switch</a>
+          <a href="./components/card.html" class="sidebar-item">Card</a>
+          <a href="./components/avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./components/alert.html" class="sidebar-item">Alert</a>
+          <a href="./components/progress.html" class="sidebar-item">Progress</a>
+          <a href="./components/table.html" class="sidebar-item">Table</a>
+          <a href="./components/skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./components/separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./components/data-grid.html" class="sidebar-item"><span>Virtualized Data Grid</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/date-range-picker.html" class="sidebar-item"><span>Date Range Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/tags-input.html" class="sidebar-item"><span>Tags Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/segmented-control.html" class="sidebar-item"><span>Segmented Control</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/otp-input.html" class="sidebar-item"><span>OTP / PIN Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/stepper.html" class="sidebar-item"><span>Stepper / Wizard</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/resizable.html" class="sidebar-item"><span>Resizable Split Pane</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/file-upload.html" class="sidebar-item"><span>File Upload & Dropzone</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/context-menu.html" class="sidebar-item"><span>Context Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/navigation-menu.html" class="sidebar-item"><span>Navigation Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/tree-view.html" class="sidebar-item"><span>Tree View</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/ai-prompt-box.html" class="sidebar-item"><span>AI Prompt Box</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/color-picker.html" class="sidebar-item"><span>Color Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./components/data-table.html" class="sidebar-item"><span>Data Table</span></a>
+          <a href="./components/calendar.html" class="sidebar-item"><span>Calendar</span></a>
+          <a href="./components/date-picker.html" class="sidebar-item"><span>Date Picker</span></a>
+          <a href="./components/dropdown.html" class="sidebar-item"><span>Dropdown Menu</span></a>
+          <a href="./components/toast.html" class="sidebar-item"><span>Toast / Toaster</span></a>
+          <a href="./components/combobox.html" class="sidebar-item"><span>Combobox</span></a>
+          <a href="./components/tabs.html" class="sidebar-item"><span>Tabs</span></a>
+          <a href="./components/dialog.html" class="sidebar-item"><span>Dialog</span></a>
+          <a href="./components/select.html" class="sidebar-item"><span>Select</span></a>
+          <a href="./components/accordion.html" class="sidebar-item"><span>Accordion</span></a>
+          <a href="./components/popover.html" class="sidebar-item"><span>Popover</span></a>
+          <a href="./components/tooltip.html" class="sidebar-item"><span>Tooltip</span></a>
+          <a href="./components/command.html" class="sidebar-item"><span>Command Palette</span></a>
+          <a href="./components/sheet.html" class="sidebar-item"><span>Sheet / Drawer</span></a>
+          <a href="./components/slider.html" class="sidebar-item"><span>Slider</span></a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="docs-main-container">
+
+      <!-- ======================================================== -->
+      <!-- 1. ARCHITECTURE & DTCG SPECIFICATION                     -->
+      <!-- ======================================================== -->
+      <section id="token-architecture">
+        <div class="docs-breadcrumb">
+          <span>Design System</span>
+          <span>/</span>
+          <span>Tokens</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Architecture</span>
+        </div>
+
+        <h1 class="docs-title">Design Tokens & System Architecture</h1>
+        <p class="docs-subtitle">
+          Token taxonomy conforming to the W3C Design Tokens Community Group (DTCG) specification. Bridging Figma Token Studio and CSS custom properties with zero drift.
+        </p>
+
+        <!-- 3-Tier Hierarchy Cards -->
+        <div data-ui="grid" data-cols="3" data-gap="4" style="margin: 2rem 0;">
+          <div data-ui="card" style="padding: 1.5rem;">
+            <span data-ui="badge" style="margin-bottom: 0.75rem;">Tier 1</span>
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Reference Tokens</h3>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.5;">
+              Raw scale definitions: Zinc 50-950, Spacing 1-24, Easing cubic-beziers. Unopinionated mathematical constants.
+            </p>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem;">
+            <span data-ui="badge" data-variant="secondary" style="margin-bottom: 0.75rem;">Tier 2</span>
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">System / Semantic</h3>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.5;">
+              Role-based bindings: <code>--ui-bg-surface</code>, <code>--ui-text-primary</code>, <code>--ui-border-focus</code>. Automatically invert in dark mode.
+            </p>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem;">
+            <span data-ui="badge" data-variant="outline" style="margin-bottom: 0.75rem;">Tier 3</span>
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Component Tokens</h3>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.5;">
+              Component-scoped variables: <code>--ui-button-height</code>, <code>--ui-calendar-cell-size</code>. Fully customizable without breaking cascade layers.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 2. COLOR PALETTES & WCAG CONTRAST STUDIO                 -->
+      <!-- ======================================================== -->
+      <section id="palette-studio">
+        <div class="docs-breadcrumb">
+          <span>Design System</span>
+          <span>/</span>
+          <span>Tokens</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Color Studio</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Color Palettes & WCAG 2.1 Contrast</h2>
+        <p class="docs-subtitle">
+          Six production palettes declared directly in CSS. Click any palette pill to preview real-time token adaptation and live accessibility contrast scores.
+        </p>
+
+        <!-- Interactive Palette Selectors -->
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 1.5rem 0;" id="palette-pill-container">
+          <button class="palette-pill-btn" data-palette="slate">
+            <span class="palette-dot" style="background: #64748b;"></span> Slate
+          </button>
+          <button class="palette-pill-btn active" data-palette="violet">
+            <span class="palette-dot" style="background: #8b5cf6;"></span> Violet
+          </button>
+          <button class="palette-pill-btn" data-palette="emerald">
+            <span class="palette-dot" style="background: #10b981;"></span> Emerald
+          </button>
+          <button class="palette-pill-btn" data-palette="rose">
+            <span class="palette-dot" style="background: #f43f5e;"></span> Rose
+          </button>
+          <button class="palette-pill-btn" data-palette="blue">
+            <span class="palette-dot" style="background: #3b82f6;"></span> Blue
+          </button>
+          <button class="palette-pill-btn" data-palette="orange">
+            <span class="palette-dot" style="background: #f97316;"></span> Orange
+          </button>
+        </div>
+
+        <!-- Live Contrast Card -->
+        <div data-ui="card" style="padding: 1.75rem; margin-bottom: 2rem; background: var(--ui-bg-subtle);">
+          <div data-ui="stack" data-direction="row" data-justify="between" data-align="center" style="margin-bottom: 1.5rem;">
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0 0 0.25rem 0;" id="active-palette-title">Violet Palette Contrast</h3>
+              <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0;">Automated WCAG 2.1 AA & AAA luminance contrast verification.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+              <span class="contrast-badge contrast-pass" id="badge-contrast-text">Text: 13.8:1 (AAA Pass)</span>
+              <span class="contrast-badge contrast-pass" id="badge-contrast-brand">Brand: 5.2:1 (AA Pass)</span>
+            </div>
+          </div>
+
+          <!-- Component Test Bar -->
+          <div data-ui="stack" data-direction="row" data-gap="3" data-align="center" style="flex-wrap: wrap;">
+            <button class="ui-button">Primary Brand Action</button>
+            <button class="ui-button ui-button--secondary">Secondary Neutral</button>
+            <button class="ui-button ui-button--outline">Outline Action</button>
+            <span data-ui="badge">Active Badge</span>
+            <div data-ui="spinner" data-size="sm" role="status" aria-label="Loading"></div>
+          </div>
+        </div>
+
+        <!-- Color Swatches Grid -->
+        <h4 style="font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 0.5rem 0;">Palette Swatches (Click to copy token)</h4>
+        <div class="token-grid" id="color-swatches-grid">
+          <!-- Populated by tokens.js -->
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 3. TYPOGRAPHY SYSTEM STUDIO                              -->
+      <!-- ======================================================== -->
+      <section id="typography-studio">
+        <div class="docs-breadcrumb">
+          <span>Design System</span>
+          <span>/</span>
+          <span>Tokens</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Typography</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Typography Scale & Optical Tracking</h2>
+        <p class="docs-subtitle">
+          Proportional type scale with tight tracking on display headings and relaxed line heights on sustained body copy.
+        </p>
+
+        <!-- Live Sample Input -->
+        <div style="margin: 1.5rem 0;">
+          <label data-ui="label" for="type-sample-input">Test Custom Copy:</label>
+          <input data-ui="input" id="type-sample-input" value="Design systems empower cross-functional teams to build at speed." style="margin-top: 0.5rem; font-size: 1rem;">
+        </div>
+
+        <!-- Typography Table / Live Display -->
+        <div data-ui="stack" data-direction="col" data-gap="4" style="margin: 2rem 0;">
+          
+          <div data-ui="card" style="padding: 1.5rem;">
+            <div data-ui="stack" data-direction="row" data-justify="between" data-align="center" style="margin-bottom: 0.75rem;">
+              <span data-ui="badge">4XL Display — 36px / 2.25rem</span>
+              <code style="font-size: 0.75rem; color: var(--ui-text-muted);">tracking: -0.035em | line-height: 1.15</code>
+            </div>
+            <div class="type-preview-text" data-ui="heading" data-size="4xl" style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.035em; line-height: 1.15;">
+              Design systems empower cross-functional teams to build at speed.
+            </div>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem;">
+            <div data-ui="stack" data-direction="row" data-justify="between" data-align="center" style="margin-bottom: 0.75rem;">
+              <span data-ui="badge">2XL Heading — 24px / 1.5rem</span>
+              <code style="font-size: 0.75rem; color: var(--ui-text-muted);">tracking: -0.025em | line-height: 1.25</code>
+            </div>
+            <div class="type-preview-text" data-ui="heading" data-size="2xl">
+              Design systems empower cross-functional teams to build at speed.
+            </div>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem;">
+            <div data-ui="stack" data-direction="row" data-justify="between" data-align="center" style="margin-bottom: 0.75rem;">
+              <span data-ui="badge">LG Section — 18px / 1.125rem</span>
+              <code style="font-size: 0.75rem; color: var(--ui-text-muted);">tracking: -0.015em | line-height: 1.35</code>
+            </div>
+            <div class="type-preview-text" data-ui="heading" data-size="lg">
+              Design systems empower cross-functional teams to build at speed.
+            </div>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem;">
+            <div data-ui="stack" data-direction="row" data-justify="between" data-align="center" style="margin-bottom: 0.75rem;">
+              <span data-ui="badge">Base Body — 16px / 1.0rem</span>
+              <code style="font-size: 0.75rem; color: var(--ui-text-muted);">line-height: 1.5</code>
+            </div>
+            <div class="type-preview-text" data-ui="text" data-variant="body">
+              Design systems empower cross-functional teams to build at speed.
+            </div>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem;">
+            <div data-ui="stack" data-direction="row" data-justify="between" data-align="center" style="margin-bottom: 0.75rem;">
+              <span data-ui="badge">SM Muted — 14px / 0.875rem</span>
+              <code style="font-size: 0.75rem; color: var(--ui-text-muted);">color: var(--ui-text-secondary)</code>
+            </div>
+            <div class="type-preview-text" data-ui="text" data-variant="muted">
+              Design systems empower cross-functional teams to build at speed.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 4. SPACING & ELEVATION MATRIX                            -->
+      <!-- ======================================================== -->
+      <section id="spacing-matrix">
+        <div class="docs-breadcrumb">
+          <span>Design System</span>
+          <span>/</span>
+          <span>Tokens</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Spacing & Elevation</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Spacing & Elevation Matrix</h2>
+        <p class="docs-subtitle">
+          Predictable 4px baseline rhythm tokens and layered elevation shadows.
+        </p>
+
+        <!-- Elevation Shadows Grid -->
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 2rem 0 1rem 0;">Layered Depth (Box Shadows)</h3>
+        <div data-ui="grid" data-cols="4" data-gap="4" style="margin-bottom: 3rem;">
+          <div class="elevation-box" style="box-shadow: var(--ui-shadow-sm);">
+            <div style="font-weight: 700; margin-bottom: 0.25rem;">Shadow SM</div>
+            <code style="font-size: 0.75rem; color: var(--ui-text-secondary);">Cards & Inputs</code>
+          </div>
+          <div class="elevation-box" style="box-shadow: var(--ui-shadow-md);">
+            <div style="font-weight: 700; margin-bottom: 0.25rem;">Shadow MD</div>
+            <code style="font-size: 0.75rem; color: var(--ui-text-secondary);">Hover states</code>
+          </div>
+          <div class="elevation-box" style="box-shadow: var(--ui-shadow-lg);">
+            <div style="font-weight: 700; margin-bottom: 0.25rem;">Shadow LG</div>
+            <code style="font-size: 0.75rem; color: var(--ui-text-secondary);">Dropdown menus</code>
+          </div>
+          <div class="elevation-box" style="box-shadow: var(--ui-shadow-popover);">
+            <div style="font-weight: 700; margin-bottom: 0.25rem;">Shadow Popover</div>
+            <code style="font-size: 0.75rem; color: var(--ui-text-secondary);">Modals & Dialogs</code>
+          </div>
+        </div>
+
+        <!-- Spacing Scale -->
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 2rem 0 1rem 0;">Spacing Scale (4px Base Grid)</h3>
+        <div data-ui="card" style="padding: 1.5rem;">
+          <div data-ui="stack" data-direction="col" data-gap="3" id="spacing-scale-container">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 5. MOTION PHYSICS & SPRING SIMULATOR                     -->
+      <!-- ======================================================== -->
+      <section id="motion-simulator">
+        <div class="docs-breadcrumb">
+          <span>Design System</span>
+          <span>/</span>
+          <span>Tokens</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Motion</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Motion Physics & Easing Simulator</h2>
+        <p class="docs-subtitle">
+          Test interactive physics easing curves. Click any curve button to trigger spring physics on the orb.
+        </p>
+
+        <!-- Interactive Physics Playground -->
+        <div data-ui="card" style="padding: 1.75rem; margin: 2rem 0;">
+          <div data-ui="stack" data-direction="row" data-justify="between" data-align="center" style="margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div data-ui="stack" data-direction="row" data-gap="2">
+              <button class="ui-button" id="trigger-spring-btn">🏎️ Spring (0.16, 1, 0.3, 1)</button>
+              <button class="ui-button ui-button--secondary" id="trigger-bounce-btn">🏀 Bounce (0.34, 1.56, 0.64, 1)</button>
+              <button class="ui-button ui-button--outline" id="trigger-ease-btn">🌊 Smooth Ease-in-out</button>
+            </div>
+            
+            <label style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; cursor: pointer;">
+              <input type="checkbox" id="reduced-motion-toggle">
+              <span>Simulate Reduced Motion (WCAG 2.1 AA)</span>
+            </label>
+          </div>
+
+          <!-- Motion Track -->
+          <div class="physics-track">
+            <div class="physics-ball" id="motion-ball">▲</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 6. LAYOUT PRIMITIVES SANDBOX                             -->
+      <!-- ======================================================== -->
+      <section id="layout-sandbox">
+        <div class="docs-breadcrumb">
+          <span>Design System</span>
+          <span>/</span>
+          <span>Tokens</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Layout Sandbox</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Layout Primitives Interactive Sandbox</h2>
+        <p class="docs-subtitle">
+          Experiment with <code>[data-ui="stack"]</code> and <code>[data-ui="grid"]</code>. The live code updates automatically for immediate copy-pasting.
+        </p>
+
+        <div data-ui="grid" data-cols="2" data-gap="4" style="margin: 2rem 0;">
+          <!-- Controls Panel -->
+          <div data-ui="card" style="padding: 1.5rem;">
+            <h4 style="margin: 0 0 1rem 0; font-size: 1rem;">Stack Configuration</h4>
+            
+            <div data-ui="stack" data-direction="col" data-gap="3">
+              <div>
+                <label data-ui="label" style="margin-bottom: 0.35rem; display: block;">Direction:</label>
+                <div data-ui="stack" data-direction="row" data-gap="2">
+                  <button class="ui-button ui-button--secondary stack-dir-btn active" data-dir="row">Row (Horizontal)</button>
+                  <button class="ui-button ui-button--secondary stack-dir-btn" data-dir="col">Col (Vertical)</button>
+                </div>
+              </div>
+
+              <div>
+                <label data-ui="label" style="margin-bottom: 0.35rem; display: block;">Gap Token:</label>
+                <div data-ui="stack" data-direction="row" data-gap="2">
+                  <button class="ui-button ui-button--secondary stack-gap-btn" data-gap="1">1 (4px)</button>
+                  <button class="ui-button ui-button--secondary stack-gap-btn" data-gap="2">2 (8px)</button>
+                  <button class="ui-button ui-button--secondary stack-gap-btn active" data-gap="4">4 (16px)</button>
+                  <button class="ui-button ui-button--secondary stack-gap-btn" data-gap="6">6 (24px)</button>
+                </div>
+              </div>
+
+              <div>
+                <label data-ui="label" style="margin-bottom: 0.35rem; display: block;">Justify Content:</label>
+                <div data-ui="stack" data-direction="row" data-gap="2">
+                  <button class="ui-button ui-button--secondary stack-justify-btn active" data-justify="start">Start</button>
+                  <button class="ui-button ui-button--secondary stack-justify-btn" data-justify="center">Center</button>
+                  <button class="ui-button ui-button--secondary stack-justify-btn" data-justify="between">Between</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Render Area -->
+          <div data-ui="card" style="padding: 1.5rem; display: flex; flex-direction: column;">
+            <h4 style="margin: 0 0 1rem 0; font-size: 1rem;">Live Canvas</h4>
+            <div style="border: 1px dashed var(--ui-border-default); border-radius: var(--ui-radius-md); padding: 1.25rem; min-height: 180px; flex: 1; background: var(--ui-bg-subtle);">
+              <div id="live-sandbox-stack" data-ui="stack" data-direction="row" data-gap="4" data-justify="start" data-align="center">
+                <div data-ui="card" style="padding: 1rem; text-align: center; min-width: 80px;">Box A</div>
+                <div data-ui="card" style="padding: 1rem; text-align: center; min-width: 80px;">Box B</div>
+                <div data-ui="card" style="padding: 1rem; text-align: center; min-width: 80px;">Box C</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Generated Code -->
+        <div class="code-container">
+          <div class="code-header">
+            <span>Generated HTML</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code id="sandbox-code-preview">&lt;div data-ui="stack" data-direction="row" data-gap="4" data-justify="start" data-align="center"&gt;
+  &lt;div data-ui="card"&gt;Box A&lt;/div&gt;
+  &lt;div data-ui="card"&gt;Box B&lt;/div&gt;
+  &lt;div data-ui="card"&gt;Box C&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 7. DTCG EXPORTER & TOOLING INTEGRATION                   -->
+      <!-- ======================================================== -->
+      <section id="dtcg-exporter">
+        <div class="docs-breadcrumb">
+          <span>Design System</span>
+          <span>/</span>
+          <span>Tokens</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Export</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Figma Tokens Studio & Style Dictionary Export</h2>
+        <p class="docs-subtitle">
+          Export standardized W3C DTCG tokens for bi-directional synchronization with design tools and codebases.
+        </p>
+
+        <div style="display: flex; gap: 1rem; margin: 1.5rem 0;">
+          <a href="./tokens.json" download="tokens.json" class="ui-button" style="text-decoration: none;">
+            💾 Download tokens.json
+          </a>
+          <button class="ui-button ui-button--secondary" id="copy-dtcg-snippet-btn">
+            📋 Copy DTCG Specification
+          </button>
+        </div>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>tokens.json</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "color": {
+    "brand": {
+      "violet": {
+        "500": { "$value": "#8b5cf6", "$type": "color" },
+        "600": { "$value": "#7c3aed", "$type": "color" }
+      }
+    }
+  },
+  "zIndex": {
+    "dropdown": { "$value": "1000", "$type": "number" },
+    "modal": { "$value": "1350", "$type": "number" },
+    "toast": { "$value": "1500", "$type": "number" }
+  }
+}</code></pre>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Right Side Table of Contents -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#token-architecture" class="toc-link">Architecture & DTCG</a>
+        <a href="#palette-studio" class="toc-link">Color Palettes & WCAG</a>
+        <a href="#typography-studio" class="toc-link">Typography System</a>
+        <a href="#spacing-matrix" class="toc-link">Spacing & Elevation</a>
+        <a href="#motion-simulator" class="toc-link">Motion Physics</a>
+        <a href="#layout-sandbox" class="toc-link">Layout Sandbox</a>
+        <a href="#dtcg-exporter" class="toc-link">DTCG Exporter</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="./playground/tokens.js"></script>
+</body>
+</html>

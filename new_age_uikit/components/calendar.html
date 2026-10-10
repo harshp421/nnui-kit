@@ -17,7 +17,8 @@
 </head>
 <body class="docs-page">
 
-    <header class="docs-nav">
+          <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
     <div class="docs-nav-left">
       <a href="../index.html" class="docs-logo">
         <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
@@ -28,6 +29,7 @@
       <nav class="docs-nav-links">
         <a href="../docs.html" class="docs-nav-link">Documentation</a>
         <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../tokens.html" class="docs-nav-link">Design Tokens</a>
         <a href="../index.html" class="docs-nav-link">Home</a>
         <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
       </nav>
@@ -41,6 +43,7 @@
       <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
         ☀️ Light
       </button>
+      
       <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
         Getting Started →
       </a>
@@ -48,27 +51,43 @@
   </header>
 
   <div class="docs-wrapper">
-        <aside class="docs-sidebar">
-      <div>
+                    <!-- Left Navigation Sidebar (Unified Canonical) -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-group">
         <div class="sidebar-group-title">Getting Started</div>
         <div class="sidebar-items">
+          <a href="../docs.html#introduction" class="sidebar-item">Introduction</a>
           <a href="../docs.html#installation" class="sidebar-item">Installation</a>
           <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
           <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
           <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
           <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#form-validation" class="sidebar-item">Form Validation (RHF/Zod)</a>
           <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
         </div>
       </div>
 
-      <div>
-        <div class="sidebar-group-title">Overview</div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Design System & Tokens</div>
         <div class="sidebar-items">
-          <a href="../components.html" class="sidebar-item">All Components</a>
+          <a href="../tokens.html" class="sidebar-item"><span>Design Tokens Studio</span> <span class="sidebar-badge-new">Live</span></a>
+          <a href="../docs.html#design-tokens" class="sidebar-item">Tokens & DTCG Standard</a>
+          <a href="../docs.html#color-palettes" class="sidebar-item">Color Palettes</a>
+          <a href="../docs.html#layout-primitives" class="sidebar-item">Layout (Stack, Grid)</a>
+          <a href="../docs.html#typography-system" class="sidebar-item">Typography System</a>
+          <a href="../docs.html#feedback-primitives" class="sidebar-item">Feedback & Status</a>
+          <a href="../docs.html#accessibility-standards" class="sidebar-item">Accessibility & Motion</a>
         </div>
       </div>
 
-      <div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Components Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item"><span>All Components Gallery</span> <span class="sidebar-badge-counter">30</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
         <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
         <div class="sidebar-items">
           <a href="./button.html" class="sidebar-item">Button</a>
@@ -86,24 +105,37 @@
         </div>
       </div>
 
-      <div>
+      <div class="sidebar-group">
         <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
         <div class="sidebar-items">
-          <a href="./data-table.html" class="sidebar-item">Data Table</a>
-          <a href="./calendar.html" class="sidebar-item active">Calendar</a>
-          <a href="./date-picker.html" class="sidebar-item">Date Picker</a>
-          <a href="./dropdown.html" class="sidebar-item">Dropdown Menu</a>
-          <a href="./toast.html" class="sidebar-item">Toast / Toaster</a>
-          <a href="./combobox.html" class="sidebar-item">Combobox</a>
-          <a href="./tabs.html" class="sidebar-item">Tabs</a>
-          <a href="./dialog.html" class="sidebar-item">Dialog</a>
-          <a href="./select.html" class="sidebar-item">Select</a>
-          <a href="./accordion.html" class="sidebar-item">Accordion</a>
-          <a href="./popover.html" class="sidebar-item">Popover</a>
-          <a href="./tooltip.html" class="sidebar-item">Tooltip</a>
-          <a href="./command.html" class="sidebar-item">Command Palette</a>
-          <a href="./sheet.html" class="sidebar-item">Sheet / Drawer</a>
-          <a href="./slider.html" class="sidebar-item">Slider</a>
+          <a href="./data-grid.html" class="sidebar-item"><span>Virtualized Data Grid</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./date-range-picker.html" class="sidebar-item"><span>Date Range Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./tags-input.html" class="sidebar-item"><span>Tags Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./segmented-control.html" class="sidebar-item"><span>Segmented Control</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./otp-input.html" class="sidebar-item"><span>OTP / PIN Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./stepper.html" class="sidebar-item"><span>Stepper / Wizard</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./resizable.html" class="sidebar-item"><span>Resizable Split Pane</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./file-upload.html" class="sidebar-item"><span>File Upload & Dropzone</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./context-menu.html" class="sidebar-item"><span>Context Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./navigation-menu.html" class="sidebar-item"><span>Navigation Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./tree-view.html" class="sidebar-item"><span>Tree View</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./ai-prompt-box.html" class="sidebar-item"><span>AI Prompt Box</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./color-picker.html" class="sidebar-item"><span>Color Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./data-table.html" class="sidebar-item"><span>Data Table</span></a>
+          <a href="./calendar.html" class="sidebar-item active"><span>Calendar</span></a>
+          <a href="./date-picker.html" class="sidebar-item"><span>Date Picker</span></a>
+          <a href="./dropdown.html" class="sidebar-item"><span>Dropdown Menu</span></a>
+          <a href="./toast.html" class="sidebar-item"><span>Toast / Toaster</span></a>
+          <a href="./combobox.html" class="sidebar-item"><span>Combobox</span></a>
+          <a href="./tabs.html" class="sidebar-item"><span>Tabs</span></a>
+          <a href="./dialog.html" class="sidebar-item"><span>Dialog</span></a>
+          <a href="./select.html" class="sidebar-item"><span>Select</span></a>
+          <a href="./accordion.html" class="sidebar-item"><span>Accordion</span></a>
+          <a href="./popover.html" class="sidebar-item"><span>Popover</span></a>
+          <a href="./tooltip.html" class="sidebar-item"><span>Tooltip</span></a>
+          <a href="./command.html" class="sidebar-item"><span>Command Palette</span></a>
+          <a href="./sheet.html" class="sidebar-item"><span>Sheet / Drawer</span></a>
+          <a href="./slider.html" class="sidebar-item"><span>Slider</span></a>
         </div>
       </div>
     </aside>

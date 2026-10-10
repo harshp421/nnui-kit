@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtualized Data Grid — NNUI-KIT</title>
+  <meta name="description" content="Enterprise-grade Virtualized Data Grid capable of virtualizing and streaming >10,000 to 100,000 rows at 60 FPS in pure Light-DOM.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../src/styles/index.css">
+  <link rel="stylesheet" href="../playground/docs.css">
+  <link rel="stylesheet" href="../playground/components.css">
+</head>
+<body class="docs-page">
+
+        <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="../index.html" class="docs-logo">
+        <span style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Components</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="../docs.html" class="docs-nav-link">Documentation</a>
+        <a href="../components.html" class="docs-nav-link active">Components</a>
+        <a href="../tokens.html" class="docs-nav-link">Design Tokens</a>
+        <a href="../index.html" class="docs-nav-link">Home</a>
+        <a href="../llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="components-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+      
+      <a href="../docs.html" class="ui-button" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Getting Started →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+                <!-- Left Navigation Sidebar (Unified Canonical) -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="../docs.html#introduction" class="sidebar-item">Introduction</a>
+          <a href="../docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="../docs.html#cdn-backend" class="sidebar-item">CDN & Backend</a>
+          <a href="../docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="../docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="../docs.html#theming" class="sidebar-item">Theming & Layers</a>
+          <a href="../docs.html#form-validation" class="sidebar-item">Form Validation (RHF/Zod)</a>
+          <a href="../docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Design System & Tokens</div>
+        <div class="sidebar-items">
+          <a href="../tokens.html" class="sidebar-item"><span>Design Tokens Studio</span> <span class="sidebar-badge-new">Live</span></a>
+          <a href="../docs.html#design-tokens" class="sidebar-item">Tokens & DTCG Standard</a>
+          <a href="../docs.html#color-palettes" class="sidebar-item">Color Palettes</a>
+          <a href="../docs.html#layout-primitives" class="sidebar-item">Layout (Stack, Grid)</a>
+          <a href="../docs.html#typography-system" class="sidebar-item">Typography System</a>
+          <a href="../docs.html#feedback-primitives" class="sidebar-item">Feedback & Status</a>
+          <a href="../docs.html#accessibility-standards" class="sidebar-item">Accessibility & Motion</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Components Overview</div>
+        <div class="sidebar-items">
+          <a href="../components.html" class="sidebar-item"><span>All Components Gallery</span> <span class="sidebar-badge-counter">30</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./button.html" class="sidebar-item">Button</a>
+          <a href="./badge.html" class="sidebar-item">Badge</a>
+          <a href="./input.html" class="sidebar-item">Input & Field</a>
+          <a href="./checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./switch.html" class="sidebar-item">Switch</a>
+          <a href="./card.html" class="sidebar-item">Card</a>
+          <a href="./avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./alert.html" class="sidebar-item">Alert</a>
+          <a href="./progress.html" class="sidebar-item">Progress</a>
+          <a href="./table.html" class="sidebar-item">Table</a>
+          <a href="./skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./data-grid.html" class="sidebar-item active"><span>Virtualized Data Grid</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./date-range-picker.html" class="sidebar-item"><span>Date Range Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./tags-input.html" class="sidebar-item"><span>Tags Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./segmented-control.html" class="sidebar-item"><span>Segmented Control</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./otp-input.html" class="sidebar-item"><span>OTP / PIN Input</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./stepper.html" class="sidebar-item"><span>Stepper / Wizard</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./resizable.html" class="sidebar-item"><span>Resizable Split Pane</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./file-upload.html" class="sidebar-item"><span>File Upload & Dropzone</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./context-menu.html" class="sidebar-item"><span>Context Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./navigation-menu.html" class="sidebar-item"><span>Navigation Menu</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./tree-view.html" class="sidebar-item"><span>Tree View</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./ai-prompt-box.html" class="sidebar-item"><span>AI Prompt Box</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./color-picker.html" class="sidebar-item"><span>Color Picker</span> <span class="sidebar-badge-new">New</span></a>
+          <a href="./data-table.html" class="sidebar-item"><span>Data Table</span></a>
+          <a href="./calendar.html" class="sidebar-item"><span>Calendar</span></a>
+          <a href="./date-picker.html" class="sidebar-item"><span>Date Picker</span></a>
+          <a href="./dropdown.html" class="sidebar-item"><span>Dropdown Menu</span></a>
+          <a href="./toast.html" class="sidebar-item"><span>Toast / Toaster</span></a>
+          <a href="./combobox.html" class="sidebar-item"><span>Combobox</span></a>
+          <a href="./tabs.html" class="sidebar-item"><span>Tabs</span></a>
+          <a href="./dialog.html" class="sidebar-item"><span>Dialog</span></a>
+          <a href="./select.html" class="sidebar-item"><span>Select</span></a>
+          <a href="./accordion.html" class="sidebar-item"><span>Accordion</span></a>
+          <a href="./popover.html" class="sidebar-item"><span>Popover</span></a>
+          <a href="./tooltip.html" class="sidebar-item"><span>Tooltip</span></a>
+          <a href="./command.html" class="sidebar-item"><span>Command Palette</span></a>
+          <a href="./sheet.html" class="sidebar-item"><span>Sheet / Drawer</span></a>
+          <a href="./slider.html" class="sidebar-item"><span>Slider</span></a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="docs-main-container">
+      <div class="docs-breadcrumb">
+        <span>Components</span>
+        <span>/</span>
+        <span>Tier 2: Micro-Enhancers</span>
+        <span>/</span>
+        <span style="color: var(--ui-text-primary); font-weight: 500;">Virtualized Data Grid</span>
+      </div>
+
+      <div style="display: flex; align-items: baseline; gap: 1rem; margin-top: 0.5rem;">
+        <h1 class="docs-title" style="margin: 0;">Virtualized Data Grid</h1>
+        <span data-ui="badge" data-variant="secondary">Enterprise Virtualization</span>
+      </div>
+      <p class="docs-subtitle">
+        High-performance windowed data grid capable of rendering and real-time streaming >10,000 to 100,000 rows at a smooth 60 FPS in 100% Light-DOM.
+      </p>
+
+      <!-- Live Interactive Stage with Preview/Code Tab Switcher -->
+      <section id="interactive-demo" style="margin: 2.5rem 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0;">Interactive Demo (10,000 Rows Live)</h3>
+          <span style="font-size: 0.8rem; color: var(--ui-text-muted);">Passive RAF Virtualization</span>
+        </div>
+
+        <div id="preview" class="preview-card">
+          <div class="preview-card-tabs">
+            <div class="preview-tab-group">
+              <button class="preview-tab-btn active" data-view="preview">Preview</button>
+              <button class="preview-tab-btn" data-view="code">Code</button>
+            </div>
+            <button class="copy-btn" id="grid-copy-btn">📋 Copy</button>
+          </div>
+
+          <div class="preview-stage" style="padding: 0; min-height: 480px; display: block;">
+            <div class="demo-grid-wrapper" style="border: none; border-radius: 0; background: var(--ui-bg-surface); overflow: hidden;">
+              <!-- Grid Controls Toolbar -->
+              <div data-ui="stack" data-direction="row" data-justify="between" data-align="center" style="padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--ui-border-subtle); background: var(--ui-bg-subtle); flex-wrap: wrap; gap: 0.75rem;">
+                <div style="position: relative; flex: 1; max-width: 360px; min-width: 240px;">
+                  <svg style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--ui-text-muted); pointer-events: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <input data-ui="input" id="grid-search-input" placeholder="Search 10,000 records (e.g. BTC, Executed)..." style="padding-left: 2rem; padding-right: 2rem; font-size: 0.85rem; width: 100%; height: 36px; border-radius: var(--ui-radius-md); background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default);">
+                  <kbd style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 0.65rem; font-family: var(--ui-font-mono, monospace); padding: 0.1rem 0.35rem; border-radius: 4px; background: var(--ui-bg-subtle); color: var(--ui-text-muted); border: 1px solid var(--ui-border-subtle); pointer-events: none;">/</kbd>
+                </div>
+
+                <div data-ui="stack" data-direction="row" data-gap="2" data-align="center" style="flex-wrap: wrap;">
+                  <button class="ui-button ui-button--secondary" id="toggle-stream-btn" style="font-size: 0.8rem; height: 36px; padding: 0 0.85rem; display: inline-flex; align-items: center; gap: 0.45rem;">
+                    <span class="stream-dot" style="width: 7px; height: 7px; border-radius: 50%; background: var(--ui-color-success-500); display: inline-block;"></span>
+                    <span id="stream-btn-text">Start Live Stream</span>
+                  </button>
+                  <button class="ui-button ui-button--secondary" id="add-batch-btn" style="font-size: 0.8rem; height: 36px; padding: 0 0.85rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Add 5,000 Rows</span>
+                  </button>
+                  <button class="ui-button ui-button--secondary" id="export-csv-btn" style="font-size: 0.8rem; height: 36px; padding: 0 0.85rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span>Export CSV</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Platform Innovations Live Banner -->
+              <div style="background: rgba(99, 102, 241, 0.08); border-bottom: 1px solid rgba(99, 102, 241, 0.2); padding: 0.5rem 1.25rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ui-color-brand-500);"></span>
+                  <span style="color: var(--ui-text-primary); font-weight: 600;">Triple-Sync Engine Active:</span>
+                  <span style="color: var(--ui-text-secondary);"><code style="color: var(--ui-color-brand-400);">persist="url"</code> (URL query sync) + <code style="color: var(--ui-color-brand-400);">sync="cross-tab"</code> (BroadcastChannel)</span>
+                </div>
+                <button type="button" class="ui-button ui-button--secondary" onclick="window.nnuiInspect(document.getElementById('demo-data-grid'))" style="padding: 0.2rem 0.6rem; font-size: 0.75rem; height: 26px;">
+                  🤖 Inspect AI Schema
+                </button>
+              </div>
+
+              <!-- Component Render -->
+              <ui-data-grid id="demo-data-grid" data-persist-id="grid" row-height="40" overscan="6" persist="url" sync="cross-tab" style="border: none; border-radius: 0; box-shadow: none;">
+                <div data-part="viewport" class="grid-viewport" style="height: 480px; overflow-y: auto;">
+                  <div data-part="runway" class="grid-runway">
+                    <table data-part="grid-table" class="ui-table grid-table">
+                      <thead></thead>
+                      <tbody data-part="virtual-tbody" class="grid-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div data-part="footer" class="grid-footer"></div>
+              </ui-data-grid>
+            </div>
+          </div>
+
+          <div class="code-stage">
+            <pre class="code-pre"><code>&lt;!-- Platform-Native Virtualized 100k Row Data Grid with Triple-Sync --&gt;
+&lt;ui-data-grid id="market-grid" row-height="40" overscan="6" persist="url" sync="cross-tab"&gt;
+  &lt;div data-part="viewport" style="height: 500px; overflow-y: auto;"&gt;
+    &lt;div data-part="runway"&gt;
+      &lt;table data-part="grid-table" class="ui-table"&gt;
+        &lt;thead&gt;&lt;/thead&gt;
+        &lt;tbody data-part="virtual-tbody"&gt;&lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div data-part="footer"&gt;&lt;/div&gt;
+&lt;/ui-data-grid&gt;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- API Reference -->
+      <section id="api-reference" style="margin: 3rem 0;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">API Reference</h3>
+        <div data-part="table-container">
+          <table data-ui="table">
+            <thead>
+              <tr>
+                <th>Method / Prop</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>persist</code></td>
+                <td><code>"url" | "session" | "local"</code></td>
+                <td><code>null</code></td>
+                <td>Declarative state persistence. "url" synchronizes search and sorting with browser URL params.</td>
+              </tr>
+              <tr>
+                <td><code>sync</code></td>
+                <td><code>"cross-tab" | boolean</code></td>
+                <td><code>false</code></td>
+                <td>Real-time synchronization across browser tabs via BroadcastChannel.</td>
+              </tr>
+              <tr>
+                <td><code>inspectAI()</code></td>
+                <td><code>async () =&gt; Object</code></td>
+                <td>-</td>
+                <td>Returns machine-readable <code>nnui.ai.v1</code> schema, live state, and React/Vue/Svelte code snippets.</td>
+              </tr>
+              <tr>
+                <td><code>setColumns(cols)</code></td>
+                <td><code>Array&lt;Column&gt;</code></td>
+                <td><code>[]</code></td>
+                <td>Sets column schema with keys, labels, widths, and sort flags.</td>
+              </tr>
+              <tr>
+                <td><code>setRows(rows)</code></td>
+                <td><code>Array&lt;Object&gt;</code></td>
+                <td><code>[]</code></td>
+                <td>Populates the grid with any size dataset (up to 100,000+ records).</td>
+              </tr>
+              <tr>
+                <td><code>appendRows(newRows, options)</code></td>
+                <td><code>Array&lt;Object&gt;</code></td>
+                <td>-</td>
+                <td>Streams incoming rows into the grid without re-sorting the full dataset.</td>
+              </tr>
+              <tr>
+                <td><code>setSearch(query)</code></td>
+                <td><code>string</code></td>
+                <td><code>""</code></td>
+                <td>Performs fast multi-column full-text search filtering. Automatically persisted if <code>persist</code> is enabled.</td>
+              </tr>
+              <tr>
+                <td><code>exportCsv(filename)</code></td>
+                <td><code>string</code></td>
+                <td><code>"export.csv"</code></td>
+                <td>Exports filtered or selected records into a downloadable CSV file.</td>
+              </tr>
+              <tr>
+                <td><code>startStreaming(ms)</code></td>
+                <td><code>number</code></td>
+                <td><code>400ms</code></td>
+                <td>Starts live simulated real-time streaming of new data rows.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#interactive-demo" class="toc-link">Interactive Demo</a>
+        <a href="#api-reference" class="toc-link">API Reference</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="../playground/components.js"></script>
+  <script type="module" src="../playground/dataGrid.js"></script>
+</body>
+</html>

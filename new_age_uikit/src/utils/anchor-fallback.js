@@ -3,6 +3,12 @@
  * 
  * Provides rock-solid, cross-browser floating element positioning.
  * Works seamlessly with Native Popover API, top-layer elements, and Light-DOM containers.
+ * 
+ * Performance Enhancements (Track 2):
+ * - IntersectionObserver: Automatically detects when anchor scrolls offscreen to pause calculations.
+ * - RequestAnimationFrame Throttling: Prevents layout thrashing during fast scroll/resize cycles.
+ * - ResizeObserver: Detects dynamic changes to anchor/target dimensions.
+ * - Edge Collision Auto-Flip: Intelligently flips bottom <-> top and right <-> left when overflowing viewport.
  */
 
 export const isAnchorPositioningSupported = (() => {
@@ -56,16 +62,43 @@ export function applyPositionFallback(anchor, target, placement = 'bottom', offs
     return;
   }
 
-  // Determine intrinsic target width without letting unconstrained top-layer popovers stretch to 100vw
-  let width = target.offsetWidth || targetRect.width || 280;
+  // Options support (such as matchAnchorWidth or explicit width)
+  const matchAnchorWidth = (typeof placement === 'object' && placement !== null && placement.matchAnchorWidth) || false;
+
+  // Determine intrinsic target width without forcing it inline unless requested
+  let width = target.offsetWidth || targetRect.width;
+  if (!width || width <= 0) {
+    const firstChild = target.firstElementChild;
+    if (firstChild) {
+      width = firstChild.offsetWidth || firstChild.getBoundingClientRect().width;
+      if (!width || width <= 0) {
+        const inlineW = parseFloat(firstChild.style.width || target.style.width);
+        if (inlineW > 0) width = inlineW;
+      }
+    }
+  }
   if (width >= viewportW - 20) {
     const firstChild = target.firstElementChild;
     const childW = firstChild ? (firstChild.offsetWidth || firstChild.getBoundingClientRect().width) : 0;
-    width = (childW > 0 && childW < viewportW - 20) ? childW : 280;
+    width = (childW > 0 && childW < viewportW - 20) ? childW : (viewportW - 32);
   }
   if (!width || width <= 0) width = 280;
 
-  let height = target.offsetHeight || targetRect.height || 320;
+  if (matchAnchorWidth && anchorRect.width > 0) {
+    width = anchorRect.width;
+  }
+
+  let height = target.offsetHeight || targetRect.height;
+  if (!height || height <= 0) {
+    const firstChild = target.firstElementChild;
+    if (firstChild) {
+      height = firstChild.offsetHeight || firstChild.getBoundingClientRect().height;
+      if (!height || height <= 0) {
+        const inlineH = parseFloat(firstChild.style.height || target.style.height);
+        if (inlineH > 0) height = inlineH;
+      }
+    }
+  }
   if (!height || height <= 0) height = 320;
 
   let top = 0;
@@ -119,7 +152,6 @@ export function applyPositionFallback(anchor, target, placement = 'bottom', offs
 
   const topPx = `${Math.round(top)}px`;
   const leftPx = `${Math.round(left)}px`;
-  const widthPx = `${Math.round(width)}px`;
 
   // Apply fixed positioning relative to viewport
   if (typeof target.style.setProperty === 'function') {
@@ -129,7 +161,9 @@ export function applyPositionFallback(anchor, target, placement = 'bottom', offs
     target.style.setProperty('right', 'auto', 'important');
     target.style.setProperty('bottom', 'auto', 'important');
     target.style.setProperty('margin', '0', 'important');
-    target.style.setProperty('width', widthPx, 'important');
+    if (matchAnchorWidth) {
+      target.style.setProperty('width', `${Math.round(anchorRect.width)}px`, 'important');
+    }
     target.style.setProperty('max-width', 'calc(100vw - 16px)', 'important');
   }
 
@@ -140,6 +174,104 @@ export function applyPositionFallback(anchor, target, placement = 'bottom', offs
   target.style.right = 'auto';
   target.style.bottom = 'auto';
   target.style.margin = '0';
-  target.style.width = widthPx;
+  if (matchAnchorWidth) {
+    target.style.width = `${Math.round(anchorRect.width)}px`;
+  }
   target.style.maxWidth = 'calc(100vw - 16px)';
+}
+
+/**
+ * Attaches passive scroll and resize listeners, IntersectionObserver, and ResizeObserver
+ * to maintain high-performance position fallback with 60fps RAF throttling.
+ * 
+ * @param {HTMLElement} anchor
+ * @param {HTMLElement} target
+ * @param {object} options { placement?: string, offset?: number, autoHideOnDisconnect?: boolean }
+ * @returns {Function} cleanup
+ */
+export function attachAnchorFallback(anchor, target, options = {}) {
+  let isAnchorVisible = true;
+  let rafId = null;
+
+  const scheduleUpdate = () => {
+    if (!isAnchorVisible) return;
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      rafId = null;
+      applyPositionFallback(anchor, target, options.placement || 'bottom', options.offset || 6);
+    });
+  };
+
+  // Immediate initial calculation
+  applyPositionFallback(anchor, target, options.placement || 'bottom', options.offset || 6);
+
+  // 1. IntersectionObserver: Pause calculations and optionally hide target when anchor leaves viewport
+  let intersectionObserver = null;
+  if (typeof IntersectionObserver !== 'undefined' && anchor instanceof HTMLElement) {
+    intersectionObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === anchor) {
+          isAnchorVisible = entry.isIntersecting;
+          if (!isAnchorVisible) {
+            if (options.autoHideOnDisconnect !== false && target.style) {
+              target.style.visibility = 'hidden';
+            }
+          } else {
+            if (target.style && target.style.visibility === 'hidden') {
+              target.style.visibility = '';
+            }
+            scheduleUpdate();
+          }
+        }
+      }
+    }, { threshold: [0, 0.1, 1.0] });
+
+    try {
+      intersectionObserver.observe(anchor);
+    } catch {
+      // Ignore if disconnected or unsupported node
+    }
+  }
+
+  // 2. ResizeObserver: Recalculate on anchor or target size changes
+  let resizeObserver = null;
+  if (typeof ResizeObserver !== 'undefined') {
+    resizeObserver = new ResizeObserver(() => {
+      scheduleUpdate();
+    });
+    try {
+      if (anchor instanceof HTMLElement) resizeObserver.observe(anchor);
+      if (target instanceof HTMLElement) resizeObserver.observe(target);
+    } catch {
+      // Ignore if disconnected
+    }
+  }
+
+  // 3. Passive event listeners with capture for scroll & resize
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', scheduleUpdate, { passive: true, capture: true });
+    window.addEventListener('resize', scheduleUpdate, { passive: true });
+  }
+
+  return () => {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    if (intersectionObserver) {
+      intersectionObserver.disconnect();
+      intersectionObserver = null;
+    }
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      resizeObserver = null;
+    }
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', scheduleUpdate, { capture: true });
+      window.removeEventListener('resize', scheduleUpdate);
+    }
+    if (target && target.style && target.style.visibility === 'hidden') {
+      target.style.visibility = '';
+    }
+  };
 }

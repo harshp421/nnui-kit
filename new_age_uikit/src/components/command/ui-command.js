@@ -44,6 +44,7 @@ export class UiCommand extends BaseLightElement {
 
     // Handle backdrop click to close
     this.listen(this._dialog, 'click', (e) => {
+      if (e.target !== this._dialog) return;
       const rect = this._dialog.getBoundingClientRect();
       const isInDialog = (
         rect.top <= e.clientY &&
@@ -137,10 +138,12 @@ export class UiCommand extends BaseLightElement {
   }
 
   _setupGlobalShortcut() {
-    // Default global shortcut: Meta+K or Ctrl+K
-    const shortcut = this.getAttribute('shortcut') || 'k';
+    // Only bind global shortcut if shortcut attribute is explicitly defined and not 'none'
+    const shortcut = this.getAttribute('shortcut');
+    if (!shortcut || shortcut === 'none') return;
 
     this.listen(window, 'keydown', (e) => {
+      if (e.defaultPrevented) return;
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === shortcut.toLowerCase()) {
         e.preventDefault();
         this.toggle();
@@ -241,7 +244,7 @@ export class UiCommand extends BaseLightElement {
   }
 
   showModal(triggerElement = null) {
-    if (this._dialog) {
+    if (this._dialog && !this._dialog.open) {
       this._dialog.showModal();
       this._isOpen = true;
       this.setAttribute('open', '');
@@ -267,7 +270,7 @@ export class UiCommand extends BaseLightElement {
   }
 
   toggle() {
-    if (this._isOpen) {
+    if (this._isOpen || (this._dialog && this._dialog.open)) {
       this.close();
     } else {
       this.showModal();

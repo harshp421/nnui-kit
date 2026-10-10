@@ -29,11 +29,16 @@
       <nav class="docs-nav-links">
         <a href="./docs.html" class="docs-nav-link">Documentation</a>
         <a href="./components.html" class="docs-nav-link">Components</a>
+        <a href="./tokens.html" class="docs-nav-link">Design Tokens</a>
         <a href="./llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
       </nav>
     </div>
 
     <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button" style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
       <button id="home-theme-btn" class="ui-button ui-button--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
         ☀️ Light
       </button>
@@ -269,6 +274,7 @@
 
   <script type="module">
     import './src/index.js';
+    import './playground/command-search.js';
 
     // Theme toggle
     const themeBtn = document.getElementById('home-theme-btn');
