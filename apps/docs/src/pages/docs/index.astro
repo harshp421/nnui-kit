@@ -19,6 +19,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <a href="#persistence" class="docs-aside-link">Declarative Persistence</a>
         <a href="#cross-tab" class="docs-aside-link">Cross-Tab Broadcast Sync</a>
         <a href="#ai-introspection" class="docs-aside-link">AI Introspection Protocol</a>
+        <a href="/llms" class="docs-aside-link" style="display: flex; align-items: center; justify-content: space-between; color: var(--brand-400, #818cf8);">
+          <span>llms.txt (AI Spec)</span>
+          <span style="font-size: 0.65rem; background: rgba(99, 102, 241, 0.2); color: var(--brand-400, #818cf8); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">NEW</span>
+        </a>
       </div>
 
       <div class="docs-aside-group">
@@ -199,6 +203,21 @@ console.log(schema.protocol);          // "nnui.ai.v1"
 console.log(schema.schema.parts);      // ["toolbar", "search", "export-btn", "table", "pagination"]
 console.log(schema.liveState);         // Active rows, sort column, search query
 console.log(schema.frameworkSnippets); // Idiomatic React 19, Vue 3, Svelte 5 snippets</code></pre>
+
+        <!-- AI Specification (llms.txt) Banner -->
+        <div data-ui="card" style="margin-top: 1.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%), var(--bg-card); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 10px; padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem; margin-bottom: 0.25rem;">
+              🤖 Using Cursor, Copilot, or Claude? Use llms.txt
+            </div>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+              Copy the standardized specification so your AI assistant writes 100% accurate NNUI-KIT code without hallucinations.
+            </p>
+          </div>
+          <a href="/llms" data-ui="button" data-variant="primary" style="text-decoration: none; font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">
+            View & Copy llms.txt →
+          </a>
+        </div>
       </section>
 
       <!-- Framework Adapter: React 18 & 19 -->

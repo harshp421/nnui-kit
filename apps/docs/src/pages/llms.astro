@@ -1,0 +1,271 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+// Read raw llms.txt specification from public directory
+const llmsFilePath = path.resolve('public/llms.txt');
+const rawLlmsContent = fs.existsSync(llmsFilePath) ? fs.readFileSync(llmsFilePath, 'utf-8') : '';
+const lineCount = rawLlmsContent.split('\n').length;
+const charCount = rawLlmsContent.length;
+const kbSize = (charCount / 1024).toFixed(1);
+---
+
+<DocsLayout 
+  title="llms.txt — AI Assistant Context & Prompt Specification | NNUI-KIT"
+  description="Full llms.txt specification for Cursor, Claude, ChatGPT, Windsurf, and Copilot. Feed NNUI-KIT's complete light-DOM component architecture directly into your AI assistant."
+  activePath="/llms"
+>
+  <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+    <!-- Breadcrumb & Badge -->
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+      <a href="/docs" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: none;">Docs</a>
+      <span style="color: var(--border-strong);">/</span>
+      <span style="color: var(--text-main); font-size: 0.85rem; font-weight: 600;">llms.txt</span>
+      <span class="announcement-badge" style="margin-left: 0.5rem; background: rgba(99, 102, 241, 0.15); color: var(--brand-400, #818cf8); border: 1px solid rgba(99, 102, 241, 0.3);">
+        AI Specification Standard
+      </span>
+    </div>
+
+    <!-- Header Section -->
+    <div style="margin-bottom: 2.5rem;">
+      <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: var(--text-main); display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+        <span>AI Coding Specification</span>
+        <code style="font-size: 1.6rem; font-family: var(--font-mono); background: var(--bg-surface); padding: 0.2rem 0.65rem; border-radius: 8px; border: 1px solid var(--border-subtle); color: var(--brand-400, #818cf8);">llms.txt</code>
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 780px;">
+        Feed this standardized specification directly into <strong>Cursor</strong>, <strong>Claude</strong>, <strong>ChatGPT</strong>, <strong>Windsurf</strong>, or <strong>GitHub Copilot</strong>. It trains any AI model on all 45 components, light-DOM markup rules, React wrappers, and state synchronization contracts in a single prompt.
+      </p>
+    </div>
+
+    <!-- Quick Action Banner -->
+    <div data-ui="card" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%), var(--bg-card); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 14px; padding: 1.75rem; margin-bottom: 3rem; display: flex; flex-direction: column; gap: 1.25rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-main); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>Ready-to-use LLM Knowledge Base</span>
+            <span style="font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 9999px; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">
+              {kbSize} KB • {lineCount} Lines
+            </span>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">
+            Includes all component contracts, dual-prefix tags, SSR hydration patterns, and <code style="color: var(--brand-400);">nnuikit/react</code> wrappers.
+          </p>
+        </div>
+
+        <!-- Primary Action Buttons -->
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+          <button 
+            id="copy-llms-btn" 
+            data-ui="button" 
+            data-variant="primary" 
+            style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; padding: 0.6rem 1.25rem; cursor: pointer; border-radius: 8px;"
+          >
+            <svg id="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span id="copy-btn-text">Copy Full llms.txt</span>
+          </button>
+
+          <a 
+            href="/llms.txt" 
+            download="llms.txt" 
+            data-ui="button" 
+            data-variant="secondary" 
+            class="btn-secondary"
+            style="display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem;"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Download</span>
+          </a>
+
+          <a 
+            href="/llms.txt" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            data-ui="button" 
+            data-variant="outline" 
+            class="btn-secondary"
+            style="display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 0.9rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem;"
+          >
+            <span>Raw View</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Guides Grid -->
+    <section style="margin-bottom: 3.5rem;">
+      <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 1.25rem;">
+        How to Use with Your AI Assistants
+      </h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+        <!-- Cursor & Windsurf -->
+        <div data-ui="card" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.85rem;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+              ⚡️
+            </div>
+            <div>
+              <div style="font-weight: 700; color: var(--text-main); font-size: 1rem;">Cursor & Windsurf</div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">Project Rules & Composer</div>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
+            Place in your project root as <code>.cursorrules</code> so Cursor's AI Composer always knows all NNUI components without asking.
+          </p>
+          <div style="background: var(--bg-surface); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-main); overflow-x: auto;">
+            curl -sO https://nnui-kit.vercel.app/llms.txt && mv llms.txt .cursorrules
+          </div>
+        </div>
+
+        <!-- Claude 3.5 Sonnet & ChatGPT -->
+        <div data-ui="card" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.85rem;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(244, 63, 94, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+              🧠
+            </div>
+            <div>
+              <div style="font-weight: 700; color: var(--text-main); font-size: 1rem;">Claude & ChatGPT</div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">Projects & Custom Instructions</div>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
+            Click <strong>Copy Full llms.txt</strong> and upload or paste it directly into Claude Projects Knowledge or a Custom GPT prompt.
+          </p>
+          <div style="background: var(--bg-surface); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-main); overflow-x: auto;">
+            Paste into System Prompt or "Project Knowledge"
+          </div>
+        </div>
+
+        <!-- GitHub Copilot -->
+        <div data-ui="card" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.85rem;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+              🤖
+            </div>
+            <div>
+              <div style="font-weight: 700; color: var(--text-main); font-size: 1rem;">GitHub Copilot</div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">Copilot Instructions</div>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
+            Add to <code>.github/copilot-instructions.md</code> so GitHub Copilot generates matching light-DOM components inside VS Code.
+          </p>
+          <div style="background: var(--bg-surface); padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-main); overflow-x: auto;">
+            mkdir -p .github && cp llms.txt .github/copilot-instructions.md
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive llms.txt Document Viewer -->
+    <section>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin: 0;">Specification Content</h2>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Live mirror of <code>/llms.txt</code> ({lineCount} lines)</span>
+        </div>
+
+        <button 
+          id="copy-viewer-btn" 
+          data-ui="button" 
+          data-variant="secondary"
+          class="btn-secondary"
+          style="display: flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.85rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+          </svg>
+          <span id="copy-viewer-text">Copy Content</span>
+        </button>
+      </div>
+
+      <!-- Code Container -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+        <!-- Bar with file info -->
+        <div style="background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle); padding: 0.65rem 1rem; display: flex; align-items: center; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #eab308; display: inline-block;"></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #22c55e; display: inline-block;"></span>
+            <span style="margin-left: 0.5rem; color: var(--text-main); font-weight: 600;">llms.txt</span>
+          </div>
+          <div>Plaintext (Markdown)</div>
+        </div>
+
+        <!-- Raw Scrollable Code Body -->
+        <pre 
+          id="llms-code-block" 
+          style="margin: 0; padding: 1.5rem; max-height: 700px; overflow-y: auto; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; color: var(--text-main); white-space: pre-wrap; word-break: break-word;"
+        >{rawLlmsContent}</pre>
+      </div>
+    </section>
+  </div>
+</DocsLayout>
+
+<script>
+  // Setup 1-Click Copy Handlers with Toast Notifications
+  const copyBtn = document.getElementById('copy-llms-btn');
+  const copyBtnText = document.getElementById('copy-btn-text');
+  const copyViewerBtn = document.getElementById('copy-viewer-btn');
+  const copyViewerText = document.getElementById('copy-viewer-text');
+  const codeBlock = document.getElementById('llms-code-block');
+
+  async function performCopy(btnTextEl: HTMLElement | null) {
+    if (!codeBlock) return;
+    const textToCopy = codeBlock.textContent || '';
+    
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      
+      if (btnTextEl) {
+        const originalText = btnTextEl.textContent;
+        btnTextEl.textContent = '✓ Copied to Clipboard!';
+        setTimeout(() => {
+          btnTextEl.textContent = originalText;
+        }, 2500);
+      }
+
+      // Trigger global platform-native toast
+      if ((window as any).toast) {
+        (window as any).toast('Copied full llms.txt to clipboard! Paste directly into Cursor, Claude, or ChatGPT.', {
+          type: 'success',
+          duration: 4000
+        });
+      }
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      // Fallback
+      const textarea = document.createElement('textarea');
+      textarea.value = textToCopy;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      
+      if ((window as any).toast) {
+        (window as any).toast('Copied llms.txt to clipboard!', { type: 'success' });
+      }
+    }
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => performCopy(copyBtnText));
+  }
+  if (copyViewerBtn) {
+    copyViewerBtn.addEventListener('click', () => performCopy(copyViewerText));
+  }
+</script>

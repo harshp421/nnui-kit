@@ -44,6 +44,10 @@ const componentsList = Object.values(componentsData) as any[];
           <a href="/docs" class={`docs-nav-link ${activePath.startsWith('/docs') ? 'active' : ''}`}>Docs</a>
           <a href="/components" class={`docs-nav-link ${activePath.startsWith('/components') ? 'active' : ''}`}>Components</a>
           <a href="/tokens" class={`docs-nav-link ${activePath.startsWith('/tokens') ? 'active' : ''}`}>Themes</a>
+          <a href="/llms" class={`docs-nav-link ${activePath.startsWith('/llms') ? 'active' : ''}`} style="display: inline-flex; align-items: center; gap: 0.35rem;">
+            <span>llms.txt</span>
+            <span style="font-size: 0.65rem; background: rgba(99, 102, 241, 0.2); color: var(--brand-400, #818cf8); border: 1px solid rgba(99, 102, 241, 0.4); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">AI</span>
+          </a>
           <a href="https://github.com/harshp421/nnui-kit" target="_blank" rel="noopener noreferrer" class="docs-nav-link">GitHub ↗</a>
         </nav>
       </div>
@@ -183,6 +187,10 @@ const componentsList = Object.values(componentsData) as any[];
           <a href="/docs#ai-introspection" class="search-result-item" data-text="ai introspection inspectai protocol copilot cursor llm schema">
             <span>AI Introspection Protocol</span>
             <span class="item-meta">nnui.ai.v1</span>
+          </a>
+          <a href="/llms" class="search-result-item" data-text="llms.txt ai assistant context cursor copilot claude chatgpt windsurf prompt specification rules">
+            <span>AI Assistant Context (llms.txt)</span>
+            <span class="item-meta">AI Spec</span>
           </a>
           <a href="/docs#react" class="search-result-item" data-text="react 18 19 nextjs next.js app router server components typescript wrappers">
             <span>React 18 & 19 (Next.js 15 App Router)</span>

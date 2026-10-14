@@ -1,6 +1,7 @@
-# NNUI-KIT — AI Coding Assistant Specification (llms.txt)
+# NNUI-KIT (`nnuikit`) — AI Coding Assistant Specification (llms.txt)
 
-> Standard Reference for LLMs, Cursor, Copilot, Claude, and AI Agents generating UI code with NNUI-KIT.
+> Standard Reference for LLMs, Cursor (`.cursorrules`), Copilot, Claude, ChatGPT, and AI Agents generating UI code with NNUI-KIT.
+> Installation: `npm install nnuikit`
 
 ---
 
@@ -9,9 +10,9 @@
 When generating markup for NNUI-KIT:
 1. **Light-DOM First**: Never attempt to attach Shadow DOM. All child elements are regular Light-DOM elements.
 2. **Mutate Attributes, Never Nodes**: Components toggle `data-state`, `aria-selected`, `aria-expanded`, and `tabindex`. Reconcilers (React 19, Vue 3, Svelte 5) manage the DOM nodes.
-3. **SSR & Hydration Safety (`nnui-kit/client`)**: When generating code for Next.js App Router, Remix, Nuxt, or SvelteKit, import `nnui-kit/client`. It safely no-ops during Node.js server pre-rendering and auto-upgrades elements during browser hydration.
-4. **First-Class React 18 & 19 Wrapper (`nnui-kit/react`)**: For idiomatic React code, import typed components directly: `import { Tabs, DataGrid, Stepper, Dialog, toast } from 'nnui-kit/react'`. They forward refs directly and bridge custom DOM events (`onChange`, `onSelectionChange`, `onSort`, `onOpen`, `onClose`).
-5. **Universal Custom Elements**: When not using the React wrapper, write direct HTML/JSX custom element tags (`<nnui-tabs>`, `<ui-tabs>`, `<ui-data-grid>`).
+3. **SSR & Hydration Safety (`nnuikit/client`)**: When generating code for Next.js App Router, Remix, Nuxt, or SvelteKit, import `nnuikit/client`. It safely no-ops during Node.js server pre-rendering and auto-upgrades elements during browser hydration.
+4. **First-Class React 18 & 19 Wrapper (`nnuikit/react`)**: For idiomatic React code, import typed components directly: `import { Tabs, DataGrid, Stepper, Dialog, toast } from 'nnuikit/react'`. They forward refs directly and bridge custom DOM events (`onChange`, `onSelectionChange`, `onSort`, `onOpen`, `onClose`).
+5. **Universal Custom Elements**: When not using the React wrapper, write direct HTML/JSX custom element tags (`<ui-tabs>`, `<nnui-tabs>`, `<ui-data-grid>`).
 6. **Standard Events**: All components dispatch lowercase standard events (`change`, `input`, `toggle`) with `event.detail.value`.
 7. **Declarative Persistence & Cross-Tab Sync**: Add `persist="url"` to automatically synchronize state with URL search params (e.g. data grids, tables, filters), `persist="session"` or `persist="local"` for storage persistence, and `sync="cross-tab"` for automatic real-time BroadcastChannel sync across browser tabs!
 8. **AI Introspection Protocol**: Every custom element implements `element.inspectAI()` returning its live schema, current state, and copy-paste ready framework snippets.
@@ -656,9 +657,9 @@ NNUI-KIT exports W3C Design Tokens Community Group specification at `nnui-kit/to
 
 ### React 18 & 19 (Official Wrapper)
 ```jsx
-import 'nnui-kit/client';
-import { toast } from 'nnui-kit';
-import { Tabs, DataGrid, Stepper } from 'nnui-kit/react';
+import 'nnuikit/client';
+import { toast } from 'nnuikit';
+import { Tabs, DataGrid, Stepper } from 'nnuikit/react';
 
 export function Dashboard() {
   const [tab, setTab] = useState('blotter');
@@ -673,8 +674,8 @@ export function Dashboard() {
 ### Svelte 5 (Runes)
 ```svelte
 <script>
-  import 'nnui-kit/css';
-  import 'nnui-kit/client';
+  import 'nnuikit/css';
+  import 'nnuikit/client';
   let role = $state('engineer');
 </script>
 
@@ -689,8 +690,8 @@ export function Dashboard() {
 ### Vue 3 (Composition API)
 ```html
 <script setup>
-import 'nnui-kit/css';
-import 'nnui-kit/client';
+import 'nnuikit/css';
+import 'nnuikit/client';
 import { ref } from 'vue';
 
 const tab = ref('overview');
