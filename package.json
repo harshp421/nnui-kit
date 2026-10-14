@@ -1,0 +1,20 @@
+{
+  "name": "nnui-kit-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "cd apps/docs && npm run dev",
+    "dev:pkg": "cd packages/nnui-kit && npm run dev",
+    "build:pkg": "cd packages/nnui-kit && npm run build",
+    "build:docs": "cd apps/docs && npm run build",
+    "build": "node scripts/build.js",
+    "test": "node packages/nnui-kit/tests/run-all.js",
+    "pack:check": "cd packages/nnui-kit && npm run pack:check",
+    "publish:pkg": "cd packages/nnui-kit && npm publish"
+  }
+}

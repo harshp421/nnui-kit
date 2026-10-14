@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — NNUI-KIT</title>
+  <meta name="description"
+    content="Comprehensive guide to installing, configuring, and architecting universal Light-DOM components with NNUI-KIT.">
+
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="./src/styles/index.css">
+  <link rel="stylesheet" href="./playground/docs.css">
+</head>
+
+<body class="docs-page">
+
+  <!-- Top Navigation (Shadcn Style) -->
+  <header class="docs-nav">
+    <div class="docs-nav-left">
+      <a href="./index.html" class="docs-logo">
+        <span
+          style="background: linear-gradient(135deg, var(--ui-color-brand-600), var(--ui-color-accent-400)); color: var(--ui-text-inverted); width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; font-size: 0.9rem;">N</span>
+        <span>NNUI-KIT</span>
+        <span class="docs-logo-badge">Docs</span>
+      </a>
+
+      <nav class="docs-nav-links">
+        <a href="./docs.html" class="docs-nav-link active">Documentation</a>
+        <a href="./components.html" class="docs-nav-link">Components</a>
+        <a href="./tokens.html" class="docs-nav-link">Design Tokens</a>
+        <a href="./index.html" class="docs-nav-link">Home</a>
+        <a href="./llms.txt" target="_blank" class="docs-nav-link">🤖 llms.txt</a>
+      </nav>
+    </div>
+
+    <div class="docs-nav-right">
+      <button class="docs-search-btn" type="button"
+        style="display: flex; align-items: center; gap: 0.5rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); border-radius: 6px; padding: 0.35rem 0.75rem; font-size: 0.8rem; color: var(--ui-text-muted); cursor: pointer; transition: all 0.2s ease;">
+        <span>🔍 Search...</span>
+        <kbd
+          style="font-family: inherit; font-size: 0.65rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--ui-text-primary);">⌘K</kbd>
+      </button>
+      <button id="docs-theme-btn" class="ui-button ui-button--secondary"
+        style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+        ☀️ Light
+      </button>
+
+      <a href="./components.html" class="ui-button"
+        style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+        Components →
+      </a>
+    </div>
+  </header>
+
+  <div class="docs-wrapper">
+    <!-- Left Navigation Sidebar (Unified Canonical) -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Getting Started</div>
+        <div class="sidebar-items">
+          <a href="./docs.html#introduction" class="sidebar-item active">Introduction</a>
+          <a href="./docs.html#installation" class="sidebar-item">Installation</a>
+          <a href="./docs.html#ssr-hydration" class="sidebar-item"><span>SSR &amp; Hydration</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./docs.html#react-wrapper" class="sidebar-item"><span>React 18 &amp; 19 Wrapper</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./docs.html#platform-innovations" class="sidebar-item"><span>Platform Innovations</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./docs.html#cdn-backend" class="sidebar-item">CDN &amp; Backend</a>
+          <a href="./docs.html#cli-registry" class="sidebar-item">CLI Registry (npx nnui)</a>
+          <a href="./docs.html#architecture" class="sidebar-item">Architecture</a>
+          <a href="./docs.html#theming" class="sidebar-item">Theming &amp; Layers</a>
+          <a href="./docs.html#form-validation" class="sidebar-item">Form Validation (RHF/Zod)</a>
+          <a href="./docs.html#ai-manifest" class="sidebar-item">AI Manifest (llms.txt)</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Design System & Tokens</div>
+        <div class="sidebar-items">
+          <a href="./tokens.html" class="sidebar-item"><span>Design Tokens Studio</span> <span
+              class="sidebar-badge-new">Live</span></a>
+          <a href="./docs.html#design-tokens" class="sidebar-item">Tokens & DTCG Standard</a>
+          <a href="./docs.html#color-palettes" class="sidebar-item">Color Palettes</a>
+          <a href="./docs.html#layout-primitives" class="sidebar-item">Layout (Stack, Grid)</a>
+          <a href="./docs.html#typography-system" class="sidebar-item">Typography System</a>
+          <a href="./docs.html#feedback-primitives" class="sidebar-item">Feedback & Status</a>
+          <a href="./docs.html#accessibility-standards" class="sidebar-item">Accessibility & Motion</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Components Overview</div>
+        <div class="sidebar-items">
+          <a href="./components.html" class="sidebar-item"><span>All Components Gallery</span> <span
+              class="sidebar-badge-counter">40</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 0: Primitives (Zero-JS)</div>
+        <div class="sidebar-items">
+          <a href="./components/button.html" class="sidebar-item">Button</a>
+          <a href="./components/badge.html" class="sidebar-item">Badge</a>
+          <a href="./components/input.html" class="sidebar-item">Input & Field</a>
+          <a href="./components/checkbox.html" class="sidebar-item">Checkbox & Radio</a>
+          <a href="./components/switch.html" class="sidebar-item">Switch</a>
+          <a href="./components/card.html" class="sidebar-item">Card</a>
+          <a href="./components/avatar.html" class="sidebar-item">Avatar</a>
+          <a href="./components/alert.html" class="sidebar-item">Alert</a>
+          <a href="./components/progress.html" class="sidebar-item">Progress</a>
+          <a href="./components/table.html" class="sidebar-item">Table</a>
+          <a href="./components/skeleton.html" class="sidebar-item">Skeleton</a>
+          <a href="./components/separator.html" class="sidebar-item">Separator</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-title">Tier 2: Micro-Enhancers</div>
+        <div class="sidebar-items">
+          <a href="./components/data-grid.html" class="sidebar-item"><span>Virtualized Data Grid</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/date-range-picker.html" class="sidebar-item"><span>Date Range Picker</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/tags-input.html" class="sidebar-item"><span>Tags Input</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/segmented-control.html" class="sidebar-item"><span>Segmented Control</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/otp-input.html" class="sidebar-item"><span>OTP / PIN Input</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/stepper.html" class="sidebar-item"><span>Stepper / Wizard</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/resizable.html" class="sidebar-item"><span>Resizable Split Pane</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/file-upload.html" class="sidebar-item"><span>File Upload & Dropzone</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/context-menu.html" class="sidebar-item"><span>Context Menu</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/navigation-menu.html" class="sidebar-item"><span>Navigation Menu</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/tree-view.html" class="sidebar-item"><span>Tree View</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/ai-prompt-box.html" class="sidebar-item"><span>AI Prompt Box</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/color-picker.html" class="sidebar-item"><span>Color Picker</span> <span
+              class="sidebar-badge-new">New</span></a>
+          <a href="./components/data-table.html" class="sidebar-item"><span>Data Table</span></a>
+          <a href="./components/calendar.html" class="sidebar-item"><span>Calendar</span></a>
+          <a href="./components/date-picker.html" class="sidebar-item"><span>Date Picker</span></a>
+          <a href="./components/dropdown.html" class="sidebar-item"><span>Dropdown Menu</span></a>
+          <a href="./components/toast.html" class="sidebar-item"><span>Toast / Toaster</span></a>
+          <a href="./components/combobox.html" class="sidebar-item"><span>Combobox</span></a>
+          <a href="./components/tabs.html" class="sidebar-item"><span>Tabs</span></a>
+          <a href="./components/dialog.html" class="sidebar-item"><span>Dialog</span></a>
+          <a href="./components/select.html" class="sidebar-item"><span>Select</span></a>
+          <a href="./components/accordion.html" class="sidebar-item"><span>Accordion</span></a>
+          <a href="./components/popover.html" class="sidebar-item"><span>Popover</span></a>
+          <a href="./components/tooltip.html" class="sidebar-item"><span>Tooltip</span></a>
+          <a href="./components/command.html" class="sidebar-item"><span>Command Palette</span></a>
+          <a href="./components/sheet.html" class="sidebar-item"><span>Sheet / Drawer</span></a>
+          <a href="./components/slider.html" class="sidebar-item"><span>Slider</span></a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Center Area -->
+    <main class="docs-main-container">
+
+      <!-- ======================================================== -->
+      <!-- 0. INTRODUCTION & MENTAL MODEL SECTION                   -->
+      <!-- ======================================================== -->
+      <section id="introduction">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Introduction</span>
+        </div>
+
+        <h1 class="docs-title">Introduction &amp; Architecture</h1>
+        <p class="docs-subtitle">
+          NNUI-KIT is a platform-native, three-tier Light-DOM universal UI system. It delivers accessible, composable
+          components that work identically across React 19, Next.js 15, Vue 3, Svelte 5, Astro, HTMX, Django, Rails, and
+          vanilla HTML without framework wrapper tax or Shadow DOM traps.
+        </p>
+
+        <!-- 3-Tier Architecture Mental Model Cards -->
+        <div data-ui="grid" data-cols="3" data-gap="4" style="margin: 2rem 0;">
+          <div data-ui="card"
+            style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span data-ui="badge">Tier 0</span>
+                <span style="font-size: 0.75rem; color: var(--ui-text-muted); font-weight: 600;">0 KB JS</span>
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--ui-text-primary);">
+                Pure CSS Primitives</h3>
+              <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.55;">
+                Button, Badge, Card, Avatar, Table, Input, Switch, Alert, Progress, Skeleton, and Separator. Instantly
+                SSR-rendered with zero JavaScript hydration required.
+              </p>
+            </div>
+            <div
+              style="margin-top: 1.25rem; padding-top: 0.85rem; border-top: 1px solid var(--ui-border-subtle); font-size: 0.8rem; color: var(--ui-text-muted);">
+              Defensive Cascade: <code>@layer ui.base</code>
+            </div>
+          </div>
+
+          <div data-ui="card"
+            style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span data-ui="badge" data-variant="secondary">Tier 1</span>
+                <span style="font-size: 0.75rem; color: var(--ui-color-brand-400); font-weight: 600;">W3C DTCG</span>
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--ui-text-primary);">
+                Design Tokens</h3>
+              <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.55;">
+                Conforms to W3C Design Tokens Community Group standard. Synchronized between Figma Token Studio and CSS
+                custom properties (<code>--ui-*</code>) with 6 themes.
+              </p>
+            </div>
+            <div
+              style="margin-top: 1.25rem; padding-top: 0.85rem; border-top: 1px solid var(--ui-border-subtle); font-size: 0.8rem; color: var(--ui-text-muted);">
+              File: <code>tokens.json</code> &amp; Studio
+            </div>
+          </div>
+
+          <div data-ui="card"
+            style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span data-ui="badge" data-variant="outline">Tier 2</span>
+                <span style="font-size: 0.75rem; color: var(--ui-color-accent-400); font-weight: 600;">Sub-4KB</span>
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--ui-text-primary);">
+                Micro-Enhancers</h3>
+              <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.55;">
+                Virtualized Data Grid (&gt;15k rows), Date Range Picker, Combobox, Dialog, Popover, Tabs. Light-DOM
+                custom elements with standard ARIA and native <code>FormData</code>.
+              </p>
+            </div>
+            <div
+              style="margin-top: 1.25rem; padding-top: 0.85rem; border-top: 1px solid var(--ui-border-subtle); font-size: 0.8rem; color: var(--ui-text-muted);">
+              Dual-Prefix: <code>&lt;ui-*&gt;</code> &amp; <code>&lt;nnui-*&gt;</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Why Light-DOM Over Shadow DOM Comparison Table -->
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem 0;">Why Light-DOM? (Solving Shadow DOM Traps)</h2>
+        <p style="font-size: 0.95rem; color: var(--ui-text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+          Traditional Web Component libraries lock their templates inside closed Shadow DOM trees. While encapsulation
+          sounds good in theory, it introduces fatal problems in production enterprise applications. NNUI-KIT executes
+          entirely in the document Light DOM:
+        </p>
+
+        <div class="api-table-wrapper" style="margin-bottom: 2.5rem;">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>Shadow-DOM Components</th>
+                <th>Framework Wrappers</th>
+                <th>NNUI-KIT (Light-DOM)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>HTML Form Submission</strong></td>
+                <td>Requires synthetic hidden inputs</td>
+                <td>Requires synthetic hidden inputs</td>
+                <td><span style="color: #10b981; font-weight: 600;">✓ Native ElementInternals &amp; FormData</span></td>
+              </tr>
+              <tr>
+                <td><strong>Global CSS Theming</strong></td>
+                <td>Broken; requires awkward <code>::part()</code></td>
+                <td>Limited to proprietary config files</td>
+                <td><span style="color: #10b981; font-weight: 600;">✓ 100% Cascade Layers &amp; CSS Variables</span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Cross-Element ARIA</strong></td>
+                <td><code>aria-labelledby</code> fails across roots</td>
+                <td>Component-specific ID mangling</td>
+                <td><span style="color: #10b981; font-weight: 600;">✓ W3C Standard Host Document ARIA</span></td>
+              </tr>
+              <tr>
+                <td><strong>Framework Compatibility</strong></td>
+                <td>Requires custom React/Vue wrappers</td>
+                <td>Locked to 1 framework (React or Vue)</td>
+                <td><span style="color: #10b981; font-weight: 600;">✓ Works identically in all 7+ frameworks</span></td>
+              </tr>
+              <tr>
+                <td><strong>Bundle Footprint</strong></td>
+                <td>40 KB – 120 KB runtime</td>
+                <td>80 KB – 250 KB runtime</td>
+                <td><span style="color: #10b981; font-weight: 600;">✓ Sub-4 KB core / 0 KB for Tier 0</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Quick Pathway Navigation -->
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem 0;">Quick Navigation Pathways</h2>
+        <div data-ui="grid" data-cols="2" data-gap="4" style="margin-bottom: 3.5rem;">
+          <a href="#installation" style="text-decoration: none; color: inherit;">
+            <div data-ui="card" style="padding: 1.25rem; transition: border-color var(--ui-transition-fast);">
+              <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">⚡</div>
+              <div style="font-weight: 700; font-size: 1rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">
+                Quickstart Installation →</div>
+              <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.5;">
+                Step-by-step setup guides for Next.js 15, Vite, Astro, HTMX, Django, Rails, and CDN.
+              </p>
+            </div>
+          </a>
+
+          <a href="./components.html" style="text-decoration: none; color: inherit;">
+            <div data-ui="card" style="padding: 1.25rem; transition: border-color var(--ui-transition-fast);">
+              <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">🧩</div>
+              <div style="font-weight: 700; font-size: 1rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">
+                Browse 30 Components →</div>
+              <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.5;">
+                Interactive playground with live controls and 1-click code copying for React, Vue, Svelte, and HTML.
+              </p>
+            </div>
+          </a>
+
+          <a href="./tokens.html" style="text-decoration: none; color: inherit;">
+            <div data-ui="card" style="padding: 1.25rem; transition: border-color var(--ui-transition-fast);">
+              <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">🎨</div>
+              <div style="font-weight: 700; font-size: 1rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">
+                Design Tokens Studio →</div>
+              <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.5;">
+                Live color palette switcher, WCAG contrast analyzer, spring motion simulator, and DTCG exporter.
+              </p>
+            </div>
+          </a>
+
+          <a href="./components/data-grid.html" style="text-decoration: none; color: inherit;">
+            <div data-ui="card" style="padding: 1.25rem; transition: border-color var(--ui-transition-fast);">
+              <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">📊</div>
+              <div style="font-weight: 700; font-size: 1rem; color: var(--ui-text-primary); margin-bottom: 0.25rem;">
+                Virtualized Data Grid (&gt;15k Rows) →</div>
+              <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0; line-height: 1.5;">
+                60fps virtualized data grid handling 15,000+ streaming rows, CSV export, column sorting, and search.
+              </p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 1. INSTALLATION SECTION                                  -->
+      <!-- ======================================================== -->
+      <section id="installation">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Installation</span>
+        </div>
+
+        <h1 class="docs-title">Installation</h1>
+        <p class="docs-subtitle">
+          How to install dependencies and structure your application with NNUI-KIT across Next.js, Vite, Astro, or plain
+          HTML.
+        </p>
+
+        <!-- Framework Pickers (Shadcn Style) -->
+        <div class="framework-selector-tabs" style="flex-wrap: wrap;">
+          <button class="framework-tab-item active" data-framework="nextjs">
+            <span>▲</span> Next.js
+          </button>
+          <button class="framework-tab-item" data-framework="vite">
+            <span>⚡</span> Vite (React / Vue)
+          </button>
+          <button class="framework-tab-item" data-framework="svelte">
+            <span>🧡</span> Svelte 5
+          </button>
+          <button class="framework-tab-item" data-framework="astro">
+            <span>🚀</span> Astro
+          </button>
+          <button class="framework-tab-item" data-framework="htmx">
+            <span>⚡</span> HTMX
+          </button>
+          <button class="framework-tab-item" data-framework="django">
+            <span>🐍</span> Django
+          </button>
+          <button class="framework-tab-item" data-framework="rails">
+            <span>💎</span> Rails
+          </button>
+          <button class="framework-tab-item" data-framework="html">
+            <span>🌐</span> CDN / HTML
+          </button>
+        </div>
+
+        <!-- Callout: Light-DOM Invariant -->
+        <div class="docs-callout">
+          <div class="docs-callout-icon">💡</div>
+          <div>
+            <strong>Zero Framework Wrappers:</strong> NNUI-KIT runs directly on native Light-DOM Web Components. You
+            write standard JSX / template tags without needing 5 separate adapter packages.
+          </div>
+        </div>
+
+        <!-- Stepper: 5 Numbered Steps -->
+        <div class="docs-stepper">
+
+          <!-- Step 1 -->
+          <div class="step-node" id="step-1">
+            <div class="step-number">1</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-1-title">Create Project</h3>
+              <p class="step-description" id="step-1-desc">Start by creating a new project with your framework of
+                choice.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-1-file">Terminal</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre
+                class="code-pre"><code id="step-1-code">npx create-next-app@latest my-app --typescript --tailwind --eslint</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-node" id="step-2">
+            <div class="step-number">2</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-2-title">Install NNUI-KIT</h3>
+              <p class="step-description" id="step-2-desc">Add the core universal package to your project.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-2-file">Terminal</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-2-code">npm install nnui-kit</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-node" id="step-3">
+            <div class="step-number">3</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-3-title">Configure Global Styles</h3>
+              <p class="step-description" id="step-3-desc">Import the universal CSS and micro-enhancers in your app
+                layout.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-3-file">app/layout.tsx</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-3-code">import 'nnui-kit/css';
+import 'nnui-kit';</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-node" id="step-4">
+            <div class="step-number">4</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-4-title">Configure Cascade Layers</h3>
+              <p class="step-description" id="step-4-desc">Tailwind utilities override defaults cleanly without
+                !important.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-4-file">app/globals.css</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-4-code">@import 'nnui-kit/css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="step-node" id="step-5">
+            <div class="step-number">5</div>
+            <div class="step-header">
+              <h3 class="step-title" id="step-5-title">Add Your First Component</h3>
+              <p class="step-description" id="step-5-desc">Render any component with native events and attributes.</p>
+            </div>
+            <div class="code-container">
+              <div class="code-header">
+                <span class="code-filename" id="step-5-file">app/page.tsx</span>
+                <button class="copy-btn">📋 Copy</button>
+              </div>
+              <pre class="code-pre"><code id="step-5-code">export default function Page() {
+  return (
+    <nnui-tabs value="tab-1">
+      <div data-part="tablist">
+        <button data-part="tab" data-value="tab-1">Overview</button>
+      </div>
+      <div data-part="tabpanel" data-value="tab-1">Welcome to NNUI-KIT</div>
+    </nnui-tabs>
+  );
+}</code></pre>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- IDE Autocomplete -->
+        <div style="margin-top: 3.5rem;" id="ide-setup">
+          <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">IDE Autocomplete (VS Code & Cursor)
+          </h2>
+          <p style="color: var(--ui-text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+            To enable autocompletion for all <code>&lt;nnui-*&gt;</code> tags and <code>data-part</code> attributes in
+            VS Code or Cursor:
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-filename">.vscode/settings.json</span>
+              <button class="copy-btn">📋 Copy</button>
+            </div>
+            <pre class="code-pre"><code>{
+  "html.customData": [
+    "./node_modules/nnui-kit/custom-elements.json"
+  ]
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 1B. SSR & HYDRATION SAFETY SECTION                       -->
+      <!-- ======================================================== -->
+      <section id="ssr-hydration">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">SSR &amp; Client Hydration</span>
+        </div>
+
+        <div style="display: flex; align-items: baseline; gap: 0.75rem;">
+          <h2 class="docs-title" style="font-size: 2rem; margin: 0;">SSR &amp; Client Hydration Safety</h2>
+          <span data-ui="badge" data-variant="success">Node SSR Ready</span>
+        </div>
+        <p class="docs-subtitle">
+          How NNUI-KIT executes safely inside Node.js Server-Side Rendering (SSR), React Server Components (RSC),
+          Next.js 15, Remix, and SvelteKit without <code>ReferenceError: HTMLElement is not defined</code>.
+        </p>
+
+        <!-- SSR Explanation Card -->
+        <div data-ui="card" style="padding: 1.75rem; margin: 2rem 0;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0 0 0.75rem 0;">The Universal
+            <code>import 'nnui-kit/client'</code> Entrypoint</h3>
+          <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
+            Standard Web Components fail during server-side pre-rendering because Node.js lacks the browser's
+            <code>HTMLElement</code> global. NNUI-KIT solves this at the base class layer with a 100% crash-free
+            fallback (<code>SafeBaseElement</code>). When running on the server, all custom elements safely no-op; upon
+            client hydration, they automatically register under both <code>&lt;ui-*&gt;</code> and
+            <code>&lt;nnui-*&gt;</code> prefixes.
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-filename">app/layout.tsx (Next.js App Router)</span>
+              <button class="copy-btn">📋 Copy</button>
+            </div>
+            <pre class="code-pre"><code>// Import universal styles and the SSR-safe client entry
+import 'nnui-kit/css';
+import 'nnui-kit/client'; // Safe for Node SSR & Server Components!
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;html lang="en" data-theme="dark"&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Bundle Size Impact Callout -->
+        <div class="docs-callout">
+          <div class="docs-callout-icon">⚡</div>
+          <div>
+            <strong>Zero Package Size Overhead:</strong> Implementing the SSR safe entrypoint adds less than <strong>30
+              bytes gzipped (0.015%)</strong> to the core library. Non-React projects (Vue, Svelte, HTMX) carry zero
+            runtime overhead thanks to package subpath exports.
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 1C. FIRST-CLASS REACT 18 & 19 WRAPPER                    -->
+      <!-- ======================================================== -->
+      <section id="react-wrapper">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">React 18 &amp; 19 Wrapper</span>
+        </div>
+
+        <div style="display: flex; align-items: baseline; gap: 0.75rem;">
+          <h2 class="docs-title" style="font-size: 2rem; margin: 0;">Official React 18 &amp; 19 Wrapper</h2>
+          <span data-ui="badge" data-variant="secondary">nnui-kit/react</span>
+        </div>
+        <p class="docs-subtitle">
+          Idiomatic React components with automatic ref forwarding, typed props, custom DOM event bridges, and automatic
+          <code>'use client';</code> isolation.
+        </p>
+
+        <div data-ui="grid" data-cols="2" data-gap="4" style="margin: 2rem 0;">
+          <div data-ui="card" style="padding: 1.5rem;">
+            <h4 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Direct Ref Forwarding</h4>
+            <p style="color: var(--ui-text-secondary); font-size: 0.85rem; line-height: 1.55; margin-bottom: 0.75rem;">
+              Access native DOM APIs directly through standard React refs (e.g.
+              <code>gridRef.current.setColumns()</code>, <code>modalRef.current.showModal()</code>).
+            </p>
+            <pre class="code-pre" style="padding: 0.75rem; font-size: 0.8rem; background: var(--ui-bg-subtle);"><code>const gridRef = useRef(null);
+// Calls native DataGrid method directly:
+gridRef.current?.setRows(trades);</code></pre>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem;">
+            <h4 style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Custom DOM Event Bridging</h4>
+            <p style="color: var(--ui-text-secondary); font-size: 0.85rem; line-height: 1.55; margin-bottom: 0.75rem;">
+              Custom events (<code>selection-change</code>, <code>sort</code>, <code>open</code>) map automatically to
+              standard camelCase React props (<code>onSelectionChange</code>, <code>onSort</code>).
+            </p>
+            <pre class="code-pre" style="padding: 0.75rem; font-size: 0.8rem; background: var(--ui-bg-subtle);"><code>&lt;DataGrid 
+  onSelectionChange={(e) =&gt; setSelected(e.detail.selected)}
+/&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="code-container" style="margin-top: 1.5rem;">
+          <div class="code-header">
+            <span class="code-filename">app/dashboard/page.tsx</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>'use client';
+
+import { useRef, useState } from 'react';
+import 'nnui-kit/client';
+import { toast } from 'nnui-kit';
+import { Tabs, DataGrid, Stepper, Dialog } from 'nnui-kit/react';
+
+export default function DashboardPage() {
+  const [tab, setTab] = useState('blotter');
+  const gridRef = useRef(null);
+
+  return (
+    &lt;div className="p-6 max-w-7xl mx-auto"&gt;
+      &lt;Tabs value={tab} onChange={(e) =&gt; setTab(e.detail.value)}&gt;
+        &lt;div data-part="tablist"&gt;
+          &lt;button data-part="tab" data-value="blotter"&gt;Real-Time Blotter&lt;/button&gt;
+          &lt;button data-part="tab" data-value="wizard"&gt;Order Slicer&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div data-part="tabpanel" data-value="blotter"&gt;
+          &lt;DataGrid ref={gridRef} row-height="40" persist="url" sync="cross-tab"&gt;
+            &lt;div data-part="viewport" style={{ height: '400px', overflowY: 'auto' }}&gt;
+              &lt;div data-part="runway"&gt;
+                &lt;table data-part="grid-table" className="ui-table"&gt;
+                  &lt;thead&gt;&lt;/thead&gt;
+                  &lt;tbody data-part="virtual-tbody"&gt;&lt;/tbody&gt;
+                &lt;/table&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/DataGrid&gt;
+        &lt;/div&gt;
+      &lt;/Tabs&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 2. CDN & BACKEND QUICKSTART SECTION                      -->
+      <!-- ======================================================== -->
+      <section id="cdn-backend">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">CDN & Backend Quickstart</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Zero-Build CDN & Backend Quickstart</h2>
+        <p class="docs-subtitle">
+          Pure Light-DOM web components engineered specifically for backend templates (HTMX, Django, Ruby on Rails,
+          Laravel, and Alpine.js) with zero Node.js build step or hydration lag.
+        </p>
+
+        <!-- Direct CDN Embed -->
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin: 2rem 0 0.5rem 0;">1. Universal CDN Quickstart</h3>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+          Paste these two lines into the <code>&lt;head&gt;</code> of any HTML document or server-side template to
+          instantly unlock all 24 components:
+        </p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">HTML &lt;head&gt; CDN Links</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- NNUI-KIT Universal Stylesheet (Cascade Layered + Shadcn Zinc Tokens) --&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nnui-kit/dist/index.css"&gt;
+
+&lt;!-- NNUI-KIT Light-DOM Runtime (&lt; 4KB, Registers &lt;ui-*&gt; and &lt;nnui-*&gt; elements) --&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/nnui-kit/dist/index.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <!-- HTMX Integration Deep Dive -->
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin: 3rem 0 0.5rem 0;">2. HTMX Hypermedia Integration</h3>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+          Because NNUI-KIT components operate entirely in the <strong>Light DOM</strong> and adhere to the strict
+          <em>"Mutate Attributes, Never Nodes"</em> invariant, HTMX swaps (<code>hx-swap="outerHTML"</code> or
+          <code>innerHTML</code>) work flawlessly without losing focus or breaking Shadow DOM hydration.
+        </p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">templates/users.html (HTMX)</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- 1. Mount toaster once in base template --&gt;
+&lt;ui-toaster position="bottom-right"&gt;&lt;/ui-toaster&gt;
+
+&lt;!-- 2. Form submission with custom elements submitting natively --&gt;
+&lt;form hx-post="/users/create" hx-target="#user-table" hx-swap="beforeend"&gt;
+  &lt;div data-ui="field"&gt;
+    &lt;label data-ui="label" for="role"&gt;User Role&lt;/label&gt;
+    &lt;ui-select id="role" name="role" required&gt;
+      &lt;button type="button" data-part="trigger"&gt;
+        &lt;span data-part="value"&gt;Select role...&lt;/span&gt;
+        &lt;span&gt;▾&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;ul data-part="listbox"&gt;
+        &lt;li data-part="option" data-value="admin"&gt;Administrator&lt;/li&gt;
+        &lt;li data-part="option" data-value="editor"&gt;Editor&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/ui-select&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" data-ui="button"&gt;Add User&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;!-- 3. Server response trigger for Toast notification --&gt;
+&lt;!-- Server returns HTTP Header: HX-Trigger: {"showToast": "User added successfully"} --&gt;
+&lt;script&gt;
+  document.body.addEventListener('showToast', (e) =&gt; {
+    toast.success(e.detail.value || 'Operation completed');
+  });
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <!-- Python / Django Integration -->
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin: 3rem 0 0.5rem 0;">3. Python & Django Templates
+          Integration</h3>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+          In Django, custom elements utilize standard <code>ElementInternals</code> form association. Inputs serialize
+          directly into <code>request.POST</code> just like native <code>&lt;input&gt;</code> tags:
+        </p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">templates/profile.html (Django)</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>{% extends "base.html" %}
+
+{% block content %}
+&lt;form method="POST" action="{% url 'update_profile' %}"&gt;
+  {% csrf_token %}
+  
+  &lt;div data-ui="field"&gt;
+    &lt;label data-ui="label"&gt;Account Notification Volume&lt;/label&gt;
+    &lt;ui-slider name="volume" value="75" min="0" max="100"&gt;&lt;/ui-slider&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" data-ui="button"&gt;Save Preferences&lt;/button&gt;
+&lt;/form&gt;
+
+{% if messages %}
+&lt;script type="module"&gt;
+  import { toast } from 'https://cdn.jsdelivr.net/npm/nnui-kit/dist/index.js';
+  {% for message in messages %}
+    toast.{{ message.tags|default:"info" }}("{{ message|escapejs }}");
+  {% endfor %}
+&lt;/script&gt;
+{% endif %}
+{% endblock %}</code></pre>
+        </div>
+
+        <!-- Ruby on Rails Integration -->
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin: 3rem 0 0.5rem 0;">4. Ruby on Rails & Hotwire Turbo
+          Integration</h3>
+        <p style="color: var(--ui-text-secondary); margin-bottom: 1rem; line-height: 1.6;">
+          Rails Turbo Frames and Turbo Streams can dynamically stream server-rendered drawers, modals, and toasts:
+        </p>
+        <div class="code-container">
+          <div class="code-header">
+            <span class="code-filename">app/views/orders/create.turbo_stream.erb (Rails)</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Append new order to list --&gt;
+&lt;%= turbo_stream.prepend "orders_list", partial: "order", locals: { order: @order } %&gt;
+
+&lt;!-- Trigger instant client-side toast --&gt;
+&lt;script type="module"&gt;
+  import { toast } from 'https://cdn.jsdelivr.net/npm/nnui-kit/dist/index.js';
+  toast.success("Order #&lt;%= @order.id %&gt; placed successfully!");
+&lt;/script&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 3. CLI REGISTRY SECTION                                  -->
+      <!-- ======================================================== -->
+      <section id="cli-registry">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">CLI Registry</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Component Registry & CLI (npx nnui)</h2>
+        <p class="docs-subtitle">
+          Just like shadcn/ui: install components directly into your own project source code. You own the code—zero
+          black-box node_modules traps.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem; margin-top: 1.5rem;">
+          <div>
+            <h4 style="font-size: 1.1rem; margin: 0 0 0.5rem 0;">1. Explore Available Components</h4>
+            <div class="code-container">
+              <div class="code-header"><span class="code-filename">Terminal</span><button class="copy-btn">📋
+                  Copy</button></div>
+              <pre class="code-pre"><code>npx nnui list</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 1.1rem; margin: 0 0 0.5rem 0;">2. Initialize in Your Project</h4>
+            <p style="color: var(--ui-text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">
+              Creates your <code>components/ui/</code> directory, base element utilities, and CSS tokens:
+            </p>
+            <div class="code-container">
+              <div class="code-header"><span class="code-filename">Terminal</span><button class="copy-btn">📋
+                  Copy</button></div>
+              <pre class="code-pre"><code>npx nnui init</code></pre>
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-size: 1.1rem; margin: 0 0 0.5rem 0;">3. Add Specific Components</h4>
+            <p style="color: var(--ui-text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">
+              Download and configure components with automatic dependency resolution:
+            </p>
+            <div class="code-container">
+              <div class="code-header"><span class="code-filename">Terminal</span><button class="copy-btn">📋
+                  Copy</button></div>
+              <pre class="code-pre"><code># Install specific components
+npx nnui add dropdown toast dialog tabs
+
+# Or install the entire 24-component portfolio
+npx nnui add --all</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 4. ARCHITECTURE SECTION                                  -->
+      <!-- ======================================================== -->
+      <section id="architecture">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Architecture</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Three-Tier Light-DOM Architecture</h2>
+        <p class="docs-subtitle">
+          Why traditional component libraries hit an architectural dead end, and how NNUI-KIT inverts the stack into
+          pure platform primitives.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          <div class="code-container">
+            <div class="code-header">
+              <span>Platform Tier Hierarchy</span>
+            </div>
+            <pre class="code-pre"><code>+-------------------------------------------------------------------------+
+| Tier 2: Micro-Enhancers (Light-DOM Custom Elements, &lt; 4 KB JS)          |
+| Focus management, APG roving tabindex, ElementInternals (Tabs, Combobox)|
++-------------------------------------------------------------------------+
+| Tier 1: Platform Primitives (Native Browser Layout Engine)              |
+| Popover API, &lt;dialog&gt;, CSS Anchor Positioning, Viewport Top-Layer       |
++-------------------------------------------------------------------------+
+| Tier 0: Pure Semantic HTML + Tokenized Scoped CSS                       |
+| Zero-JS first paint, 100% crawlable, @layer and @scope isolation       |
++-------------------------------------------------------------------------+</code></pre>
+          </div>
+
+          <h3 style="font-size: 1.35rem; font-weight: 700; margin: 1rem 0 0.5rem 0;">The 4 Core Engineering Invariants
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div style="border-left: 2px solid var(--ui-color-accent-400); padding-left: 1.25rem;">
+              <h4 style="margin: 0 0 0.35rem 0; font-size: 1.05rem;">1. Zero Shadow DOM</h4>
+              <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                <code>attachShadow()</code> is strictly forbidden. All nodes reside in the document DOM. ID references
+                (<code>aria-labelledby</code>, <code>for</code>, <code>aria-controls</code>) resolve natively across all
+                screen readers (VoiceOver, NVDA, JAWS) with zero polyfills.
+              </p>
+            </div>
+
+            <div style="border-left: 2px solid var(--ui-color-success-500); padding-left: 1.25rem;">
+              <h4 style="margin: 0 0 0.35rem 0; font-size: 1.05rem;">2. Mutate Attributes, Never Nodes</h4>
+              <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                Custom elements track state exclusively by toggling attributes (<code>data-state</code>,
+                <code>aria-selected</code>, <code>tabindex</code>). Enhancers never call <code>appendChild()</code> or
+                remove nodes, preventing reconciliation crashes in React 19, Vue 3, and Svelte 5.
+              </p>
+            </div>
+
+            <div style="border-left: 2px solid var(--ui-color-warning-500); padding-left: 1.25rem;">
+              <h4 style="margin: 0 0 0.35rem 0; font-size: 1.05rem;">3. Defensive Cascade Layers (@layer)</h4>
+              <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                All library CSS is declared in
+                <code>@layer ui.tokens, ui.reset, ui.base, ui.components, ui.overrides;</code>. Consumer utility classes
+                (Tailwind, UnoCSS) automatically win the cascade cleanly without ever needing <code>!important</code>.
+              </p>
+            </div>
+
+            <div style="border-left: 2px solid #818cf8; padding-left: 1.25rem;">
+              <h4 style="margin: 0 0 0.35rem 0; font-size: 1.05rem;">4. Sub-4KB Core Runtime</h4>
+              <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                By delegating overlays to the browser's top layer (<code>popover</code>, <code>&lt;dialog&gt;</code>)
+                and positioning to CSS Anchor Positioning, main-thread JavaScript handles only state coordination and
+                keyboard navigation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 3. THEMING SECTION                                       -->
+      <!-- ======================================================== -->
+      <section id="theming">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Theming</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Theming & Dark Mode</h2>
+        <p class="docs-subtitle">
+          Built with an authentic high-contrast Zinc color scale, customized through CSS custom properties.
+        </p>
+
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          NNUI-KIT automatically respects system dark mode preferences via
+          <code>@media (prefers-color-scheme: dark)</code>. To force a theme programmatically, set the
+          <code>data-theme</code> attribute on your root <code>&lt;html&gt;</code> element:
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>index.html</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Force Dark Theme --&gt;
+&lt;html data-theme="dark"&gt;
+
+&lt;!-- Force Light Theme --&gt;
+&lt;html data-theme="light"&gt;</code></pre>
+        </div>
+
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.5rem 0;">Tailwind CSS Integration</h3>
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          Because NNUI-KIT is styled inside <code>@layer ui.components</code>, any Tailwind utility applied to component
+          elements overrides library styles with zero specificity conflicts:
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Example Component</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Tailwind classes (bg-zinc-800, text-emerald-400, rounded-2xl) win effortlessly --&gt;
+&lt;button class="ui-button bg-zinc-800 text-emerald-400 rounded-2xl"&gt;
+  Custom Styled Button
+&lt;/button&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 4. FORM VALIDATION (REACT HOOK FORM & ZOD)               -->
+      <!-- ======================================================== -->
+      <section id="form-validation">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Form Validation</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Form Validation (React Hook Form & Zod)</h2>
+        <p class="docs-subtitle">
+          First-class integration with schema validation libraries. Light-DOM inputs and custom elements wire into form
+          state using native attributes.
+        </p>
+
+        <!-- Live Visual Comparison -->
+        <div data-ui="grid" data-cols="2" data-gap="4" style="margin: 2rem 0;">
+          <div data-ui="card" style="padding: 1.5rem;">
+            <span data-ui="badge" data-variant="secondary" style="margin-bottom: 0.75rem;">Default State</span>
+            <div data-ui="stack" data-direction="col" data-gap="1">
+              <label data-ui="label" for="demo-email-valid">Work Email</label>
+              <input data-ui="input" id="demo-email-valid" placeholder="you@company.com" value="alex@acme.corp">
+              <span data-ui="field-hint">We will never share your personal email.</span>
+            </div>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem; border-color: rgba(239, 68, 68, 0.4);">
+            <span data-ui="badge" data-variant="destructive" style="margin-bottom: 0.75rem;">Error State
+              (aria-invalid="true")</span>
+            <div data-ui="stack" data-direction="col" data-gap="1">
+              <label data-ui="label" for="demo-email-invalid">Work Email</label>
+              <input data-ui="input" id="demo-email-invalid" aria-invalid="true" aria-describedby="demo-email-err"
+                value="invalid-email">
+              <span data-ui="field-error" id="demo-email-err">Please enter a valid business email address.</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.75rem 0;">React 19 + React Hook Form + Zod
+          Implementation</h3>
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          Use React Hook Form's <code>register()</code> for native inputs or <code>Controller</code> for composite
+          custom elements (like <code>&lt;ui-tags-input&gt;</code> or <code>&lt;ui-date-range-picker&gt;</code>):
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>app/components/RegistrationForm.tsx</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import 'nnui-kit';
+
+const formSchema = z.object({
+  email: z.string().email('Please enter a valid email address'),
+  skills: z.array(z.string()).min(1, 'Please add at least one skill tag'),
+});
+
+type FormData = z.infer&lt;typeof formSchema&gt;;
+
+export function RegistrationForm() {
+  const { register, control, handleSubmit, formState: { errors } } = useForm&lt;FormData&gt;({
+    resolver: zodResolver(formSchema),
+  });
+
+  const onSubmit = (data: FormData) => {
+    console.log('Valid Form Submission:', data);
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-md"&gt;
+      
+      {/* 1. Native Input with Zod Validation */}
+      &lt;div data-ui="stack" data-direction="col" data-gap="1"&gt;
+        &lt;label data-ui="label" htmlFor="email-input"&gt;Work Email&lt;/label&gt;
+        &lt;input
+          data-ui="input"
+          id="email-input"
+          {...register('email')}
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={errors.email ? 'email-error' : 'email-hint'}
+        /&gt;
+        {errors.email ? (
+          &lt;span data-ui="field-error" id="email-error"&gt;{errors.email.message}&lt;/span&gt;
+        ) : (
+          &lt;span data-ui="field-hint" id="email-hint"&gt;We will send your verification link here.&lt;/span&gt;
+        )}
+      &lt;/div&gt;
+
+      {/* 2. Custom Element Tags Input via Controller */}
+      &lt;div data-ui="stack" data-direction="col" data-gap="1"&gt;
+        &lt;label data-ui="label"&gt;Technical Skills&lt;/label&gt;
+        &lt;Controller
+          name="skills"
+          control={control}
+          render={({ field }) =&gt; (
+            &lt;ui-tags-input
+              placeholder="Add skill (e.g. React)..."
+              onChange={(e) =&gt; field.onChange(e.detail.tags)}
+            /&gt;
+          )}
+        /&gt;
+        {errors.skills && (
+          &lt;span data-ui="field-error"&gt;{errors.skills.message}&lt;/span&gt;
+        )}
+      &lt;/div&gt;
+
+      &lt;button type="submit" className="ui-button"&gt;Submit Application&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 4. AI MANIFEST SECTION                                   -->
+      <!-- ======================================================== -->
+      <section id="ai-manifest">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Getting Started</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">AI Manifest</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">AI Coding Assistant Support (llms.txt)</h2>
+        <p class="docs-subtitle">
+          Standardized specifications that allow Cursor, Copilot, ChatGPT, and Claude to generate 100% accurate,
+          zero-hallucination markup.
+        </p>
+
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          NNUI-KIT includes a standardized <code>llms.txt</code> file at the root of the project. AI coding assistants
+          consume this plain-text manifest to understand exact tag names, required semantic child parts
+          (<code>data-part="input"</code>, <code>data-part="listbox"</code>), and event formats.
+        </p>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <a href="./llms.txt" target="_blank" class="ui-button" style="text-decoration: none;">
+            View Raw llms.txt Specification ↗
+          </a>
+          <a href="./components.html" class="ui-button ui-button--secondary" style="text-decoration: none;">
+            Browse All Components →
+          </a>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- PLATFORM INNOVATIONS & AI PROTOCOL SECTION               -->
+      <!-- ======================================================== -->
+      <section id="platform-innovations">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Platform Innovations</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Triple-Sync &amp; AI Protocol</span>
+        </div>
+
+        <div style="display: flex; align-items: baseline; gap: 0.75rem;">
+          <h2 class="docs-title" style="font-size: 2rem; margin: 0;">Triple-Synchronized UI &amp; AI Protocol</h2>
+          <span data-ui="badge" data-variant="secondary">Platform Innovation</span>
+        </div>
+        <p class="docs-subtitle">
+          Declarative state persistence, zero-latency multi-tab sync, CSS container query polymorphic morphing, and
+          autonomous AI introspection (<code>element.inspectAI()</code>).
+        </p>
+
+        <!-- 4 Core Pillars Grid -->
+        <div data-ui="grid" data-cols="2" data-gap="4" style="margin: 2rem 0;">
+          <!-- Pillar 1: Declarative Persistence -->
+          <div data-ui="card"
+            style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <span style="font-size: 1.25rem;">🔗</span>
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0; color: var(--ui-text-primary);">Declarative
+                  State Persistence</h3>
+              </div>
+              <p style="color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+                No router code or Redux boilerplate. Simply add <code>persist="url"</code> to sync search, sort, and
+                pagination state directly into URL query parameters (e.g. <code>?page=2&amp;search=btc</code>), or
+                <code>persist="local"</code> to autosave drafts and wizard progress across page refreshes.
+              </p>
+            </div>
+            <pre class="code-pre"
+              style="margin: 0; padding: 0.75rem; font-size: 0.8rem; background: var(--ui-bg-subtle);"><code>&lt;!-- Automatically syncs search &amp; filters to URL --&gt;
+&lt;ui-data-grid persist="url" sync="cross-tab"&gt;&lt;/ui-data-grid&gt;
+
+&lt;!-- Autosaves step progress across browser reloads --&gt;
+&lt;ui-stepper persist="local" sync="cross-tab"&gt;&lt;/ui-stepper&gt;</code></pre>
+          </div>
+
+          <!-- Pillar 2: Cross-Tab BroadcastChannel Sync -->
+          <div data-ui="card"
+            style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <span style="font-size: 1.25rem;">⚡</span>
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0; color: var(--ui-text-primary);">Real-Time
+                  Multi-Tab Synchronization</h3>
+              </div>
+              <p style="color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+                Add <code>sync="cross-tab"</code> to any interactive component. It utilizes zero-overhead Web
+                <code>BroadcastChannel</code> primitives to immediately reflect user actions across all open browser
+                windows and tabs without needing a WebSocket server or polling.
+              </p>
+            </div>
+            <pre class="code-pre"
+              style="margin: 0; padding: 0.75rem; font-size: 0.8rem; background: var(--ui-bg-subtle);"><code>// Zero backend required. When user changes step in Tab 1,
+// Tab 2 updates instantly in sub-millisecond real time:
+&lt;ui-stepper sync="cross-tab"&gt;...&lt;/ui-stepper&gt;</code></pre>
+          </div>
+
+          <!-- Pillar 3: AI Introspection Protocol -->
+          <div data-ui="card"
+            style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <span style="font-size: 1.25rem;">🤖</span>
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0; color: var(--ui-text-primary);">
+                  Machine-Readable AI Protocol</h3>
+              </div>
+              <p style="color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+                Every NNUI-KIT element implements <code>element.inspectAI()</code> conforming to protocol
+                <code>nnui.ai.v1</code>. Autonomous coding agents (Cursor, Claude, Antigravity) can query elements
+                directly to discover valid attributes, live state, and generate 100% accurate framework code.
+              </p>
+            </div>
+            <pre class="code-pre"
+              style="margin: 0; padding: 0.75rem; font-size: 0.8rem; background: var(--ui-bg-subtle);"><code>const schema = await element.inspectAI();
+console.log(schema.protocol); // 'nnui.ai.v1'
+console.log(schema.state);    // Live runtime snapshot
+console.log(schema.snippets); // React 19, Vue 3, Svelte 5</code></pre>
+          </div>
+
+          <!-- Pillar 4: Container Polymorphism & HUD Inspector -->
+          <div data-ui="card"
+            style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                <span style="font-size: 1.25rem;">🎯</span>
+                <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0; color: var(--ui-text-primary);">In-Browser
+                  HUD &amp; Container Morphing</h3>
+              </div>
+              <p style="color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">
+                Hold <kbd
+                  style="font-family: inherit; font-size: 0.75rem; background: var(--ui-bg-subtle); border: 1px solid var(--ui-border-default); padding: 0.15rem 0.4rem; border-radius: 4px;">Alt
+                  / Option</kbd> and click any component to open the live HUD Inspector overlay. Additionally,
+                components use CSS <code>@container</code> queries to automatically adapt layout when placed into narrow
+                sidebars or modals.
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem;">
+              <span data-ui="badge" data-variant="primary">Shortcut: Ctrl+Shift+U</span>
+              <span data-ui="badge" data-variant="secondary">CSS @container native</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 5. DESIGN TOKENS & DTCG STANDARD                         -->
+      <!-- ======================================================== -->
+      <section id="design-tokens">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Design System</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Design Tokens</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Design Tokens & DTCG Standard</h2>
+        <p class="docs-subtitle">
+          Token taxonomy conforming to the W3C Design Tokens Community Group (DTCG) specification for unified
+          cross-tooling synchronization with Figma and code.
+        </p>
+
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          NNUI-KIT organizes tokens across a 3-tier architecture: <strong>Reference Tokens</strong> (raw scale values),
+          <strong>System/Semantic Tokens</strong> (role-based variables like <code>--ui-bg-surface</code> or
+          <code>--ui-text-primary</code>), and <strong>Component Tokens</strong>.
+        </p>
+
+        <!-- Token Summary Cards -->
+        <div data-ui="grid" data-cols="3" data-gap="4" style="margin: 2rem 0;">
+          <div data-ui="card" style="padding: 1.25rem;">
+            <div style="font-weight: 700; margin-bottom: 0.25rem;">🎨 Color Scales</div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0;">50 to 950 stepped lightness
+              shades, with dark-mode inverted semantic roles.</p>
+          </div>
+          <div data-ui="card" style="padding: 1.25rem;">
+            <div style="font-weight: 700; margin-bottom: 0.25rem;">⚡ Motion Curves</div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0;">Cubic-bezier spring physics
+              (<code>--ui-ease-spring</code>, <code>--ui-ease-bounce</code>).</p>
+          </div>
+          <div data-ui="card" style="padding: 1.25rem;">
+            <div style="font-weight: 700; margin-bottom: 0.25rem;">📐 Unified Elevation</div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0;">Strict Z-index scales
+              (<code>--ui-z-dropdown</code> 1000 through <code>--ui-z-tooltip</code> 1500).</p>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.5rem 0;">W3C DTCG Token Export (`tokens.json`)
+        </h3>
+        <p style="color: var(--ui-text-secondary); font-size: 0.95rem; line-height: 1.6;">
+          NNUI-KIT includes a first-class <code>tokens.json</code> conforming to the W3C Design Tokens Community Group
+          specification. Import it directly into <strong>Figma Token Studio</strong> or <strong>Style
+            Dictionary</strong>:
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>tokens.json (W3C DTCG Format)</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "color": {
+    "brand": {
+      "600": { "$type": "color", "$value": "#6366f1", "$description": "Primary accent violet" }
+    }
+  },
+  "elevation": {
+    "z-dropdown": { "$type": "number", "$value": 1000 },
+    "z-modal": { "$type": "number", "$value": 1300 },
+    "z-toast": { "$type": "number", "$value": 1400 }
+  }
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 6. CSS NATIVE COLOR PALETTES                             -->
+      <!-- ======================================================== -->
+      <section id="color-palettes">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Design System</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Color Palettes</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">CSS Native Color Palettes</h2>
+        <p class="docs-subtitle">
+          Six curated, production-ready color palettes declared directly in CSS. Switch palettes on the entire document
+          or individual subtrees without a single line of JavaScript.
+        </p>
+
+        <!-- Palette Preview Grid -->
+        <div data-ui="grid" data-cols="3" data-gap="4" style="margin: 2rem 0;">
+          <!-- Slate -->
+          <div data-ui="card" style="padding: 1.25rem; border-top: 4px solid #71717a;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 700;">Slate</span>
+              <span data-ui="badge">Neutral</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin-bottom: 1rem;">
+              Minimalist, high-contrast monochrome Zinc tones.
+            </p>
+            <code
+              style="font-size: 0.75rem; background: var(--ui-bg-subtle); padding: 0.2rem 0.4rem; border-radius: 4px;">data-palette="slate"</code>
+          </div>
+
+          <!-- Violet -->
+          <div data-ui="card" style="padding: 1.25rem; border-top: 4px solid #8b5cf6;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 700;">Violet</span>
+              <span data-ui="badge" data-variant="secondary">Modern</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin-bottom: 1rem;">
+              Electric purple and indigo accents for creative apps.
+            </p>
+            <code
+              style="font-size: 0.75rem; background: var(--ui-bg-subtle); padding: 0.2rem 0.4rem; border-radius: 4px;">data-palette="violet"</code>
+          </div>
+
+          <!-- Emerald -->
+          <div data-ui="card" style="padding: 1.25rem; border-top: 4px solid #10b981;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 700;">Emerald</span>
+              <span data-ui="badge" data-variant="outline">Fintech</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin-bottom: 1rem;">
+              Clean, trustworthy mint and emerald tones for finance.
+            </p>
+            <code
+              style="font-size: 0.75rem; background: var(--ui-bg-subtle); padding: 0.2rem 0.4rem; border-radius: 4px;">data-palette="emerald"</code>
+          </div>
+
+          <!-- Rose -->
+          <div data-ui="card" style="padding: 1.25rem; border-top: 4px solid #f43f5e;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 700;">Rose</span>
+              <span data-ui="badge" data-variant="destructive">Bold</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin-bottom: 1rem;">
+              Vibrant crimson accents for lifestyle and high-impact products.
+            </p>
+            <code
+              style="font-size: 0.75rem; background: var(--ui-bg-subtle); padding: 0.2rem 0.4rem; border-radius: 4px;">data-palette="rose"</code>
+          </div>
+
+          <!-- Blue -->
+          <div data-ui="card" style="padding: 1.25rem; border-top: 4px solid #3b82f6;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 700;">Blue</span>
+              <span data-ui="badge">SaaS</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin-bottom: 1rem;">
+              Corporate, dependable cobalt tones for B2B dashboards.
+            </p>
+            <code
+              style="font-size: 0.75rem; background: var(--ui-bg-subtle); padding: 0.2rem 0.4rem; border-radius: 4px;">data-palette="blue"</code>
+          </div>
+
+          <!-- Orange -->
+          <div data-ui="card" style="padding: 1.25rem; border-top: 4px solid #f97316;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 700;">Orange</span>
+              <span data-ui="badge" data-variant="secondary">Warm</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin-bottom: 1rem;">
+              Warm amber and sunset tones for vibrant interfaces.
+            </p>
+            <code
+              style="font-size: 0.75rem; background: var(--ui-bg-subtle); padding: 0.2rem 0.4rem; border-radius: 4px;">data-palette="orange"</code>
+          </div>
+        </div>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>HTML (Zero-JS Theming)</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Apply palette globally on the document --&gt;
+&lt;html data-palette="emerald" data-theme="dark"&gt;
+
+&lt;!-- Or apply palette only to a specific container/sidebar subtree --&gt;
+&lt;aside data-palette="violet"&gt;
+  &lt;button class="ui-button"&gt;Violet Accent Button&lt;/button&gt;
+&lt;/aside&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 7. LAYOUT PRIMITIVES                                     -->
+      <!-- ======================================================== -->
+      <section id="layout-primitives">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Design System</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Layout Primitives</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Layout Primitives (Stack, Grid, Container)</h2>
+        <p class="docs-subtitle">
+          First-class structural layout primitives eliminate ad-hoc CSS hacks and guarantee proportional spacing across
+          all views.
+        </p>
+
+        <!-- Live Preview of Stack and Grid -->
+        <div
+          style="border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.5rem; background: var(--ui-bg-subtle); margin: 2rem 0;">
+          <div data-ui="stack" data-direction="col" data-gap="4">
+            <div data-ui="stack" data-direction="row" data-justify="between" data-align="center">
+              <span style="font-weight: 600;">Layout Demo: Auto-responsive 3-Column Grid</span>
+              <span data-ui="badge">Live Render</span>
+            </div>
+
+            <div data-ui="grid" data-cols="3" data-gap="3">
+              <div data-ui="card" style="padding: 1rem; text-align: center;">Item 1</div>
+              <div data-ui="card" style="padding: 1rem; text-align: center;">Item 2</div>
+              <div data-ui="card" style="padding: 1rem; text-align: center;">Item 3</div>
+            </div>
+
+            <div data-ui="stack" data-direction="row" data-gap="2" data-justify="end">
+              <button class="ui-button ui-button--secondary"
+                style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">Cancel</button>
+              <button class="ui-button" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">Apply Layout</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Layout Example</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Responsive Container --&gt;
+&lt;div data-ui="container" data-size="lg"&gt;
+
+  &lt;!-- Vertical Stack with standard gap token --&gt;
+  &lt;div data-ui="stack" data-direction="col" data-gap="6"&gt;
+
+    &lt;!-- Horizontal Header Stack with Space-Between --&gt;
+    &lt;div data-ui="stack" data-direction="row" data-justify="between" data-align="center"&gt;
+      &lt;h2 data-ui="heading" data-size="lg"&gt;Team Projects&lt;/h2&gt;
+      &lt;button class="ui-button"&gt;+ New Project&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Auto-responsive Grid (1 to 4 cols) --&gt;
+    &lt;div data-ui="grid" data-cols="3" data-gap="4"&gt;
+      &lt;div data-ui="card"&gt;Project Alpha&lt;/div&gt;
+      &lt;div data-ui="card"&gt;Project Beta&lt;/div&gt;
+      &lt;div data-ui="card"&gt;Project Gamma&lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 8. TYPOGRAPHY SYSTEM                                     -->
+      <!-- ======================================================== -->
+      <section id="typography-system">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Design System</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Typography</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Typography System</h2>
+        <p class="docs-subtitle">
+          Proportional type scale with optical letter-spacing, fluid font hierarchies, and standardized semantic text
+          roles.
+        </p>
+
+        <!-- Live Preview of Typography Scale -->
+        <div
+          style="border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.75rem; background: var(--ui-bg-subtle); margin: 2rem 0;">
+          <div data-ui="stack" data-direction="col" data-gap="3">
+            <div data-ui="heading" data-size="2xl">Display 2XL — Enterprise Systems</div>
+            <div data-ui="heading" data-size="xl">Heading XL — Feature Modules</div>
+            <div data-ui="heading" data-size="lg">Heading LG — Section Header</div>
+            <div data-ui="heading" data-size="md">Heading MD — Card Title</div>
+            <div data-ui="heading" data-size="sm">Heading SM — Subsection Label</div>
+            <hr data-ui="separator" style="margin: 0.5rem 0;">
+            <p data-ui="text" data-variant="lead">Lead Paragraph: High visual hierarchy introduction text for hero
+              sections.</p>
+            <p data-ui="text" data-variant="body">Body Paragraph: Standard content typography optimized for sustained
+              reading comprehension.</p>
+            <p data-ui="text" data-variant="muted">Muted Text: Secondary metadata, timestamps, and contextual captions.
+            </p>
+          </div>
+        </div>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Typography HTML</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Heading Primitives with optical tracking --&gt;
+&lt;h1 data-ui="heading" data-size="2xl"&gt;Dashboard Analytics&lt;/h1&gt;
+&lt;h2 data-ui="heading" data-size="lg"&gt;Recent Activity&lt;/h2&gt;
+
+&lt;!-- Text Roles --&gt;
+&lt;p data-ui="text" data-variant="lead"&gt;Overview of performance across all services.&lt;/p&gt;
+&lt;p data-ui="text" data-variant="muted"&gt;Last updated 2 minutes ago.&lt;/p&gt;
+&lt;code data-ui="text" data-variant="code"&gt;npm run dev&lt;/code&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 9. FEEDBACK & STATUS PRIMITIVES                          -->
+      <!-- ======================================================== -->
+      <section id="feedback-primitives">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Design System</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Feedback & Status</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Feedback & Status Primitives</h2>
+        <p class="docs-subtitle">
+          Canonical asynchronous state indicators: loading spinners, zero-data empty states, and accessible form field
+          error bindings.
+        </p>
+
+        <!-- Live Preview of Feedback Primitives -->
+        <div
+          style="border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-lg); padding: 1.75rem; background: var(--ui-bg-subtle); margin: 2rem 0;">
+          <div data-ui="grid" data-cols="2" data-gap="4">
+
+            <!-- Spinner Preview -->
+            <div data-ui="card"
+              style="padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+              <span style="font-weight: 600; font-size: 0.9rem;">Indeterminate Spinners</span>
+              <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <div data-ui="spinner" data-size="sm" role="status" aria-label="Small loading"></div>
+                <div data-ui="spinner" data-size="md" role="status" aria-label="Medium loading"></div>
+                <div data-ui="spinner" data-size="lg" role="status" aria-label="Large loading"></div>
+              </div>
+            </div>
+
+            <!-- Empty State Preview -->
+            <div data-ui="card" style="padding: 1.5rem;">
+              <div data-ui="empty" style="padding: 1rem 0;">
+                <div data-ui="empty-icon">📁</div>
+                <h4 data-ui="empty-title">No documents yet</h4>
+                <p data-ui="empty-description">Create your first document or import from GitHub.</p>
+                <button class="ui-button ui-button--secondary"
+                  style="font-size: 0.8rem; padding: 0.35rem 0.75rem; margin-top: 0.5rem;">+ Create Document</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Feedback Markup</span>
+            <button class="copy-btn">📋 Copy</button>
+          </div>
+          <pre class="code-pre"><code>&lt;!-- Accessible Loading Spinner --&gt;
+&lt;div data-ui="spinner" data-size="md" role="status" aria-label="Loading..."&gt;&lt;/div&gt;
+
+&lt;!-- Canonical Empty State --&gt;
+&lt;div data-ui="empty"&gt;
+  &lt;div data-ui="empty-icon"&gt;🔍&lt;/div&gt;
+  &lt;h3 data-ui="empty-title"&gt;No results found&lt;/h3&gt;
+  &lt;p data-ui="empty-description"&gt;Try adjusting your filters or search keywords.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Form Field Validation Feedback --&gt;
+&lt;div data-ui="stack" data-direction="col" data-gap="1"&gt;
+  &lt;label data-ui="label" for="username-input"&gt;Username&lt;/label&gt;
+  &lt;input data-ui="input" id="username-input" aria-invalid="true" aria-describedby="user-err"&gt;
+  &lt;span data-ui="field-error" id="user-err"&gt;Username is already taken&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- 10. ACCESSIBILITY & MOTION STANDARDS                     -->
+      <!-- ======================================================== -->
+      <section id="accessibility-standards">
+        <div class="docs-breadcrumb">
+          <span>Docs</span>
+          <span>/</span>
+          <span>Design System</span>
+          <span>/</span>
+          <span style="color: var(--ui-text-primary); font-weight: 500;">Accessibility</span>
+        </div>
+
+        <h2 class="docs-title" style="font-size: 2rem;">Accessibility & Motion Standards</h2>
+        <p class="docs-subtitle">
+          Built-in guardrails for WCAG 2.1 AA compliance: reduced-motion safety, Windows High Contrast Mode, and screen
+          reader announcements.
+        </p>
+
+        <div data-ui="stack" data-direction="col" data-gap="3" style="margin: 2rem 0;">
+          <div data-ui="card" style="padding: 1.25rem;">
+            <h4 style="margin: 0 0 0.35rem 0; font-size: 1rem;">🏃 Vestibular Motion Safety (`prefers-reduced-motion`)
+            </h4>
+            <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.5;">
+              When users configure system-level reduced motion preferences, NNUI-KIT automatically reduces animation
+              durations to <code>0.001ms</code> and disables transform translations, satisfying WCAG 2.1 Criterion
+              2.3.3.
+            </p>
+          </div>
+
+          <div data-ui="card" style="padding: 1.25rem;">
+            <h4 style="margin: 0 0 0.35rem 0; font-size: 1rem;">👁️ High Contrast Mode (`forced-colors`)</h4>
+            <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.5;">
+              Components adapt to Windows High Contrast Mode by mapping outlines to system colors
+              (<code>CanvasText</code>, <code>Highlight</code>, <code>ButtonFace</code>), preserving visual boundaries
+              even when background images and box shadows are stripped.
+            </p>
+          </div>
+
+          <div data-ui="card" style="padding: 1.25rem;">
+            <h4 style="margin: 0 0 0.35rem 0; font-size: 1rem;">🔊 Screen-Reader Only Utility (`.ui-sr-only`)</h4>
+            <p style="margin: 0; color: var(--ui-text-secondary); font-size: 0.9rem; line-height: 1.5;">
+              Hide visual content while keeping it fully announced by VoiceOver, NVDA, and JAWS using
+              <code>class="ui-sr-only"</code> or <code>data-ui="sr-only"</code>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Right Side "On This Page" Table of Contents (Shadcn Style) -->
+    <aside class="docs-toc">
+      <div class="toc-title">On This Page</div>
+      <div class="toc-items">
+        <a href="#introduction" class="toc-link">Introduction</a>
+        <a href="#installation" class="toc-link">Installation</a>
+        <a href="#ssr-hydration" class="toc-link">SSR &amp; Hydration</a>
+        <a href="#react-wrapper" class="toc-link">React 18 &amp; 19 Wrapper</a>
+        <a href="#platform-innovations" class="toc-link">Triple-Sync &amp; AI Protocol</a>
+        <a href="#cdn-backend" class="toc-link">CDN &amp; Backend</a>
+        <a href="#cli-registry" class="toc-link">CLI Registry</a>
+        <a href="#architecture" class="toc-link">Architecture</a>
+        <a href="#theming" class="toc-link">Theming & Layers</a>
+        <a href="#form-validation" class="toc-link">Form Validation (RHF & Zod)</a>
+        <a href="#ai-manifest" class="toc-link">AI Manifest</a>
+        <a href="#platform-innovations" class="toc-link">Triple-Sync & AI Protocol</a>
+        <div style="height: 1px; background: var(--ui-border-default); margin: 0.5rem 0;"></div>
+        <div
+          style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--ui-text-muted); margin-bottom: 0.25rem;">
+          Design System</div>
+        <a href="#design-tokens" class="toc-link">Design Tokens (DTCG)</a>
+        <a href="#color-palettes" class="toc-link">Color Palettes</a>
+        <a href="#layout-primitives" class="toc-link">Layout Primitives</a>
+        <a href="#typography-system" class="toc-link">Typography System</a>
+        <a href="#feedback-primitives" class="toc-link">Feedback & Status</a>
+        <a href="#accessibility-standards" class="toc-link">Accessibility & Motion</a>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="./playground/docs.js"></script>
+</body>
+
+</html>

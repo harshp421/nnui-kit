@@ -1,0 +1,240 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import tokens from 'nnui-kit/tokens.json';
+
+const palettes = ['zinc', 'slate', 'violet', 'rose', 'emerald', 'blue', 'orange'];
+const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+---
+
+<DocsLayout title="Design Tokens Studio | NNUI-KIT" activePath="/tokens">
+  <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+    <div style="margin-bottom: 3rem;">
+      <div class="announcement-badge" style="margin-bottom: 0.75rem;">W3C DTCG Specification Compliant</div>
+      <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: var(--text-main);">
+        Design Tokens & Themes
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 650px;">
+        NNUI-KIT adheres to the W3C Design Tokens Community Group (DTCG) standard with full 50–950 tonal color scales. Switch palettes live or export CSS variables directly into your project.
+      </p>
+    </div>
+
+    <!-- Live Palette Switcher Bar -->
+    <div data-ui="card" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.75rem; margin-bottom: 3rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+      <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Active Brand Palette</h3>
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        {palettes.map((p) => (
+          <button 
+            class="palette-btn btn-secondary" 
+            data-ui="button"
+            data-variant="secondary"
+            data-size="sm"
+            data-pal={p} 
+            style="text-transform: capitalize; font-weight: 600; font-size: 0.85rem;"
+          >
+            {p}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Active Swatches Grid (Full 50-950 Tonal Scale) -->
+    <section style="margin-bottom: 4rem;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--text-main);">Color Scale Swatches (50–950)</h2>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Dynamically bound to <code>--ui-color-brand-[shade]</code></span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.75rem;">
+        {colorShades.map((shade) => (
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; background: var(--bg-card); transition: transform 0.15s ease;" class="swatch-card">
+            <div 
+              class="swatch-box" 
+              data-shade={shade} 
+              style={`height: 65px; background-color: var(--ui-color-brand-${shade}); transition: background-color 0.25s ease;`}
+            ></div>
+            <div style="padding: 0.5rem; text-align: center; border-top: 1px solid var(--border-subtle);">
+              <div style="font-family: var(--docs-font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-main);">{shade}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CSS Variable Export Output -->
+    <section>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--text-main);">Generated CSS Tokens</h2>
+        <button id="copy-tokens-btn" class="btn-secondary" data-ui="button" data-variant="secondary" data-size="sm" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;">
+          <span>Copy CSS Variables</span>
+        </button>
+      </div>
+
+      <pre class="code-viewer-pre" style="border-radius: 8px; border: 1px solid var(--border-subtle);"><code id="css-export-output">/* Select a palette above to view its CSS variable block */</code></pre>
+    </section>
+  </div>
+</DocsLayout>
+
+<script>
+  import tokensData from 'nnui-kit/tokens.json';
+
+  const paletteBtns = document.querySelectorAll('.palette-btn');
+  const paletteSelect = document.getElementById('palette-select') as HTMLSelectElement;
+  const cssOutput = document.getElementById('css-export-output');
+  const copyBtn = document.getElementById('copy-tokens-btn');
+
+  const paletteCssMap: Record<string, string> = {
+    zinc: `:root[data-palette="zinc"], :root {
+  --ui-color-brand-50: #fafafa;
+  --ui-color-brand-100: #f4f4f5;
+  --ui-color-brand-200: #e4e4e7;
+  --ui-color-brand-300: #d4d4d8;
+  --ui-color-brand-400: #a1a1aa;
+  --ui-color-brand-500: #71717a;
+  --ui-color-brand-600: #52525b;
+  --ui-color-brand-700: #3f3f46;
+  --ui-color-brand-800: #27272a;
+  --ui-color-brand-900: #18181b;
+  --ui-color-brand-950: #09090b;
+}`,
+    slate: `:root[data-palette="slate"] {
+  --ui-color-brand-50: #f8fafc;
+  --ui-color-brand-100: #f1f5f9;
+  --ui-color-brand-200: #e2e8f0;
+  --ui-color-brand-300: #cbd5e1;
+  --ui-color-brand-400: #94a3b8;
+  --ui-color-brand-500: #64748b;
+  --ui-color-brand-600: #475569;
+  --ui-color-brand-700: #334155;
+  --ui-color-brand-800: #1e293b;
+  --ui-color-brand-900: #0f172a;
+  --ui-color-brand-950: #020617;
+}`,
+    violet: `:root[data-palette="violet"] {
+  --ui-color-brand-50: #f5f3ff;
+  --ui-color-brand-100: #ede9fe;
+  --ui-color-brand-200: #ddd6fe;
+  --ui-color-brand-300: #c4b5fd;
+  --ui-color-brand-400: #a78bfa;
+  --ui-color-brand-500: #8b5cf6;
+  --ui-color-brand-600: #7c3aed;
+  --ui-color-brand-700: #6d28d9;
+  --ui-color-brand-800: #5b21b6;
+  --ui-color-brand-900: #4c1d95;
+  --ui-color-brand-950: #2e1065;
+}`,
+    emerald: `:root[data-palette="emerald"] {
+  --ui-color-brand-50: #ecfdf5;
+  --ui-color-brand-100: #d1fae5;
+  --ui-color-brand-200: #a7f3d0;
+  --ui-color-brand-300: #6ee7b7;
+  --ui-color-brand-400: #34d399;
+  --ui-color-brand-500: #10b981;
+  --ui-color-brand-600: #059669;
+  --ui-color-brand-700: #047857;
+  --ui-color-brand-800: #065f46;
+  --ui-color-brand-900: #064e3b;
+  --ui-color-brand-950: #022c22;
+}`,
+    rose: `:root[data-palette="rose"] {
+  --ui-color-brand-50: #fff1f2;
+  --ui-color-brand-100: #ffe4e6;
+  --ui-color-brand-200: #fecdd3;
+  --ui-color-brand-300: #fda4af;
+  --ui-color-brand-400: #fb7185;
+  --ui-color-brand-500: #f43f5e;
+  --ui-color-brand-600: #e11d48;
+  --ui-color-brand-700: #be123c;
+  --ui-color-brand-800: #9f1239;
+  --ui-color-brand-900: #881337;
+  --ui-color-brand-950: #4c0519;
+}`,
+    blue: `:root[data-palette="blue"] {
+  --ui-color-brand-50: #eff6ff;
+  --ui-color-brand-100: #dbeafe;
+  --ui-color-brand-200: #bfdbfe;
+  --ui-color-brand-300: #93c5fd;
+  --ui-color-brand-400: #60a5fa;
+  --ui-color-brand-500: #3b82f6;
+  --ui-color-brand-600: #2563eb;
+  --ui-color-brand-700: #1d4ed8;
+  --ui-color-brand-800: #1e40af;
+  --ui-color-brand-900: #1e3a8a;
+  --ui-color-brand-950: #172554;
+}`,
+    orange: `:root[data-palette="orange"] {
+  --ui-color-brand-50: #fff7ed;
+  --ui-color-brand-100: #ffedd5;
+  --ui-color-brand-200: #fed7aa;
+  --ui-color-brand-300: #fdba74;
+  --ui-color-brand-400: #fb923c;
+  --ui-color-brand-500: #f97316;
+  --ui-color-brand-600: #ea580c;
+  --ui-color-brand-700: #c2410c;
+  --ui-color-brand-800: #9a3412;
+  --ui-color-brand-900: #7c2d12;
+  --ui-color-brand-950: #431407;
+}`
+  };
+
+  function updatePaletteUI(pal: string) {
+    document.documentElement.setAttribute('data-palette', pal);
+    localStorage.setItem('nnui-palette', pal);
+    if (paletteSelect) paletteSelect.value = pal;
+
+    // Highlight active button
+    paletteBtns.forEach((btn) => {
+      const match = btn.getAttribute('data-pal') === pal;
+      if (match) {
+        btn.classList.add('active');
+        (btn as HTMLElement).style.borderColor = 'var(--text-main)';
+        (btn as HTMLElement).style.background = 'var(--text-main)';
+        (btn as HTMLElement).style.color = 'var(--bg-primary)';
+      } else {
+        btn.classList.remove('active');
+        (btn as HTMLElement).style.borderColor = 'var(--border-subtle)';
+        (btn as HTMLElement).style.background = 'var(--bg-secondary)';
+        (btn as HTMLElement).style.color = 'var(--text-main)';
+      }
+    });
+
+    // Update code output
+    if (cssOutput && paletteCssMap[pal]) {
+      cssOutput.textContent = paletteCssMap[pal];
+    }
+  }
+
+  paletteBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const pal = btn.getAttribute('data-pal') || 'zinc';
+      updatePaletteUI(pal);
+    });
+  });
+
+  // Copy CSS Variables Button
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      if (cssOutput) {
+        await navigator.clipboard.writeText(cssOutput.textContent || '');
+        const span = copyBtn.querySelector('span');
+        if (span) {
+          const orig = span.textContent;
+          span.textContent = '✓ Copied!';
+          setTimeout(() => {
+            span.textContent = orig;
+          }, 2000);
+        }
+      }
+    });
+  }
+
+  // Initialize with currently saved palette
+  const initialPal = localStorage.getItem('nnui-palette') || 'zinc';
+  updatePaletteUI(initialPal);
+
+  // Listen for palette change from header ui-dropdown
+  window.addEventListener('nnui-palette-changed', (e: any) => {
+    if (e.detail?.palette) {
+      updatePaletteUI(e.detail.palette);
+    }
+  });
+</script>

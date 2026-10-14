@@ -1,0 +1,121 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import registry from 'nnui-kit/registry.json';
+
+const componentsList = Object.values(registry.components);
+const tier0 = componentsList.filter((c: any) => c.tier === 0);
+const tier2 = componentsList.filter((c: any) => c.tier === 2);
+---
+
+<DocsLayout title="Components Catalog (45) | NNUI-KIT" activePath="/components">
+  <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+    <!-- Title and Search -->
+    <div style="margin-bottom: 3rem;">
+      <div class="announcement-badge" style="margin-bottom: 0.75rem;">Platform-Native Directory</div>
+      <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: var(--text-main);">
+        Components ({componentsList.length})
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1.15rem; max-width: 650px; margin-bottom: 2rem;">
+        Every component is crafted for direct Light-DOM composition. Copy-paste via CLI or import as universal web components.
+      </p>
+
+      <div style="display: flex; gap: 1rem; align-items: center; max-width: 520px;">
+        <input 
+          id="component-search" 
+          type="search" 
+          data-ui="input"
+          placeholder="Filter components by name, tag, or tier... (⌘K)" 
+          style="width: 100%; box-sizing: border-box; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-secondary); color: var(--text-main); font-size: 0.9rem; outline: none; transition: border-color 0.15s ease;"
+        />
+      </div>
+    </div>
+
+    <!-- Tier 2: Micro-Enhancers -->
+    <section style="margin-bottom: 4rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--text-main);">
+          Tier 2: Micro-Enhancers
+        </h2>
+        <span class="docs-version-pill" data-ui="badge" style="border-color: #10b981; color: #10b981;">{tier2.length} Custom Elements</span>
+      </div>
+
+      <div class="bento-grid" id="tier2-grid" style="margin: 0; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;">
+        {tier2.map((comp: any) => (
+          <a href={`/components/${comp.name}`} class="bento-card component-card" data-ui="card" data-name={comp.name} data-desc={comp.description} style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.65rem;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0; color: var(--text-main);">
+                  &lt;ui-{comp.name}&gt;
+                </h3>
+                <span class="docs-version-pill" data-ui="badge" style="font-family: var(--docs-font-mono);">
+                  Tier 2
+                </span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.25rem; min-height: 2.6rem;">
+                {comp.description}
+              </p>
+            </div>
+            <div style="font-family: var(--docs-font-mono); font-size: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-subtle); padding: 0.45rem 0.65rem; border-radius: 6px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
+              <span>npx nnui add {comp.name}</span>
+              <span style="color: var(--text-main); font-weight: 600; font-family: var(--docs-font-sans); font-size: 0.75rem;">View &rarr;</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Tier 0: Pure Semantic Primitives -->
+    <section>
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--text-main);">
+          Tier 0: Pure Semantic Primitives
+        </h2>
+        <span class="docs-version-pill" data-ui="badge">{tier0.length} Zero-JS Controls</span>
+      </div>
+
+      <div class="bento-grid" id="tier0-grid" style="margin: 0; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;">
+        {tier0.map((comp: any) => (
+          <a href={`/components/${comp.name}`} class="bento-card component-card" data-ui="card" data-name={comp.name} data-desc={comp.description} style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.65rem;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0; color: var(--text-main);">
+                  [data-ui="{comp.name}"]
+                </h3>
+                <span class="docs-version-pill" data-ui="badge" style="font-family: var(--docs-font-mono);">
+                  Zero-JS
+                </span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.25rem; min-height: 2.6rem;">
+                {comp.description}
+              </p>
+            </div>
+            <div style="font-family: var(--docs-font-mono); font-size: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-subtle); padding: 0.45rem 0.65rem; border-radius: 6px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
+              <span>npx nnui add {comp.name}</span>
+              <span style="color: var(--text-main); font-weight: 600; font-family: var(--docs-font-sans); font-size: 0.75rem;">View &rarr;</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</DocsLayout>
+
+<script>
+  const searchInput = document.getElementById('component-search') as HTMLInputElement;
+  const cards = document.querySelectorAll('.component-card') as NodeListOf<HTMLElement>;
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      cards.forEach((card) => {
+        const name = (card.getAttribute('data-name') || '').toLowerCase();
+        const desc = (card.getAttribute('data-desc') || '').toLowerCase();
+        if (!query || name.includes(query) || desc.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  }
+</script>

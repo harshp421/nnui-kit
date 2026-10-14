@@ -1,0 +1,443 @@
+---
+import 'nnui-kit/css';
+import '../styles/docs.css';
+import componentsData from '../data/components-data.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  activePath?: string;
+}
+
+const {
+  title = 'NNUI-KIT — Universal Light-DOM UI Architecture',
+  description = 'Platform-Native, Three-Tier Light-DOM Universal UI Architecture with Zero Shadow DOM A11y Traps.',
+  activePath = '/'
+} = Astro.props;
+
+const componentsList = Object.values(componentsData) as any[];
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark" data-palette="zinc" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Top Sticky Frosted Glass Header -->
+    <header class="docs-header">
+      <div style="display: flex; align-items: center; gap: 2rem;">
+        <a href="/" class="docs-logo">
+          <span class="docs-logo-mark">▲</span>
+          <span>nnui-kit</span>
+          <span class="docs-version-pill">v1.0</span>
+        </a>
+
+        <nav class="docs-nav-links">
+          <a href="/docs" class={`docs-nav-link ${activePath.startsWith('/docs') ? 'active' : ''}`}>Docs</a>
+          <a href="/components" class={`docs-nav-link ${activePath.startsWith('/components') ? 'active' : ''}`}>Components</a>
+          <a href="/tokens" class={`docs-nav-link ${activePath.startsWith('/tokens') ? 'active' : ''}`}>Themes</a>
+          <a href="https://github.com/harshp421/nnui-kit" target="_blank" rel="noopener noreferrer" class="docs-nav-link">GitHub ↗</a>
+        </nav>
+      </div>
+
+      <div class="header-actions">
+        <!-- Search Trigger (⌘K) -->
+        <button class="search-trigger-btn" data-ui="button" data-variant="secondary" id="search-trigger" title="Quick Search (⌘K)">
+          <span>Search docs...</span>
+          <kbd class="search-kbd">⌘K</kbd>
+        </button>
+
+        <!-- Brand Palette Selector (Dogfooding <ui-dropdown>) -->
+        <ui-dropdown id="palette-dropdown" style="display: inline-block;">
+          <button data-part="trigger" data-ui="button" data-variant="outline" class="palette-dropdown" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; height: 32px; padding: 0.35rem 0.65rem;" title="Select color harmony palette">
+            <span id="active-palette-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #71717a; display: inline-block; flex-shrink: 0;"></span>
+            <span id="active-palette-name" style="text-transform: capitalize; font-weight: 500; font-size: 0.8rem;">Zinc</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6; margin-left: 2px;">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+
+          <div data-part="menu" style="min-width: 145px; border-radius: 8px; padding: 0.25rem;">
+            <div data-part="item" data-value="zinc">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #71717a;"></span>
+                <span>Zinc</span>
+              </div>
+            </div>
+            <div data-part="item" data-value="slate">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #64748b;"></span>
+                <span>Slate</span>
+              </div>
+            </div>
+            <div data-part="item" data-value="violet">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #8b5cf6;"></span>
+                <span>Violet</span>
+              </div>
+            </div>
+            <div data-part="item" data-value="rose">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #f43f5e;"></span>
+                <span>Rose</span>
+              </div>
+            </div>
+            <div data-part="item" data-value="emerald">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+                <span>Emerald</span>
+              </div>
+            </div>
+            <div data-part="item" data-value="blue">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #3b82f6;"></span>
+                <span>Blue</span>
+              </div>
+            </div>
+            <div data-part="item" data-value="orange">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: #f97316;"></span>
+                <span>Orange</span>
+              </div>
+            </div>
+          </div>
+        </ui-dropdown>
+
+        <!-- Dark / Light Theme Mode Toggle Button -->
+        <button id="theme-toggle" data-ui="button" data-variant="ghost" class="theme-toggle-btn" title="Toggle Theme (Light/Dark)">
+          <span id="theme-icon">☀️</span>
+        </button>
+
+        <!-- GitHub Stars Badge -->
+        <a 
+          href="https://github.com/harshp421/nnui-kit" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="btn-secondary" 
+          data-ui="button" 
+          data-variant="secondary"
+          style="padding: 0.35rem 0.75rem; font-size: 0.8rem; gap: 0.4rem;"
+        >
+          <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+          <span>Star</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Quick Search Command Modal Dialog (⌘K) -->
+    <dialog id="search-modal-dialog" data-ui="dialog" class="search-modal-dialog">
+      <div class="search-modal-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); flex-shrink: 0;">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          id="search-modal-input" 
+          type="search" 
+          data-ui="input"
+          class="search-modal-input" 
+          placeholder="Search documentation, components, frameworks... (⌘K)" 
+          autocomplete="off"
+        />
+        <kbd class="search-kbd" id="search-modal-close" style="cursor: pointer;" title="Close dialog">ESC</kbd>
+      </div>
+
+      <div class="search-modal-body" id="search-modal-results">
+        <!-- Group: Frameworks & Guides -->
+        <div class="search-group" data-group="guides">
+          <div class="search-group-title">Documentation & Guides</div>
+          <a href="/docs#introduction" class="search-result-item" data-text="introduction overview architecture platform native">
+            <span>Introduction & Vision</span>
+            <span class="item-meta">Docs</span>
+          </a>
+          <a href="/docs#mental-model" class="search-result-item" data-text="three tier architecture mental model zero js primitives">
+            <span>Three-Tier Architecture</span>
+            <span class="item-meta">Architecture</span>
+          </a>
+          <a href="/docs#why-light-dom" class="search-result-item" data-text="why light dom shadow dom traps accessibility a11y tailwind form">
+            <span>Why Light-DOM? (Solving Shadow Traps)</span>
+            <span class="item-meta">Core Principle</span>
+          </a>
+          <a href="/docs#installation" class="search-result-item" data-text="installation setup cli npx nnui add init npm">
+            <span>Installation & CLI Setup</span>
+            <span class="item-meta">Quickstart</span>
+          </a>
+          <a href="/docs#persistence" class="search-result-item" data-text="declarative persistence persist url local storage query params">
+            <span>Declarative State Persistence</span>
+            <span class="item-meta">Crown Feature</span>
+          </a>
+          <a href="/docs#cross-tab" class="search-result-item" data-text="cross tab broadcast sync multi tab broadcastchannel synchronization">
+            <span>Cross-Tab Broadcast Sync</span>
+            <span class="item-meta">Crown Feature</span>
+          </a>
+          <a href="/docs#ai-introspection" class="search-result-item" data-text="ai introspection inspectai protocol copilot cursor llm schema">
+            <span>AI Introspection Protocol</span>
+            <span class="item-meta">nnui.ai.v1</span>
+          </a>
+          <a href="/docs#react" class="search-result-item" data-text="react 18 19 nextjs next.js app router server components typescript wrappers">
+            <span>React 18 & 19 (Next.js 15 App Router)</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a href="/docs#svelte" class="search-result-item" data-text="svelte 5 runes state derived effect custom element">
+            <span>Svelte 5 (Runes Architecture)</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a href="/docs#vue" class="search-result-item" data-text="vue 3 nuxt 3 composition api custom element iscustomelement">
+            <span>Vue 3 & Nuxt 3 (Composition API)</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a href="/docs#htmx" class="search-result-item" data-text="htmx 2 backend ssr django rails laravel go templ partials">
+            <span>HTMX 2 & Backend SSR</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a href="/tokens" class="search-result-item" data-text="tokens themes dtcg palettes colors zinc slate violet emerald rose blue orange">
+            <span>Design Tokens & Themes Studio</span>
+            <span class="item-meta">Themes</span>
+          </a>
+        </div>
+
+        <!-- Group: All Components -->
+        <div class="search-group" data-group="components" style="margin-top: 0.75rem;">
+          <div class="search-group-title">Components ({componentsList.length})</div>
+          {componentsList.map((comp: any) => (
+            <a href={`/components/${comp.slug}`} class="search-result-item" data-text={`${comp.slug} ${comp.name} ${comp.title} ${comp.description}`}>
+              <span>{comp.title}</span>
+              <span class="item-meta">{comp.tier === 0 ? 'Tier 0: Pure HTML' : 'Tier 2: Micro-Enhancer'}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="search-modal-footer">
+        <div>Navigate <kbd class="search-kbd">↑</kbd> <kbd class="search-kbd">↓</kbd> · Select <kbd class="search-kbd">↵</kbd></div>
+        <div>Close <kbd class="search-kbd">ESC</kbd></div>
+      </div>
+    </dialog>
+
+    <!-- Page Content Slot -->
+    <slot />
+
+    <!-- Global Platform-Native Toaster (Mounted for all routes & previews) -->
+    <ui-toaster position="bottom-right"></ui-toaster>
+
+    <!-- Theme, Palette & Search Controller Script -->
+    <script>
+      import 'nnui-kit/client';
+      import { toast } from 'nnui-kit';
+
+      // Ensure global availability for inline scripts and interactive previews
+      (window as any).toast = toast;
+
+      function initDocsApp() {
+        // --- 1. Theme & Palette Management ---
+        const savedTheme = localStorage.getItem('nnui-theme') || 'dark';
+        const savedPalette = localStorage.getItem('nnui-palette') || 'zinc';
+
+        applyThemeMode(savedTheme);
+        applyPalette(savedPalette);
+
+        // Bind Theme Toggle Button
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+          themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyThemeMode(next);
+            localStorage.setItem('nnui-theme', next);
+          });
+        }
+
+        // Bind Palette Selector (<ui-dropdown>)
+        const paletteDropdown = document.getElementById('palette-dropdown');
+        if (paletteDropdown) {
+          paletteDropdown.addEventListener('select', (e: any) => {
+            const pal = e.detail?.value;
+            if (pal) {
+              applyPalette(pal);
+              localStorage.setItem('nnui-palette', pal);
+              window.dispatchEvent(new CustomEvent('nnui-palette-changed', { detail: { palette: pal } }));
+            }
+          });
+        }
+
+        // --- 2. Quick Search Command Modal (⌘K) ---
+        const searchDialog = document.getElementById('search-modal-dialog') as HTMLDialogElement | null;
+        const searchTrigger = document.getElementById('search-trigger');
+        const searchInput = document.getElementById('search-modal-input') as HTMLInputElement | null;
+        const searchClose = document.getElementById('search-modal-close');
+        const resultsContainer = document.getElementById('search-modal-results');
+
+        function openSearchModal() {
+          if (!searchDialog) return;
+          searchDialog.showModal();
+          if (searchInput) {
+            searchInput.value = '';
+            searchInput.focus();
+            filterSearchResults('');
+          }
+        }
+
+        function closeSearchModal() {
+          if (!searchDialog) return;
+          searchDialog.close();
+        }
+
+        function filterSearchResults(query: string) {
+          if (!resultsContainer) return;
+          const q = query.toLowerCase().trim();
+          const items = resultsContainer.querySelectorAll('.search-result-item') as NodeListOf<HTMLElement>;
+          let firstVisible: HTMLElement | null = null;
+
+          items.forEach((item) => {
+            const dataText = (item.getAttribute('data-text') || '').toLowerCase();
+            const textContent = (item.textContent || '').toLowerCase();
+            if (!q || dataText.includes(q) || textContent.includes(q)) {
+              item.style.display = 'flex';
+              if (!firstVisible) firstVisible = item;
+            } else {
+              item.style.display = 'none';
+              item.classList.remove('selected');
+            }
+          });
+
+          // Toggle visibility of group titles
+          document.querySelectorAll('.search-group').forEach((group) => {
+            const visibleInGroup = group.querySelectorAll('.search-result-item:not([style*="display: none"])');
+            (group as HTMLElement).style.display = visibleInGroup.length > 0 ? 'block' : 'none';
+          });
+
+          // Highlight the first visible item
+          items.forEach(i => i.classList.remove('selected'));
+          if (firstVisible) {
+            (firstVisible as HTMLElement).classList.add('selected');
+          }
+        }
+
+        if (searchTrigger) {
+          searchTrigger.addEventListener('click', openSearchModal);
+        }
+
+        if (searchClose) {
+          searchClose.addEventListener('click', closeSearchModal);
+        }
+
+        // Close when clicking outside modal backdrop
+        if (searchDialog) {
+          searchDialog.addEventListener('click', (e) => {
+            const rect = searchDialog.getBoundingClientRect();
+            const isInDialog = (
+              rect.top <= e.clientY &&
+              e.clientY <= rect.top + rect.height &&
+              rect.left <= e.clientX &&
+              e.clientX <= rect.left + rect.width
+            );
+            if (!isInDialog) {
+              closeSearchModal();
+            }
+          });
+        }
+
+        // Real-time Search Input filtering
+        if (searchInput) {
+          searchInput.addEventListener('input', (e) => {
+            filterSearchResults((e.target as HTMLInputElement).value);
+          });
+        }
+
+        // Keyboard Shortcut Navigation: ⌘K, Esc, Up/Down, Enter
+        window.addEventListener('keydown', (e) => {
+          // Open on ⌘K or Ctrl+K
+          if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            if (searchDialog?.open) {
+              closeSearchModal();
+            } else {
+              openSearchModal();
+            }
+            return;
+          }
+
+          // If search modal is open, handle arrows and Enter
+          if (searchDialog?.open && resultsContainer) {
+            const visibleItems = Array.from(
+              resultsContainer.querySelectorAll('.search-result-item:not([style*="display: none"])')
+            ) as HTMLElement[];
+
+            if (visibleItems.length === 0) return;
+
+            let currentIndex = visibleItems.findIndex(item => item.classList.contains('selected'));
+
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              const nextIndex = currentIndex < visibleItems.length - 1 ? currentIndex + 1 : 0;
+              visibleItems.forEach(i => i.classList.remove('selected'));
+              visibleItems[nextIndex].classList.add('selected');
+              visibleItems[nextIndex].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              const prevIndex = currentIndex > 0 ? currentIndex - 1 : visibleItems.length - 1;
+              visibleItems.forEach(i => i.classList.remove('selected'));
+              visibleItems[prevIndex].classList.add('selected');
+              visibleItems[prevIndex].scrollIntoView({ block: 'nearest' });
+            } else if (e.key === 'Enter') {
+              if (currentIndex >= 0 && visibleItems[currentIndex]) {
+                e.preventDefault();
+                visibleItems[currentIndex].click();
+              }
+            } else if (e.key === 'Escape') {
+              closeSearchModal();
+            }
+          }
+        });
+      }
+
+      function applyThemeMode(theme: string) {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        const icon = document.getElementById('theme-icon');
+        if (icon) {
+          icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+      }
+
+      const PALETTE_DOT_COLORS: Record<string, string> = {
+        zinc: '#71717a',
+        slate: '#64748b',
+        violet: '#8b5cf6',
+        rose: '#f43f5e',
+        emerald: '#10b981',
+        blue: '#3b82f6',
+        orange: '#f97316'
+      };
+
+      function applyPalette(palette: string) {
+        document.documentElement.setAttribute('data-palette', palette);
+        const dot = document.getElementById('active-palette-dot');
+        const name = document.getElementById('active-palette-name');
+        if (dot) {
+          dot.style.background = PALETTE_DOT_COLORS[palette] || '#71717a';
+        }
+        if (name) {
+          name.textContent = palette.charAt(0).toUpperCase() + palette.slice(1);
+        }
+      }
+
+      // Initialize on load
+      initDocsApp();
+    </script>
+  </body>
+</html>

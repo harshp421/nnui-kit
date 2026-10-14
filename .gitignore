@@ -1,0 +1,9 @@
+node_modules/
+apps/docs/dist/
+dist-docs/
+.astro/
+.DS_Store
+*.tgz
+*.log
+.env
+.env.*
