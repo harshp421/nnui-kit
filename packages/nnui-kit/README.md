@@ -1,12 +1,12 @@
-# NNUI-KIT (`nnui-kit`)
+# NNUI-KIT (`nnuikit`)
 
 > **Platform-Native, Three-Tier Light-DOM Universal UI Architecture**  
-> 40 Components & Primitives • Zero Shadow DOM a11y traps • SSR Safe (`nnui-kit/client`) • First-class React 18/19 wrapper (`nnui-kit/react`) • React 19, Vue 3, Svelte 5, Astro, HTMX 2 & Node SSR ready • Sub-40 KB gzipped total runtime.
+> 45 Components & Primitives • Zero Shadow DOM a11y traps • SSR Safe (`nnuikit/client`) • First-class React 18/19 wrapper (`nnuikit/react`) • React 19, Vue 3, Svelte 5, Astro, HTMX 2 & Node SSR ready • Sub-40 KB gzipped total runtime.
 
-[![npm version](https://img.shields.io/npm/v/nnui-kit.svg?style=flat-square)](https://www.npmjs.com/package/nnui-kit)
+[![npm version](https://img.shields.io/npm/v/nnuikit.svg?style=flat-square)](https://www.npmjs.com/package/nnuikit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Bundle Size](https://img.shields.io/badge/gzip%20size-39.8%20kB-emerald.svg?style=flat-square)](https://bundlephobia.com/package/nnui-kit)
-[![Shadow DOM](https://img.shields.io/badge/Shadow%20DOM-0%25%20(Pure%20Light--DOM)-purple.svg?style=flat-square)](https://github.com/harshp421/new_age_uiKit)
+[![Bundle Size](https://img.shields.io/badge/gzip%20size-39.8%20kB-emerald.svg?style=flat-square)](https://bundlephobia.com/package/nnuikit)
+[![Shadow DOM](https://img.shields.io/badge/Shadow%20DOM-0%25%20(Pure%20Light--DOM)-purple.svg?style=flat-square)](https://github.com/harshp421/nnui-kit)
 
 ---
 
@@ -15,13 +15,13 @@
 Install the universal package from npm:
 
 ```bash
-npm install nnui-kit
+npm install nnuikit
 # or
-pnpm add nnui-kit
+pnpm add nnuikit
 # or
-yarn add nnui-kit
+yarn add nnuikit
 # or
-bun add nnui-kit
+bun add nnuikit
 ```
 
 ### Choose Your Import Mode
