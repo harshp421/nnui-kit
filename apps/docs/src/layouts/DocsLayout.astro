@@ -19,10 +19,29 @@ const componentsList = Object.values(componentsData) as any[];
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark" data-palette="zinc" class="dark">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- 0ms Synchronous Theme & Palette Hydration (Executes before paint to eliminate FOUC / flicker) -->
+    <script is:inline>
+      (function () {
+        try {
+          const savedTheme = localStorage.getItem('nnui-theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          const savedPalette = localStorage.getItem('nnui-palette') || 'zinc';
+          const root = document.documentElement;
+          root.setAttribute('data-theme', savedTheme);
+          root.setAttribute('data-palette', savedPalette);
+          if (savedTheme === 'dark') {
+            root.classList.add('dark');
+          } else {
+            root.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -248,11 +267,12 @@ const componentsList = Object.values(componentsData) as any[];
 
       function initDocsApp() {
         // --- 1. Theme & Palette Management ---
-        const savedTheme = localStorage.getItem('nnui-theme') || 'dark';
-        const savedPalette = localStorage.getItem('nnui-palette') || 'zinc';
+        const currentTheme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('nnui-theme') || 'dark';
+        const currentPalette = document.documentElement.getAttribute('data-palette') || localStorage.getItem('nnui-palette') || 'zinc';
 
-        applyThemeMode(savedTheme);
-        applyPalette(savedPalette);
+        // Synchronize UI button icon and dropdown dot without triggering re-render
+        syncThemeControls(currentTheme);
+        syncPaletteControls(currentPalette);
 
         // Bind Theme Toggle Button
         const themeBtn = document.getElementById('theme-toggle');
@@ -260,8 +280,15 @@ const componentsList = Object.values(componentsData) as any[];
           themeBtn.addEventListener('click', () => {
             const current = document.documentElement.getAttribute('data-theme') || 'dark';
             const next = current === 'dark' ? 'light' : 'dark';
+
+            // Only transition colors when user explicitly clicks the toggle
+            document.documentElement.classList.add('theme-transition');
             applyThemeMode(next);
             localStorage.setItem('nnui-theme', next);
+
+            setTimeout(() => {
+              document.documentElement.classList.remove('theme-transition');
+            }, 300);
           });
         }
 
@@ -409,6 +436,13 @@ const componentsList = Object.values(componentsData) as any[];
         });
       }
 
+      function syncThemeControls(theme: string) {
+        const icon = document.getElementById('theme-icon');
+        if (icon) {
+          icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+      }
+
       function applyThemeMode(theme: string) {
         document.documentElement.setAttribute('data-theme', theme);
         if (theme === 'dark') {
@@ -416,10 +450,7 @@ const componentsList = Object.values(componentsData) as any[];
         } else {
           document.documentElement.classList.remove('dark');
         }
-        const icon = document.getElementById('theme-icon');
-        if (icon) {
-          icon.textContent = theme === 'dark' ? '☀️' : '🌙';
-        }
+        syncThemeControls(theme);
       }
 
       const PALETTE_DOT_COLORS: Record<string, string> = {
@@ -432,8 +463,7 @@ const componentsList = Object.values(componentsData) as any[];
         orange: '#f97316'
       };
 
-      function applyPalette(palette: string) {
-        document.documentElement.setAttribute('data-palette', palette);
+      function syncPaletteControls(palette: string) {
         const dot = document.getElementById('active-palette-dot');
         const name = document.getElementById('active-palette-name');
         if (dot) {
@@ -442,6 +472,11 @@ const componentsList = Object.values(componentsData) as any[];
         if (name) {
           name.textContent = palette.charAt(0).toUpperCase() + palette.slice(1);
         }
+      }
+
+      function applyPalette(palette: string) {
+        document.documentElement.setAttribute('data-palette', palette);
+        syncPaletteControls(palette);
       }
 
       // Initialize on load

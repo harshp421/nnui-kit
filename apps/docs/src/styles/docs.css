@@ -43,7 +43,14 @@ html, body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Smooth transition ONLY when user explicitly clicks theme toggle button */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease !important;
 }
 
 /* Prevent fixed header from overlapping anchor targets */
