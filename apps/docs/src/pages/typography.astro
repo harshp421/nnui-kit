@@ -1,0 +1,450 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Typography System | NNUI-KIT" activePath="/typography">
+  <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+    
+    <!-- Header -->
+    <div style="margin-bottom: 3rem;">
+      <div class="announcement-badge" style="margin-bottom: 0.75rem;">Platform-Native Semantic Primitives</div>
+      <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: var(--text-main);">
+        Typography System
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 720px;">
+        Proportional typographic scale with optical letter-spacing, fluid font hierarchies, and standardized semantic text roles. Zero Shadow DOM barriers, rendering instantly with pure semantic HTML.
+      </p>
+    </div>
+
+    <!-- 1. Interactive Type Scale Explorer -->
+    <section style="margin-bottom: 4rem;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem;">
+        <div>
+          <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.25rem; color: var(--text-main);">Interactive Type Explorer</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Test fluid type rendering, optical tracking, and font weights live.</p>
+        </div>
+      </div>
+
+      <div class="typography-interactive-box">
+        <!-- Explorer Controls -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle);">
+          <!-- Custom Text Input -->
+          <div style="grid-column: 1 / -1;">
+            <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Sample Preview Text</label>
+            <input 
+              id="type-sample-input" 
+              type="text" 
+              data-ui="input" 
+              class="ui-input" 
+              value="Universal Light-DOM UI Architecture engineered for modern web platforms." 
+              style="width: 100%; font-size: 0.9rem;"
+            />
+          </div>
+
+          <!-- Font Size Selector -->
+          <div>
+            <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Size</label>
+            <ui-segmented-control id="type-size-control" value="2xl" style="width: 100%;">
+              <button data-part="segment" data-value="sm">SM</button>
+              <button data-part="segment" data-value="base">Base</button>
+              <button data-part="segment" data-value="lg">LG</button>
+              <button data-part="segment" data-value="xl">XL</button>
+              <button data-part="segment" data-value="2xl">2XL</button>
+              <button data-part="segment" data-value="3xl">3XL</button>
+            </ui-segmented-control>
+          </div>
+
+          <!-- Font Weight Selector -->
+          <div>
+            <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Weight</label>
+            <ui-segmented-control id="type-weight-control" value="700" style="width: 100%;">
+              <button data-part="segment" data-value="400">400</button>
+              <button data-part="segment" data-value="500">500</button>
+              <button data-part="segment" data-value="600">600</button>
+              <button data-part="segment" data-value="700">700</button>
+              <button data-part="segment" data-value="800">800</button>
+            </ui-segmented-control>
+          </div>
+
+          <!-- Font Family Selector -->
+          <div>
+            <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Font Family</label>
+            <ui-segmented-control id="type-font-control" value="sans" style="width: 100%;">
+              <button data-part="segment" data-value="sans">Sans (Inter)</button>
+              <button data-part="segment" data-value="mono">Mono (JetBrains)</button>
+            </ui-segmented-control>
+          </div>
+        </div>
+
+        <!-- Live Specimen Rendering Canvas -->
+        <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--ui-radius-md, 8px); padding: 2rem; min-height: 140px; display: flex; align-items: center; justify-content: center; text-align: center;">
+          <div id="type-live-preview" style="font-size: 1.75rem; font-weight: 700; letter-spacing: -0.025em; color: var(--text-main); font-family: var(--docs-font-sans); line-height: 1.3; transition: all 0.15s ease;">
+            Universal Light-DOM UI Architecture engineered for modern web platforms.
+          </div>
+        </div>
+
+        <!-- Live Metrics Readout -->
+        <div style="display: flex; gap: 1.5rem; margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); font-family: var(--docs-font-mono); flex-wrap: wrap;">
+          <span>Size: <strong id="metric-size-val" style="color: var(--text-main);">1.75rem (28px)</strong></span>
+          <span>Weight: <strong id="metric-weight-val" style="color: var(--text-main);">700 Bold</strong></span>
+          <span>Tracking: <strong id="metric-tracking-val" style="color: var(--text-main);">-0.025em</strong></span>
+          <span>Line-Height: <strong style="color: var(--text-main);">1.3</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Type Hierarchy & Scale Specimen Table -->
+    <section style="margin-bottom: 4rem;">
+      <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--text-main);">Type Hierarchy & Scale</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0 0 1.5rem;">Standard proportional display and heading roles with optical letter-spacing (tracking).</p>
+
+      <div class="type-specimen-table">
+        <!-- Display 3XL -->
+        <div class="type-specimen-row">
+          <div class="type-row-header">
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--ui-color-brand-500);">Display 3XL</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <span class="type-meta-pill">2.25rem (36px)</span>
+              <span class="type-meta-pill">Weight 800</span>
+              <span class="type-meta-pill">Tracking -0.035em</span>
+            </div>
+          </div>
+          <div data-ui="heading" data-size="3xl">
+            Design for the Modern Platform
+          </div>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Marketing hero banners, high-impact landing headlines.</span>
+        </div>
+
+        <!-- Display 2XL -->
+        <div class="type-specimen-row">
+          <div class="type-row-header">
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--ui-color-brand-500);">Display 2XL</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <span class="type-meta-pill">1.75rem (28px)</span>
+              <span class="type-meta-pill">Weight 700</span>
+              <span class="type-meta-pill">Tracking -0.025em</span>
+            </div>
+          </div>
+          <div data-ui="heading" data-size="2xl">
+            Enterprise Application Dashboard
+          </div>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Primary Page Titles (H1), top-level view headers.</span>
+        </div>
+
+        <!-- Heading XL -->
+        <div class="type-specimen-row">
+          <div class="type-row-header">
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--ui-color-brand-500);">Heading XL</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <span class="type-meta-pill">1.35rem (21.6px)</span>
+              <span class="type-meta-pill">Weight 600</span>
+              <span class="type-meta-pill">Tracking -0.02em</span>
+            </div>
+          </div>
+          <div data-ui="heading" data-size="xl">
+            Real-Time Telemetry & Performance
+          </div>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Major section titles (H2), dashboard panel headers.</span>
+        </div>
+
+        <!-- Heading LG -->
+        <div class="type-specimen-row">
+          <div class="type-row-header">
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--ui-color-brand-500);">Heading LG</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <span class="type-meta-pill">1.15rem (18.4px)</span>
+              <span class="type-meta-pill">Weight 600</span>
+              <span class="type-meta-pill">Tracking -0.015em</span>
+            </div>
+          </div>
+          <div data-ui="heading" data-size="lg">
+            Authentication & Security Policies
+          </div>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Subsections (H3), dialog headers, modal titles.</span>
+        </div>
+
+        <!-- Heading MD -->
+        <div class="type-specimen-row">
+          <div class="type-row-header">
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--ui-color-brand-500);">Heading MD</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <span class="type-meta-pill">1.0rem (16px)</span>
+              <span class="type-meta-pill">Weight 600</span>
+              <span class="type-meta-pill">Tracking Normal</span>
+            </div>
+          </div>
+          <div style="font-size: 1rem; font-weight: 600; color: var(--text-main);">
+            Card Title & Widget Header
+          </div>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Card headers (H4), settings group titles.</span>
+        </div>
+
+        <!-- Heading SM -->
+        <div class="type-specimen-row">
+          <div class="type-row-header">
+            <span style="font-weight: 700; font-size: 0.85rem; color: var(--ui-color-brand-500);">Heading SM</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <span class="type-meta-pill">0.875rem (14px)</span>
+              <span class="type-meta-pill">Weight 600</span>
+              <span class="type-meta-pill">Tracking Normal</span>
+            </div>
+          </div>
+          <div style="font-size: 0.875rem; font-weight: 600; color: var(--text-main);">
+            Sidebar Group Label & Column Title
+          </div>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Table column headers, sidebar group titles (H5).</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Semantic Text Roles & Prose -->
+    <section style="margin-bottom: 4rem;">
+      <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--text-main);">Semantic Text Roles</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0 0 1.5rem;">Built-in body, lead, muted, code, and quote primitives for readable content layouts.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        
+        <!-- Lead & Body Card -->
+        <div data-ui="card" class="theme-showcase-card">
+          <div class="theme-card-title">
+            <span>Body & Lead Text</span>
+            <span class="type-meta-pill">data-variant</span>
+          </div>
+
+          <div>
+            <label style="font-size: 0.75rem; font-weight: 700; color: var(--ui-color-brand-500); display: block; margin-bottom: 0.35rem;">data-variant="lead"</label>
+            <p data-ui="text" data-variant="lead" style="margin-bottom: 1.25rem;">
+              NNUI-KIT delivers three-tier platform-native UI architecture with zero Shadow DOM barriers and sub-40 KB runtime footprint.
+            </p>
+
+            <label style="font-size: 0.75rem; font-weight: 700; color: var(--ui-color-brand-500); display: block; margin-bottom: 0.35rem;">data-variant="body"</label>
+            <p data-ui="text" data-variant="body" style="margin-bottom: 1.25rem;">
+              Components render into standard Light-DOM trees, allowing direct CSS styling with Tailwind or vanilla CSS, native HTML form submissions with FormData, and accessibility inspection by screen readers.
+            </p>
+
+            <label style="font-size: 0.75rem; font-weight: 700; color: var(--ui-color-brand-500); display: block; margin-bottom: 0.35rem;">data-variant="muted"</label>
+            <p data-ui="text" data-variant="muted" style="margin: 0;">
+              Updated 2 minutes ago · Version 1.0.1 · MIT Licensed
+            </p>
+          </div>
+        </div>
+
+        <!-- Quotes, Code & Form Hints Card -->
+        <div data-ui="card" class="theme-showcase-card">
+          <div class="theme-card-title">
+            <span>Code, Quotes & Form Bindings</span>
+            <span class="type-meta-pill">Specialized Roles</span>
+          </div>
+
+          <div>
+            <!-- Blockquote Specimen -->
+            <label style="font-size: 0.75rem; font-weight: 700; color: var(--ui-color-brand-500); display: block; margin-bottom: 0.35rem;">Blockquote Callout</label>
+            <blockquote style="margin: 0 0 1.25rem; padding: 0.75rem 1rem; border-left: 3px solid var(--ui-color-brand-500); background: var(--bg-secondary); border-radius: 0 var(--ui-radius-md, 8px) var(--ui-radius-md, 8px) 0; font-style: italic; color: var(--text-main); font-size: 0.9rem;">
+              "Shadow DOM creates isolation, but in enterprise web apps, isolation quickly turns into an accessibility and styling prison."
+            </blockquote>
+
+            <!-- Inline Code & Keyboard -->
+            <label style="font-size: 0.75rem; font-weight: 700; color: var(--ui-color-brand-500); display: block; margin-bottom: 0.35rem;">Inline Code & Shortcuts</label>
+            <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.25rem;">
+              Run <code style="font-family: var(--docs-font-mono); font-size: 0.8rem; background: var(--bg-secondary); border: 1px solid var(--border-subtle); padding: 2px 6px; border-radius: 4px; color: var(--ui-color-brand-500);">npm install nnuikit</code> or press <kbd class="ui-kbd">⌘K</kbd> to search docs.
+            </p>
+
+            <!-- Form Validation Messages -->
+            <label style="font-size: 0.75rem; font-weight: 700; color: var(--ui-color-brand-500); display: block; margin-bottom: 0.35rem;">Form Helper & Error Primitives</label>
+            <div data-ui="field-hint" style="margin-bottom: 0.4rem;">
+              ℹ️ Password must be at least 8 characters with one special symbol.
+            </div>
+            <div data-ui="field-error">
+              ⚠️ Email address is required for 2FA notification dispatch.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. Layout & Feedback Primitives (Platform Understanding) -->
+    <section style="margin-bottom: 4rem;">
+      <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--text-main);">Layout & Feedback Primitives</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0 0 1.5rem;">Zero-JS structural primitives that establish clean visual hierarchy across applications.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+        
+        <!-- Layout Primitives Card -->
+        <div data-ui="card" class="theme-showcase-card">
+          <div class="theme-card-title">
+            <span>Layout Containers (Zero-JS)</span>
+            <span class="type-meta-pill">data-ui</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+              <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">data-ui="stack" (Flexbox gap alignment)</span>
+              <div data-ui="stack" style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                <span data-ui="badge" data-variant="secondary">Flex Row</span>
+                <span data-ui="badge" data-variant="secondary">Gap Token</span>
+                <span data-ui="badge" data-variant="secondary">Zero JS</span>
+              </div>
+            </div>
+
+            <hr data-ui="separator" style="margin: 0.5rem 0; border: none; border-top: 1px solid var(--border-subtle);" />
+
+            <div>
+              <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">data-ui="grid" (Responsive columns)</span>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.5rem;">
+                <div style="padding: 0.5rem; text-align: center; background: var(--bg-secondary); border-radius: 6px; font-size: 0.75rem; font-weight: 600;">Col 1</div>
+                <div style="padding: 0.5rem; text-align: center; background: var(--bg-secondary); border-radius: 6px; font-size: 0.75rem; font-weight: 600;">Col 2</div>
+                <div style="padding: 0.5rem; text-align: center; background: var(--bg-secondary); border-radius: 6px; font-size: 0.75rem; font-weight: 600;">Col 3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback & Status Primitives Card -->
+        <div data-ui="card" class="theme-showcase-card">
+          <div class="theme-card-title">
+            <span>Feedback & Status Indicators</span>
+            <span class="type-meta-pill">Zero-JS</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div>
+              <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Accessible Spinners</span>
+              <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <div data-ui="spinner" data-size="sm" role="status" aria-label="Small loading"></div>
+                <div data-ui="spinner" data-size="md" role="status" aria-label="Medium loading"></div>
+                <div data-ui="spinner" data-size="lg" role="status" aria-label="Large loading"></div>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Pure CSS keyframe spin</span>
+              </div>
+            </div>
+
+            <div style="padding: 1rem; background: var(--bg-secondary); border-radius: var(--ui-radius-md, 8px); text-align: center;">
+              <div style="font-size: 1.75rem; margin-bottom: 0.25rem;">📁</div>
+              <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-main);">Empty State Primitive</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">data-ui="empty" zero-data feedback</div>
+              <button class="btn-brand" data-ui="button" data-size="xs" style="font-size: 0.75rem; padding: 0.35rem 0.75rem;">+ Create Project</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. Framework Usage Code Snippets -->
+    <section>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--text-main);">Code Examples & Implementation</h2>
+        <button id="copy-type-code-btn" class="btn-secondary" data-ui="button" data-size="sm">
+          <span>Copy Snippet</span>
+        </button>
+      </div>
+
+      <pre class="code-viewer-pre" style="border-radius: 8px; border: 1px solid var(--border-subtle);"><code id="type-code-block">&lt;!-- 1. Semantic Headings with Optical Tracking --&gt;
+&lt;h1 data-ui="heading" data-size="3xl"&gt;Enterprise Platform Architecture&lt;/h1&gt;
+&lt;h2 data-ui="heading" data-size="2xl"&gt;Analytics &amp; Metrics&lt;/h2&gt;
+&lt;h3 data-ui="heading" data-size="xl"&gt;Security &amp; Audit Logs&lt;/h3&gt;
+
+&lt;!-- 2. Standardized Semantic Text Roles --&gt;
+&lt;p data-ui="text" data-variant="lead"&gt;High-hierarchy introductory paragraph.&lt;/p&gt;
+&lt;p data-ui="text" data-variant="body"&gt;Standard content typography.&lt;/p&gt;
+&lt;p data-ui="text" data-variant="muted"&gt;Secondary metadata and captions.&lt;/p&gt;
+&lt;p data-ui="text" data-variant="small"&gt;Footnotes and legal disclaimers.&lt;/p&gt;
+
+&lt;!-- 3. Form Validation Messages --&gt;
+&lt;div data-ui="field-hint"&gt;Helper guidance text for form fields.&lt;/div&gt;
+&lt;div data-ui="field-error"&gt;Live accessible validation error message.&lt;/div&gt;
+
+&lt;!-- 4. Layout &amp; Feedback Primitives --&gt;
+&lt;div data-ui="stack" data-direction="col" data-gap="3"&gt;...&lt;/div&gt;
+&lt;div data-ui="spinner" data-size="md" role="status"&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+  </div>
+</DocsLayout>
+
+<script>
+  // Interactive Type Scale Explorer Controller
+  const sampleInput = document.getElementById('type-sample-input') as HTMLInputElement | null;
+  const livePreview = document.getElementById('type-live-preview');
+  const sizeControl = document.getElementById('type-size-control');
+  const weightControl = document.getElementById('type-weight-control');
+  const fontControl = document.getElementById('type-font-control');
+
+  const metricSize = document.getElementById('metric-size-val');
+  const metricWeight = document.getElementById('metric-weight-val');
+  const metricTracking = document.getElementById('metric-tracking-val');
+  const copyBtn = document.getElementById('copy-type-code-btn');
+
+  const SIZE_MAP: Record<string, { fontSize: string; tracking: string; label: string }> = {
+    sm: { fontSize: '0.875rem', tracking: '0em', label: '0.875rem (14px)' },
+    base: { fontSize: '1rem', tracking: '0em', label: '1.0rem (16px)' },
+    lg: { fontSize: '1.15rem', tracking: '-0.015em', label: '1.15rem (18.4px)' },
+    xl: { fontSize: '1.35rem', tracking: '-0.02em', label: '1.35rem (21.6px)' },
+    '2xl': { fontSize: '1.75rem', tracking: '-0.025em', label: '1.75rem (28px)' },
+    '3xl': { fontSize: '2.25rem', tracking: '-0.035em', label: '2.25rem (36px)' },
+  };
+
+  const WEIGHT_MAP: Record<string, string> = {
+    '400': '400 Regular',
+    '500': '500 Medium',
+    '600': '600 Semi-Bold',
+    '700': '700 Bold',
+    '800': '800 Extra-Bold',
+  };
+
+  function updateTypePreview() {
+    if (!livePreview) return;
+
+    const text = sampleInput?.value || 'Universal Light-DOM UI Architecture';
+    livePreview.textContent = text;
+
+    const size = (sizeControl as any)?.value || '2xl';
+    const weight = (weightControl as any)?.value || '700';
+    const font = (fontControl as any)?.value || 'sans';
+
+    const sizeConfig = SIZE_MAP[size] || SIZE_MAP['2xl'];
+
+    livePreview.style.fontSize = sizeConfig.fontSize;
+    livePreview.style.letterSpacing = sizeConfig.tracking;
+    livePreview.style.fontWeight = weight;
+    livePreview.style.fontFamily = font === 'mono' ? 'var(--docs-font-mono)' : 'var(--docs-font-sans)';
+
+    if (metricSize) metricSize.textContent = sizeConfig.label;
+    if (metricWeight) metricWeight.textContent = WEIGHT_MAP[weight] || weight;
+    if (metricTracking) metricTracking.textContent = sizeConfig.tracking;
+  }
+
+  // Bind input listeners
+  if (sampleInput) {
+    sampleInput.addEventListener('input', updateTypePreview);
+  }
+
+  if (sizeControl) {
+    sizeControl.addEventListener('change', updateTypePreview);
+  }
+
+  if (weightControl) {
+    weightControl.addEventListener('change', updateTypePreview);
+  }
+
+  if (fontControl) {
+    fontControl.addEventListener('change', updateTypePreview);
+  }
+
+  // Copy code button
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const code = document.getElementById('type-code-block')?.textContent || '';
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span>✓ Copied!</span>';
+        if ((window as any).toast) {
+          (window as any).toast.success('Typography snippet copied to clipboard');
+        }
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+        }, 2000);
+      });
+    });
+  }
+</script>

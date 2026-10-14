@@ -26,6 +26,14 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       </div>
 
       <div class="docs-aside-group">
+        <div class="docs-aside-title">Design System & Tokens</div>
+        <a href="#typography-system" class="docs-aside-link">Typography System</a>
+        <a href="#layout-primitives" class="docs-aside-link">Layout & Status Primitives</a>
+        <a href="/tokens" class="docs-aside-link">Theme Studio (Live)</a>
+        <a href="/typography" class="docs-aside-link">Typography Studio ↗</a>
+      </div>
+
+      <div class="docs-aside-group">
         <div class="docs-aside-title">Framework Adapters</div>
         <a href="#react" class="docs-aside-link">React 18 & 19</a>
         <a href="#svelte" class="docs-aside-link">Svelte 5 (Runes)</a>
@@ -422,6 +430,77 @@ const onSelect = (e) =&gt; &#123;
     &lt;/div&gt;
   &lt;/dialog&gt;
 &lt;/ui-dialog&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Typography System Section -->
+      <section id="typography-system" style="margin-bottom: 4rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+          <h2 style="font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; margin: 0; color: var(--text-main);">
+            Typography System
+          </h2>
+          <a href="/typography" class="btn-brand" data-ui="button" data-size="xs" style="font-size: 0.78rem; padding: 0.35rem 0.85rem; text-decoration: none;">
+            Open Interactive Studio ↗
+          </a>
+        </div>
+        <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem;">
+          Proportional type scale with optical letter-spacing, fluid font hierarchies, and standardized semantic text roles. Zero Shadow DOM barriers, rendering instantly with pure semantic HTML:
+        </p>
+
+        <!-- Live Preview of Typography Scale -->
+        <div style="border: 1px solid var(--border-subtle); border-radius: var(--ui-radius-lg, 12px); padding: 1.75rem; background: var(--bg-card); margin-bottom: 1.5rem;">
+          <div data-ui="stack" data-direction="col" style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <div data-ui="heading" data-size="2xl">Display 2XL — Enterprise Systems</div>
+            <div data-ui="heading" data-size="xl">Heading XL — Feature Modules</div>
+            <div data-ui="heading" data-size="lg">Heading LG — Section Header</div>
+            <hr data-ui="separator" style="margin: 0.5rem 0; border: none; border-top: 1px solid var(--border-subtle);" />
+            <p data-ui="text" data-variant="lead" style="margin: 0;">Lead Paragraph: High visual hierarchy introduction text for hero sections.</p>
+            <p data-ui="text" data-variant="body" style="margin: 0;">Body Paragraph: Standard content typography optimized for sustained reading comprehension.</p>
+            <p data-ui="text" data-variant="muted" style="margin: 0;">Muted Text: Secondary metadata, timestamps, and contextual captions.</p>
+          </div>
+        </div>
+
+        <div style="border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card); overflow: hidden;">
+          <div style="padding: 0.65rem 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem; font-weight: 700;">
+            typography-example.html
+          </div>
+          <pre class="code-viewer-pre" style="margin: 0;"><code>&lt;!-- Headings with optical tracking --&gt;
+&lt;h1 data-ui="heading" data-size="2xl"&gt;Dashboard Analytics&lt;/h1&gt;
+&lt;h2 data-ui="heading" data-size="lg"&gt;Recent Activity&lt;/h2&gt;
+
+&lt;!-- Standardized Text Roles --&gt;
+&lt;p data-ui="text" data-variant="lead"&gt;Overview of performance across all services.&lt;/p&gt;
+&lt;p data-ui="text" data-variant="muted"&gt;Last updated 2 minutes ago.&lt;/p&gt;
+&lt;code data-ui="text" data-variant="code"&gt;npm install nnuikit&lt;/code&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Layout & Status Primitives Section -->
+      <section id="layout-primitives" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; color: var(--text-main);">
+          Layout & Status Primitives
+        </h2>
+        <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem;">
+          Zero-JS structural primitives that establish clean visual hierarchy across applications:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
+          <div data-ui="card" style="padding: 1.5rem; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--ui-radius-md, 8px);">
+            <span style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.75rem;">Indeterminate Spinners</span>
+            <div style="display: flex; align-items: center; gap: 1.25rem;">
+              <div data-ui="spinner" data-size="sm" role="status"></div>
+              <div data-ui="spinner" data-size="md" role="status"></div>
+              <div data-ui="spinner" data-size="lg" role="status"></div>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Accessible ARIA roles</span>
+            </div>
+          </div>
+
+          <div data-ui="card" style="padding: 1.5rem; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--ui-radius-md, 8px); text-align: center;">
+            <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">📁</div>
+            <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-main);">Empty State Primitive</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0.25rem 0 0.75rem;">data-ui="empty" zero-data feedback</p>
+            <button class="btn-brand" data-ui="button" data-size="xs" style="font-size: 0.75rem; padding: 0.3rem 0.75rem;">+ Create Document</button>
+          </div>
         </div>
       </section>
     </main>

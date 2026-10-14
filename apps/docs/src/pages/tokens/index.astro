@@ -2,51 +2,320 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import tokens from 'nnui-kit/tokens.json';
 
-const palettes = ['zinc', 'slate', 'violet', 'rose', 'emerald', 'blue', 'orange'];
+const palettes = [
+  { name: 'zinc', hex: '#71717a', label: 'Zinc (Neutral)' },
+  { name: 'slate', hex: '#64748b', label: 'Slate (Cool)' },
+  { name: 'violet', hex: '#8b5cf6', label: 'Violet (Electric)' },
+  { name: 'blue', hex: '#3b82f6', label: 'Blue (Corporate)' },
+  { name: 'emerald', hex: '#10b981', label: 'Emerald (Forest)' },
+  { name: 'rose', hex: '#f43f5e', label: 'Rose (Vibrant)' },
+  { name: 'orange', hex: '#f97316', label: 'Orange (Warm)' },
+];
+
+const radii = [
+  { val: '0', label: '0px' },
+  { val: '0.3', label: '0.3rem' },
+  { val: '0.5', label: '0.5rem' },
+  { val: '0.75', label: '0.75rem' },
+  { val: '1.0', label: '1.0rem' },
+  { val: 'full', label: 'Full' },
+];
+
 const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 ---
 
-<DocsLayout title="Design Tokens Studio | NNUI-KIT" activePath="/tokens">
+<DocsLayout title="Design Tokens & Theme Studio | NNUI-KIT" activePath="/tokens">
   <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
-    <div style="margin-bottom: 3rem;">
+    
+    <!-- Header -->
+    <div style="margin-bottom: 2.5rem;">
       <div class="announcement-badge" style="margin-bottom: 0.75rem;">W3C DTCG Specification Compliant</div>
       <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: var(--text-main);">
-        Design Tokens & Themes
+        Design Tokens & Theme Studio
       </h1>
-      <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 650px;">
-        NNUI-KIT adheres to the W3C Design Tokens Community Group (DTCG) standard with full 50–950 tonal color scales. Switch palettes live or export CSS variables directly into your project.
+      <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 720px;">
+        Customize brand color harmonies, light/dark color modes, and border radii in real time. Watch all 45 platform-native components react instantly without re-rendering or Shadow DOM obstacles.
       </p>
     </div>
 
-    <!-- Live Palette Switcher Bar -->
-    <div data-ui="card" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.75rem; margin-bottom: 3rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
-      <h3 style="margin-top: 0; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700; color: var(--text-main);">Active Brand Palette</h3>
-      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-        {palettes.map((p) => (
-          <button 
-            class="palette-btn btn-secondary" 
-            data-ui="button"
-            data-variant="secondary"
-            data-size="sm"
-            data-pal={p} 
-            style="text-transform: capitalize; font-weight: 600; font-size: 0.85rem;"
-          >
-            {p}
-          </button>
-        ))}
+    <!-- Theme Studio Controls Toolbar -->
+    <div class="theme-studio-toolbar">
+      <!-- Quick Presets Row -->
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Quick Presets:</span>
+          <button type="button" class="preset-chip-btn" data-preset="violet-dark">⚡ Electric Violet</button>
+          <button type="button" class="preset-chip-btn" data-preset="emerald-dark">🌿 Emerald Forest</button>
+          <button type="button" class="preset-chip-btn" data-preset="rose-light">🌸 Rose Daylight</button>
+          <button type="button" class="preset-chip-btn" data-preset="blue-dark">💎 Modern Slate Blue</button>
+          <button type="button" class="preset-chip-btn" data-preset="orange-dark">🔥 Sunset Orange</button>
+          <button type="button" class="preset-chip-btn" data-preset="zinc-dark">🖤 Pure Monochrome</button>
+        </div>
+
+        <button id="copy-tokens-quick-btn" class="btn-brand" data-ui="button" data-size="xs" style="font-size: 0.78rem; padding: 0.35rem 0.85rem;">
+          <span>Copy Theme CSS 📋</span>
+        </button>
+      </div>
+
+      <!-- Controls: Palette, Mode, Radius -->
+      <div class="theme-controls-row">
+        <!-- Palette Selector -->
+        <div class="theme-control-group" style="flex: 2; min-width: 280px;">
+          <label class="theme-control-label">Brand Color Harmony (7 Palettes)</label>
+          <div class="palette-swatch-pills" id="palette-pills-container">
+            {palettes.map((p) => (
+              <button 
+                type="button"
+                class="palette-pill-btn" 
+                data-palette={p.name}
+                title={p.label}
+              >
+                <span class="palette-pill-dot" style={`background-color: ${p.hex};`}></span>
+                <span style="text-transform: capitalize;">{p.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="theme-control-group" style="flex: 1; min-width: 140px;">
+          <label class="theme-control-label">Color Mode</label>
+          <div style="display: flex; gap: 0.35rem;">
+            <button type="button" id="mode-btn-light" class="radius-pill-btn" style="flex: 1; text-align: center;">☀️ Light</button>
+            <button type="button" id="mode-btn-dark" class="radius-pill-btn active" style="flex: 1; text-align: center;">🌙 Dark</button>
+          </div>
+        </div>
+
+        <!-- Radius Selector -->
+        <div class="theme-control-group" style="flex: 1.5; min-width: 220px;">
+          <label class="theme-control-label">Border Radius</label>
+          <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;" id="radius-pills-container">
+            {radii.map((r) => (
+              <button 
+                type="button"
+                class={`radius-pill-btn ${r.val === '0.5' ? 'active' : ''}`}
+                data-radius={r.val}
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Live Component Showcase Matrix (Components Adapt in Real Time) -->
+    <section style="margin-bottom: 4rem;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem;">
+        <div>
+          <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.25rem; color: var(--text-main);">Live Component Preview Matrix</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">These live micro-enhancers and primitives adapt instantly to the theme, palette, and radius selections above.</p>
+        </div>
+        <span data-ui="badge" data-variant="secondary" style="font-size: 0.75rem;">
+          Reactive Light-DOM
+        </span>
+      </div>
+
+      <div class="theme-showcase-matrix">
+        
+        <!-- Card 1: Buttons & Actions -->
+        <div data-ui="card" class="theme-showcase-card">
+          <div class="theme-card-title">
+            <span>Actions & Button Primitives</span>
+            <span data-ui="badge" data-variant="outline" style="font-size: 0.7rem;">Tier 0</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <!-- Primary Brand Button (Dynamic Accent) -->
+            <button class="btn-brand" data-ui="button" id="demo-brand-btn" style="width: 100%; justify-content: center;">
+              <span>Brand Accent Button ⚡</span>
+            </button>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+              <button data-ui="button" data-variant="secondary" style="justify-content: center;">
+                Secondary
+              </button>
+              <button data-ui="button" data-variant="outline" style="justify-content: center;">
+                Outline
+              </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+              <button data-ui="button" data-variant="ghost" style="justify-content: center;">
+                Ghost Action
+              </button>
+              <button data-ui="button" data-variant="destructive" style="justify-content: center;">
+                Destructive
+              </button>
+            </div>
+
+            <!-- Toast Notification Trigger -->
+            <button id="trigger-live-toast-btn" class="btn-secondary" data-ui="button" style="width: 100%; justify-content: center; font-size: 0.8rem; margin-top: 0.5rem;">
+              <span>🔔 Trigger Toast Notification</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: Interactive Form & Inputs -->
+        <div data-ui="card" class="theme-showcase-card">
+          <div class="theme-card-title">
+            <span>Form Controls & Sliders</span>
+            <span data-ui="badge" data-variant="outline" style="font-size: 0.7rem;">Interactive</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Input with Brand Focus -->
+            <div>
+              <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 0.35rem;">Project Name</label>
+              <input 
+                type="text" 
+                data-ui="input" 
+                class="ui-input" 
+                value="my-universal-platform" 
+                style="width: 100%; font-size: 0.85rem;"
+              />
+              <div data-ui="field-hint">Dynamically rings with active brand color on focus.</div>
+            </div>
+
+            <!-- Toggle Switch & Checkbox -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: var(--bg-secondary); border-radius: var(--ui-radius-md, 8px);">
+              <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Cross-Tab Sync</span>
+              <label data-ui="switch" style="cursor: pointer; display: inline-flex; align-items: center;">
+                <input type="checkbox" checked style="accent-color: var(--ui-color-brand-500); width: 18px; height: 18px; cursor: pointer;" />
+              </label>
+            </div>
+
+            <!-- Live Slider Component -->
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.35rem;">
+                <span style="color: var(--text-main);">Performance Allocation</span>
+                <span id="slider-val-readout" style="color: var(--ui-color-brand-500);">75%</span>
+              </div>
+              <input 
+                id="theme-demo-slider" 
+                type="range" 
+                min="0" 
+                max="100" 
+                value="75" 
+                style="width: 100%; accent-color: var(--ui-color-brand-500); cursor: pointer;"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Tabs, Badges & Segmented Control -->
+        <div data-ui="card" class="theme-showcase-card">
+          <div class="theme-card-title">
+            <span>Navigation, Tabs & Badges</span>
+            <span data-ui="badge" data-variant="outline" style="font-size: 0.7rem;">Micro-Enhancer</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Segmented Control Role -->
+            <div>
+              <ui-segmented-control value="developer" style="width: 100%;">
+                <button data-part="segment" data-value="viewer" style="flex: 1;">Viewer</button>
+                <button data-part="segment" data-value="developer" style="flex: 1;">Developer</button>
+                <button data-part="segment" data-value="admin" style="flex: 1;">Admin</button>
+              </ui-segmented-control>
+            </div>
+
+            <!-- Tabs Component -->
+            <ui-tabs value="overview" style="margin-top: 0.25rem;">
+              <div data-part="tablist" style="margin-bottom: 0.75rem;">
+                <button data-part="tab" data-value="overview" class="active">Overview</button>
+                <button data-part="tab" data-value="deploy">Deployments</button>
+                <button data-part="tab" data-value="audit">Audit Log</button>
+              </div>
+              <div data-part="tabpanel" data-value="overview">
+                <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                  Active tab border and highlights automatically adhere to <code style="color: var(--ui-color-brand-500);">--ui-color-brand-500</code>.
+                </div>
+              </div>
+              <div data-part="tabpanel" data-value="deploy" hidden>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Zero latency deployment pipeline active.</div>
+              </div>
+              <div data-part="tabpanel" data-value="audit" hidden>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Audited across 15 WAI-ARIA micro-enhancers.</div>
+              </div>
+            </ui-tabs>
+
+            <!-- Badges Row -->
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <span class="btn-brand" style="font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: var(--ui-radius-full, 9999px);">Brand Filled</span>
+              <span data-ui="badge" data-variant="secondary" style="font-size: 0.7rem;">Secondary</span>
+              <span data-ui="badge" data-variant="outline" style="font-size: 0.7rem;">Outline</span>
+              <span data-ui="badge" style="font-size: 0.7rem; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">Verified</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Collapsible Accordion & Feedback -->
+        <div data-ui="card" class="theme-showcase-card">
+          <div class="theme-card-title">
+            <span>Accordion & Feedback States</span>
+            <span data-ui="badge" data-variant="outline" style="font-size: 0.7rem;">Light-DOM</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Live Vertical Accordion Component -->
+            <ui-accordion type="single" collapsible style="width: 100%;">
+              <div data-part="item" data-state="open" style="border: 1px solid var(--border-subtle); border-radius: var(--ui-radius-md, 8px); margin-bottom: 0.5rem; overflow: hidden;">
+                <button data-part="trigger" style="width: 100%; padding: 0.65rem 0.85rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-secondary); border: none; font-size: 0.82rem; font-weight: 600; color: var(--text-main); cursor: pointer; text-align: left;">
+                  <span>What makes NNUI-KIT themes unique?</span>
+                  <span style="font-size: 0.75rem;">▾</span>
+                </button>
+                <div data-part="content" style="padding: 0.75rem 0.85rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; background: var(--bg-card);">
+                  Tokens live in CSS Cascade Layers (<code>@layer ui.tokens</code>) and bind directly to semantic HTML primitives without Shadow DOM style isolation barriers.
+                </div>
+              </div>
+
+              <div data-part="item" data-state="closed" style="border: 1px solid var(--border-subtle); border-radius: var(--ui-radius-md, 8px); overflow: hidden;">
+                <button data-part="trigger" style="width: 100%; padding: 0.65rem 0.85rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-secondary); border: none; font-size: 0.82rem; font-weight: 600; color: var(--text-main); cursor: pointer; text-align: left;">
+                  <span>How are radius tokens applied?</span>
+                  <span style="font-size: 0.75rem;">▾</span>
+                </button>
+                <div data-part="content" hidden style="padding: 0.75rem 0.85rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; background: var(--bg-card);">
+                  Border radii scale dynamically through <code>--ui-radius-*</code> variables, cascading through cards, buttons, badges, and modals simultaneously.
+                </div>
+              </div>
+            </ui-accordion>
+
+            <!-- Spinner & Status Row -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 0.5rem; border-top: 1px solid var(--border-subtle);">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div data-ui="spinner" data-size="sm" role="status"></div>
+                <span style="font-size: 0.78rem; color: var(--text-muted);">Dynamic Palette Reactive</span>
+              </div>
+              <span id="active-theme-status-tag" style="font-size: 0.75rem; font-weight: 700; color: var(--ui-color-brand-500); text-transform: uppercase;">
+                Zinc Dark
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- Active Swatches Grid (Full 50-950 Tonal Scale) -->
     <section style="margin-bottom: 4rem;">
       <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem;">
-        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--text-main);">Color Scale Swatches (50–950)</h2>
-        <span style="font-size: 0.85rem; color: var(--text-muted);">Dynamically bound to <code>--ui-color-brand-[shade]</code></span>
+        <div>
+          <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.25rem; color: var(--text-main);">Full Color Scale Swatches (50–950)</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Click any swatch to copy its CSS custom property or hex value.</p>
+        </div>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Bound to <code>--ui-color-brand-[shade]</code></span>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.75rem;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 0.75rem;">
         {colorShades.map((shade) => (
-          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; background: var(--bg-card); transition: transform 0.15s ease;" class="swatch-card">
+          <div 
+            data-ui="card" 
+            class="swatch-card"
+            data-shade={shade}
+            style="border: 1px solid var(--border-subtle); border-radius: var(--ui-radius-md, 8px); overflow: hidden; background: var(--bg-card); transition: transform 0.15s ease; cursor: pointer;"
+            title={`Copy --ui-color-brand-${shade}`}
+          >
             <div 
               class="swatch-box" 
               data-shade={shade} 
@@ -54,6 +323,7 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
             ></div>
             <div style="padding: 0.5rem; text-align: center; border-top: 1px solid var(--border-subtle);">
               <div style="font-family: var(--docs-font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-main);">{shade}</div>
+              <div class="swatch-hex-label" data-shade={shade} style="font-family: var(--docs-font-mono); font-size: 0.68rem; color: var(--text-muted);">#...</div>
             </div>
           </div>
         ))}
@@ -62,14 +332,18 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
     <!-- CSS Variable Export Output -->
     <section>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0; color: var(--text-main);">Generated CSS Tokens</h2>
-        <button id="copy-tokens-btn" class="btn-secondary" data-ui="button" data-variant="secondary" data-size="sm" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;">
-          <span>Copy CSS Variables</span>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.25rem; color: var(--text-main);">Generated CSS Tokens</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Ready to paste into your design system, Tailwind config, or stylesheet.</p>
+        </div>
+
+        <button id="copy-tokens-btn" class="btn-secondary" data-ui="button" data-variant="secondary" data-size="sm" style="font-size: 0.8rem; padding: 0.4rem 0.95rem;">
+          <span>Copy CSS Variables 📋</span>
         </button>
       </div>
 
-      <pre class="code-viewer-pre" style="border-radius: 8px; border: 1px solid var(--border-subtle);"><code id="css-export-output">/* Select a palette above to view its CSS variable block */</code></pre>
+      <pre class="code-viewer-pre" style="border-radius: var(--ui-radius-md, 8px); border: 1px solid var(--border-subtle);"><code id="css-export-output">/* Select a palette above to view its CSS variable block */</code></pre>
     </section>
   </div>
 </DocsLayout>
@@ -77,164 +351,245 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 <script>
   import tokensData from 'nnui-kit/tokens.json';
 
-  const paletteBtns = document.querySelectorAll('.palette-btn');
-  const paletteSelect = document.getElementById('palette-select') as HTMLSelectElement;
+  const palettePills = document.querySelectorAll('.palette-pill-btn');
+  const radiusPills = document.querySelectorAll('.radius-pill-btn[data-radius]');
+  const modeLightBtn = document.getElementById('mode-btn-light');
+  const modeDarkBtn = document.getElementById('mode-btn-dark');
+  const presetBtns = document.querySelectorAll('.preset-chip-btn');
+  const statusTag = document.getElementById('active-theme-status-tag');
   const cssOutput = document.getElementById('css-export-output');
   const copyBtn = document.getElementById('copy-tokens-btn');
+  const copyQuickBtn = document.getElementById('copy-tokens-quick-btn');
+  const demoSlider = document.getElementById('theme-demo-slider') as HTMLInputElement | null;
+  const sliderReadout = document.getElementById('slider-val-readout');
+  const toastBtn = document.getElementById('trigger-live-toast-btn');
 
-  const paletteCssMap: Record<string, string> = {
-    zinc: `:root[data-palette="zinc"], :root {
-  --ui-color-brand-50: #fafafa;
-  --ui-color-brand-100: #f4f4f5;
-  --ui-color-brand-200: #e4e4e7;
-  --ui-color-brand-300: #d4d4d8;
-  --ui-color-brand-400: #a1a1aa;
-  --ui-color-brand-500: #71717a;
-  --ui-color-brand-600: #52525b;
-  --ui-color-brand-700: #3f3f46;
-  --ui-color-brand-800: #27272a;
-  --ui-color-brand-900: #18181b;
-  --ui-color-brand-950: #09090b;
-}`,
-    slate: `:root[data-palette="slate"] {
-  --ui-color-brand-50: #f8fafc;
-  --ui-color-brand-100: #f1f5f9;
-  --ui-color-brand-200: #e2e8f0;
-  --ui-color-brand-300: #cbd5e1;
-  --ui-color-brand-400: #94a3b8;
-  --ui-color-brand-500: #64748b;
-  --ui-color-brand-600: #475569;
-  --ui-color-brand-700: #334155;
-  --ui-color-brand-800: #1e293b;
-  --ui-color-brand-900: #0f172a;
-  --ui-color-brand-950: #020617;
-}`,
-    violet: `:root[data-palette="violet"] {
-  --ui-color-brand-50: #f5f3ff;
-  --ui-color-brand-100: #ede9fe;
-  --ui-color-brand-200: #ddd6fe;
-  --ui-color-brand-300: #c4b5fd;
-  --ui-color-brand-400: #a78bfa;
-  --ui-color-brand-500: #8b5cf6;
-  --ui-color-brand-600: #7c3aed;
-  --ui-color-brand-700: #6d28d9;
-  --ui-color-brand-800: #5b21b6;
-  --ui-color-brand-900: #4c1d95;
-  --ui-color-brand-950: #2e1065;
-}`,
-    emerald: `:root[data-palette="emerald"] {
-  --ui-color-brand-50: #ecfdf5;
-  --ui-color-brand-100: #d1fae5;
-  --ui-color-brand-200: #a7f3d0;
-  --ui-color-brand-300: #6ee7b7;
-  --ui-color-brand-400: #34d399;
-  --ui-color-brand-500: #10b981;
-  --ui-color-brand-600: #059669;
-  --ui-color-brand-700: #047857;
-  --ui-color-brand-800: #065f46;
-  --ui-color-brand-900: #064e3b;
-  --ui-color-brand-950: #022c22;
-}`,
-    rose: `:root[data-palette="rose"] {
-  --ui-color-brand-50: #fff1f2;
-  --ui-color-brand-100: #ffe4e6;
-  --ui-color-brand-200: #fecdd3;
-  --ui-color-brand-300: #fda4af;
-  --ui-color-brand-400: #fb7185;
-  --ui-color-brand-500: #f43f5e;
-  --ui-color-brand-600: #e11d48;
-  --ui-color-brand-700: #be123c;
-  --ui-color-brand-800: #9f1239;
-  --ui-color-brand-900: #881337;
-  --ui-color-brand-950: #4c0519;
-}`,
-    blue: `:root[data-palette="blue"] {
-  --ui-color-brand-50: #eff6ff;
-  --ui-color-brand-100: #dbeafe;
-  --ui-color-brand-200: #bfdbfe;
-  --ui-color-brand-300: #93c5fd;
-  --ui-color-brand-400: #60a5fa;
-  --ui-color-brand-500: #3b82f6;
-  --ui-color-brand-600: #2563eb;
-  --ui-color-brand-700: #1d4ed8;
-  --ui-color-brand-800: #1e40af;
-  --ui-color-brand-900: #1e3a8a;
-  --ui-color-brand-950: #172554;
-}`,
-    orange: `:root[data-palette="orange"] {
-  --ui-color-brand-50: #fff7ed;
-  --ui-color-brand-100: #ffedd5;
-  --ui-color-brand-200: #fed7aa;
-  --ui-color-brand-300: #fdba74;
-  --ui-color-brand-400: #fb923c;
-  --ui-color-brand-500: #f97316;
-  --ui-color-brand-600: #ea580c;
-  --ui-color-brand-700: #c2410c;
-  --ui-color-brand-800: #9a3412;
-  --ui-color-brand-900: #7c2d12;
-  --ui-color-brand-950: #431407;
-}`
+  // Palette HEX values map for 50-950
+  const PALETTE_HEX_MAP: Record<string, Record<number, string>> = {
+    zinc: { 50: '#fafafa', 100: '#f4f4f5', 200: '#e4e4e7', 300: '#d4d4d8', 400: '#a1a1aa', 500: '#71717a', 600: '#52525b', 700: '#3f3f46', 800: '#27272a', 900: '#18181b', 950: '#09090b' },
+    slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617' },
+    violet: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd', 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9', 800: '#5b21b6', 900: '#4c1d95', 950: '#2e1065' },
+    emerald: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22' },
+    rose: { 50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c', 800: '#9f1239', 900: '#881337', 950: '#4c0519' },
+    blue: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' },
+    orange: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12', 950: '#431407' },
   };
 
-  function updatePaletteUI(pal: string) {
-    document.documentElement.setAttribute('data-palette', pal);
-    localStorage.setItem('nnui-palette', pal);
-    if (paletteSelect) paletteSelect.value = pal;
+  let currentPalette = localStorage.getItem('nnui-palette') || 'zinc';
+  let currentTheme = localStorage.getItem('nnui-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  let currentRadius = localStorage.getItem('nnui-radius') || '0.5';
 
-    // Highlight active button
-    paletteBtns.forEach((btn) => {
-      const match = btn.getAttribute('data-pal') === pal;
-      if (match) {
+  function applyStudioTheme() {
+    // Apply attributes to root
+    document.documentElement.setAttribute('data-palette', currentPalette);
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    document.documentElement.setAttribute('data-radius', currentRadius);
+
+    if (currentTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Persist to localStorage
+    localStorage.setItem('nnui-palette', currentPalette);
+    localStorage.setItem('nnui-theme', currentTheme);
+    localStorage.setItem('nnui-radius', currentRadius);
+
+    // Update Palette Pills UI
+    palettePills.forEach((btn) => {
+      const pal = btn.getAttribute('data-palette');
+      if (pal === currentPalette) {
         btn.classList.add('active');
-        (btn as HTMLElement).style.borderColor = 'var(--text-main)';
-        (btn as HTMLElement).style.background = 'var(--text-main)';
-        (btn as HTMLElement).style.color = 'var(--bg-primary)';
       } else {
         btn.classList.remove('active');
-        (btn as HTMLElement).style.borderColor = 'var(--border-subtle)';
-        (btn as HTMLElement).style.background = 'var(--bg-secondary)';
-        (btn as HTMLElement).style.color = 'var(--text-main)';
       }
     });
 
-    // Update code output
-    if (cssOutput && paletteCssMap[pal]) {
-      cssOutput.textContent = paletteCssMap[pal];
+    // Update Mode UI
+    if (currentTheme === 'dark') {
+      modeDarkBtn?.classList.add('active');
+      modeLightBtn?.classList.remove('active');
+    } else {
+      modeLightBtn?.classList.add('active');
+      modeDarkBtn?.classList.remove('active');
     }
+
+    // Update Radius Pills UI
+    radiusPills.forEach((btn) => {
+      const rad = btn.getAttribute('data-radius');
+      if (rad === currentRadius) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Update Status Tag
+    if (statusTag) {
+      statusTag.textContent = `${currentPalette.toUpperCase()} · ${currentTheme.toUpperCase()} · ${currentRadius} RADIUS`;
+    }
+
+    // Update Swatch Hex Labels
+    const hexMap = PALETTE_HEX_MAP[currentPalette] || PALETTE_HEX_MAP.zinc;
+    document.querySelectorAll('.swatch-hex-label').forEach((label) => {
+      const shade = Number(label.getAttribute('data-shade'));
+      if (shade && hexMap[shade]) {
+        label.textContent = hexMap[shade];
+      }
+    });
+
+    // Generate Export Code
+    generateCssCode();
   }
 
-  paletteBtns.forEach((btn) => {
+  function generateCssCode() {
+    if (!cssOutput) return;
+
+    const hexMap = PALETTE_HEX_MAP[currentPalette] || PALETTE_HEX_MAP.zinc;
+    const code = `/* NNUI-KIT W3C DTCG Token Customization */
+:root[data-palette="${currentPalette}"], 
+[data-palette="${currentPalette}"] {
+  --ui-color-brand-50: ${hexMap[50]};
+  --ui-color-brand-100: ${hexMap[100]};
+  --ui-color-brand-200: ${hexMap[200]};
+  --ui-color-brand-300: ${hexMap[300]};
+  --ui-color-brand-400: ${hexMap[400]};
+  --ui-color-brand-500: ${hexMap[500]};
+  --ui-color-brand-600: ${hexMap[600]};
+  --ui-color-brand-700: ${hexMap[700]};
+  --ui-color-brand-800: ${hexMap[800]};
+  --ui-color-brand-900: ${hexMap[900]};
+  --ui-color-brand-950: ${hexMap[950]};
+
+  /* Border Radius Override (${currentRadius}) */
+  --ui-radius-sm: ${currentRadius === '0' ? '0px' : currentRadius === 'full' ? '9999px' : '0.375rem'};
+  --ui-radius-md: ${currentRadius === '0' ? '0px' : currentRadius === 'full' ? '9999px' : currentRadius + 'rem'};
+  --ui-radius-lg: ${currentRadius === '0' ? '0px' : currentRadius === 'full' ? '24px' : (parseFloat(currentRadius) * 1.5) + 'rem'};
+}`;
+
+    cssOutput.textContent = code;
+  }
+
+  // Bind Palette Pill Clicks
+  palettePills.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const pal = btn.getAttribute('data-pal') || 'zinc';
-      updatePaletteUI(pal);
+      const pal = btn.getAttribute('data-palette');
+      if (pal) {
+        currentPalette = pal;
+        applyStudioTheme();
+      }
     });
   });
 
-  // Copy CSS Variables Button
-  if (copyBtn) {
-    copyBtn.addEventListener('click', async () => {
-      if (cssOutput) {
-        await navigator.clipboard.writeText(cssOutput.textContent || '');
-        const span = copyBtn.querySelector('span');
-        if (span) {
-          const orig = span.textContent;
-          span.textContent = '✓ Copied!';
-          setTimeout(() => {
-            span.textContent = orig;
-          }, 2000);
+  // Bind Mode Clicks
+  modeLightBtn?.addEventListener('click', () => {
+    currentTheme = 'light';
+    applyStudioTheme();
+  });
+
+  modeDarkBtn?.addEventListener('click', () => {
+    currentTheme = 'dark';
+    applyStudioTheme();
+  });
+
+  // Bind Radius Clicks
+  radiusPills.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const rad = btn.getAttribute('data-radius');
+      if (rad) {
+        currentRadius = rad;
+        applyStudioTheme();
+      }
+    });
+  });
+
+  // Bind Presets
+  const PRESET_MAP: Record<string, { palette: string; theme: string; radius: string; title: string }> = {
+    'violet-dark': { palette: 'violet', theme: 'dark', radius: '0.5', title: 'Electric Violet' },
+    'emerald-dark': { palette: 'emerald', theme: 'dark', radius: '0.75', title: 'Emerald Forest' },
+    'rose-light': { palette: 'rose', theme: 'light', radius: '0.5', title: 'Rose Daylight' },
+    'blue-dark': { palette: 'blue', theme: 'dark', radius: '0.3', title: 'Modern Slate Blue' },
+    'orange-dark': { palette: 'orange', theme: 'dark', radius: '1.0', title: 'Sunset Orange' },
+    'zinc-dark': { palette: 'zinc', theme: 'dark', radius: '0.5', title: 'Pure Monochrome' },
+  };
+
+  presetBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const presetKey = btn.getAttribute('data-preset');
+      if (presetKey && PRESET_MAP[presetKey]) {
+        const p = PRESET_MAP[presetKey];
+        currentPalette = p.palette;
+        currentTheme = p.theme;
+        currentRadius = p.radius;
+        applyStudioTheme();
+
+        if ((window as any).toast) {
+          (window as any).toast.success(`Preset Applied: ${p.title}`);
         }
+      }
+    });
+  });
+
+  // Bind Interactive Slider
+  if (demoSlider && sliderReadout) {
+    demoSlider.addEventListener('input', (e: any) => {
+      sliderReadout.textContent = `${e.target.value}%`;
+    });
+  }
+
+  // Bind Live Toast Button
+  if (toastBtn) {
+    toastBtn.addEventListener('click', () => {
+      if ((window as any).toast) {
+        (window as any).toast.success(`Theme Applied: ${currentPalette.toUpperCase()} · ${currentTheme.toUpperCase()} mode!`, {
+          title: 'Theme Customizer',
+          duration: 3500
+        });
       }
     });
   }
 
-  // Initialize with currently saved palette
-  const initialPal = localStorage.getItem('nnui-palette') || 'zinc';
-  updatePaletteUI(initialPal);
+  // Bind Swatch Click-to-Copy
+  document.querySelectorAll('.swatch-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const shade = card.getAttribute('data-shade');
+      const hex = card.querySelector('.swatch-hex-label')?.textContent || '';
+      navigator.clipboard.writeText(hex).then(() => {
+        if ((window as any).toast) {
+          (window as any).toast.success(`Copied ${hex} (--ui-color-brand-${shade})`);
+        }
+      });
+    });
+  });
+
+  // Copy CSS Code
+  function copyCss() {
+    if (cssOutput) {
+      navigator.clipboard.writeText(cssOutput.textContent || '').then(() => {
+        if ((window as any).toast) {
+          (window as any).toast.success('CSS custom property block copied to clipboard');
+        }
+        if (copyBtn) {
+          const orig = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<span>✓ Copied!</span>';
+          setTimeout(() => { copyBtn.innerHTML = orig; }, 2000);
+        }
+      });
+    }
+  }
+
+  copyBtn?.addEventListener('click', copyCss);
+  copyQuickBtn?.addEventListener('click', copyCss);
+
+  // Initialize on page load
+  applyStudioTheme();
 
   // Listen for palette change from header ui-dropdown
   window.addEventListener('nnui-palette-changed', (e: any) => {
     if (e.detail?.palette) {
-      updatePaletteUI(e.detail.palette);
+      currentPalette = e.detail.palette;
+      applyStudioTheme();
     }
   });
 </script>

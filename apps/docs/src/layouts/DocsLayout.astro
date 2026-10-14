@@ -31,9 +31,11 @@ const componentsList = Object.values(componentsData) as any[];
           const savedTheme = localStorage.getItem('nnui-theme') || 
             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
           const savedPalette = localStorage.getItem('nnui-palette') || 'zinc';
+          const savedRadius = localStorage.getItem('nnui-radius') || '0.5';
           const root = document.documentElement;
           root.setAttribute('data-theme', savedTheme);
           root.setAttribute('data-palette', savedPalette);
+          root.setAttribute('data-radius', savedRadius);
           if (savedTheme === 'dark') {
             root.classList.add('dark');
           } else {
@@ -63,6 +65,7 @@ const componentsList = Object.values(componentsData) as any[];
           <a href="/docs" class={`docs-nav-link ${activePath.startsWith('/docs') ? 'active' : ''}`}>Docs</a>
           <a href="/components" class={`docs-nav-link ${activePath.startsWith('/components') ? 'active' : ''}`}>Components</a>
           <a href="/tokens" class={`docs-nav-link ${activePath.startsWith('/tokens') ? 'active' : ''}`}>Themes</a>
+          <a href="/typography" class={`docs-nav-link ${activePath.startsWith('/typography') ? 'active' : ''}`}>Typography</a>
           <a href="/llms" class={`docs-nav-link ${activePath.startsWith('/llms') ? 'active' : ''}`} style="display: inline-flex; align-items: center; gap: 0.35rem;">
             <span>llms.txt</span>
             <span style="font-size: 0.65rem; background: rgba(99, 102, 241, 0.2); color: var(--brand-400, #818cf8); border: 1px solid rgba(99, 102, 241, 0.4); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">AI</span>
@@ -227,9 +230,21 @@ const componentsList = Object.values(componentsData) as any[];
             <span>HTMX 2 & Backend SSR</span>
             <span class="item-meta">Framework</span>
           </a>
-          <a href="/tokens" class="search-result-item" data-text="tokens themes dtcg palettes colors zinc slate violet emerald rose blue orange">
-            <span>Design Tokens & Themes Studio</span>
+          <a href="/tokens" class="search-result-item" data-text="tokens themes dtcg palettes colors zinc slate violet emerald rose blue orange customizer radius">
+            <span>Design Tokens & Theme Studio</span>
             <span class="item-meta">Themes</span>
+          </a>
+          <a href="/typography" class="search-result-item" data-text="typography system font type scale heading text lead muted optical tracking monospace sans">
+            <span>Typography System & Scale</span>
+            <span class="item-meta">Design System</span>
+          </a>
+          <a href="/docs#layout-primitives" class="search-result-item" data-text="layout primitives stack grid container separator flex layout zero js">
+            <span>Layout Primitives (Stack, Grid, Container)</span>
+            <span class="item-meta">Primitives</span>
+          </a>
+          <a href="/docs#feedback-primitives" class="search-result-item" data-text="feedback status primitives spinner empty state loading indicator zero js">
+            <span>Feedback & Status Primitives (Spinner, Empty)</span>
+            <span class="item-meta">Primitives</span>
           </a>
         </div>
 
