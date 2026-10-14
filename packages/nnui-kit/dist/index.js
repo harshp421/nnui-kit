@@ -556,7 +556,13 @@ class Z extends A {
         const n = a.id || `${t}-trigger-${s}`, o = r.id || `${t}-content-${s}`;
         this.setAttributeSafe(a, "id", n), this.setAttributeSafe(a, "aria-controls", o), this.setAttributeSafe(r, "id", o), this.setAttributeSafe(r, "role", "region"), this.setAttributeSafe(r, "aria-labelledby", n);
         const l = i.getAttribute("data-state") === "open" || a.getAttribute("aria-expanded") === "true";
-        this.setAttributeSafe(a, "aria-expanded", l ? "true" : "false"), this.setAttributeSafe(i, "data-state", l ? "open" : "closed"), l ? r.removeAttribute("hidden") : r.setAttribute("hidden", "");
+        if (this.setAttributeSafe(a, "aria-expanded", l ? "true" : "false"), this.setAttributeSafe(i, "data-state", l ? "open" : "closed"), this.setAttributeSafe(r, "data-state", l ? "open" : "closed"), !r.querySelector('[data-part="content-inner"]')) {
+          const d = document.createElement("div");
+          for (d.setAttribute("data-part", "content-inner"); r.firstChild; )
+            d.appendChild(r.firstChild);
+          r.appendChild(d);
+        }
+        l ? r.removeAttribute("hidden") : r.setAttribute("hidden", "");
       }
     });
   }
@@ -607,7 +613,16 @@ class Z extends A {
   }
   _setItemState(t, e) {
     const i = t.querySelector('[data-part="trigger"]'), s = t.querySelector('[data-part="content"]');
-    this.setAttributeSafe(t, "data-state", e ? "open" : "closed"), i && this.setAttributeSafe(i, "aria-expanded", e ? "true" : "false"), s && (e ? s.removeAttribute("hidden") : s.setAttribute("hidden", ""));
+    if (e)
+      this.setAttributeSafe(t, "data-state", "open"), i && this.setAttributeSafe(i, "aria-expanded", "true"), s && (s.removeAttribute("hidden"), this.setAttributeSafe(s, "data-state", "open"));
+    else if (this.setAttributeSafe(t, "data-state", "closed"), i && this.setAttributeSafe(i, "aria-expanded", "false"), s) {
+      this.setAttributeSafe(s, "data-state", "closed");
+      let a = !1;
+      const r = () => {
+        a || (a = !0, t.getAttribute("data-state") === "closed" && s.setAttribute("hidden", ""), s.removeEventListener("transitionend", r));
+      };
+      s.addEventListener("transitionend", r, { once: !0 }), setTimeout(r, 280);
+    }
   }
 }
 const Tt = typeof window > "u" || typeof CSS > "u" || !CSS.supports ? !1 : CSS.supports("anchor-name", "--test") && (CSS.supports("position-area", "bottom span-right") || CSS.supports("inset-area", "bottom span-right"));

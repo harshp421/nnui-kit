@@ -54,6 +54,17 @@ export class UiAccordion extends BaseLightElement {
         const isOpen = item.getAttribute('data-state') === 'open' || trigger.getAttribute('aria-expanded') === 'true';
         this.setAttributeSafe(trigger, 'aria-expanded', isOpen ? 'true' : 'false');
         this.setAttributeSafe(item, 'data-state', isOpen ? 'open' : 'closed');
+        this.setAttributeSafe(content, 'data-state', isOpen ? 'open' : 'closed');
+
+        // Ensure inner content wrapper for smooth CSS grid height animation
+        if (!content.querySelector('[data-part="content-inner"]')) {
+          const inner = document.createElement('div');
+          inner.setAttribute('data-part', 'content-inner');
+          while (content.firstChild) {
+            inner.appendChild(content.firstChild);
+          }
+          content.appendChild(inner);
+        }
 
         if (!isOpen) {
           content.setAttribute('hidden', '');
@@ -139,15 +150,34 @@ export class UiAccordion extends BaseLightElement {
     const trigger = item.querySelector('[data-part="trigger"]');
     const content = item.querySelector('[data-part="content"]');
 
-    this.setAttributeSafe(item, 'data-state', open ? 'open' : 'closed');
-    if (trigger) {
-      this.setAttributeSafe(trigger, 'aria-expanded', open ? 'true' : 'false');
-    }
-    if (content) {
-      if (open) {
+    if (open) {
+      this.setAttributeSafe(item, 'data-state', 'open');
+      if (trigger) {
+        this.setAttributeSafe(trigger, 'aria-expanded', 'true');
+      }
+      if (content) {
         content.removeAttribute('hidden');
-      } else {
-        content.setAttribute('hidden', '');
+        this.setAttributeSafe(content, 'data-state', 'open');
+      }
+    } else {
+      this.setAttributeSafe(item, 'data-state', 'closed');
+      if (trigger) {
+        this.setAttributeSafe(trigger, 'aria-expanded', 'false');
+      }
+      if (content) {
+        this.setAttributeSafe(content, 'data-state', 'closed');
+        // Smoothly wait for CSS transition to collapse before setting hidden
+        let closed = false;
+        const finalizeClose = () => {
+          if (closed) return;
+          closed = true;
+          if (item.getAttribute('data-state') === 'closed') {
+            content.setAttribute('hidden', '');
+          }
+          content.removeEventListener('transitionend', finalizeClose);
+        };
+        content.addEventListener('transitionend', finalizeClose, { once: true });
+        setTimeout(finalizeClose, 280);
       }
     }
   }

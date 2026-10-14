@@ -249,19 +249,25 @@
   [data-ui="accordion"] {
     display: flex;
     flex-direction: column;
-    gap: var(--ui-space-2);
+    gap: 0.625rem;
     width: 100%;
 
     [data-part="item"] {
-      border: 1px solid var(--ui-border-default);
-      border-radius: var(--ui-radius-md);
-      background-color: var(--ui-bg-surface);
+      border: 1px solid var(--ui-border-default, var(--border-subtle, rgba(255, 255, 255, 0.1)));
+      border-radius: var(--ui-radius-lg, 12px);
+      background-color: var(--ui-bg-surface, var(--bg-card, rgba(255, 255, 255, 0.02)));
       overflow: hidden;
-      transition: border-color var(--ui-transition-fast);
+      transition: border-color var(--ui-transition-fast, 150ms ease), background-color var(--ui-transition-fast, 150ms ease), box-shadow var(--ui-transition-fast, 150ms ease);
+    }
+
+    [data-part="item"]:hover {
+      border-color: var(--ui-border-strong, var(--border-strong, rgba(255, 255, 255, 0.2)));
     }
 
     [data-part="item"][data-state="open"] {
-      border-color: var(--ui-border-strong);
+      border-color: var(--ui-color-brand-500, #6366f1);
+      background-color: var(--ui-bg-surface-active, rgba(99, 102, 241, 0.03));
+      box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.12);
     }
 
     [data-part="trigger"] {
@@ -269,52 +275,81 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.85rem 1rem;
-      font-size: var(--ui-font-size-sm);
-      font-weight: 500;
-      color: var(--ui-text-primary);
+      padding: 1rem 1.25rem;
+      font-size: var(--ui-font-size-base, 0.95rem);
+      font-weight: 600;
+      color: var(--ui-text-primary, var(--text-main, #ffffff));
       background: transparent;
       border: none;
       cursor: pointer;
       text-align: left;
       outline: none;
+      gap: 1rem;
+      user-select: none;
+      transition: color var(--ui-transition-fast, 150ms ease);
+    }
+
+    [data-part="trigger"]:hover {
+      color: var(--ui-color-brand-400, #818cf8);
     }
 
     [data-part="trigger"]:focus-visible {
-      outline: 2px solid var(--ui-color-brand-400);
+      outline: 2px solid var(--ui-color-brand-500, #6366f1);
       outline-offset: -2px;
     }
 
     [data-part="icon"],
     [data-part="indicator"] {
-      transition: transform var(--ui-transition-base);
-      color: var(--ui-text-muted);
-      display: inline-block;
-      font-size: 1.15rem;
+      transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms ease;
+      color: var(--ui-text-muted, var(--text-muted, rgba(255, 255, 255, 0.5)));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
       line-height: 1;
     }
 
+    /* Flip indicator 180deg (for chevron-down) or 90deg (for right chevron) */
     [data-part="item"][data-state="open"] [data-part="icon"],
     [data-part="item"][data-state="open"] [data-part="indicator"] {
-      transform: rotate(90deg);
+      transform: rotate(180deg);
+      color: var(--ui-color-brand-400, #818cf8);
     }
 
+    /* Smooth CSS Grid Expanding Content */
     [data-part="content"] {
-      padding: 0 1rem 1rem 1rem;
-      color: var(--ui-text-secondary);
-      font-size: var(--ui-font-size-sm);
-      line-height: 1.5;
-      display: none;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 250ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+      opacity: 0;
     }
 
     [data-part="item"][data-state="open"] > [data-part="content"],
     [data-state="open"] > [data-part="content"] {
-      display: block;
-      animation: uiSlideDown 150ms cubic-bezier(0.16, 1, 0.3, 1);
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    [data-part="content-inner"] {
+      overflow: hidden;
+      min-height: 0;
+      padding: 0 1.25rem 1.15rem 1.25rem;
+      color: var(--ui-text-secondary, var(--text-muted, rgba(255, 255, 255, 0.75)));
+      font-size: var(--ui-font-size-sm, 0.875rem);
+      line-height: 1.6;
+    }
+
+    /* Fallback if content-inner is not used */
+    [data-part="content"]:not(:has([data-part="content-inner"])) {
+      overflow: hidden;
+      padding: 0 1.25rem;
+    }
+    [data-part="item"][data-state="open"] > [data-part="content"]:not(:has([data-part="content-inner"])) {
+      padding: 0 1.25rem 1.15rem 1.25rem;
     }
 
     [data-part="content"][hidden] {
-      display: none !important;
+      display: none;
     }
   }
 
