@@ -1,5 +1,5 @@
 {
-  "name": "@harshparmar/nnui-kit",
+  "name": "nnuikit",
   "version": "1.0.0",
   "description": "NNUI-KIT: Platform-Native, Three-Tier Light-DOM Universal UI Architecture with Zero Shadow DOM A11y Traps",
   "type": "module",
@@ -47,6 +47,7 @@
     }
   },
   "bin": {
+    "nnuikit": "bin/nnui.js",
     "nnui": "bin/nnui.js"
   },
   "files": [

@@ -11,6 +11,6 @@
   },
   "dependencies": {
     "astro": "^7.3.8",
-    "@harshparmar/nnui-kit": "*"
+    "nnuikit": "*"
   }
 }
