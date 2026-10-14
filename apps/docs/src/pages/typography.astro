@@ -27,9 +27,9 @@ import DocsLayout from '../layouts/DocsLayout.astro';
 
       <div class="typography-interactive-box">
         <!-- Explorer Controls -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle);">
+        <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle);">
           <!-- Custom Text Input -->
-          <div style="grid-column: 1 / -1;">
+          <div>
             <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Sample Preview Text</label>
             <input 
               id="type-sample-input" 
@@ -41,38 +41,41 @@ import DocsLayout from '../layouts/DocsLayout.astro';
             />
           </div>
 
-          <!-- Font Size Selector -->
-          <div>
-            <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Size</label>
-            <ui-segmented-control id="type-size-control" value="2xl" style="width: 100%;">
-              <button data-part="segment" data-value="sm">SM</button>
-              <button data-part="segment" data-value="base">Base</button>
-              <button data-part="segment" data-value="lg">LG</button>
-              <button data-part="segment" data-value="xl">XL</button>
-              <button data-part="segment" data-value="2xl">2XL</button>
-              <button data-part="segment" data-value="3xl">3XL</button>
-            </ui-segmented-control>
-          </div>
+          <!-- Controls Row: Size, Weight, Font Family -->
+          <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: flex-start;">
+            <!-- Font Size Selector -->
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+              <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Size</label>
+              <div class="type-pill-group" id="type-size-pills">
+                <button type="button" class="type-pill-btn" data-val="sm">SM</button>
+                <button type="button" class="type-pill-btn" data-val="base">Base</button>
+                <button type="button" class="type-pill-btn" data-val="lg">LG</button>
+                <button type="button" class="type-pill-btn" data-val="xl">XL</button>
+                <button type="button" class="type-pill-btn active" data-val="2xl">2XL</button>
+                <button type="button" class="type-pill-btn" data-val="3xl">3XL</button>
+              </div>
+            </div>
 
-          <!-- Font Weight Selector -->
-          <div>
-            <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Weight</label>
-            <ui-segmented-control id="type-weight-control" value="700" style="width: 100%;">
-              <button data-part="segment" data-value="400">400</button>
-              <button data-part="segment" data-value="500">500</button>
-              <button data-part="segment" data-value="600">600</button>
-              <button data-part="segment" data-value="700">700</button>
-              <button data-part="segment" data-value="800">800</button>
-            </ui-segmented-control>
-          </div>
+            <!-- Font Weight Selector -->
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+              <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Weight</label>
+              <div class="type-pill-group" id="type-weight-pills">
+                <button type="button" class="type-pill-btn" data-val="400">400</button>
+                <button type="button" class="type-pill-btn" data-val="500">500</button>
+                <button type="button" class="type-pill-btn" data-val="600">600</button>
+                <button type="button" class="type-pill-btn active" data-val="700">700</button>
+                <button type="button" class="type-pill-btn" data-val="800">800</button>
+              </div>
+            </div>
 
-          <!-- Font Family Selector -->
-          <div>
-            <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Font Family</label>
-            <ui-segmented-control id="type-font-control" value="sans" style="width: 100%;">
-              <button data-part="segment" data-value="sans">Sans (Inter)</button>
-              <button data-part="segment" data-value="mono">Mono (JetBrains)</button>
-            </ui-segmented-control>
+            <!-- Font Family Selector -->
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+              <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Font Family</label>
+              <div class="type-pill-group" id="type-font-pills">
+                <button type="button" class="type-pill-btn active" data-val="sans">Sans (Inter)</button>
+                <button type="button" class="type-pill-btn" data-val="mono">Mono (JetBrains)</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -366,14 +369,19 @@ import DocsLayout from '../layouts/DocsLayout.astro';
   // Interactive Type Scale Explorer Controller
   const sampleInput = document.getElementById('type-sample-input') as HTMLInputElement | null;
   const livePreview = document.getElementById('type-live-preview');
-  const sizeControl = document.getElementById('type-size-control');
-  const weightControl = document.getElementById('type-weight-control');
-  const fontControl = document.getElementById('type-font-control');
+
+  const sizePills = document.querySelectorAll('#type-size-pills .type-pill-btn');
+  const weightPills = document.querySelectorAll('#type-weight-pills .type-pill-btn');
+  const fontPills = document.querySelectorAll('#type-font-pills .type-pill-btn');
 
   const metricSize = document.getElementById('metric-size-val');
   const metricWeight = document.getElementById('metric-weight-val');
   const metricTracking = document.getElementById('metric-tracking-val');
   const copyBtn = document.getElementById('copy-type-code-btn');
+
+  let activeSize = '2xl';
+  let activeWeight = '700';
+  let activeFont = 'sans';
 
   const SIZE_MAP: Record<string, { fontSize: string; tracking: string; label: string }> = {
     sm: { fontSize: '0.875rem', tracking: '0em', label: '0.875rem (14px)' },
@@ -398,19 +406,15 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     const text = sampleInput?.value || 'Universal Light-DOM UI Architecture';
     livePreview.textContent = text;
 
-    const size = (sizeControl as any)?.value || '2xl';
-    const weight = (weightControl as any)?.value || '700';
-    const font = (fontControl as any)?.value || 'sans';
-
-    const sizeConfig = SIZE_MAP[size] || SIZE_MAP['2xl'];
+    const sizeConfig = SIZE_MAP[activeSize] || SIZE_MAP['2xl'];
 
     livePreview.style.fontSize = sizeConfig.fontSize;
     livePreview.style.letterSpacing = sizeConfig.tracking;
-    livePreview.style.fontWeight = weight;
-    livePreview.style.fontFamily = font === 'mono' ? 'var(--docs-font-mono)' : 'var(--docs-font-sans)';
+    livePreview.style.fontWeight = activeWeight;
+    livePreview.style.fontFamily = activeFont === 'mono' ? 'var(--docs-font-mono)' : 'var(--docs-font-sans)';
 
     if (metricSize) metricSize.textContent = sizeConfig.label;
-    if (metricWeight) metricWeight.textContent = WEIGHT_MAP[weight] || weight;
+    if (metricWeight) metricWeight.textContent = WEIGHT_MAP[activeWeight] || activeWeight;
     if (metricTracking) metricTracking.textContent = sizeConfig.tracking;
   }
 
@@ -419,17 +423,35 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     sampleInput.addEventListener('input', updateTypePreview);
   }
 
-  if (sizeControl) {
-    sizeControl.addEventListener('change', updateTypePreview);
-  }
+  // Bind Size Pills
+  sizePills.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      sizePills.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeSize = btn.getAttribute('data-val') || '2xl';
+      updateTypePreview();
+    });
+  });
 
-  if (weightControl) {
-    weightControl.addEventListener('change', updateTypePreview);
-  }
+  // Bind Weight Pills
+  weightPills.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      weightPills.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeWeight = btn.getAttribute('data-val') || '700';
+      updateTypePreview();
+    });
+  });
 
-  if (fontControl) {
-    fontControl.addEventListener('change', updateTypePreview);
-  }
+  // Bind Font Pills
+  fontPills.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      fontPills.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFont = btn.getAttribute('data-val') || 'sans';
+      updateTypePreview();
+    });
+  });
 
   // Copy code button
   if (copyBtn) {
