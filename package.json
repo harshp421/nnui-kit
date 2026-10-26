@@ -18,5 +18,8 @@
     "test": "node packages/nnui-kit/tests/run-all.js",
     "pack:check": "cd packages/nnui-kit && npm run pack:check",
     "publish:pkg": "cd packages/nnui-kit && npm publish"
+  },
+  "devDependencies": {
+    "wrangler": "^4.152.0"
   }
 }
