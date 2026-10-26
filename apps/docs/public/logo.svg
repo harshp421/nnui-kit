@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="logoLeftPillar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="logoDiagonal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <linearGradient id="logoRightPillar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8"/>
+      <stop offset="50%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="glassFacet" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.05)"/>
+    </linearGradient>
+    <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Glowing Geometric 'N' Prism -->
+  <g filter="url(#logoGlow)">
+    <!-- Left Column -->
+    <path d="M28 20 L50 34 L50 108 L28 94 Z" fill="url(#logoLeftPillar)" />
+    <!-- Diagonal Crystal Facet -->
+    <path d="M28 20 L50 34 L100 108 L78 94 Z" fill="url(#logoDiagonal)" opacity="0.92" />
+    <!-- Top Cap Highlight -->
+    <path d="M28 20 L50 34 L78 94 L56 80 Z" fill="url(#glassFacet)" opacity="0.3" />
+    <!-- Right Column -->
+    <path d="M78 20 L100 34 L100 108 L78 94 Z" fill="url(#logoRightPillar)" />
+    <!-- Beveled Light Accents -->
+    <path d="M28 20 L50 34 M78 20 L100 34 M28 20 L78 94 M50 108 L100 108" stroke="rgba(255, 255, 255, 0.45)" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>
