@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -31,15 +32,18 @@ if (buildDocs.status !== 0) {
   process.exit(buildDocs.status || 1);
 }
 
-console.log('\n⚡ 3/3 Building React 19 Dashboard Microservice...');
-const buildDash = spawnSync('npm', ['run', 'build'], {
-  cwd: path.join(rootDir, 'apps/dashboard'),
-  stdio: 'inherit',
-  env: cleanEnv,
-});
-if (buildDash.status !== 0) {
-  process.exit(buildDash.status || 1);
+const dashDir = path.join(rootDir, 'apps/dashboard');
+if (fs.existsSync(dashDir)) {
+  console.log('\n⚡ 3/3 Building React 19 Dashboard Microservice...');
+  const buildDash = spawnSync('npm', ['run', 'build'], {
+    cwd: dashDir,
+    stdio: 'inherit',
+    env: cleanEnv,
+  });
+  if (buildDash.status !== 0) {
+    process.exit(buildDash.status || 1);
+  }
 }
 
-console.log('\n✨ NNUI-KIT MONOREPO BUILD SUCCEEDED ACROSS ALL 3 TARGETS!');
+console.log('\n✨ NNUI-KIT BUILD SUCCEEDED!');
 
