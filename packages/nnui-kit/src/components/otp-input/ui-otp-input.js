@@ -14,13 +14,42 @@ import { Keys } from '../../utils/a11y.js';
  * - 'input' and 'change' CustomEvents with { value, isComplete }
  */
 export class UiOtpInput extends BaseLightElement {
+  static formAssociated = true;
+
   static get observedAttributes() {
-    return ['length', 'value', 'disabled', 'type', 'mask'];
+    return ['length', 'value', 'name', 'disabled', 'type', 'mask'];
+  }
+
+  constructor() {
+    super();
+    if (typeof this.attachInternals === 'function') {
+      this._internals = this.attachInternals();
+    }
+  }
+
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
+
+  get name() {
+    return this.getAttribute('name') || '';
+  }
+
+  set name(val) {
+    if (val) this.setAttributeSafe('name', val);
+    else this.removeAttributeSafe('name');
   }
 
   get length() {
     const len = parseInt(this.getAttribute('length'), 10);
     return isNaN(len) || len <= 0 ? 6 : len;
+  }
+
+  set length(val) {
+    if (val !== null && val !== undefined) this.setAttributeSafe('length', String(val));
+    else this.removeAttributeSafe('length');
   }
 
   get value() {
@@ -40,6 +69,8 @@ export class UiOtpInput extends BaseLightElement {
   get isComplete() {
     return this.value.length === this.length;
   }
+
+  set isComplete(_) {}
 
   get disabled() {
     return this.hasAttribute('disabled');
@@ -205,9 +236,21 @@ export class UiOtpInput extends BaseLightElement {
     this._emitChange();
   }
 
+  _updateFormValue() {
+    if (this._internals) {
+      this._internals.setFormValue(this.value);
+    }
+  }
+
+  formResetCallback() {
+    const initVal = this.getAttribute('value') || '';
+    this.value = initVal;
+  }
+
   _emitChange() {
     const val = this.value;
     const complete = this.isComplete;
+    this._updateFormValue();
 
     this.dispatch('input', { value: val, isComplete: complete });
     if (complete) {

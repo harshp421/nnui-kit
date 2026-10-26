@@ -13,9 +13,24 @@ import { Keys, getNextIndex } from '../../utils/a11y.js';
  * - Standard 'change' CustomEvent with { value }
  */
 export class UiSegmentedControl extends BaseLightElement {
+  static formAssociated = true;
+
   static get observedAttributes() {
     return ['value', 'name', 'disabled', 'size'];
   }
+
+  constructor() {
+    super();
+    if (typeof this.attachInternals === 'function') {
+      this._internals = this.attachInternals();
+    }
+  }
+
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
 
   get value() {
     return this.getAttribute('value') || '';
@@ -140,8 +155,22 @@ export class UiSegmentedControl extends BaseLightElement {
     if (this._hiddenInput) {
       this._hiddenInput.value = currentVal;
     }
+    this._updateFormValue();
 
     this._updateIndicator(activeSegment);
+  }
+
+  _updateFormValue() {
+    if (this._internals) {
+      this._internals.setFormValue(this.value);
+    }
+  }
+
+  formResetCallback() {
+    const defaultSeg = this._getSegments().find(s => s.hasAttribute('default-selected') || s.hasAttribute('selected'));
+    const initialVal = defaultSeg ? (defaultSeg.dataset.value || defaultSeg.getAttribute('value') || defaultSeg.textContent.trim()) : (this.getAttribute('value') || '');
+    this.value = initialVal;
+    this._syncState();
   }
 
   _updateIndicator(activeSegment = null) {

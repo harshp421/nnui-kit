@@ -12,13 +12,45 @@ import { BaseLightElement } from '../../utils/base-element.js';
  * - Form associated / standard change events
  */
 export class UiTagsInput extends BaseLightElement {
+  static formAssociated = true;
+
   static get observedAttributes() {
-    return ['placeholder', 'max-tags', 'disabled', 'delimiter'];
+    return ['placeholder', 'max-tags', 'disabled', 'delimiter', 'name', 'value'];
   }
 
   constructor() {
     super();
     this._tags = [];
+    if (typeof this.attachInternals === 'function') {
+      this._internals = this.attachInternals();
+    }
+  }
+
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
+
+  get name() {
+    return this.getAttribute('name') || '';
+  }
+
+  set name(val) {
+    if (val) this.setAttributeSafe(this, 'name', val);
+    else this.removeAttributeSafe(this, 'name');
+  }
+
+  get value() {
+    return this._tags.join(',');
+  }
+
+  set value(val) {
+    if (typeof val === 'string') {
+      this._tags = val ? val.split(',').map(s => s.trim()).filter(Boolean) : [];
+      this._render();
+      this._updateFormValue();
+    }
   }
 
   get tags() {
@@ -29,12 +61,18 @@ export class UiTagsInput extends BaseLightElement {
     if (Array.isArray(val)) {
       this._tags = [...val];
       this._render();
+      this._updateFormValue();
     }
   }
 
   get maxTags() {
     const val = parseInt(this.getAttribute('max-tags'), 10);
     return isNaN(val) ? Infinity : val;
+  }
+
+  set maxTags(val) {
+    if (val !== null && val !== undefined) this.setAttributeSafe(this, 'max-tags', String(val));
+    else this.removeAttributeSafe(this, 'max-tags');
   }
 
   init() {
@@ -186,7 +224,21 @@ export class UiTagsInput extends BaseLightElement {
   clear() {
     this._tags = [];
     this._render();
+    this._updateFormValue();
     this.dispatchCustomEvent('change', { tags: [] });
+  }
+
+  _updateFormValue() {
+    if (this._internals) {
+      this._internals.setFormValue(this._tags.join(','));
+    }
+  }
+
+  formResetCallback() {
+    const initialTagsAttr = this.getAttribute('value') || this.getAttribute('tags') || '';
+    this._tags = initialTagsAttr ? initialTagsAttr.split(',').map(s => s.trim()).filter(Boolean) : [];
+    this._render();
+    this._updateFormValue();
   }
 }
 

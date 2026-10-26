@@ -21,8 +21,18 @@ export class UiTreeView extends BaseLightElement {
     return this.getAttribute('selection-mode') || 'single';
   }
 
+  set selectionMode(val) {
+    if (val) this.setAttributeSafe('selection-mode', val);
+    else this.removeAttributeSafe('selection-mode');
+  }
+
   get disabled() {
     return this.hasAttribute('disabled');
+  }
+
+  set disabled(val) {
+    if (val) this.setAttributeSafe('disabled', '');
+    else this.removeAttributeSafe('disabled');
   }
 
   init() {

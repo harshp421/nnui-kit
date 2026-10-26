@@ -16,6 +16,11 @@ export class UiDropdown extends BaseLightElement {
     return this.hasAttribute('open') || this._menu?.getAttribute('data-state') === 'open';
   }
 
+  set isOpen(val) {
+    if (val) this.open();
+    else this.close();
+  }
+
   init() {
     this.setAttributeSafe(this, 'data-ui', 'dropdown');
     this._trigger = this.querySelector('[data-part="trigger"], button');

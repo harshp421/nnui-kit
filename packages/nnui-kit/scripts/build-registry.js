@@ -61,6 +61,7 @@ const baseElementContent = fs.readFileSync(path.join(rootDir, 'src/utils/base-el
 const a11yContent = fs.readFileSync(path.join(rootDir, 'src/utils/a11y.js'), 'utf-8');
 const anchorFallbackContent = fs.readFileSync(path.join(rootDir, 'src/utils/anchor-fallback.js'), 'utf-8');
 const tokensCss = fs.readFileSync(path.join(rootDir, 'src/styles/tokens.css'), 'utf-8');
+const themeCss = fs.readFileSync(path.join(rootDir, 'src/styles/theme.css'), 'utf-8');
 const baseCss = fs.readFileSync(path.join(rootDir, 'src/styles/base.css'), 'utf-8');
 const componentsCss = fs.readFileSync(path.join(rootDir, 'src/styles/components.css'), 'utf-8');
 const tokensJson = fs.readFileSync(path.join(rootDir, 'tokens.json'), 'utf-8');
@@ -75,6 +76,7 @@ const registry = {
     'a11y.js': a11yContent,
     'anchor-fallback.js': anchorFallbackContent,
     'tokens.css': tokensCss,
+    'theme.css': themeCss,
     'base.css': baseCss,
     'components.css': componentsCss,
     'tokens.json': tokensJson,
@@ -107,7 +109,32 @@ for (const comp of TIER_2_COMPONENTS) {
 }
 
 // Add Tier 0 Primitives
+const TIER_0_SNIPPETS = {
+  input: `<!-- Standard Input -->
+<input data-ui="input" type="text" placeholder="Enter your text..." />
+
+<!-- Search Input with Leading Icon & Keyboard Shortcut (<kbd>) -->
+<div data-part="input-group">
+  <span data-part="input-icon-left">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+  </span>
+  <input data-ui="input" type="search" placeholder="Search anything..." />
+  <span data-part="input-icon-right">
+    <kbd class="ui-kbd">⌘K</kbd>
+  </span>
+</div>
+
+<!-- Input Sizes -->
+<input data-ui="input" data-size="sm" placeholder="Small (32px)" />
+<input data-ui="input" data-size="md" placeholder="Default (36px)" />
+<input data-ui="input" data-size="lg" placeholder="Large (44px)" />`,
+};
+
 for (const comp of TIER_0_COMPONENTS) {
+  const customSnippet = TIER_0_SNIPPETS[comp.name];
   registry.components[comp.name] = {
     name: comp.name,
     title: comp.title,
@@ -120,10 +147,10 @@ for (const comp of TIER_0_COMPONENTS) {
       {
         name: `${comp.name}.html`,
         path: `components/ui/${comp.name}.html`,
-        content: `<!-- NNUI-KIT ${comp.title} (${comp.desc}) -->\n<!-- Use standard semantic HTML with data-ui="${comp.name}" -->`
-      }
+        content: customSnippet || `<!-- NNUI-KIT ${comp.title} (${comp.desc}) -->\n<!-- Use standard semantic HTML with data-ui="${comp.name}" -->`,
+      },
     ],
-    cssSnippet: `/* Styles for ${comp.title} in base.css */`
+    cssSnippet: `/* Styles for ${comp.title} in base.css */`,
   };
 }
 

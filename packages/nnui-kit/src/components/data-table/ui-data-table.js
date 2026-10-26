@@ -37,6 +37,8 @@ export class UiDataTable extends BaseLightElement {
     return Math.max(1, Math.ceil(this._filteredRows.length / this.pageSize));
   }
 
+  set totalPages(_) {}
+
   init() {
     this.setAttributeSafe(this, 'data-ui', 'data-table');
 

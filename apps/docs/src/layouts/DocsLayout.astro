@@ -66,12 +66,17 @@ const componentsList = Object.values(componentsData) as any[];
           <a href="/components" class={`docs-nav-link ${activePath.startsWith('/components') ? 'active' : ''}`}>Components</a>
           <a href="/tokens" class={`docs-nav-link ${activePath.startsWith('/tokens') ? 'active' : ''}`}>Themes</a>
           <a href="/typography" class={`docs-nav-link ${activePath.startsWith('/typography') ? 'active' : ''}`}>Typography</a>
+          <a href="/shadow-vs-light" class={`docs-nav-link ${activePath.startsWith('/shadow-vs-light') ? 'active' : ''}`} style="display: inline-flex; align-items: center; gap: 0.35rem;">
+            <span>Light vs Shadow</span>
+            <span style="font-size: 0.65rem; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">WHY</span>
+          </a>
           <a href="/llms" class={`docs-nav-link ${activePath.startsWith('/llms') ? 'active' : ''}`} style="display: inline-flex; align-items: center; gap: 0.35rem;">
             <span>llms.txt</span>
             <span style="font-size: 0.65rem; background: rgba(99, 102, 241, 0.2); color: var(--brand-400, #818cf8); border: 1px solid rgba(99, 102, 241, 0.4); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">AI</span>
           </a>
           <a href="https://github.com/harshp421/nnui-kit" target="_blank" rel="noopener noreferrer" class="docs-nav-link">GitHub ↗</a>
         </nav>
+
       </div>
 
       <div class="header-actions">

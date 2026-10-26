@@ -19,7 +19,25 @@ pnpm add nnui-kit
 yarn add nnui-kit
 
 # bun
-bun add nnui-kit
+bun add nnuikit
+```
+
+### Registry CLI & Framework Targets (Code Ownership)
+
+Use the CLI to drop fully-editable component source code directly into your project:
+
+```bash
+# Initialize NNUI-KIT (tokens & config)
+npx nnui init
+
+# Target 1: React 18 & 19 (drops React compound component into src/components/ui/)
+npx nnui add dialog tabs command --react
+
+# Target 2: Vanilla HTML (drops HTML template snippet & JS micro-enhancer)
+npx nnui add dialog tabs command --html
+
+# Target 3: Ruby on Rails (drops ERB partial & configures config/importmap.rb)
+npx nnui add dialog tabs command --rails
 ```
 
 ### Zero-Build / CDN (HTMX, Django, Rails, Laravel Blade, Plain HTML)
@@ -28,10 +46,10 @@ No build step, bundler, or Node.js required. Drop these two lines into your HTML
 
 ```html
 <!-- Stylesheet (Tokens + Primitives + Defensive Cascade Layers) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nnui-kit@1.0.0/dist/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nnuikit@1.0.5/dist/index.css">
 
-<!-- Core Micro-Enhancers (< 40 KB ESM) -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/nnui-kit@1.0.0/dist/index.js"></script>
+<!-- Core Micro-Enhancers -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/nnuikit@1.0.5/dist/index.js"></script>
 ```
 
 ---
@@ -242,18 +260,19 @@ Form-associated custom elements (`<ui-select>`, `<ui-slider>`, `<ui-otp-input>`)
 
 ---
 
-## 5. IDE Autocomplete via Custom Elements Manifest (CEM)
+## 5. IDE Autocomplete via VS Code HTML Custom Data
 
-To enable tag, attribute, and event autocomplete in **VS Code** and **Cursor**:
+To enable tag, attribute, `data-part`, and event autocomplete in **VS Code** and **Cursor**:
 
 Add this to your project's `.vscode/settings.json`:
 
 ```json
 {
   "html.customData": [
-    "./node_modules/nnui-kit/custom-elements.json"
+    "./node_modules/nnuikit/dist/vscode.html-data.json"
   ]
 }
 ```
 
-Now, typing `<ui-` or `<nnui-` in any HTML, JSX, Vue, or Svelte template will offer intelligent autocomplete with all documented parts (`data-part="input"`, `data-part="viewport"`), attributes (`persist`, `sync`), and events!
+Now, typing `<ui-` or `<nnui-` in any HTML, JSX, Vue, Astro, or Svelte template offers intelligent autocomplete with all documented parts (`data-part="tablist"`, `data-part="tab"`, `data-part="viewport"`), attributes (`orientation`, `persist`, `sync`), and events!
+

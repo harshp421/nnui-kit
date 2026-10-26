@@ -241,4 +241,33 @@ for (const name of microEnhancers) {
 }
 console.log('    ✓ TypeScript JSX and HTMLElement type bindings verified for all components');
 
+// =========================================================================
+// TEST 7: Universal Form Association (FACE)
+// =========================================================================
+console.log('  Testing Universal Form Association (FACE)...');
+
+const formAssociatedComponents = [
+  'select',
+  'slider',
+  'calendar',
+  'date-picker',
+  'combobox',
+  'otp-input',
+  'tags-input',
+  'segmented-control',
+  'color-picker',
+  'date-range-picker'
+];
+
+for (const name of formAssociatedComponents) {
+  const CompClass = componentsMap[name];
+  assert.strictEqual(CompClass.formAssociated, true, `<ui-${name}> must declare static formAssociated = true`);
+
+  const el = document.createElement(`ui-${name}`);
+  assert.strictEqual(typeof el.formResetCallback, 'function', `<ui-${name}> must implement formResetCallback()`);
+  assert('name' in el, `<ui-${name}> must expose .name property`);
+  assert('value' in el || 'tags' in el, `<ui-${name}> must expose .value or .tags property`);
+}
+console.log(`    ✓ Form association and reset lifecycle verified across all ${formAssociatedComponents.length} data-entry controls`);
+
 console.log('\n🎉 ALL TRACK 3 VISUAL & ARCHITECTURAL INTEGRITY TESTS PASSED SUCCESSFULLY!\n');

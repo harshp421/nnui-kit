@@ -1,0 +1,1360 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vscode-html-languageservice/main/docs/customData.schema.json",
+  "version": 1.1,
+  "tags": [
+    {
+      "name": "ui-tabs",
+      "description": "**Tabs (NNUI-KIT)**\n\nWAI-ARIA APG compliant roving tabindex tabs in Light-DOM. Mutates attributes, never nodes.\n\n[Documentation](https://nnui.dev/components/tabs)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Currently active tab identifier value."
+        },
+        {
+          "name": "orientation",
+          "description": "Keyboard navigation direction.",
+          "values": [
+            {
+              "name": "horizontal"
+            },
+            {
+              "name": "vertical"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "nnui-tabs",
+      "description": "**Tabs (NNUI-KIT)**\n\nWAI-ARIA APG compliant roving tabindex tabs in Light-DOM. Mutates attributes, never nodes.\n\n[Documentation](https://nnui.dev/components/tabs)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Currently active tab identifier value."
+        },
+        {
+          "name": "orientation",
+          "description": "Keyboard navigation direction.",
+          "values": [
+            {
+              "name": "horizontal"
+            },
+            {
+              "name": "vertical"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ui-combobox",
+      "description": "**Combobox (NNUI-KIT)**\n\nAPG active-descendant combobox autocomplete in Light-DOM with top-layer positioning.\n\n[Documentation](https://nnui.dev/components/combobox)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Selected option value."
+        },
+        {
+          "name": "open",
+          "description": "Whether the combobox listbox popup is open."
+        }
+      ]
+    },
+    {
+      "name": "nnui-combobox",
+      "description": "**Combobox (NNUI-KIT)**\n\nAPG active-descendant combobox autocomplete in Light-DOM with top-layer positioning.\n\n[Documentation](https://nnui.dev/components/combobox)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Selected option value."
+        },
+        {
+          "name": "open",
+          "description": "Whether the combobox listbox popup is open."
+        }
+      ]
+    },
+    {
+      "name": "ui-dialog",
+      "description": "**Dialog (NNUI-KIT)**\n\nTop-layer accessible modal dialog wrapping native HTML5 <dialog> with focus trap.\n\n[Documentation](https://nnui.dev/components/dialog)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls modal open visibility state."
+        }
+      ]
+    },
+    {
+      "name": "nnui-dialog",
+      "description": "**Dialog (NNUI-KIT)**\n\nTop-layer accessible modal dialog wrapping native HTML5 <dialog> with focus trap.\n\n[Documentation](https://nnui.dev/components/dialog)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls modal open visibility state."
+        }
+      ]
+    },
+    {
+      "name": "ui-select",
+      "description": "**Select (NNUI-KIT)**\n\nCustom dropdown select with native HTML5 form integration via ElementInternals.\n\n[Documentation](https://nnui.dev/components/select)",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "Form submission field name."
+        },
+        {
+          "name": "value",
+          "description": "Currently selected option value."
+        },
+        {
+          "name": "required",
+          "description": "Enforces native form validation before submission."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables select dropdown interaction."
+        },
+        {
+          "name": "open",
+          "description": "Controls open state of dropdown options listbox."
+        }
+      ]
+    },
+    {
+      "name": "nnui-select",
+      "description": "**Select (NNUI-KIT)**\n\nCustom dropdown select with native HTML5 form integration via ElementInternals.\n\n[Documentation](https://nnui.dev/components/select)",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "Form submission field name."
+        },
+        {
+          "name": "value",
+          "description": "Currently selected option value."
+        },
+        {
+          "name": "required",
+          "description": "Enforces native form validation before submission."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables select dropdown interaction."
+        },
+        {
+          "name": "open",
+          "description": "Controls open state of dropdown options listbox."
+        }
+      ]
+    },
+    {
+      "name": "ui-accordion",
+      "description": "**Accordion (NNUI-KIT)**\n\nExpandable accordion sections with single or multiple simultaneous collapse.\n\n[Documentation](https://nnui.dev/components/accordion)",
+      "attributes": [
+        {
+          "name": "type",
+          "description": "Accordion expansion mode.",
+          "values": [
+            {
+              "name": "single"
+            },
+            {
+              "name": "multiple"
+            }
+          ]
+        },
+        {
+          "name": "collapsible",
+          "description": "Allows closing all items when in single mode."
+        }
+      ]
+    },
+    {
+      "name": "nnui-accordion",
+      "description": "**Accordion (NNUI-KIT)**\n\nExpandable accordion sections with single or multiple simultaneous collapse.\n\n[Documentation](https://nnui.dev/components/accordion)",
+      "attributes": [
+        {
+          "name": "type",
+          "description": "Accordion expansion mode.",
+          "values": [
+            {
+              "name": "single"
+            },
+            {
+              "name": "multiple"
+            }
+          ]
+        },
+        {
+          "name": "collapsible",
+          "description": "Allows closing all items when in single mode."
+        }
+      ]
+    },
+    {
+      "name": "ui-popover",
+      "description": "**Popover (NNUI-KIT)**\n\nTop-layer anchored popover with click-outside light dismiss and anchor positioning.\n\n[Documentation](https://nnui.dev/components/popover)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls popover visibility."
+        }
+      ]
+    },
+    {
+      "name": "nnui-popover",
+      "description": "**Popover (NNUI-KIT)**\n\nTop-layer anchored popover with click-outside light dismiss and anchor positioning.\n\n[Documentation](https://nnui.dev/components/popover)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls popover visibility."
+        }
+      ]
+    },
+    {
+      "name": "ui-tooltip",
+      "description": "**Tooltip (NNUI-KIT)**\n\nAnchored hover and focus tooltip with automatic aria-describedby linkage.\n\n[Documentation](https://nnui.dev/components/tooltip)",
+      "attributes": [
+        {
+          "name": "delay",
+          "description": "Hover appearance delay in milliseconds (default: 200)."
+        }
+      ]
+    },
+    {
+      "name": "nnui-tooltip",
+      "description": "**Tooltip (NNUI-KIT)**\n\nAnchored hover and focus tooltip with automatic aria-describedby linkage.\n\n[Documentation](https://nnui.dev/components/tooltip)",
+      "attributes": [
+        {
+          "name": "delay",
+          "description": "Hover appearance delay in milliseconds (default: 200)."
+        }
+      ]
+    },
+    {
+      "name": "ui-command",
+      "description": "**Command Palette (NNUI-KIT)**\n\nFast instant-filtered command menu with keyboard shortcut listener and fuzzy filter.\n\n[Documentation](https://nnui.dev/components/command)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls command palette open modal state."
+        },
+        {
+          "name": "shortcut",
+          "description": "Global keyboard shortcut trigger (e.g. \"k\" or \"meta+k\")."
+        }
+      ]
+    },
+    {
+      "name": "nnui-command",
+      "description": "**Command Palette (NNUI-KIT)**\n\nFast instant-filtered command menu with keyboard shortcut listener and fuzzy filter.\n\n[Documentation](https://nnui.dev/components/command)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls command palette open modal state."
+        },
+        {
+          "name": "shortcut",
+          "description": "Global keyboard shortcut trigger (e.g. \"k\" or \"meta+k\")."
+        }
+      ]
+    },
+    {
+      "name": "ui-sheet",
+      "description": "**Sheet / Drawer (NNUI-KIT)**\n\nNative dialog sliding drawer supporting 4 directions with smooth CSS transitions.\n\n[Documentation](https://nnui.dev/components/sheet)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls sheet slide-in visibility."
+        },
+        {
+          "name": "side",
+          "description": "Screen docking edge.",
+          "values": [
+            {
+              "name": "right"
+            },
+            {
+              "name": "left"
+            },
+            {
+              "name": "top"
+            },
+            {
+              "name": "bottom"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "nnui-sheet",
+      "description": "**Sheet / Drawer (NNUI-KIT)**\n\nNative dialog sliding drawer supporting 4 directions with smooth CSS transitions.\n\n[Documentation](https://nnui.dev/components/sheet)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls sheet slide-in visibility."
+        },
+        {
+          "name": "side",
+          "description": "Screen docking edge.",
+          "values": [
+            {
+              "name": "right"
+            },
+            {
+              "name": "left"
+            },
+            {
+              "name": "top"
+            },
+            {
+              "name": "bottom"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ui-slider",
+      "description": "**Slider (NNUI-KIT)**\n\nForm-associated range slider with pointer capture and ElementInternals form value sync.\n\n[Documentation](https://nnui.dev/components/slider)",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "Form submission field name."
+        },
+        {
+          "name": "value",
+          "description": "Current numeric value of the slider."
+        },
+        {
+          "name": "min",
+          "description": "Minimum slider value (default: 0)."
+        },
+        {
+          "name": "max",
+          "description": "Maximum slider value (default: 100)."
+        },
+        {
+          "name": "step",
+          "description": "Stepping increment granularity (default: 1)."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables slider thumb interaction."
+        }
+      ]
+    },
+    {
+      "name": "nnui-slider",
+      "description": "**Slider (NNUI-KIT)**\n\nForm-associated range slider with pointer capture and ElementInternals form value sync.\n\n[Documentation](https://nnui.dev/components/slider)",
+      "attributes": [
+        {
+          "name": "name",
+          "description": "Form submission field name."
+        },
+        {
+          "name": "value",
+          "description": "Current numeric value of the slider."
+        },
+        {
+          "name": "min",
+          "description": "Minimum slider value (default: 0)."
+        },
+        {
+          "name": "max",
+          "description": "Maximum slider value (default: 100)."
+        },
+        {
+          "name": "step",
+          "description": "Stepping increment granularity (default: 1)."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables slider thumb interaction."
+        }
+      ]
+    },
+    {
+      "name": "ui-dropdown",
+      "description": "**Dropdown Menu (NNUI-KIT)**\n\nAccessible roving tabindex dropdown menu with top-layer anchoring and light dismiss.\n\n[Documentation](https://nnui.dev/components/dropdown)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls menu open visibility."
+        }
+      ]
+    },
+    {
+      "name": "nnui-dropdown",
+      "description": "**Dropdown Menu (NNUI-KIT)**\n\nAccessible roving tabindex dropdown menu with top-layer anchoring and light dismiss.\n\n[Documentation](https://nnui.dev/components/dropdown)",
+      "attributes": [
+        {
+          "name": "open",
+          "description": "Controls menu open visibility."
+        }
+      ]
+    },
+    {
+      "name": "ui-toaster",
+      "description": "**Toaster (NNUI-KIT)**\n\nStacked notification viewport host supporting toast() helper with live regions.\n\n[Documentation](https://nnui.dev/components/toaster)",
+      "attributes": [
+        {
+          "name": "position",
+          "description": "Screen placement corner for queued toast notifications.",
+          "values": [
+            {
+              "name": "bottom-right"
+            },
+            {
+              "name": "top-right"
+            },
+            {
+              "name": "bottom-left"
+            },
+            {
+              "name": "top-left"
+            },
+            {
+              "name": "top-center"
+            },
+            {
+              "name": "bottom-center"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "nnui-toaster",
+      "description": "**Toaster (NNUI-KIT)**\n\nStacked notification viewport host supporting toast() helper with live regions.\n\n[Documentation](https://nnui.dev/components/toaster)",
+      "attributes": [
+        {
+          "name": "position",
+          "description": "Screen placement corner for queued toast notifications.",
+          "values": [
+            {
+              "name": "bottom-right"
+            },
+            {
+              "name": "top-right"
+            },
+            {
+              "name": "bottom-left"
+            },
+            {
+              "name": "top-left"
+            },
+            {
+              "name": "top-center"
+            },
+            {
+              "name": "bottom-center"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ui-data-table",
+      "description": "**Data Table (NNUI-KIT)**\n\nHigh-performance table with column sorting, search filtering, and pagination.\n\n[Documentation](https://nnui.dev/components/data-table)",
+      "attributes": [
+        {
+          "name": "page-size",
+          "description": "Number of rows rendered per page (default: 10)."
+        },
+        {
+          "name": "current-page",
+          "description": "Active 1-indexed page number."
+        }
+      ]
+    },
+    {
+      "name": "nnui-data-table",
+      "description": "**Data Table (NNUI-KIT)**\n\nHigh-performance table with column sorting, search filtering, and pagination.\n\n[Documentation](https://nnui.dev/components/data-table)",
+      "attributes": [
+        {
+          "name": "page-size",
+          "description": "Number of rows rendered per page (default: 10)."
+        },
+        {
+          "name": "current-page",
+          "description": "Active 1-indexed page number."
+        }
+      ]
+    },
+    {
+      "name": "ui-calendar",
+      "description": "**Calendar (NNUI-KIT)**\n\nWAI-ARIA APG calendar grid with month navigation and roving keyboard focus.\n\n[Documentation](https://nnui.dev/components/calendar)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Selected date string formatted as YYYY-MM-DD."
+        },
+        {
+          "name": "min",
+          "description": "Earliest selectable date string (YYYY-MM-DD)."
+        },
+        {
+          "name": "max",
+          "description": "Latest selectable date string (YYYY-MM-DD)."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables calendar selection."
+        }
+      ]
+    },
+    {
+      "name": "nnui-calendar",
+      "description": "**Calendar (NNUI-KIT)**\n\nWAI-ARIA APG calendar grid with month navigation and roving keyboard focus.\n\n[Documentation](https://nnui.dev/components/calendar)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Selected date string formatted as YYYY-MM-DD."
+        },
+        {
+          "name": "min",
+          "description": "Earliest selectable date string (YYYY-MM-DD)."
+        },
+        {
+          "name": "max",
+          "description": "Latest selectable date string (YYYY-MM-DD)."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables calendar selection."
+        }
+      ]
+    },
+    {
+      "name": "ui-date-picker",
+      "description": "**Date Picker (NNUI-KIT)**\n\nComposed popover date picker with input trigger and embedded calendar.\n\n[Documentation](https://nnui.dev/components/date-picker)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Selected date formatted as YYYY-MM-DD."
+        },
+        {
+          "name": "placeholder",
+          "description": "Input trigger placeholder string."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables date picker interaction."
+        },
+        {
+          "name": "open",
+          "description": "Controls date picker calendar popup state."
+        }
+      ]
+    },
+    {
+      "name": "nnui-date-picker",
+      "description": "**Date Picker (NNUI-KIT)**\n\nComposed popover date picker with input trigger and embedded calendar.\n\n[Documentation](https://nnui.dev/components/date-picker)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Selected date formatted as YYYY-MM-DD."
+        },
+        {
+          "name": "placeholder",
+          "description": "Input trigger placeholder string."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables date picker interaction."
+        },
+        {
+          "name": "open",
+          "description": "Controls date picker calendar popup state."
+        }
+      ]
+    },
+    {
+      "name": "ui-data-grid",
+      "description": "**Virtualized Data Grid (NNUI-KIT)**\n\nEnterprise virtualized data grid streaming >10,000 to 100,000 rows at 60 FPS in Light-DOM.\n\n[Documentation](https://nnui.dev/components/data-grid)",
+      "attributes": [
+        {
+          "name": "row-height",
+          "description": "Pixel height of each row for virtual window calculation (default: 40)."
+        },
+        {
+          "name": "overscan",
+          "description": "Number of virtual buffer rows rendered outside the visible viewport (default: 5)."
+        },
+        {
+          "name": "sort-key",
+          "description": "Active column sorting key identifier."
+        },
+        {
+          "name": "sort-dir",
+          "description": "Active sort direction.",
+          "values": [
+            {
+              "name": "asc"
+            },
+            {
+              "name": "desc"
+            }
+          ]
+        },
+        {
+          "name": "search",
+          "description": "Active text filter query string across virtualized data."
+        },
+        {
+          "name": "streaming",
+          "description": "Enables high-throughput append optimizations for live data feeds."
+        },
+        {
+          "name": "persist",
+          "description": "Synchronize grid filters and sort state with URL or storage."
+        },
+        {
+          "name": "sync",
+          "description": "Synchronize grid state across browser tabs via BroadcastChannel."
+        }
+      ]
+    },
+    {
+      "name": "nnui-data-grid",
+      "description": "**Virtualized Data Grid (NNUI-KIT)**\n\nEnterprise virtualized data grid streaming >10,000 to 100,000 rows at 60 FPS in Light-DOM.\n\n[Documentation](https://nnui.dev/components/data-grid)",
+      "attributes": [
+        {
+          "name": "row-height",
+          "description": "Pixel height of each row for virtual window calculation (default: 40)."
+        },
+        {
+          "name": "overscan",
+          "description": "Number of virtual buffer rows rendered outside the visible viewport (default: 5)."
+        },
+        {
+          "name": "sort-key",
+          "description": "Active column sorting key identifier."
+        },
+        {
+          "name": "sort-dir",
+          "description": "Active sort direction.",
+          "values": [
+            {
+              "name": "asc"
+            },
+            {
+              "name": "desc"
+            }
+          ]
+        },
+        {
+          "name": "search",
+          "description": "Active text filter query string across virtualized data."
+        },
+        {
+          "name": "streaming",
+          "description": "Enables high-throughput append optimizations for live data feeds."
+        },
+        {
+          "name": "persist",
+          "description": "Synchronize grid filters and sort state with URL or storage."
+        },
+        {
+          "name": "sync",
+          "description": "Synchronize grid state across browser tabs via BroadcastChannel."
+        }
+      ]
+    },
+    {
+      "name": "ui-date-range-picker",
+      "description": "**Date Range Picker (NNUI-KIT)**\n\nAPG compliant dual-calendar date range picker with preset chips and hover range highlight.\n\n[Documentation](https://nnui.dev/components/date-range-picker)",
+      "attributes": [
+        {
+          "name": "start-date",
+          "description": "Start date formatted as YYYY-MM-DD."
+        },
+        {
+          "name": "end-date",
+          "description": "End date formatted as YYYY-MM-DD."
+        },
+        {
+          "name": "placeholder",
+          "description": "Input trigger display placeholder."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables range selection."
+        },
+        {
+          "name": "open",
+          "description": "Controls calendar range popover state."
+        },
+        {
+          "name": "persist",
+          "description": "Persists selected range into URL or web storage."
+        }
+      ]
+    },
+    {
+      "name": "nnui-date-range-picker",
+      "description": "**Date Range Picker (NNUI-KIT)**\n\nAPG compliant dual-calendar date range picker with preset chips and hover range highlight.\n\n[Documentation](https://nnui.dev/components/date-range-picker)",
+      "attributes": [
+        {
+          "name": "start-date",
+          "description": "Start date formatted as YYYY-MM-DD."
+        },
+        {
+          "name": "end-date",
+          "description": "End date formatted as YYYY-MM-DD."
+        },
+        {
+          "name": "placeholder",
+          "description": "Input trigger display placeholder."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables range selection."
+        },
+        {
+          "name": "open",
+          "description": "Controls calendar range popover state."
+        },
+        {
+          "name": "persist",
+          "description": "Persists selected range into URL or web storage."
+        }
+      ]
+    },
+    {
+      "name": "ui-tags-input",
+      "description": "**Tags Input (NNUI-KIT)**\n\nMulti-token chip input with keyboard badge deletion, duplicate prevention, and backspace removal.\n\n[Documentation](https://nnui.dev/components/tags-input)",
+      "attributes": [
+        {
+          "name": "tags",
+          "description": "Comma-separated string of initial tag items."
+        },
+        {
+          "name": "placeholder",
+          "description": "Input placeholder string."
+        },
+        {
+          "name": "max-tags",
+          "description": "Maximum allowed tags count."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables tag additions and removals."
+        }
+      ]
+    },
+    {
+      "name": "nnui-tags-input",
+      "description": "**Tags Input (NNUI-KIT)**\n\nMulti-token chip input with keyboard badge deletion, duplicate prevention, and backspace removal.\n\n[Documentation](https://nnui.dev/components/tags-input)",
+      "attributes": [
+        {
+          "name": "tags",
+          "description": "Comma-separated string of initial tag items."
+        },
+        {
+          "name": "placeholder",
+          "description": "Input placeholder string."
+        },
+        {
+          "name": "max-tags",
+          "description": "Maximum allowed tags count."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables tag additions and removals."
+        }
+      ]
+    },
+    {
+      "name": "ui-segmented-control",
+      "description": "**Segmented Control (NNUI-KIT)**\n\nAccessible pill toggle control with sliding active indicator in Light-DOM.\n\n[Documentation](https://nnui.dev/components/segmented-control)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Currently active segment item value."
+        },
+        {
+          "name": "name",
+          "description": "Form submission field name."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables control interaction."
+        }
+      ]
+    },
+    {
+      "name": "nnui-segmented-control",
+      "description": "**Segmented Control (NNUI-KIT)**\n\nAccessible pill toggle control with sliding active indicator in Light-DOM.\n\n[Documentation](https://nnui.dev/components/segmented-control)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Currently active segment item value."
+        },
+        {
+          "name": "name",
+          "description": "Form submission field name."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables control interaction."
+        }
+      ]
+    },
+    {
+      "name": "ui-otp-input",
+      "description": "**OTP / PIN Input (NNUI-KIT)**\n\nOne-time passcode input with automatic focus progression and clipboard paste distribution.\n\n[Documentation](https://nnui.dev/components/otp-input)",
+      "attributes": [
+        {
+          "name": "length",
+          "description": "Total number of digit input boxes (default: 6)."
+        },
+        {
+          "name": "value",
+          "description": "Current entered OTP string."
+        },
+        {
+          "name": "type",
+          "description": "Character constraint.",
+          "values": [
+            {
+              "name": "number"
+            },
+            {
+              "name": "text"
+            },
+            {
+              "name": "alphanumeric"
+            }
+          ]
+        },
+        {
+          "name": "mask",
+          "description": "Mask characters with bullets like a password input."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables OTP input boxes."
+        }
+      ]
+    },
+    {
+      "name": "nnui-otp-input",
+      "description": "**OTP / PIN Input (NNUI-KIT)**\n\nOne-time passcode input with automatic focus progression and clipboard paste distribution.\n\n[Documentation](https://nnui.dev/components/otp-input)",
+      "attributes": [
+        {
+          "name": "length",
+          "description": "Total number of digit input boxes (default: 6)."
+        },
+        {
+          "name": "value",
+          "description": "Current entered OTP string."
+        },
+        {
+          "name": "type",
+          "description": "Character constraint.",
+          "values": [
+            {
+              "name": "number"
+            },
+            {
+              "name": "text"
+            },
+            {
+              "name": "alphanumeric"
+            }
+          ]
+        },
+        {
+          "name": "mask",
+          "description": "Mask characters with bullets like a password input."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables OTP input boxes."
+        }
+      ]
+    },
+    {
+      "name": "ui-stepper",
+      "description": "**Stepper / Wizard (NNUI-KIT)**\n\nMulti-step workflow progress indicator and panel synchronizer in Light-DOM.\n\n[Documentation](https://nnui.dev/components/stepper)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Active step number or step ID."
+        },
+        {
+          "name": "orientation",
+          "description": "Stepper layout direction.",
+          "values": [
+            {
+              "name": "horizontal"
+            },
+            {
+              "name": "vertical"
+            }
+          ]
+        },
+        {
+          "name": "linear",
+          "description": "Enforces linear completion before subsequent steps unlock."
+        },
+        {
+          "name": "sync",
+          "description": "Synchronizes current step across open browser tabs."
+        }
+      ]
+    },
+    {
+      "name": "nnui-stepper",
+      "description": "**Stepper / Wizard (NNUI-KIT)**\n\nMulti-step workflow progress indicator and panel synchronizer in Light-DOM.\n\n[Documentation](https://nnui.dev/components/stepper)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Active step number or step ID."
+        },
+        {
+          "name": "orientation",
+          "description": "Stepper layout direction.",
+          "values": [
+            {
+              "name": "horizontal"
+            },
+            {
+              "name": "vertical"
+            }
+          ]
+        },
+        {
+          "name": "linear",
+          "description": "Enforces linear completion before subsequent steps unlock."
+        },
+        {
+          "name": "sync",
+          "description": "Synchronizes current step across open browser tabs."
+        }
+      ]
+    },
+    {
+      "name": "ui-resizable",
+      "description": "**Resizable Split Pane (NNUI-KIT)**\n\nMulti-panel layout with draggable dividers and keyboard arrow key resizing.\n\n[Documentation](https://nnui.dev/components/resizable)",
+      "attributes": [
+        {
+          "name": "direction",
+          "description": "Split divider orientation.",
+          "values": [
+            {
+              "name": "horizontal"
+            },
+            {
+              "name": "vertical"
+            }
+          ]
+        },
+        {
+          "name": "min-size",
+          "description": "Minimum pane size percentage (default: 10)."
+        },
+        {
+          "name": "max-size",
+          "description": "Maximum pane size percentage (default: 90)."
+        }
+      ]
+    },
+    {
+      "name": "nnui-resizable",
+      "description": "**Resizable Split Pane (NNUI-KIT)**\n\nMulti-panel layout with draggable dividers and keyboard arrow key resizing.\n\n[Documentation](https://nnui.dev/components/resizable)",
+      "attributes": [
+        {
+          "name": "direction",
+          "description": "Split divider orientation.",
+          "values": [
+            {
+              "name": "horizontal"
+            },
+            {
+              "name": "vertical"
+            }
+          ]
+        },
+        {
+          "name": "min-size",
+          "description": "Minimum pane size percentage (default: 10)."
+        },
+        {
+          "name": "max-size",
+          "description": "Maximum pane size percentage (default: 90)."
+        }
+      ]
+    },
+    {
+      "name": "ui-file-upload",
+      "description": "**File Upload & Dropzone (NNUI-KIT)**\n\nDrag-and-drop file uploader with clipboard paste, file extension validation, and list preview.\n\n[Documentation](https://nnui.dev/components/file-upload)",
+      "attributes": [
+        {
+          "name": "accept",
+          "description": "MIME types or file extensions accepted (e.g. \"image/*,.pdf\")."
+        },
+        {
+          "name": "multiple",
+          "description": "Allows uploading multiple files simultaneously."
+        },
+        {
+          "name": "max-size",
+          "description": "Maximum file size in bytes."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables file dropzone."
+        }
+      ]
+    },
+    {
+      "name": "nnui-file-upload",
+      "description": "**File Upload & Dropzone (NNUI-KIT)**\n\nDrag-and-drop file uploader with clipboard paste, file extension validation, and list preview.\n\n[Documentation](https://nnui.dev/components/file-upload)",
+      "attributes": [
+        {
+          "name": "accept",
+          "description": "MIME types or file extensions accepted (e.g. \"image/*,.pdf\")."
+        },
+        {
+          "name": "multiple",
+          "description": "Allows uploading multiple files simultaneously."
+        },
+        {
+          "name": "max-size",
+          "description": "Maximum file size in bytes."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables file dropzone."
+        }
+      ]
+    },
+    {
+      "name": "ui-context-menu",
+      "description": "**Context Menu (NNUI-KIT)**\n\nTop-layer right-click context menu with cursor positioning and viewport collision avoidance.\n\n[Documentation](https://nnui.dev/components/context-menu)",
+      "attributes": [
+        {
+          "name": "disabled",
+          "description": "Disables right-click context menu override."
+        }
+      ]
+    },
+    {
+      "name": "nnui-context-menu",
+      "description": "**Context Menu (NNUI-KIT)**\n\nTop-layer right-click context menu with cursor positioning and viewport collision avoidance.\n\n[Documentation](https://nnui.dev/components/context-menu)",
+      "attributes": [
+        {
+          "name": "disabled",
+          "description": "Disables right-click context menu override."
+        }
+      ]
+    },
+    {
+      "name": "ui-navigation-menu",
+      "description": "**Navigation Menu (NNUI-KIT)**\n\nAccessible top-level mega-menu with hover intent delays and roving keyboard focus.\n\n[Documentation](https://nnui.dev/components/navigation-menu)",
+      "attributes": [
+        {
+          "name": "delay",
+          "description": "Hover intent opening delay in milliseconds (default: 150)."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables menu interaction."
+        }
+      ]
+    },
+    {
+      "name": "nnui-navigation-menu",
+      "description": "**Navigation Menu (NNUI-KIT)**\n\nAccessible top-level mega-menu with hover intent delays and roving keyboard focus.\n\n[Documentation](https://nnui.dev/components/navigation-menu)",
+      "attributes": [
+        {
+          "name": "delay",
+          "description": "Hover intent opening delay in milliseconds (default: 150)."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables menu interaction."
+        }
+      ]
+    },
+    {
+      "name": "ui-tree-view",
+      "description": "**Tree View (NNUI-KIT)**\n\nWAI-ARIA APG hierarchical folder and node explorer with 4-way arrow keyboard traversal.\n\n[Documentation](https://nnui.dev/components/tree-view)",
+      "attributes": [
+        {
+          "name": "selection-mode",
+          "description": "Node selection mode.",
+          "values": [
+            {
+              "name": "single"
+            },
+            {
+              "name": "multiple"
+            }
+          ]
+        },
+        {
+          "name": "disabled",
+          "description": "Disables tree interaction."
+        }
+      ]
+    },
+    {
+      "name": "nnui-tree-view",
+      "description": "**Tree View (NNUI-KIT)**\n\nWAI-ARIA APG hierarchical folder and node explorer with 4-way arrow keyboard traversal.\n\n[Documentation](https://nnui.dev/components/tree-view)",
+      "attributes": [
+        {
+          "name": "selection-mode",
+          "description": "Node selection mode.",
+          "values": [
+            {
+              "name": "single"
+            },
+            {
+              "name": "multiple"
+            }
+          ]
+        },
+        {
+          "name": "disabled",
+          "description": "Disables tree interaction."
+        }
+      ]
+    },
+    {
+      "name": "ui-ai-prompt-box",
+      "description": "**AI Prompt Box (NNUI-KIT)**\n\nAI Copilot prompt box with auto-expanding textarea, action toolbar, and streaming stop state.\n\n[Documentation](https://nnui.dev/components/ai-prompt-box)",
+      "attributes": [
+        {
+          "name": "max-rows",
+          "description": "Maximum textarea expansion rows before scrollbar appears (default: 8)."
+        },
+        {
+          "name": "loading",
+          "description": "Enables generation state and changes submit button to stop button."
+        },
+        {
+          "name": "placeholder",
+          "description": "Textarea prompt placeholder text."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables prompt input."
+        },
+        {
+          "name": "persist",
+          "description": "Persists user prompt draft in web storage."
+        }
+      ]
+    },
+    {
+      "name": "nnui-ai-prompt-box",
+      "description": "**AI Prompt Box (NNUI-KIT)**\n\nAI Copilot prompt box with auto-expanding textarea, action toolbar, and streaming stop state.\n\n[Documentation](https://nnui.dev/components/ai-prompt-box)",
+      "attributes": [
+        {
+          "name": "max-rows",
+          "description": "Maximum textarea expansion rows before scrollbar appears (default: 8)."
+        },
+        {
+          "name": "loading",
+          "description": "Enables generation state and changes submit button to stop button."
+        },
+        {
+          "name": "placeholder",
+          "description": "Textarea prompt placeholder text."
+        },
+        {
+          "name": "disabled",
+          "description": "Disables prompt input."
+        },
+        {
+          "name": "persist",
+          "description": "Persists user prompt draft in web storage."
+        }
+      ]
+    },
+    {
+      "name": "ui-color-picker",
+      "description": "**Color Picker (NNUI-KIT)**\n\nModern color canvas with native EyeDropper API integration and multiple format outputs.\n\n[Documentation](https://nnui.dev/components/color-picker)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Current color string (e.g. \"#6366f1\" or \"oklch(0.6 0.2 260)\")."
+        },
+        {
+          "name": "name",
+          "description": "Form submission field name."
+        },
+        {
+          "name": "format",
+          "description": "Color format output representation.",
+          "values": [
+            {
+              "name": "hex"
+            },
+            {
+              "name": "rgb"
+            },
+            {
+              "name": "hsl"
+            },
+            {
+              "name": "oklch"
+            }
+          ]
+        },
+        {
+          "name": "disabled",
+          "description": "Disables color picker canvas."
+        }
+      ]
+    },
+    {
+      "name": "nnui-color-picker",
+      "description": "**Color Picker (NNUI-KIT)**\n\nModern color canvas with native EyeDropper API integration and multiple format outputs.\n\n[Documentation](https://nnui.dev/components/color-picker)",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Current color string (e.g. \"#6366f1\" or \"oklch(0.6 0.2 260)\")."
+        },
+        {
+          "name": "name",
+          "description": "Form submission field name."
+        },
+        {
+          "name": "format",
+          "description": "Color format output representation.",
+          "values": [
+            {
+              "name": "hex"
+            },
+            {
+              "name": "rgb"
+            },
+            {
+              "name": "hsl"
+            },
+            {
+              "name": "oklch"
+            }
+          ]
+        },
+        {
+          "name": "disabled",
+          "description": "Disables color picker canvas."
+        }
+      ]
+    }
+  ],
+  "globalAttributes": [
+    {
+      "name": "data-part",
+      "description": "NNUI-KIT Light-DOM semantic slot part identifier for child elements.",
+      "values": [
+        {
+          "name": "tablist",
+          "description": "Container element holding tab trigger buttons"
+        },
+        {
+          "name": "tab",
+          "description": "Interactive tab trigger button"
+        },
+        {
+          "name": "tabpanel",
+          "description": "Panel container associated with an active tab"
+        },
+        {
+          "name": "trigger",
+          "description": "Interactive trigger for dropdowns, popovers, and selects"
+        },
+        {
+          "name": "listbox",
+          "description": "Popup container holding selectable options"
+        },
+        {
+          "name": "option",
+          "description": "Selectable option item inside a combobox or select"
+        },
+        {
+          "name": "viewport",
+          "description": "Scrollable viewport container for virtualized data grid"
+        },
+        {
+          "name": "runway",
+          "description": "Total virtual scroll height runway container"
+        },
+        {
+          "name": "grid-table",
+          "description": "Inner virtualized data grid table element"
+        },
+        {
+          "name": "virtual-tbody",
+          "description": "Virtual table body element for rendered row slice"
+        },
+        {
+          "name": "track",
+          "description": "Slider or scrollbar track element"
+        },
+        {
+          "name": "thumb",
+          "description": "Draggable slider thumb handle"
+        },
+        {
+          "name": "input",
+          "description": "Embedded search or text input field"
+        },
+        {
+          "name": "panel",
+          "description": "Content panel inside an accordion, sheet, or resizable pane"
+        },
+        {
+          "name": "step",
+          "description": "Interactive workflow step inside a stepper"
+        },
+        {
+          "name": "toolbar",
+          "description": "Action button bar inside prompt box or table"
+        },
+        {
+          "name": "close",
+          "description": "Dismiss button inside dialog, sheet, or toast"
+        }
+      ]
+    },
+    {
+      "name": "persist",
+      "description": "NNUI-KIT State Persistence Protocol. Automatically synchronizes element state with URL or web storage.",
+      "values": [
+        {
+          "name": "url",
+          "description": "Synchronize active state with browser URL search parameters"
+        },
+        {
+          "name": "local",
+          "description": "Persist state in localStorage across page refreshes"
+        },
+        {
+          "name": "session",
+          "description": "Persist state in sessionStorage for active tab session"
+        }
+      ]
+    },
+    {
+      "name": "sync",
+      "description": "NNUI-KIT Cross-Tab State Synchronization Protocol using BroadcastChannel.",
+      "values": [
+        {
+          "name": "cross-tab",
+          "description": "Broadcast state changes live across all open browser tabs"
+        }
+      ]
+    },
+    {
+      "name": "data-ui",
+      "description": "NNUI-KIT component type marker applied to root Light-DOM element."
+    }
+  ]
+}

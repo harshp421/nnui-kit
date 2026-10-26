@@ -738,3 +738,165 @@ declare global {
     }
   }
 }
+
+// React 18 & 19 JSX Module Augmentation
+declare module 'react' {
+  namespace JSX {
+    interface IntrinsicElements extends globalThis.JSX.IntrinsicElements {}
+  }
+}
+
+declare module 'nnui-kit/react' {
+  import * as React from 'react';
+
+  export interface PartProps extends React.HTMLAttributes<HTMLElement> {
+    as?: any;
+    className?: string;
+    children?: React.ReactNode;
+    [key: string]: any;
+  }
+
+  export const createPart: (partName: string, defaultTag?: string, displayName?: string) => React.ForwardRefExoticComponent<PartProps>;
+  export const createReactComponent: (tagName: string, displayName: string, eventMap?: Record<string, string>) => React.ForwardRefExoticComponent<any>;
+
+  export interface TabsComponent extends React.ForwardRefExoticComponent<any> {
+    Root: TabsComponent;
+    List: React.ForwardRefExoticComponent<PartProps>;
+    Tab: React.ForwardRefExoticComponent<PartProps>;
+    Trigger: React.ForwardRefExoticComponent<PartProps>;
+    Panel: React.ForwardRefExoticComponent<PartProps>;
+    Content: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Tabs: TabsComponent;
+
+  export interface DialogComponent extends React.ForwardRefExoticComponent<any> {
+    Root: DialogComponent;
+    Trigger: React.ForwardRefExoticComponent<PartProps>;
+    Content: React.ForwardRefExoticComponent<PartProps>;
+    Close: React.ForwardRefExoticComponent<PartProps>;
+    Title: React.ForwardRefExoticComponent<PartProps>;
+    Description: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Dialog: DialogComponent;
+
+  export interface SelectComponent extends React.ForwardRefExoticComponent<any> {
+    Root: SelectComponent;
+    Trigger: React.ForwardRefExoticComponent<PartProps>;
+    Value: React.ForwardRefExoticComponent<PartProps>;
+    List: React.ForwardRefExoticComponent<PartProps>;
+    Content: React.ForwardRefExoticComponent<PartProps>;
+    Item: React.ForwardRefExoticComponent<PartProps>;
+    Option: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Select: SelectComponent;
+
+  export interface AccordionComponent extends React.ForwardRefExoticComponent<any> {
+    Root: AccordionComponent;
+    Item: React.ForwardRefExoticComponent<PartProps>;
+    Trigger: React.ForwardRefExoticComponent<PartProps>;
+    Header: React.ForwardRefExoticComponent<PartProps>;
+    Content: React.ForwardRefExoticComponent<PartProps>;
+    Panel: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Accordion: AccordionComponent;
+
+  export interface SliderComponent extends React.ForwardRefExoticComponent<any> {
+    Root: SliderComponent;
+    Track: React.ForwardRefExoticComponent<PartProps>;
+    Range: React.ForwardRefExoticComponent<PartProps>;
+    Thumb: React.ForwardRefExoticComponent<PartProps>;
+    Value: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Slider: SliderComponent;
+
+  export interface PopoverComponent extends React.ForwardRefExoticComponent<any> {
+    Root: PopoverComponent;
+    Trigger: React.ForwardRefExoticComponent<PartProps>;
+    Content: React.ForwardRefExoticComponent<PartProps>;
+    Close: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Popover: PopoverComponent;
+
+  export interface SheetComponent extends React.ForwardRefExoticComponent<any> {
+    Root: SheetComponent;
+    Trigger: React.ForwardRefExoticComponent<PartProps>;
+    Content: React.ForwardRefExoticComponent<PartProps>;
+    Close: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Sheet: SheetComponent;
+
+  export interface DropdownComponent extends React.ForwardRefExoticComponent<any> {
+    Root: DropdownComponent;
+    Trigger: React.ForwardRefExoticComponent<PartProps>;
+    Menu: React.ForwardRefExoticComponent<PartProps>;
+    Content: React.ForwardRefExoticComponent<PartProps>;
+    Item: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Dropdown: DropdownComponent;
+
+  export interface CommandComponent extends React.ForwardRefExoticComponent<any> {
+    Root: CommandComponent;
+    Input: React.ForwardRefExoticComponent<PartProps>;
+    List: React.ForwardRefExoticComponent<PartProps>;
+    Group: React.ForwardRefExoticComponent<PartProps>;
+    Item: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Command: CommandComponent;
+
+  export interface StepperComponent extends React.ForwardRefExoticComponent<any> {
+    Root: StepperComponent;
+    Step: React.ForwardRefExoticComponent<PartProps>;
+    Content: React.ForwardRefExoticComponent<PartProps>;
+    Panel: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Stepper: StepperComponent;
+
+  export interface SegmentedControlComponent extends React.ForwardRefExoticComponent<any> {
+    Root: SegmentedControlComponent;
+    Segment: React.ForwardRefExoticComponent<PartProps>;
+    Item: React.ForwardRefExoticComponent<PartProps>;
+    Indicator: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const SegmentedControl: SegmentedControlComponent;
+
+  export interface ComboboxComponent extends React.ForwardRefExoticComponent<any> {
+    Root: ComboboxComponent;
+    Input: React.ForwardRefExoticComponent<PartProps>;
+    List: React.ForwardRefExoticComponent<PartProps>;
+    Item: React.ForwardRefExoticComponent<PartProps>;
+    Option: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const Combobox: ComboboxComponent;
+
+  export interface DataGridComponent extends React.ForwardRefExoticComponent<any> {
+    Root: DataGridComponent;
+    Viewport: React.ForwardRefExoticComponent<PartProps>;
+    Runway: React.ForwardRefExoticComponent<PartProps>;
+    Table: React.ForwardRefExoticComponent<PartProps>;
+    VirtualBody: React.ForwardRefExoticComponent<PartProps>;
+  }
+  export const DataGrid: DataGridComponent;
+
+  export const Tooltip: React.ForwardRefExoticComponent<any> & { Root: any; Trigger: any; Content: any };
+  export const Toaster: React.ForwardRefExoticComponent<any>;
+  export const DataTable: React.ForwardRefExoticComponent<any>;
+  export const Calendar: React.ForwardRefExoticComponent<any>;
+  export const DatePicker: React.ForwardRefExoticComponent<any> & { Root: any; Trigger: any };
+  export const DateRangePicker: React.ForwardRefExoticComponent<any> & { Root: any; Trigger: any };
+  export const TagsInput: React.ForwardRefExoticComponent<any> & { Root: any; Input: any; Tag: any };
+  export const OtpInput: React.ForwardRefExoticComponent<any> & { Root: any; Slot: any };
+  export const Resizable: React.ForwardRefExoticComponent<any> & { Root: any; Panel: any; Handle: any };
+  export const FileUpload: React.ForwardRefExoticComponent<any> & { Root: any; Dropzone: any };
+  export const ContextMenu: React.ForwardRefExoticComponent<any> & { Root: any; Trigger: any; Menu: any; Item: any };
+  export const NavigationMenu: React.ForwardRefExoticComponent<any> & { Root: any; Item: any; Trigger: any; Content: any };
+  export const TreeView: React.ForwardRefExoticComponent<any> & { Root: any; Item: any };
+  export const AiPromptBox: React.ForwardRefExoticComponent<any>;
+  export const ColorPicker: React.ForwardRefExoticComponent<any> & { Root: any; Swatch: any; Input: any };
+  export const Input: React.ForwardRefExoticComponent<any>;
+  export const toast: any;
+}
+
+declare module 'nnuikit/react' {
+  export * from 'nnui-kit/react';
+}
+

@@ -13,18 +13,68 @@ export class UiDialog extends BaseLightElement {
     return this._dialog ? this._dialog.hasAttribute('open') : false;
   }
 
+  set isOpen(val) {
+    if (val) this.showModal();
+    else this.close();
+  }
+
   init() {
     this.setAttributeSafe(this, 'data-ui', 'dialog-container');
     this._dialog = this.querySelector('dialog');
     this._trigger = null;
 
     if (!this._dialog) {
-      console.warn(`[NNUI-KIT] <${this.tagName.toLowerCase()}> is missing expected <dialog> element. Add a <dialog> element inside.`);
+      // Light-DOM invariant: Never reparent children or create synthetic wrapper nodes.
+      // If no native <dialog> exists, bind custom events to this element container.
+      this._bindCustomEvents();
       return;
     }
 
     this._setupDialog();
     this._bindEvents();
+  }
+
+  _bindCustomEvents() {
+    // 1. Trigger click inside <ui-dialog>
+    this.listen(this, 'click', (e) => {
+      const trigger = e.target.closest('[data-part="trigger"], [data-trigger]');
+      if (trigger) {
+        e.preventDefault();
+        this.showModal(trigger);
+        return;
+      }
+
+      // 2. Close button click
+      const closeBtn = e.target.closest('[data-part="dialog-close"], [data-part="close"], [data-close]');
+      if (closeBtn) {
+        e.preventDefault();
+        this.close('button');
+        return;
+      }
+
+      // 3. Backdrop click
+      const backdrop = e.target.closest('[data-part="backdrop"]');
+      if (backdrop && e.target === backdrop) {
+        this.close('backdrop');
+      }
+    });
+
+    // 4. Global trigger support for external buttons with data-dialog-target="id"
+    this.listen(document, 'click', (e) => {
+      if (!this.id) return;
+      const trigger = e.target.closest(`[data-dialog-target="${this.id}"], [data-target="${this.id}"]`);
+      if (trigger && !this.contains(trigger)) {
+        e.preventDefault();
+        this.showModal(trigger);
+      }
+    });
+
+    // 5. Native cancel (Esc key)
+    this.listen(window, 'keydown', (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.close('escape');
+      }
+    });
   }
 
   _setupDialog() {
@@ -95,17 +145,31 @@ export class UiDialog extends BaseLightElement {
     });
   }
 
+  get isOpen() {
+    return this._dialog ? this._dialog.hasAttribute('open') : this.hasAttribute('open');
+  }
+
+  set isOpen(val) {
+    if (val) this.showModal();
+    else this.close();
+  }
+
   showModal(triggerElement = null) {
-    if (!this._dialog || this.isOpen) return;
-    this._trigger = triggerElement || document.activeElement;
-    this._dialog.showModal();
+    if (this._dialog) {
+      if (this.isOpen) return;
+      this._trigger = triggerElement || document.activeElement;
+      this._dialog.showModal();
+    } else {
+      this._trigger = triggerElement || document.activeElement;
+    }
     this.setAttributeSafe(this, 'open', '');
     this.dispatch('open');
   }
 
   close(reason = 'programmatic') {
-    if (!this._dialog || !this.isOpen) return;
-    this._dialog.close();
+    if (this._dialog && this._dialog.open) {
+      this._dialog.close();
+    }
     this.removeAttribute('open');
     this.dispatch('close', { reason });
     this._restoreFocus();
@@ -119,11 +183,14 @@ export class UiDialog extends BaseLightElement {
   }
 
   attributeChangedCallback(name, oldVal, newVal) {
-    if (name === 'open' && this._dialog) {
-      if (newVal !== null && !this.isOpen) {
-        this.showModal();
-      } else if (newVal === null && this.isOpen) {
-        this.close();
+    if (name === 'open') {
+      const hasOpen = newVal !== null;
+      if (this._dialog) {
+        if (hasOpen && !this._dialog.open) {
+          this._dialog.showModal();
+        } else if (!hasOpen && this._dialog.open) {
+          this._dialog.close();
+        }
       }
     }
   }

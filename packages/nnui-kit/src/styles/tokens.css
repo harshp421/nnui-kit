@@ -48,7 +48,8 @@
     --ui-border-subtle: #f4f4f5;
     --ui-border-default: #e4e4e7;
     --ui-border-strong: #d4d4d8;
-    --ui-border-focus: #09090b;
+    --ui-border-focus: var(--ui-color-brand-600);
+    --ui-focus-ring: color-mix(in srgb, var(--ui-color-brand-500) 25%, transparent);
 
     /* Canonical Convenience Aliases */
     --ui-bg: var(--ui-bg-canvas);
@@ -141,7 +142,8 @@
     --ui-border-subtle: #18181b;
     --ui-border-default: #27272a;
     --ui-border-strong: #3f3f46;
-    --ui-border-focus: #fafafa;
+    --ui-border-focus: var(--ui-color-brand-500);
+    --ui-focus-ring: color-mix(in srgb, var(--ui-color-brand-400) 30%, transparent);
 
     --ui-shadow-popover: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 4px 16px -2px rgba(0, 0, 0, 0.5);
     --ui-glass-bg: rgba(9, 9, 11, 0.85);
@@ -273,7 +275,8 @@
       --ui-border-subtle: #18181b;
       --ui-border-default: #27272a;
       --ui-border-strong: #3f3f46;
-      --ui-border-focus: #fafafa;
+      --ui-border-focus: var(--ui-color-brand-500);
+      --ui-focus-ring: color-mix(in srgb, var(--ui-color-brand-400) 30%, transparent);
 
       --ui-shadow-popover: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 4px 16px -2px rgba(0, 0, 0, 0.5);
       --ui-glass-bg: rgba(9, 9, 11, 0.85);

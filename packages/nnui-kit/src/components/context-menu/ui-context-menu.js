@@ -35,6 +35,11 @@ export class UiContextMenu extends BaseLightElement {
     return menu.matches?.(':popover-open') || menu.getAttribute('data-state') === 'open';
   }
 
+  set isOpen(val) {
+    if (val) this.open();
+    else this.close();
+  }
+
   init() {
     this.setAttributeSafe('data-ui', 'context-menu');
 

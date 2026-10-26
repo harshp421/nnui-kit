@@ -12,14 +12,35 @@
     box-sizing: border-box;
   }
 
-  /* Scoped reset for custom elements */
+  /* Scoped reset for all platform-native custom elements */
   ui-tabs, nnui-tabs,
   ui-combobox, nnui-combobox,
   ui-dialog, nnui-dialog,
   ui-select, nnui-select,
   ui-accordion, nnui-accordion,
   ui-popover, nnui-popover,
-  ui-tooltip, nnui-tooltip {
+  ui-tooltip, nnui-tooltip,
+  ui-command, nnui-command,
+  ui-sheet, nnui-sheet,
+  ui-slider, nnui-slider,
+  ui-dropdown, nnui-dropdown,
+  ui-toaster, nnui-toaster,
+  ui-data-table, nnui-data-table,
+  ui-calendar, nnui-calendar,
+  ui-date-picker, nnui-date-picker,
+  ui-data-grid, nnui-data-grid,
+  ui-date-range-picker, nnui-date-range-picker,
+  ui-tags-input, nnui-tags-input,
+  ui-segmented-control, nnui-segmented-control,
+  ui-otp-input, nnui-otp-input,
+  ui-stepper, nnui-stepper,
+  ui-resizable, nnui-resizable,
+  ui-file-upload, nnui-file-upload,
+  ui-context-menu, nnui-context-menu,
+  ui-navigation-menu, nnui-navigation-menu,
+  ui-tree-view, nnui-tree-view,
+  ui-ai-prompt-box, nnui-ai-prompt-box,
+  ui-color-picker, nnui-color-picker {
     display: block;
     box-sizing: border-box;
   }

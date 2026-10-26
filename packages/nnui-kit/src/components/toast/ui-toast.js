@@ -16,6 +16,20 @@ export class UiToaster extends BaseLightElement {
     return this.getAttribute('position') || 'bottom-right';
   }
 
+  set position(val) {
+    if (val) this.setAttribute('position', val);
+    else this.removeAttribute('position');
+  }
+
+  get expand() {
+    return this.hasAttribute('expand');
+  }
+
+  set expand(val) {
+    if (val) this.setAttribute('expand', '');
+    else this.removeAttribute('expand');
+  }
+
   init() {
     this.setAttributeSafe(this, 'data-ui', 'toaster');
     this.setAttributeSafe(this, 'role', 'region');

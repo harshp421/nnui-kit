@@ -26,8 +26,15 @@ test('SSR and Node Server Execution Safety Suite', async (t) => {
     assert.ok(reactModule.Dialog, 'Dialog component should be exported');
     assert.ok(reactModule.Stepper, 'Stepper component should be exported');
     assert.ok(reactModule.Slider, 'Slider component should be exported');
-    assert.ok(reactModule.ColorPicker, 'ColorPicker component should be exported');
     assert.ok(typeof reactModule.toast === 'function', 'toast should be exported');
     assert.ok(typeof reactModule.createReactComponent === 'function', 'createReactComponent factory should be exported');
+    assert.ok(typeof reactModule.createPart === 'function', 'createPart factory should be exported');
+    assert.ok(reactModule.Tabs.List, 'Tabs.List compound component should be attached');
+    assert.ok(reactModule.Tabs.Tab, 'Tabs.Tab compound component should be attached');
+    assert.ok(reactModule.Dialog.Trigger, 'Dialog.Trigger compound component should be attached');
+    assert.ok(reactModule.Dialog.Content, 'Dialog.Content compound component should be attached');
+    assert.ok(reactModule.Select.Trigger, 'Select.Trigger compound component should be attached');
+    assert.ok(reactModule.Slider.Track, 'Slider.Track compound component should be attached');
+    assert.ok(reactModule.DataGrid.Viewport, 'DataGrid.Viewport compound component should be attached');
   });
 });

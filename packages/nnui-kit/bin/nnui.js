@@ -115,10 +115,16 @@ async function handleInit(cwd) {
     }
   }
 
-  // Write tokens.css, base.css, and components.css
+  // Write tokens.css, theme.css, base.css, and components.css
   const tokensPath = path.join(componentsDir, 'tokens.css');
   fs.writeFileSync(tokensPath, reg.common['tokens.css'], 'utf-8');
   console.log(`  \x1b[32m✓\x1b[0m Created ${path.relative(cwd, tokensPath)}`);
+
+  if (reg.common['theme.css']) {
+    const themePath = path.join(componentsDir, 'theme.css');
+    fs.writeFileSync(themePath, reg.common['theme.css'], 'utf-8');
+    console.log(`  \x1b[32m✓\x1b[0m Created ${path.relative(cwd, themePath)} (Copy-paste theme tokens file)`);
+  }
 
   if (reg.common['base.css']) {
     const baseCssPath = path.join(componentsDir, 'base.css');
@@ -146,14 +152,236 @@ async function handleInit(cwd) {
   console.log('  \x1b[36mnpx nnui add dropdown toast dialog tabs stack grid\x1b[0m\n');
 }
 
+// Helper: Convert string to PascalCase
+function toPascalCase(str) {
+  return str
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('');
+}
+
+// Helper: Convert string to snake_case
+function toSnakeCase(str) {
+  return str.replace(/-/g, '_');
+}
+
+// Compound subcomponents lookup for React
+function getCompoundParts(name) {
+  const map = {
+    tabs: ['List', 'Tab', 'Trigger', 'Panel', 'Content'],
+    combobox: ['Input', 'List', 'Item', 'Option'],
+    dialog: ['Trigger', 'Content', 'Close', 'Title', 'Description'],
+    select: ['Trigger', 'Value', 'List', 'Content', 'Item', 'Option'],
+    accordion: ['Item', 'Trigger', 'Header', 'Content', 'Panel'],
+    popover: ['Trigger', 'Content', 'Close'],
+    tooltip: ['Trigger', 'Content'],
+    command: ['Input', 'List', 'Group', 'Item'],
+    sheet: ['Trigger', 'Content', 'Close'],
+    stepper: ['StepList', 'Step', 'Panel'],
+    slider: ['Track', 'Range', 'Thumb'],
+    dropdown: ['Trigger', 'Menu', 'Item'],
+    'data-table': ['Header', 'Body', 'Row', 'Cell'],
+    'data-grid': ['Header', 'Body', 'Row', 'Cell'],
+  };
+  return map[name] || [];
+}
+
+// Generate React 18/19 Compound Component (Shadcn style)
+function generateReactComponent(name, comp) {
+  const pascal = toPascalCase(name);
+  const compounds = getCompoundParts(name);
+  let compoundExports = '';
+  if (compounds.length > 0) {
+    compoundExports = compounds.map((c) => `export const ${pascal}${c} = ${pascal}.${c};`).join('\n') + '\n\n';
+  }
+
+  // Pre-configured composite examples for popular components
+  let exampleCode = '';
+  if (name === 'dialog') {
+    exampleCode = `/**
+ * Example Dialog Modal Component (User Customizable)
+ */
+export function ${pascal}Modal({ open, onClose, title, description, children, ...props }) {
+  return (
+    <${pascal} open={open} onClose={onClose} {...props}>
+      <div data-part="backdrop" onClick={onClose} />
+      <div data-part="panel">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          {title && <h3 style={{ margin: 0, fontWeight: 700 }}>{title}</h3>}
+          <button data-part="close" onClick={onClose} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>✕</button>
+        </div>
+        {description && <p style={{ color: 'var(--ui-text-muted)', fontSize: '0.875rem' }}>{description}</p>}
+        <div>{children}</div>
+      </div>
+    </${pascal}>
+  );
+}`;
+  } else if (name === 'tabs') {
+    exampleCode = `/**
+ * Example Composite Tabs Component (User Customizable)
+ */
+export function ${pascal}Group({ items = [], defaultValue, onChange, ...props }) {
+  return (
+    <${pascal} value={defaultValue || (items[0] && items[0].value)} onChange={onChange} {...props}>
+      <${pascal}.List style={{ display: 'flex', gap: '0.5rem', borderBottom: '1px solid var(--ui-border-default)' }}>
+        {items.map((item) => (
+          <${pascal}.Tab key={item.value} data-value={item.value}>
+            {item.label}
+          </${pascal}.Tab>
+        ))}
+      </${pascal}.List>
+      {items.map((item) => (
+        <${pascal}.Panel key={item.value} data-value={item.value} style={{ marginTop: '1rem' }}>
+          {item.content}
+        </${pascal}.Panel>
+      ))}
+    </${pascal}>
+  );
+}`;
+  } else {
+    exampleCode = `/**
+ * ${comp.title || pascal} Wrapper Component
+ */
+export function ${pascal}Demo(props) {
+  return (
+    <${pascal} {...props}>
+      {props.children}
+    </${pascal}>
+  );
+}`;
+  }
+
+  return `import React from 'react';
+import { ${pascal} } from 'nnuikit/react';
+
+// Export raw primitive & compound parts
+export { ${pascal} };
+${compoundExports}${exampleCode}
+
+export default ${pascal};
+`;
+}
+
+// Generate Vanilla HTML Component Snippet
+function generateHtmlSnippet(name, comp) {
+  const tag = `ui-${name}`;
+
+  let markup = '';
+  if (name === 'dialog') {
+    markup = `  <button data-part="trigger" type="button">Open Modal</button>
+  <dialog data-part="dialog">
+    <div data-part="panel">
+      <h3>Modal Title</h3>
+      <p>This is a native Light-DOM dialog running on platform top-layer.</p>
+      <button data-part="close" type="button">Close</button>
+    </div>
+  </dialog>`;
+  } else if (name === 'tabs') {
+    markup = `  <div data-part="tablist">
+    <button data-part="tab" data-value="overview">Overview</button>
+    <button data-part="tab" data-value="analytics">Analytics</button>
+  </div>
+  <div data-part="tabpanel" data-value="overview">Overview content...</div>
+  <div data-part="tabpanel" data-value="analytics">Analytics content...</div>`;
+  } else {
+    markup = `  <button data-part="trigger" type="button">Toggle ${comp.title || name}</button>
+  <div data-part="content">
+    <h3>${comp.title || name}</h3>
+    <p>${comp.desc || 'Light-DOM Platform-Native component.'}</p>
+    <button data-part="close" type="button">Close</button>
+  </div>`;
+  }
+
+  return `<!-- =========================================================================
+     NNUI-KIT ${comp.title || name} (Vanilla HTML & Light-DOM Custom Element)
+     Zero Shadow DOM • Native Browser Accessible
+     ========================================================================= -->
+
+<${tag} id="${name}-demo">
+${markup}
+</${tag}>
+
+<!-- Load NNUI micro-enhancer module -->
+<script type="module" src="./ui-${name}.js"></script>
+`;
+}
+
+// Generate Ruby on Rails ERB Partial
+function generateRailsPartial(name, comp) {
+  const snake = toSnakeCase(name);
+  const tag = `ui-${name}`;
+
+  let innerContent = '';
+  if (name === 'dialog') {
+    innerContent = `  <% if local_assigns[:trigger] %>
+    <button data-part="trigger" type="button" class="<%= local_assigns[:trigger_class] || 'btn btn-primary' %>">
+      <%= local_assigns[:trigger] %>
+    </button>
+  <% end %>
+
+  <dialog data-part="dialog" class="<%= local_assigns[:dialog_class] %>">
+    <div data-part="panel" class="<%= local_assigns[:panel_class] %>">
+      <% if local_assigns[:title] %>
+        <h3 data-part="title"><%= local_assigns[:title] %></h3>
+      <% end %>
+      <% if local_assigns[:description] %>
+        <p data-part="description"><%= local_assigns[:description] %></p>
+      <% end %>
+
+      <div data-part="body">
+        <%= yield if block_given? %>
+      </div>
+
+      <button data-part="close" type="button" class="<%= local_assigns[:close_class] || 'btn btn-close' %>">✕</button>
+    </div>
+  </dialog>`;
+  } else if (name === 'tabs') {
+    innerContent = `  <div data-part="tablist" class="<%= local_assigns[:tablist_class] %>">
+    <% Array(local_assigns[:tabs]).each do |tab| %>
+      <button data-part="tab" data-value="<%= tab[:id] || tab[:value] %>" class="<%= local_assigns[:tab_class] %>">
+        <%= tab[:label] || tab[:title] %>
+      </button>
+    <% end %>
+  </div>
+
+  <%= yield if block_given? %>`;
+  } else {
+    innerContent = `  <% if local_assigns[:trigger] %>
+    <button data-part="trigger" type="button" class="<%= local_assigns[:trigger_class] || 'btn' %>">
+      <%= local_assigns[:trigger] %>
+    </button>
+  <% end %>
+
+  <% if block_given? %>
+    <%= yield %>
+  <% else %>
+    <div data-part="content" class="<%= local_assigns[:content_class] %>">
+      <% if local_assigns[:title] %>
+        <h3 data-part="title"><%= local_assigns[:title] %></h3>
+      <% end %>
+      <%= local_assigns[:body] %>
+    </div>
+  <% end %>`;
+  }
+
+  return `<%# app/views/components/_${snake}.html.erb %>
+<%# NNUI-KIT Platform-Native Light-DOM ${comp.title || name} %>
+<%# Usage: %>
+<%#   <%= render "components/${snake}", id: "my-${name}" do %>
+<%#     Content here... %>
+<%#   <% end %>
+
+<${tag} id="<%= local_assigns[:id] %>" <%= "open" if local_assigns[:open] %> class="<%= local_assigns[:class] %>">
+${innerContent}
+</${tag}>
+`;
+}
+
 // Command: add
 async function handleAdd(componentNames, options, cwd) {
   printBanner();
   const reg = await getRegistry();
   const config = getConfig(cwd);
-
-  const targetDir = options.path ? path.resolve(cwd, options.path) : path.join(cwd, config.componentsDir);
-  const utilsDir = path.join(cwd, config.utilsDir);
 
   // If --all, grab every component in registry
   let namesToInstall = componentNames;
@@ -163,12 +391,176 @@ async function handleAdd(componentNames, options, cwd) {
 
   if (namesToInstall.length === 0) {
     console.error('\x1b[31mError:\x1b[0m Please specify one or more component names to install.');
-    console.log('Example: \x1b[36mnpx nnui add dropdown toast\x1b[0m');
-    console.log('Run \x1b[36mnpx nnui list\x1b[0m to view available components.');
+    console.log('Examples:');
+    console.log('  \x1b[36mnpx nnui add dialog --react\x1b[0m   (Drops React compound component into src/components/ui/)');
+    console.log('  \x1b[36mnpx nnui add dialog --html\x1b[0m    (Drops vanilla HTML snippet & micro-enhancer)');
+    console.log('  \x1b[36mnpx nnui add dialog --rails\x1b[0m   (Drops ERB partial & configures importmap)');
+    console.log('\nRun \x1b[36mnpx nnui list\x1b[0m to view all available components.');
     process.exit(1);
   }
 
-  // Ensure utils exist
+  let installedCount = 0;
+
+  // -------------------------------------------------------------
+  // TARGET 1: REACT (--react)
+  // -------------------------------------------------------------
+  if (options.react) {
+    const defaultReactDir = fs.existsSync(path.join(cwd, 'src'))
+      ? path.join(cwd, 'src/components/ui')
+      : path.join(cwd, 'components/ui');
+    const targetDir = options.path ? path.resolve(cwd, options.path) : defaultReactDir;
+
+    fs.mkdirSync(targetDir, { recursive: true });
+
+    for (const name of namesToInstall) {
+      const comp = reg.components[name.toLowerCase()];
+      if (!comp) {
+        console.warn(`  \x1b[33m⚠\x1b[0m Component "\x1b[1m${name}\x1b[0m" not found in registry. Skipping.`);
+        continue;
+      }
+
+      const destPath = path.join(targetDir, `${comp.name}.jsx`);
+      if (fs.existsSync(destPath) && !options.overwrite) {
+        console.log(`  \x1b[90m• ${path.relative(cwd, destPath)} already exists (use --overwrite to replace)\x1b[0m`);
+      } else {
+        const reactCode = generateReactComponent(comp.name, comp);
+        fs.writeFileSync(destPath, reactCode, 'utf-8');
+        console.log(`  \x1b[32m✓\x1b[0m Created React component ${comp.title} \x1b[90m(${path.relative(cwd, destPath)})\x1b[0m`);
+        installedCount++;
+      }
+    }
+
+    console.log(`\n\x1b[32mDone!\x1b[0m Added ${installedCount} React component(s) to ${path.relative(cwd, targetDir)}/`);
+    console.log('Import your components into your React 18/19 app:\n');
+    console.log(`  \x1b[36mimport { ${toPascalCase(namesToInstall[0])} } from './${path.relative(cwd, path.join(targetDir, namesToInstall[0] + '.jsx'))}';\x1b[0m\n`);
+    return;
+  }
+
+  // -------------------------------------------------------------
+  // TARGET 2: HTML / VANILLA (--html / --vanilla)
+  // -------------------------------------------------------------
+  if (options.html) {
+    const targetDir = options.path ? path.resolve(cwd, options.path) : path.join(cwd, config.componentsDir);
+    const utilsDir = path.join(cwd, config.utilsDir);
+
+    fs.mkdirSync(utilsDir, { recursive: true });
+    for (const utilFile of ['base-element.js', 'a11y.js', 'anchor-fallback.js']) {
+      const utilPath = path.join(utilsDir, utilFile);
+      if (!fs.existsSync(utilPath) && reg.common[utilFile]) {
+        fs.writeFileSync(utilPath, reg.common[utilFile], 'utf-8');
+        console.log(`  \x1b[32m✓\x1b[0m Installed ${path.relative(cwd, utilPath)}`);
+      }
+    }
+
+    for (const name of namesToInstall) {
+      const comp = reg.components[name.toLowerCase()];
+      if (!comp) {
+        console.warn(`  \x1b[33m⚠\x1b[0m Component "\x1b[1m${name}\x1b[0m" not found in registry. Skipping.`);
+        continue;
+      }
+
+      const compFolder = path.join(targetDir, comp.name);
+      fs.mkdirSync(compFolder, { recursive: true });
+
+      // 1. Write micro-enhancer JS
+      for (const file of comp.files) {
+        const jsDest = path.join(compFolder, file.name);
+        let code = file.content.replace(/['"]\.\.\/\.\.\/utils\/(.*?)['"]/g, `'../utils/$1'`);
+        fs.writeFileSync(jsDest, code, 'utf-8');
+        console.log(`  \x1b[32m✓\x1b[0m Installed JS micro-enhancer \x1b[90m(${path.relative(cwd, jsDest)})\x1b[0m`);
+      }
+
+      // 2. Write HTML demonstration snippet
+      const htmlDest = path.join(compFolder, `${comp.name}.html`);
+      if (!fs.existsSync(htmlDest) || options.overwrite) {
+        const htmlSnippet = generateHtmlSnippet(comp.name, comp);
+        fs.writeFileSync(htmlDest, htmlSnippet, 'utf-8');
+        console.log(`  \x1b[32m✓\x1b[0m Created HTML snippet \x1b[90m(${path.relative(cwd, htmlDest)})\x1b[0m`);
+      }
+
+      installedCount++;
+    }
+
+    console.log(`\n\x1b[32mDone!\x1b[0m Added ${installedCount} vanilla HTML component(s) to ${path.relative(cwd, targetDir)}/`);
+    console.log('Open the .html file in any browser or embed directly into your static templates:\n');
+    console.log(`  \x1b[36mopen ./${path.relative(cwd, path.join(targetDir, namesToInstall[0], namesToInstall[0] + '.html'))}\x1b[0m\n`);
+    return;
+  }
+
+  // -------------------------------------------------------------
+  // TARGET 3: RUBY ON RAILS (--rails)
+  // -------------------------------------------------------------
+  if (options.rails) {
+    const viewsDir = options.path ? path.resolve(cwd, options.path) : path.join(cwd, 'app/views/components');
+    const jsDir = path.join(cwd, 'app/javascript/components');
+    const utilsDir = path.join(jsDir, 'utils');
+
+    fs.mkdirSync(viewsDir, { recursive: true });
+    fs.mkdirSync(jsDir, { recursive: true });
+    fs.mkdirSync(utilsDir, { recursive: true });
+
+    // Write utils for Rails asset pipeline
+    for (const utilFile of ['base-element.js', 'a11y.js', 'anchor-fallback.js']) {
+      const utilPath = path.join(utilsDir, utilFile);
+      if (!fs.existsSync(utilPath) && reg.common[utilFile]) {
+        fs.writeFileSync(utilPath, reg.common[utilFile], 'utf-8');
+        console.log(`  \x1b[32m✓\x1b[0m Installed Rails JS util ${path.relative(cwd, utilPath)}`);
+      }
+    }
+
+    for (const name of namesToInstall) {
+      const comp = reg.components[name.toLowerCase()];
+      if (!comp) {
+        console.warn(`  \x1b[33m⚠\x1b[0m Component "\x1b[1m${name}\x1b[0m" not found in registry. Skipping.`);
+        continue;
+      }
+
+      const snake = toSnakeCase(comp.name);
+
+      // 1. Write Rails ERB Partial
+      const erbPath = path.join(viewsDir, `_${snake}.html.erb`);
+      if (!fs.existsSync(erbPath) || options.overwrite) {
+        const erbContent = generateRailsPartial(comp.name, comp);
+        fs.writeFileSync(erbPath, erbContent, 'utf-8');
+        console.log(`  \x1b[32m✓\x1b[0m Created Rails ERB partial \x1b[90m(${path.relative(cwd, erbPath)})\x1b[0m`);
+      }
+
+      // 2. Write Rails JS Micro-Enhancer
+      for (const file of comp.files) {
+        const jsDest = path.join(jsDir, `ui-${comp.name}.js`);
+        let code = file.content.replace(/['"]\.\.\/\.\.\/utils\/(.*?)['"]/g, `'./utils/$1'`);
+        fs.writeFileSync(jsDest, code, 'utf-8');
+        console.log(`  \x1b[32m✓\x1b[0m Created Rails JS enhancer \x1b[90m(${path.relative(cwd, jsDest)})\x1b[0m`);
+      }
+
+      installedCount++;
+    }
+
+    // 3. Configure importmap.rb if present
+    const importmapPath = path.join(cwd, 'config/importmap.rb');
+    if (fs.existsSync(importmapPath)) {
+      let importmapContent = fs.readFileSync(importmapPath, 'utf-8');
+      if (!importmapContent.includes('pin "nnuikit"')) {
+        importmapContent += `\n# NNUI-KIT Platform-Native Light-DOM UI Library\npin "nnuikit", to: "https://cdn.jsdelivr.net/npm/nnuikit@1.0.5/dist/index.js"\n`;
+        fs.writeFileSync(importmapPath, importmapContent, 'utf-8');
+        console.log(`  \x1b[32m✓\x1b[0m Added nnuikit pin to config/importmap.rb`);
+      }
+    }
+
+    console.log(`\n\x1b[32mDone!\x1b[0m Added ${installedCount} Rails component(s) to ${path.relative(cwd, viewsDir)}/`);
+    console.log('Render directly in your Rails ERB views:\n');
+    console.log(`  \x1b[36m<%= render "components/${toSnakeCase(namesToInstall[0])}", id: "my-${namesToInstall[0]}", title: "Hello Rails" do %>\x1b[0m`);
+    console.log(`  \x1b[36m  <p>Rendered with platform-native Light-DOM!</p>\x1b[0m`);
+    console.log(`  \x1b[36m<% end %>\x1b[0m\n`);
+    return;
+  }
+
+  // -------------------------------------------------------------
+  // DEFAULT / STANDARD INSTALLATION (Backwards compatible)
+  // -------------------------------------------------------------
+  const targetDir = options.path ? path.resolve(cwd, options.path) : path.join(cwd, config.componentsDir);
+  const utilsDir = path.join(cwd, config.utilsDir);
+
   fs.mkdirSync(utilsDir, { recursive: true });
   for (const utilFile of ['base-element.js', 'a11y.js', 'anchor-fallback.js']) {
     const utilPath = path.join(utilsDir, utilFile);
@@ -177,8 +569,6 @@ async function handleAdd(componentNames, options, cwd) {
       console.log(`  \x1b[32m✓\x1b[0m Installed ${path.relative(cwd, utilPath)}`);
     }
   }
-
-  let installedCount = 0;
 
   for (const name of namesToInstall) {
     const comp = reg.components[name.toLowerCase()];
@@ -195,7 +585,6 @@ async function handleAdd(componentNames, options, cwd) {
       if (fs.existsSync(destPath) && !options.overwrite) {
         console.log(`  \x1b[90m• ${path.relative(cwd, destPath)} already exists (use --overwrite to replace)\x1b[0m`);
       } else {
-        // Rewrite import paths to point to project's utilsDir
         let code = file.content;
         code = code.replace(/['"]\.\.\/\.\.\/utils\/(.*?)['"]/g, `'../utils/$1'`);
         fs.writeFileSync(destPath, code, 'utf-8');
@@ -207,7 +596,7 @@ async function handleAdd(componentNames, options, cwd) {
 
   console.log(`\n\x1b[32mDone!\x1b[0m Added ${installedCount} component(s) to ${path.relative(cwd, targetDir)}/`);
   console.log('Import your components directly in your application:\n');
-  console.log(`  \x1b[36mimport './${path.relative(cwd, targetDir)}/dropdown/ui-dropdown.js';\x1b[0m\n`);
+  console.log(`  \x1b[36mimport './${path.relative(cwd, targetDir)}/${namesToInstall[0]}/ui-${namesToInstall[0]}.js';\x1b[0m\n`);
 }
 
 // Help documentation
@@ -219,9 +608,15 @@ function printHelp() {
 Commands:
   init                       Initialize NNUI in your project directory
   add <component...>         Add one or more components from registry
-  add --all                  Add all 27 components into your project
+  add --all                  Add all components into your project
   list                       List all available components in registry
   help                       Show this help menu
+
+Framework Targets:
+  --react                    Generate React 18/19 compound components in src/components/ui/
+  --html, --vanilla          Generate vanilla HTML snippets & micro-enhancers in components/ui/
+  --rails                    Generate Ruby on Rails ERB partials & importmap pinning
+  --target <framework>       Specify framework target (react, html, rails)
 
 Options:
   --overwrite                Overwrite existing component files
@@ -243,9 +638,22 @@ async function run() {
   const command = args[0];
   const remaining = args.slice(1);
 
+  const isReact = remaining.includes('--react') || remaining.some((a) => a.startsWith('--target=react'));
+  const isHtml = remaining.includes('--html') || remaining.includes('--vanilla') || remaining.some((a) => a.startsWith('--target=html') || a.startsWith('--target=vanilla'));
+  const isRails = remaining.includes('--rails') || remaining.some((a) => a.startsWith('--target=rails'));
+
+  let targetOption = null;
+  const targetFlagIdx = remaining.indexOf('--target');
+  if (targetFlagIdx !== -1 && remaining[targetFlagIdx + 1]) {
+    targetOption = remaining[targetFlagIdx + 1].toLowerCase();
+  }
+
   const options = {
     overwrite: remaining.includes('--overwrite'),
     all: remaining.includes('--all'),
+    react: isReact || targetOption === 'react',
+    html: isHtml || targetOption === 'html' || targetOption === 'vanilla',
+    rails: isRails || targetOption === 'rails',
     path: null
   };
 
@@ -254,7 +662,11 @@ async function run() {
     options.path = remaining[pathIdx + 1];
   }
 
-  const componentNames = remaining.filter((arg) => !arg.startsWith('--') && arg !== options.path);
+  const componentNames = remaining.filter((arg, idx) => {
+    if (arg.startsWith('--')) return false;
+    if (remaining[idx - 1] === '--path' || remaining[idx - 1] === '--target') return false;
+    return true;
+  });
 
   switch (command) {
     case 'list':
@@ -278,3 +690,4 @@ run().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+

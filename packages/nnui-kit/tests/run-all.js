@@ -17,6 +17,8 @@ const testFiles = [
   'tests/track4.test.js',
   'tests/crown-features.test.js',
   'tests/ssr-react.test.js',
+  'tests/react19-properties.test.js',
+  'tests/intellisense.test.js',
 ];
 
 console.log('🚀 Running NNUI-KIT Complete Test Suite...\n');

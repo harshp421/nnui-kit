@@ -22,8 +22,18 @@ export class UiNavigationMenu extends BaseLightElement {
     return isNaN(d) ? 150 : d;
   }
 
+  set delay(val) {
+    if (val !== null && val !== undefined) this.setAttributeSafe('delay', String(val));
+    else this.removeAttributeSafe('delay');
+  }
+
   get disabled() {
     return this.hasAttribute('disabled');
+  }
+
+  set disabled(val) {
+    if (val) this.setAttributeSafe('disabled', '');
+    else this.removeAttributeSafe('disabled');
   }
 
   init() {

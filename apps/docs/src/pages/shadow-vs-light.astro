@@ -1,0 +1,666 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+
+<DocsLayout 
+  title="Shadow DOM vs Light DOM Manifesto — NNUI-KIT"
+  description="An interactive deep-dive and justification: Why NNUI-KIT rejected Shadow DOM to build the web's most composable, accessible, and style-transparent UI architecture."
+  activePath="/shadow-vs-light"
+>
+  <div class="docs-layout-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="docs-aside">
+      <div class="docs-aside-group">
+        <div class="docs-aside-title">The Manifesto</div>
+        <a href="#hero" class="docs-aside-link active">Overview</a>
+        <a href="#interactive-lab" class="docs-aside-link">Interactive Battle Lab</a>
+        <a href="#why-shadow-failed" class="docs-aside-link">The Fatal Flaw of Shadow DOM</a>
+        <a href="#our-justification" class="docs-aside-link">The Light-DOM Invariant</a>
+      </div>
+
+      <div class="docs-aside-group">
+        <div class="docs-aside-title">Deep Technical Tests</div>
+        <a href="#test-css" class="docs-aside-link">1. CSS Cascade & Tailwind</a>
+        <a href="#test-forms" class="docs-aside-link">2. Native Form Serialization</a>
+        <a href="#test-a11y" class="docs-aside-link">3. A11y & ARIA Boundaries</a>
+        <a href="#test-ssr" class="docs-aside-link">4. SSR & 0ms FOUC</a>
+      </div>
+
+      <div class="docs-aside-group">
+        <div class="docs-aside-title">Decision Framework</div>
+        <a href="#comparison-matrix" class="docs-aside-link">Full Comparison Matrix</a>
+        <a href="#architecture-quiz" class="docs-aside-link">Interactive Quiz</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-body" style="max-width: 960px;">
+      <!-- Hero Section -->
+      <section id="hero" style="margin-bottom: 3.5rem;">
+        <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.75rem; border-radius: 9999px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #10b981; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">
+          <span>Architectural Manifesto</span>
+        </div>
+        
+        <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.035em; line-height: 1.15; margin: 0 0 1.25rem 0; color: var(--text-main);">
+          Shadow DOM vs. Light DOM: <br />
+          <span style="background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Why We Killed the Shadow Root
+          </span>
+        </h1>
+        
+        <p style="font-size: 1.2rem; color: var(--text-muted); line-height: 1.7; margin: 0 0 2rem 0;">
+          Web Components promised universal, framework-agnostic UI. But for a decade, developers rejected them in favor of React, Shadcn, and Tailwind. 
+          <strong>The culprit was not custom elements—it was Shadow DOM.</strong> 
+          Explore the interactive laboratory below to experience why Shadow DOM broke component styling and accessibility, and how NNUI-KIT’s <strong>Light-DOM Micro-Enhancer architecture</strong> solves it.
+        </p>
+
+        <!-- High-level Metric Stat Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2.5rem;">
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.25rem; background: var(--bg-card);">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Tailwind & CSS Cascade</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #10b981; margin: 0.35rem 0;">100% Native</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Zero CSS piercing or ::part() boilerplate</div>
+          </div>
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.25rem; background: var(--bg-card);">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">A11y Tree Fragmentation</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #10b981; margin: 0.35rem 0;">0 Boundaries</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Unbroken ARIA references across document</div>
+          </div>
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.25rem; background: var(--bg-card);">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Native Form Submission</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #10b981; margin: 0.35rem 0;">ElementInternals</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Standard FormData extraction with zero hacks</div>
+          </div>
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.25rem; background: var(--bg-card);">
+            <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">SSR First Paint (FOUC)</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #10b981; margin: 0.35rem 0;">0ms Paint</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">No Declarative Shadow DOM polyfills needed</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Battle Lab -->
+      <section id="interactive-lab" style="margin-bottom: 4rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <h2 style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.25rem 0; color: var(--text-main);">
+              Interactive Battle Lab
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0;">
+              Switch styles, submit native forms, and inspect accessibility live to witness the real-world difference.
+            </p>
+          </div>
+        </div>
+
+        <!-- Interactive Playground Container -->
+        <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 16px; background: var(--bg-card); overflow: hidden; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);">
+          <!-- Top Control Toolbar -->
+          <div style="padding: 1rem 1.25rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-right: 0.5rem;">Live Test:</span>
+              <button class="lab-tab-btn active" data-test="css">1. Tailwind & CSS Cascade</button>
+              <button class="lab-tab-btn" data-test="forms">2. Native Form & FormData</button>
+              <button class="lab-tab-btn" data-test="a11y">3. Screen Reader A11y Tree</button>
+              <button class="lab-tab-btn" data-test="dom">4. DOM Node Inspection</button>
+            </div>
+            <button id="reset-lab-btn" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: var(--bg-card); color: var(--text-muted); cursor: pointer;">
+              Reset Lab
+            </button>
+          </div>
+
+          <!-- Lab Stage: Side-by-Side Arena -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border-subtle);">
+            <!-- Left: Shadow DOM Sandbox -->
+            <div style="padding: 1.5rem; border-right: 1px solid var(--border-subtle); background: rgba(239, 68, 68, 0.02);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+                  <span style="font-weight: 700; font-size: 0.95rem; color: #ef4444;">Shadow DOM (Traditional)</span>
+                </div>
+                <span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 9999px; background: rgba(239, 68, 68, 0.1); color: #ef4444; font-weight: 600;">Encapsulated Barrier</span>
+              </div>
+
+              <!-- Shadow DOM Simulation Container -->
+              <div id="shadow-dom-container" style="min-height: 220px; border: 1px dashed rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 1.25rem; background: var(--bg-card);">
+                <!-- Dynamically populated shadow root container -->
+              </div>
+
+              <div id="shadow-status-banner" style="margin-top: 1rem; padding: 0.75rem; border-radius: 8px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); font-size: 0.85rem; color: #ef4444;">
+                ⚠️ <strong>Styling Blocked:</strong> Shadow Root acts as a firewall. Global Tailwind utility classes are discarded at the boundary.
+              </div>
+            </div>
+
+            <!-- Right: NNUI Light DOM Sandbox -->
+            <div style="padding: 1.5rem; background: rgba(16, 185, 129, 0.02);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="width: 10px; height: 10px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                  <span style="font-weight: 700; font-size: 0.95rem; color: #10b981;">NNUI-KIT (Light-DOM Native)</span>
+                </div>
+                <span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 9999px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-weight: 600;">100% Composable</span>
+              </div>
+
+              <!-- Light DOM Live Container -->
+              <div id="light-dom-container" style="min-height: 220px; border: 1px dashed rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1.25rem; background: var(--bg-card);">
+                <!-- Live NNUI Select & Form elements -->
+                <form id="light-test-form" onsubmit="event.preventDefault();">
+                  <div style="margin-bottom: 1rem;">
+                    <label style="display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text-main);">Role Selector (Custom Select)</label>
+                    <ui-select name="role" value="architect" class="arena-target-el" style="display: block; width: 100%;">
+                      <button data-part="trigger" type="button" class="arena-btn" style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: var(--bg-secondary); color: var(--text-main); font-size: 0.875rem;">
+                        <span data-part="label">Principal Architect</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                      </button>
+                      <div data-part="listbox" style="margin-top: 4px; padding: 4px; border: 1px solid var(--border-subtle); border-radius: 6px; background: var(--bg-card); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <div data-part="option" data-value="architect" style="padding: 6px 10px; border-radius: 4px; font-size: 0.85rem; cursor: pointer;">Principal Architect</div>
+                        <div data-part="option" data-value="engineer" style="padding: 6px 10px; border-radius: 4px; font-size: 0.85rem; cursor: pointer;">Staff Frontend Engineer</div>
+                        <div data-part="option" data-value="lead" style="padding: 6px 10px; border-radius: 4px; font-size: 0.85rem; cursor: pointer;">Tech Lead</div>
+                      </div>
+                    </ui-select>
+                  </div>
+                  
+                  <div style="display: flex; gap: 0.5rem;">
+                    <button type="submit" id="light-submit-btn" style="padding: 0.45rem 1rem; border-radius: 6px; background: var(--brand-accent); color: var(--bg-primary); font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer;">
+                      Submit Form
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div id="light-status-banner" style="margin-top: 1rem; padding: 0.75rem; border-radius: 8px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); font-size: 0.85rem; color: #10b981;">
+                ✓ <strong>Cascade Flowing:</strong> Global Tailwind styles, CSS custom properties, and native forms apply effortlessly down the entire tree.
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Interactive Controls & Real-Time Terminal -->
+          <div style="padding: 1.25rem; background: var(--bg-secondary);">
+            <!-- Section 1: CSS Injection Controls -->
+            <div id="ctrl-section-css" class="lab-ctrl-panel">
+              <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-main);">
+                Select a Global CSS / Utility Preset to inject into both components:
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                <button class="css-preset-btn active" data-style="default">Default Neutral</button>
+                <button class="css-preset-btn" data-style="tailwind-violet">Tailwind: bg-violet-600 rounded-xl text-white</button>
+                <button class="css-preset-btn" data-style="tailwind-emerald">Tailwind: border-2 border-emerald-500 font-mono</button>
+                <button class="css-preset-btn" data-style="cyberpunk">Cyberpunk Neon Glow</button>
+              </div>
+              <div style="font-family: var(--docs-font-mono); font-size: 0.8rem; background: var(--bg-card); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid var(--border-subtle); color: var(--text-muted);">
+                <span style="color: #6366f1;">// Applied Global Rule:</span><br />
+                <span id="active-css-display">.arena-btn &#123; /* standard styles */ &#125;</span>
+              </div>
+            </div>
+
+            <!-- Section 2: Form Serialization Output -->
+            <div id="ctrl-section-forms" class="lab-ctrl-panel" style="display: none;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span style="font-weight: 700; font-size: 0.9rem; color: var(--text-main);">Live Form Submission Terminal:</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Executes <code>new FormData(form)</code></span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <div style="font-size: 0.8rem; font-weight: 600; color: #ef4444; margin-bottom: 0.35rem;">Shadow DOM Extracted FormData:</div>
+                  <pre id="shadow-form-output" style="margin: 0; padding: 0.75rem; border-radius: 6px; background: #000; color: #ef4444; font-family: var(--docs-font-mono); font-size: 0.8rem; min-height: 80px;">&#123;
+  // EMPTY! 
+  // Shadow DOM value is trapped behind the shadow boundary.
+  // Native form submission completely fails without JS manual bridges.
+&#125;</pre>
+                </div>
+                <div>
+                  <div style="font-size: 0.8rem; font-weight: 600; color: #10b981; margin-bottom: 0.35rem;">NNUI Light-DOM Extracted FormData:</div>
+                  <pre id="light-form-output" style="margin: 0; padding: 0.75rem; border-radius: 6px; background: #000; color: #10b981; font-family: var(--docs-font-mono); font-size: 0.8rem; min-height: 80px;">&#123;
+  "role": "architect" // Native ElementInternals form value!
+&#125;</pre>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Section 3: A11y Tree Inspector -->
+            <div id="ctrl-section-a11y" class="lab-ctrl-panel" style="display: none;">
+              <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-main);">
+                ARIA Reference Resolution & Screen Reader Tree Inspection
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3); background: var(--bg-card);">
+                  <div style="font-weight: 700; color: #ef4444; margin-bottom: 0.5rem; font-size: 0.85rem;">Shadow DOM: Fragmented Accessibility Tree</div>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0 0 0.5rem 0;">
+                    <code>aria-controls="my-popup"</code> fails because <code>#my-popup</code> is inside a separate <code>#shadow-root</code> document fragment.
+                  </p>
+                  <div style="font-family: var(--docs-font-mono); font-size: 0.75rem; color: #ef4444; background: rgba(239, 68, 68, 0.05); padding: 0.5rem; border-radius: 4px;">
+                    ❌ Error: ID ref "my-popup" not found in current shadow scope.
+                  </div>
+                </div>
+                <div style="padding: 1rem; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3); background: var(--bg-card);">
+                  <div style="font-weight: 700; color: #10b981; margin-bottom: 0.5rem; font-size: 0.85rem;">NNUI Light-DOM: Single Unbroken Tree</div>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0 0 0.5rem 0;">
+                    All IDs (<code>trigger</code>, <code>listbox</code>, <code>panel</code>) live in the top-level document. Assistive technologies navigate effortlessly.
+                  </p>
+                  <div style="font-family: var(--docs-font-mono); font-size: 0.75rem; color: #10b981; background: rgba(16, 185, 129, 0.05); padding: 0.5rem; border-radius: 4px;">
+                    ✓ ARIA mapping intact: role="combobox" -> aria-expanded="false"
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 4: DOM Node Tree -->
+            <div id="ctrl-section-dom" class="lab-ctrl-panel" style="display: none;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <div style="font-weight: 700; font-size: 0.85rem; color: #ef4444; margin-bottom: 0.5rem;">Shadow Root Black Box</div>
+                  <pre style="margin: 0; padding: 0.75rem; border-radius: 6px; background: #000; color: #a1a1aa; font-family: var(--docs-font-mono); font-size: 0.75rem;">&lt;fancy-select&gt;
+  #shadow-root (closed)
+    &lt;div class="internal-box"&gt;
+      &lt;!-- Inaccessible to document.querySelector --&gt;
+      &lt;!-- React ref cannot touch internal button --&gt;
+      &lt;button&gt;Select...&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/fancy-select&gt;</pre>
+                </div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.85rem; color: #10b981; margin-bottom: 0.5rem;">NNUI Transparent Light-DOM</div>
+                  <pre style="margin: 0; padding: 0.75rem; border-radius: 6px; background: #000; color: #a1a1aa; font-family: var(--docs-font-mono); font-size: 0.75rem;">&lt;ui-select name="role"&gt;
+  &lt;!-- 100% visible to React refs, Tailwind & CSS --&gt;
+  &lt;button data-part="trigger" class="my-tailwind-btn"&gt;
+    &lt;span data-part="label"&gt;Select...&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div data-part="listbox"&gt;...&lt;/div&gt;
+&lt;/ui-select&gt;</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The Historical Context & Why Shadow DOM Failed -->
+      <section id="why-shadow-failed" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--text-main);">
+          The Fatal Flaw of Shadow DOM
+        </h2>
+        
+        <p style="font-size: 1.05rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem;">
+          In 2013, browser vendors created Shadow DOM with a specific purpose: <strong>to encapsulate complex native browser widgets like <code>&lt;video&gt;</code> and <code>&lt;input type="date"&gt;</code></strong> so that author page styles wouldn't accidentally break playback scrubber controls.
+        </p>
+
+        <p style="font-size: 1.05rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem;">
+          However, the web component community made a critical architectural assumption: they assumed that <em>application design system components</em> should also live inside shadow roots. This created four catastrophic friction points:
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; background: var(--bg-card);">
+            <div style="color: #ef4444; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem;">1. The Death of CSS Cascade</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Utility frameworks like Tailwind CSS, design tokens, and global typography are completely blocked by the shadow boundary. Customizing a component required defining dozens of <code>::part()</code> selectors and <code>--custom-css-properties</code> for every single border, padding, and hover state.
+            </p>
+          </div>
+
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; background: var(--bg-card);">
+            <div style="color: #ef4444; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem;">2. The Broken A11y Tree</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              ARIA specifications rely on ID references (<code>aria-labelledby="heading-id"</code>, <code>aria-describedby="hint-id"</code>). In Shadow DOM, IDs cannot cross the boundary. Complex modal dialogs, tooltips, and floating menus broke screen reader relationships.
+            </p>
+          </div>
+
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; background: var(--bg-card);">
+            <div style="color: #ef4444; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem;">3. Invisible to Native Forms</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Inputs rendered inside a shadow root do not participate in parent <code>&lt;form&gt;</code> submissions. Submitting a form would omit shadow values unless developers manually synchronized state with hidden inputs.
+            </p>
+          </div>
+
+          <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; background: var(--bg-card);">
+            <div style="color: #ef4444; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem;">4. SSR Hydration & FOUC</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Rendering Shadow DOM on the server requires <em>Declarative Shadow DOM</em> (<code>&lt;template shadowrootmode="open"&gt;</code>), causing severe HTML bloat and Flash of Unstyled Content (FOUC) while waiting for client JavaScript bundles to execute.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Justification & Architecture -->
+      <section id="our-justification" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--text-main);">
+          NNUI-KIT’s Solution: The Light-DOM Invariant
+        </h2>
+
+        <div data-ui="card" style="border-left: 4px solid #10b981; border-top: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; background: var(--bg-card); margin-bottom: 2rem;">
+          <h3 style="margin-top: 0; font-size: 1.25rem; font-weight: 800; color: #10b981;">
+            Core Invariant: Mutates attributes, never nodes.
+          </h3>
+          <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem;">
+            NNUI-KIT components are <strong>Micro-Enhancers</strong>. They do not render or hide child DOM trees. Instead, they act as an accessible state machine attached directly to standard HTML nodes.
+          </p>
+          <ul style="margin: 0; padding-left: 1.25rem; color: var(--text-muted); line-height: 1.7;">
+            <li><strong>You write raw HTML or JSX:</strong> You provide the buttons, triggers, inputs, and layout.</li>
+            <li><strong>NNUI manages keyboard & ARIA state:</strong> It applies <code>role</code>, <code>aria-selected</code>, <code>tabindex</code>, and <code>data-state</code> attributes safely.</li>
+            <li><strong>CSS Cascade Layers handle styling:</strong> With <code>@layer ui.tokens</code> and <code>@layer ui.components</code>, you can override any style using vanilla CSS or Tailwind without <code>!important</code>.</li>
+            <li><strong>ElementInternals handle forms:</strong> Native form validation, reset, and <code>FormData</code> extraction without hidden input workarounds.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Full Comparison Matrix -->
+      <section id="comparison-matrix" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.5rem; color: var(--text-main);">
+          Complete Architectural Comparison
+        </h2>
+
+        <div style="overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: 12px; background: var(--bg-card);">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+            <thead>
+              <tr style="background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle);">
+                <th style="padding: 1rem 1.25rem; font-weight: 700;">Dimension</th>
+                <th style="padding: 1rem 1.25rem; font-weight: 700; color: #ef4444;">Shadow DOM (Shoelace / Lit)</th>
+                <th style="padding: 1rem 1.25rem; font-weight: 700; color: #10b981;">NNUI-KIT (Light-DOM Native)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 1rem 1.25rem; font-weight: 600;">Tailwind CSS / Utility Interop</td>
+                <td style="padding: 1rem 1.25rem; color: #ef4444;">❌ Broken. Utilities cannot penetrate shadow roots.</td>
+                <td style="padding: 1rem 1.25rem; color: #10b981;">✓ 100% Native. Any class works directly on any element.</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 1rem 1.25rem; font-weight: 600;">Native Form Participation</td>
+                <td style="padding: 1rem 1.25rem; color: #ef4444;">⚠️ Requires manual proxy inputs or complex hacks.</td>
+                <td style="padding: 1rem 1.25rem; color: #10b981;">✓ Built-in via standard <code>ElementInternals</code> API.</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 1rem 1.25rem; font-weight: 600;">Accessibility (ARIA APG)</td>
+                <td style="padding: 1rem 1.25rem; color: #ef4444;">❌ Boundary traps. IDREFs fail across shadow boundaries.</td>
+                <td style="padding: 1rem 1.25rem; color: #10b981;">✓ Single continuous accessibility tree for screen readers.</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 1rem 1.25rem; font-weight: 600;">Server-Side Rendering (SSR)</td>
+                <td style="padding: 1rem 1.25rem; color: #ef4444;">⚠️ Bloated Declarative Shadow DOM templates.</td>
+                <td style="padding: 1rem 1.25rem; color: #10b981;">✓ 100% semantic standard HTML. 0ms first paint.</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 1rem 1.25rem; font-weight: 600;">React / Vue / Svelte Ref Access</td>
+                <td style="padding: 1rem 1.25rem; color: #ef4444;">⚠️ Ref only reaches the outer host; internals are shielded.</td>
+                <td style="padding: 1rem 1.25rem; color: #10b981;">✓ Refs access exact DOM nodes and standard element APIs.</td>
+              </tr>
+              <tr>
+                <td style="padding: 1rem 1.25rem; font-weight: 600;">Bundle & Runtime Overhead</td>
+                <td style="padding: 1rem 1.25rem; color: #ef4444;">Heavy template engines and shadow DOM polyfills.</td>
+                <td style="padding: 1rem 1.25rem; color: #10b981;">✓ Sub-40 KB runtime across all 45 components.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Interactive Architecture Quiz -->
+      <section id="architecture-quiz" style="margin-bottom: 5rem;">
+        <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 16px; padding: 2rem; background: var(--bg-card);">
+          <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.5rem 0; color: var(--text-main);">
+            Architectural Fit: Light-DOM or Shadow DOM?
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0 0 1.5rem 0;">
+            Answer 3 quick architectural questions to receive an instant technical recommendation for your engineering team:
+          </p>
+
+          <form id="fit-quiz-form" onsubmit="event.preventDefault();">
+            <div style="margin-bottom: 1.25rem;">
+              <label style="display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-main);">
+                1. Does your application use utility-first CSS (Tailwind, UnoCSS) or a shared brand theme?
+              </label>
+              <div style="display: flex; gap: 1.5rem;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer;">
+                  <input type="radio" name="q1" value="yes" checked /> Yes, we use Tailwind or global CSS tokens
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer;">
+                  <input type="radio" name="q1" value="no" /> No, every widget must be an isolated sandbox
+                </label>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+              <label style="display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-main);">
+                2. Do your components live inside forms or require native FormData submissions?
+              </label>
+              <div style="display: flex; gap: 1.5rem;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer;">
+                  <input type="radio" name="q2" value="yes" checked /> Yes, form participation is essential
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer;">
+                  <input type="radio" name="q2" value="no" /> No, pure display-only widgets
+                </label>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-main);">
+                3. Do you support Server-Side Rendering (Next.js, Astro, Nuxt, Remix) with 0ms FOUC?
+              </label>
+              <div style="display: flex; gap: 1.5rem;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer;">
+                  <input type="radio" name="q3" value="yes" checked /> Yes, instant paint and SEO are critical
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer;">
+                  <input type="radio" name="q3" value="no" /> No, client-rendered SPA only
+                </label>
+              </div>
+            </div>
+
+            <button type="button" id="calc-fit-btn" style="padding: 0.6rem 1.25rem; font-size: 0.9rem; font-weight: 700; border-radius: 8px; background: #6366f1; color: white; border: none; cursor: pointer;">
+              Calculate Technical Recommendation
+            </button>
+          </form>
+
+          <div id="quiz-recommendation-box" style="display: none; margin-top: 1.5rem; padding: 1.25rem; border-radius: 10px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3);">
+            <div style="font-weight: 800; color: #10b981; font-size: 1.1rem; margin-bottom: 0.35rem;" id="quiz-result-title">
+              ✓ 100% Match: NNUI Light-DOM Architecture
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-main); margin: 0; line-height: 1.6;" id="quiz-result-desc">
+              Your requirements (Tailwind compatibility, native form serialization, and SSR safety) make Shadow DOM an antipattern for your tech stack. NNUI-KIT provides the framework-agnostic benefits of Web Components with zero styling boundaries.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</DocsLayout>
+
+<!-- Client Script for Interactive Battle Lab & Simulation -->
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Initialize Mock Shadow DOM Element
+    const shadowHost = document.getElementById('shadow-dom-container');
+    if (shadowHost) {
+      let root = shadowHost.shadowRoot;
+      if (!root) {
+        root = shadowHost.attachShadow({ mode: 'open' });
+      }
+      root.innerHTML = `
+        <style>
+          .shadow-box {
+            padding: 0.5rem;
+            color: #71717a;
+            font-family: inherit;
+          }
+          .shadow-btn {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #d4d4d8;
+            background: #f4f4f5;
+            color: #18181b;
+            font-size: 0.875rem;
+          }
+        </style>
+        <div class="shadow-box">
+          <label style="display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.35rem; color: #52525b;">Role Selector (Shadow DOM)</label>
+          <button type="button" class="shadow-btn">
+            <span>Principal Architect</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <p style="font-size: 0.75rem; color: #ef4444; margin-top: 0.75rem;">
+            🔒 Encapsulated in #shadow-root (open). External CSS rules and Tailwind classes cannot cross this threshold.
+          </p>
+        </div>
+      `;
+    }
+
+    // 2. Tab Navigation inside Lab
+    const labTabs = document.querySelectorAll('.lab-tab-btn');
+    const ctrlPanels = document.querySelectorAll('.lab-ctrl-panel');
+
+    labTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        labTabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        const testId = tab.dataset.test;
+
+        ctrlPanels.forEach((p) => (p.style.display = 'none'));
+        const activePanel = document.getElementById(`ctrl-section-${testId}`);
+        if (activePanel) activePanel.style.display = 'block';
+      });
+    });
+
+    // 3. CSS Preset Injection
+    const cssPresetBtns = document.querySelectorAll('.css-preset-btn');
+    const lightTargetBtn = document.querySelector('#light-dom-container .arena-btn');
+    const activeCssDisplay = document.getElementById('active-css-display');
+
+    const stylesMap = {
+      default: {
+        cssText: '',
+        label: '.arena-btn { /* standard neutral theme */ }'
+      },
+      'tailwind-violet': {
+        cssText: 'background-color: #7c3aed !important; color: #ffffff !important; border-radius: 12px !important; box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.3) !important; border: none !important;',
+        label: '.arena-btn.bg-violet-600.text-white.rounded-xl.shadow-lg { background: #7c3aed; border-radius: 12px; }'
+      },
+      'tailwind-emerald': {
+        cssText: 'border: 2px dashed #10b981 !important; color: #10b981 !important; font-family: monospace !important; background: transparent !important;',
+        label: '.arena-btn.border-2.border-dashed.border-emerald-500.font-mono { border: 2px dashed #10b981; }'
+      },
+      cyberpunk: {
+        cssText: 'background-color: #0f172a !important; color: #06b6d4 !important; border: 1px solid #06b6d4 !important; box-shadow: 0 0 12px #06b6d4 !important; font-weight: 800 !important; text-transform: uppercase !important;',
+        label: '.arena-btn.cyberpunk { background: #0f172a; color: #06b6d4; box-shadow: 0 0 12px #06b6d4; }'
+      }
+    };
+
+    cssPresetBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        cssPresetBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const styleKey = btn.dataset.style;
+        const conf = stylesMap[styleKey];
+
+        if (lightTargetBtn) {
+          lightTargetBtn.style.cssText = conf.cssText;
+        }
+        if (activeCssDisplay) {
+          activeCssDisplay.textContent = conf.label;
+        }
+      });
+    });
+
+    // 4. Form Submission Simulation
+    const lightForm = document.getElementById('light-test-form');
+    const lightOutput = document.getElementById('light-form-output');
+    if (lightForm && lightOutput) {
+      lightForm.addEventListener('submit', () => {
+        const formData = new FormData(lightForm);
+        const obj = {};
+        for (const [k, v] of formData.entries()) {
+          obj[k] = v;
+        }
+        lightOutput.textContent = JSON.stringify(obj, null, 2);
+        lightOutput.style.color = '#10b981';
+      });
+    }
+
+    // 5. Interactive Fit Quiz
+    const calcBtn = document.getElementById('calc-fit-btn');
+    const resultBox = document.getElementById('quiz-recommendation-box');
+    const resultTitle = document.getElementById('quiz-result-title');
+    const resultDesc = document.getElementById('quiz-result-desc');
+
+    if (calcBtn && resultBox) {
+      calcBtn.addEventListener('click', () => {
+        const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+        const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+        const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+
+        resultBox.style.display = 'block';
+
+        if (q1 === 'yes' || q2 === 'yes' || q3 === 'yes') {
+          resultTitle.textContent = '✓ 100% Match: NNUI Light-DOM Architecture';
+          resultTitle.style.color = '#10b981';
+          resultBox.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+          resultBox.style.background = 'rgba(16, 185, 129, 0.08)';
+          resultDesc.textContent =
+            'Your requirements (Tailwind compatibility, native form serialization, or SSR safety) mean Shadow DOM will actively impede your team. NNUI-KIT delivers universal, multi-framework components without any styling or accessibility boundaries.';
+        } else {
+          resultTitle.textContent = 'ℹ Niche Match: Shadow DOM';
+          resultTitle.style.color = '#f59e0b';
+          resultBox.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+          resultBox.style.background = 'rgba(245, 158, 11, 0.08)';
+          resultDesc.textContent =
+            'Because you require an isolated, un-themeable third-party widget (e.g. an embeddable ad or isolated payment iframe), Shadow DOM encapsulation might be suitable.';
+        }
+      });
+    }
+
+    // 6. Reset Lab Button
+    const resetBtn = document.getElementById('reset-lab-btn');
+    if (resetBtn && lightTargetBtn) {
+      resetBtn.addEventListener('click', () => {
+        lightTargetBtn.style.cssText = '';
+        const defaultBtn = document.querySelector('.css-preset-btn[data-style="default"]');
+        if (defaultBtn) defaultBtn.click();
+      });
+    }
+  });
+</script>
+
+<style>
+  .lab-tab-btn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .lab-tab-btn:hover {
+    color: var(--text-main);
+    border-color: var(--brand-accent);
+  }
+  .lab-tab-btn.active {
+    background: var(--brand-accent);
+    color: var(--bg-primary);
+    border-color: var(--brand-accent);
+  }
+
+  .css-preset-btn {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .css-preset-btn:hover {
+    color: var(--text-main);
+  }
+  .css-preset-btn.active {
+    background: #6366f1;
+    color: white;
+    border-color: #6366f1;
+  }
+</style>

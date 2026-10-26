@@ -37,22 +37,38 @@ export class UiDataGrid extends BaseLightElement {
     return isNaN(val) || val <= 0 ? 40 : val;
   }
 
+  set rowHeight(val) {
+    if (val !== null && val !== undefined) this.setAttributeSafe('row-height', String(val));
+    else this.removeAttributeSafe('row-height');
+  }
+
   get overscan() {
     const val = parseInt(this.getAttribute('overscan'), 10);
     return isNaN(val) || val < 0 ? 6 : val;
+  }
+
+  set overscan(val) {
+    if (val !== null && val !== undefined) this.setAttributeSafe('overscan', String(val));
+    else this.removeAttributeSafe('overscan');
   }
 
   get totalRows() {
     return this._rows.length;
   }
 
+  set totalRows(_) {}
+
   get filteredCount() {
     return this._filteredRows.length;
   }
 
+  set filteredCount(_) {}
+
   get selectedCount() {
     return this._selectedIds.size;
   }
+
+  set selectedCount(_) {}
 
   getAiState() {
     return {

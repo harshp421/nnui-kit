@@ -1,6 +1,6 @@
 {
   "name": "nnuikit",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "NNUI-KIT: Platform-Native, Three-Tier Light-DOM Universal UI Architecture with Zero Shadow DOM A11y Traps",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -27,9 +27,14 @@
       "default": "./dist/react.js"
     },
     "./css": "./dist/index.css",
+    "./css/standalone": "./dist/standalone.css",
     "./tokens": "./src/styles/tokens.css",
     "./tokens.json": "./tokens.json",
+    "./theme.css": "./src/styles/theme.css",
+    "./globals.css": "./src/styles/globals.css",
     "./custom-elements.json": "./custom-elements.json",
+    "./html-data.json": "./dist/vscode.html-data.json",
+    "./vscode.html-data.json": "./dist/vscode.html-data.json",
     "./llms.txt": "./llms.txt",
     "./registry.json": "./registry.json",
     "./package.json": "./package.json"
@@ -56,6 +61,7 @@
     "bin",
     "registry.json",
     "custom-elements.json",
+    "vscode.html-data.json",
     "tokens.json",
     "llms.txt",
     "README.md",
@@ -64,14 +70,15 @@
   "scripts": {
     "dev": "vite build --config vite.lib.config.js --watch",
     "dev:docs": "cd ../../apps/docs && npm run dev",
-    "build:lib": "vite build --config vite.lib.config.js",
+    "build:vscode": "node scripts/build-vscode-data.js",
+    "build:lib": "node scripts/build-vscode-data.js && vite build --config vite.lib.config.js",
     "build:registry": "node scripts/build-registry.js",
-    "build": "node scripts/build-registry.js && vite build --config vite.lib.config.js",
-    "prepare": "node scripts/build-registry.js && vite build --config vite.lib.config.js",
-    "prepublishOnly": "node scripts/build-registry.js && vite build --config vite.lib.config.js",
-    "pack:check": "npm pack --dry-run",
+    "build": "node scripts/build-registry.js && node scripts/build-vscode-data.js && vite build --config vite.lib.config.js",
+    "prepublishOnly": "npm run build",
+    "pack:check": "npm pack --dry-run --ignore-scripts",
     "pack": "npm pack",
     "test": "node tests/run-all.js",
+
     "publish:pkg": "npm publish",
     "deploy": "npm publish"
   },

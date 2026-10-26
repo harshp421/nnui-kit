@@ -25,6 +25,21 @@ export class UiDatePicker extends BaseLightElement {
     }
   }
 
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
+
+  get name() {
+    return this.getAttribute('name') || '';
+  }
+
+  set name(val) {
+    if (val) this.setAttributeSafe(this, 'name', val);
+    else this.removeAttributeSafe(this, 'name');
+  }
+
   get value() {
     return this.getAttribute('value') || '';
   }
@@ -35,6 +50,11 @@ export class UiDatePicker extends BaseLightElement {
 
   get isOpen() {
     return this.hasAttribute('open') || this._popover?.matches(':popover-open') || this._popover?.hasAttribute('open');
+  }
+
+  set isOpen(val) {
+    if (val) this.open();
+    else this.close();
   }
 
   init() {
@@ -334,5 +354,9 @@ export class UiDatePicker extends BaseLightElement {
         }
       }
     }
+  }
+
+  formResetCallback() {
+    this.value = this.getAttribute('value') || '';
   }
 }

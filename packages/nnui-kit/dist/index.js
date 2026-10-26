@@ -1,11 +1,35 @@
-var U = Object.defineProperty;
-var K = (h, t, e) => t in h ? U(h, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : h[t] = e;
-var O = (h, t, e) => K(h, typeof t != "symbol" ? t + "" : t, e);
-const Y = typeof globalThis.HTMLElement < "u" ? globalThis.HTMLElement : class {
+var Q = Object.defineProperty;
+var J = (h, t, e) => t in h ? Q(h, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : h[t] = e;
+var x = (h, t, e) => J(h, typeof t != "symbol" ? t + "" : t, e);
+const L = typeof globalThis.HTMLElement < "u" ? globalThis.HTMLElement : class {
 };
-class A extends Y {
+class A extends L {
   constructor() {
-    super(), this._cleanups = [], this._initialized = !1;
+    super(), this._cleanups = [], this._initialized = !1, this._ensureSettersForGetters();
+  }
+  /**
+   * React 19 reconciler compatibility guard:
+   * React 19 checks `'prop' in element` and executes `element[prop] = value`.
+   * If a class prototype has a getter without a setter, JavaScript strict mode throws
+   * "TypeError: Cannot set property X of #<Element> which has only a getter".
+   * This guard automatically adds a reflecting setter if one was omitted on any subclass.
+   */
+  _ensureSettersForGetters() {
+    let t = Object.getPrototypeOf(this);
+    for (; t && t !== L.prototype && t !== Object.prototype; ) {
+      const e = Object.getOwnPropertyDescriptors(t);
+      for (const [i, s] of Object.entries(e))
+        s.get && !s.set && Object.defineProperty(t, i, {
+          get: s.get,
+          set(a) {
+            const r = i.replace(/[A-Z]/g, (n) => "-" + n.toLowerCase());
+            typeof a == "boolean" ? a ? this.setAttribute(r, "") : this.removeAttribute(r) : a != null ? this.setAttribute(r, String(a)) : this.removeAttribute(r);
+          },
+          configurable: !0,
+          enumerable: s.enumerable
+        });
+      t = Object.getPrototypeOf(t);
+    }
   }
   /**
    * Forbid attachShadow to enforce unbroken accessibility trees.
@@ -87,9 +111,11 @@ class A extends Y {
   }
   /**
    * Diagnostic helper to warn developers when AI-generated markup is missing expected parts.
+   * Only triggers when children were provided but expected parts are absent (avoids false-positives
+   * during deferred V-DOM/React mounting or before auto-scaffolding).
    */
   warnIfMissing(t, e = "") {
-    typeof window < "u" && !this.querySelector(t) && console.warn(
+    typeof window < "u" && this.childElementCount > 0 && !this.querySelector(t) && console.warn(
       `[NNUI-KIT] <${this.tagName.toLowerCase()}>: Missing expected child "${t}" (${e}). Make sure your template includes this element for proper functionality.`
     );
   }
@@ -150,11 +176,11 @@ const c = {
   END: "End",
   TAB: "Tab"
 };
-let j = 0;
-function C(h = "ui") {
-  return `${h}-${++j}-${Math.random().toString(36).slice(2, 7)}`;
+let X = 0;
+function I(h = "ui") {
+  return `${h}-${++X}-${Math.random().toString(36).slice(2, 7)}`;
 }
-function G(h, t, e = !1) {
+function Z(h, t, e = !1) {
   h.forEach((i, s) => {
     s === t ? (i.setAttribute("tabindex", "0"), e && i.focus()) : i.setAttribute("tabindex", "-1");
   });
@@ -164,7 +190,7 @@ function S(h, t, e, i = !0) {
   let s = h + e;
   return i ? (s < 0 && (s = t - 1), s >= t && (s = 0)) : s = Math.max(0, Math.min(t - 1, s)), s;
 }
-class Q extends A {
+class tt extends A {
   static get observedAttributes() {
     return ["value", "orientation"];
   }
@@ -177,8 +203,11 @@ class Q extends A {
   get orientation() {
     return this.getAttribute("orientation") || "horizontal";
   }
+  set orientation(t) {
+    t ? this.setAttributeSafe(this, "orientation", t) : this.removeAttributeSafe(this, "orientation");
+  }
   init() {
-    this.setAttributeSafe(this, "data-ui", "tabs"), this._getTabs().length === 0 && console.warn(`[NNUI-KIT] <${this.tagName.toLowerCase()}> has no tab triggers. Add buttons with data-part="tab" or role="tab".`), this._setupStructure(), this._syncState(), this._bindEvents();
+    this.setAttributeSafe(this, "data-ui", "tabs"), this.childElementCount > 0 && this._getTabs().length === 0 && console.warn(`[NNUI-KIT] <${this.tagName.toLowerCase()}> has no tab triggers. Add buttons with data-part="tab" or role="tab".`), this._setupStructure(), this._syncState(), this._bindEvents();
   }
   _getTabs() {
     const t = this.querySelector('[data-part="tablist"], [role="tablist"]');
@@ -194,7 +223,7 @@ class Q extends A {
     );
   }
   _setupStructure() {
-    const t = this._getTabs(), e = this._getPanels(), i = this.id || C("tabs");
+    const t = this._getTabs(), e = this._getPanels(), i = this.id || I("tabs");
     t.forEach((s, a) => {
       var l;
       const r = s.dataset.value || `tab-${a}`;
@@ -251,7 +280,7 @@ class Q extends A {
       }
       if (r >= 0 && r !== s) {
         const n = i[r];
-        G(i, r, !0), this.selectTab(n.dataset.value);
+        Z(i, r, !0), this.selectTab(n.dataset.value);
       }
     });
   }
@@ -267,18 +296,35 @@ class Q extends A {
     e !== i && this._initialized && t === "value" && this._syncState();
   }
 }
-class J extends A {
+class B extends A {
   static get observedAttributes() {
-    return ["value", "open"];
+    return ["value", "open", "name", "disabled"];
+  }
+  constructor() {
+    super(), typeof this.attachInternals == "function" && (this._internals = this.attachInternals());
+  }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(t) {
+  }
+  get name() {
+    return this.getAttribute("name") || "";
+  }
+  set name(t) {
+    t ? this.setAttributeSafe(this, "name", t) : this.removeAttributeSafe(this, "name");
   }
   get value() {
     return this.getAttribute("value") || "";
   }
   set value(t) {
-    this.setAttributeSafe(this, "value", t);
+    this.setAttributeSafe(this, "value", t), this._updateFormValue(t);
   }
   get isOpen() {
     return this.hasAttribute("open");
+  }
+  set isOpen(t) {
+    t ? this.open() : this.close();
   }
   init() {
     this.setAttributeSafe(this, "data-ui", "combobox"), this._input = this.querySelector('[data-part="input"], input'), this._listbox = this.querySelector('[data-part="listbox"], [role="listbox"], ul, ol'), this._activeIndex = -1, this.warnIfMissing('[data-part="input"], input', "Input search element"), this.warnIfMissing('[data-part="listbox"], [role="listbox"], ul, ol', "Dropdown listbox container"), this._setupARIA(), this._bindEvents();
@@ -291,7 +337,7 @@ class J extends A {
   }
   _setupARIA() {
     var i;
-    const t = this.id || C("combobox"), e = ((i = this._listbox) == null ? void 0 : i.id) || `${t}-listbox`;
+    const t = this.id || I("combobox"), e = ((i = this._listbox) == null ? void 0 : i.id) || `${t}-listbox`;
     this._input && (this.setAttributeSafe(this._input, "role", "combobox"), this.setAttributeSafe(this._input, "aria-autocomplete", "list"), this.setAttributeSafe(this._input, "aria-expanded", "false"), this.setAttributeSafe(this._input, "aria-controls", e), this.setAttributeSafe(this._input, "autocomplete", "off")), this._listbox && (this.setAttributeSafe(this._listbox, "id", e), this.setAttributeSafe(this._listbox, "role", "listbox"), this.setAttributeSafe(this._listbox, "data-state", "closed")), this._getOptions().forEach((s, a) => {
       const r = s.id || `${t}-opt-${a}`;
       this.setAttributeSafe(s, "id", r), this.setAttributeSafe(s, "role", "option"), this.setAttributeSafe(s, "aria-selected", "false");
@@ -351,20 +397,52 @@ class J extends A {
   close() {
     this.isOpen && (this.removeAttribute("open"), this._input && this.setAttributeSafe(this._input, "aria-expanded", "false"), this._listbox && this.setAttributeSafe(this._listbox, "data-state", "closed"), this._activeIndex = -1, this._highlightOption(null));
   }
+  _updateFormValue(t = this.value) {
+    this._internals && this._internals.setFormValue(t);
+  }
+  formResetCallback() {
+    const t = this._getOptions().find((i) => i.hasAttribute("selected") || i.hasAttribute("default-selected")), e = t ? t.dataset.value || t.textContent.trim() : this.getAttribute("value") || "";
+    this.value = e, this._input && (this._input.value = t ? t.textContent.trim() : e), this._updateFormValue(e);
+  }
 }
-class X extends A {
+x(B, "formAssociated", !0);
+class et extends A {
   static get observedAttributes() {
     return ["open"];
   }
   get isOpen() {
     return this._dialog ? this._dialog.hasAttribute("open") : !1;
   }
+  set isOpen(t) {
+    t ? this.showModal() : this.close();
+  }
   init() {
     if (this.setAttributeSafe(this, "data-ui", "dialog-container"), this._dialog = this.querySelector("dialog"), this._trigger = null, !this._dialog) {
-      console.warn(`[NNUI-KIT] <${this.tagName.toLowerCase()}> is missing expected <dialog> element. Add a <dialog> element inside.`);
+      this._bindCustomEvents();
       return;
     }
     this._setupDialog(), this._bindEvents();
+  }
+  _bindCustomEvents() {
+    this.listen(this, "click", (t) => {
+      const e = t.target.closest('[data-part="trigger"], [data-trigger]');
+      if (e) {
+        t.preventDefault(), this.showModal(e);
+        return;
+      }
+      if (t.target.closest('[data-part="dialog-close"], [data-part="close"], [data-close]')) {
+        t.preventDefault(), this.close("button");
+        return;
+      }
+      const s = t.target.closest('[data-part="backdrop"]');
+      s && t.target === s && this.close("backdrop");
+    }), this.listen(document, "click", (t) => {
+      if (!this.id) return;
+      const e = t.target.closest(`[data-dialog-target="${this.id}"], [data-target="${this.id}"]`);
+      e && !this.contains(e) && (t.preventDefault(), this.showModal(e));
+    }), this.listen(window, "keydown", (t) => {
+      t.key === "Escape" && this.isOpen && this.close("escape");
+    });
   }
   _setupDialog() {
     this.setAttributeSafe(this._dialog, "data-ui", "dialog"), this.hasAttribute("open") && !this._dialog.open && this.showModal();
@@ -390,20 +468,34 @@ class X extends A {
       this.removeAttribute("open"), this.dispatch("close", { reason: "api" }), this._restoreFocus();
     });
   }
+  get isOpen() {
+    return this._dialog ? this._dialog.hasAttribute("open") : this.hasAttribute("open");
+  }
+  set isOpen(t) {
+    t ? this.showModal() : this.close();
+  }
   showModal(t = null) {
-    !this._dialog || this.isOpen || (this._trigger = t || document.activeElement, this._dialog.showModal(), this.setAttributeSafe(this, "open", ""), this.dispatch("open"));
+    if (this._dialog) {
+      if (this.isOpen) return;
+      this._trigger = t || document.activeElement, this._dialog.showModal();
+    } else
+      this._trigger = t || document.activeElement;
+    this.setAttributeSafe(this, "open", ""), this.dispatch("open");
   }
   close(t = "programmatic") {
-    !this._dialog || !this.isOpen || (this._dialog.close(), this.removeAttribute("open"), this.dispatch("close", { reason: t }), this._restoreFocus());
+    this._dialog && this._dialog.open && this._dialog.close(), this.removeAttribute("open"), this.dispatch("close", { reason: t }), this._restoreFocus();
   }
   _restoreFocus() {
     this._trigger && typeof this._trigger.focus == "function" && (this._trigger.focus(), this._trigger = null);
   }
   attributeChangedCallback(t, e, i) {
-    t === "open" && this._dialog && (i !== null && !this.isOpen ? this.showModal() : i === null && this.isOpen && this.close());
+    if (t === "open") {
+      const s = i !== null;
+      this._dialog && (s && !this._dialog.open ? this._dialog.showModal() : !s && this._dialog.open && this._dialog.close());
+    }
   }
 }
-class z extends A {
+class V extends A {
   static get observedAttributes() {
     return ["value", "name", "required", "disabled", "open"];
   }
@@ -412,6 +504,8 @@ class z extends A {
   }
   get form() {
     return this._internals ? this._internals.form : null;
+  }
+  set form(t) {
   }
   get name() {
     return this.getAttribute("name") || "";
@@ -428,11 +522,20 @@ class z extends A {
   get isOpen() {
     return this.hasAttribute("open");
   }
+  set isOpen(t) {
+    t ? this.open() : this.close();
+  }
   get required() {
     return this.hasAttribute("required");
   }
+  set required(t) {
+    t ? this.setAttributeSafe(this, "required", "") : this.removeAttributeSafe(this, "required");
+  }
   get disabled() {
     return this.hasAttribute("disabled");
+  }
+  set disabled(t) {
+    t ? this.setAttributeSafe(this, "disabled", "") : this.removeAttributeSafe(this, "disabled");
   }
   init() {
     this.setAttributeSafe(this, "data-ui", "select"), this._trigger = this.querySelector('[data-part="trigger"], button'), this._valueDisplay = this.querySelector('[data-part="value"], span'), this._listbox = this.querySelector('[data-part="listbox"], [role="listbox"], ul, ol'), this._activeIndex = -1, this.warnIfMissing('[data-part="trigger"], button', "Trigger button"), this.warnIfMissing('[data-part="listbox"], [role="listbox"], ul, ol', "Dropdown listbox container"), this._setupStructure(), this._syncState(), this._bindEvents();
@@ -442,7 +545,7 @@ class z extends A {
   }
   _setupStructure() {
     var i;
-    const t = this.id || C("select"), e = ((i = this._listbox) == null ? void 0 : i.id) || `${t}-listbox`;
+    const t = this.id || I("select"), e = ((i = this._listbox) == null ? void 0 : i.id) || `${t}-listbox`;
     if (this._trigger && (this.setAttributeSafe(this._trigger, "role", "combobox"), this.setAttributeSafe(this._trigger, "aria-haspopup", "listbox"), this.setAttributeSafe(this._trigger, "aria-expanded", "false"), this.setAttributeSafe(this._trigger, "aria-controls", e), this.setAttributeSafe(this._trigger, "tabindex", this.disabled ? "-1" : "0")), this._listbox && (this.setAttributeSafe(this._listbox, "id", e), this.setAttributeSafe(this._listbox, "role", "listbox"), this.setAttributeSafe(this._listbox, "data-state", "closed"), this.setAttributeSafe(this._listbox, "tabindex", "-1")), this._getOptions().forEach((s, a) => {
       const r = s.id || `${t}-opt-${a}`;
       this.setAttributeSafe(s, "id", r), this.setAttributeSafe(s, "role", "option"), this.setAttributeSafe(s, "aria-selected", "false");
@@ -528,16 +631,22 @@ class z extends A {
     e !== i && this._initialized && t === "value" && (this._updateFormValue(i), this._syncState());
   }
 }
-O(z, "formAssociated", !0);
-class Z extends A {
+x(V, "formAssociated", !0);
+class it extends A {
   static get observedAttributes() {
     return ["type", "collapsible"];
   }
   get type() {
     return this.getAttribute("type") || "single";
   }
+  set type(t) {
+    t ? this.setAttribute("type", t) : this.removeAttribute("type");
+  }
   get collapsible() {
     return this.getAttribute("collapsible") !== "false";
+  }
+  set collapsible(t) {
+    t === !1 || t === "false" ? this.setAttribute("collapsible", "false") : this.removeAttribute("collapsible");
   }
   init() {
     this.setAttributeSafe(this, "data-ui", "accordion"), this._setupStructure(), this._bindEvents();
@@ -549,7 +658,7 @@ class Z extends A {
     return Array.from(this.querySelectorAll('[data-part="trigger"]'));
   }
   _setupStructure() {
-    const t = this.id || C("accordion");
+    const t = this.id || I("accordion");
     this._getItems().forEach((i, s) => {
       const a = i.querySelector('[data-part="trigger"]'), r = i.querySelector('[data-part="content"]');
       if (a && r) {
@@ -625,7 +734,7 @@ class Z extends A {
     }
   }
 }
-const Tt = typeof window > "u" || typeof CSS > "u" || !CSS.supports ? !1 : CSS.supports("anchor-name", "--test") && (CSS.supports("position-area", "bottom span-right") || CSS.supports("inset-area", "bottom span-right"));
+const Ot = typeof window > "u" || typeof CSS > "u" || !CSS.supports ? !1 : CSS.supports("anchor-name", "--test") && (CSS.supports("position-area", "bottom span-right") || CSS.supports("inset-area", "bottom span-right"));
 function R(h, t, e = "bottom", i = 6) {
   if (!h || !t) return;
   typeof e == "object" && e !== null && (i = e.offset ?? i, e = e.placement || "bottom");
@@ -672,7 +781,7 @@ function R(h, t, e = "bottom", i = 6) {
   const b = `${Math.round(p)}px`, v = `${Math.round(g)}px`;
   typeof t.style.setProperty == "function" && (t.style.setProperty("position", "fixed", "important"), t.style.setProperty("top", b, "important"), t.style.setProperty("left", v, "important"), t.style.setProperty("right", "auto", "important"), t.style.setProperty("bottom", "auto", "important"), t.style.setProperty("margin", "0", "important"), d && t.style.setProperty("width", `${Math.round(r.width)}px`, "important"), t.style.setProperty("max-width", "calc(100vw - 16px)", "important")), t.style.position = "fixed", t.style.top = b, t.style.left = v, t.style.right = "auto", t.style.bottom = "auto", t.style.margin = "0", d && (t.style.width = `${Math.round(r.width)}px`), t.style.maxWidth = "calc(100vw - 16px)";
 }
-function tt(h, t, e = {}) {
+function st(h, t, e = {}) {
   let i = !0, s = null;
   const a = () => {
     i && (s || (s = requestAnimationFrame(() => {
@@ -705,12 +814,12 @@ function tt(h, t, e = {}) {
     s && (cancelAnimationFrame(s), s = null), r && (r.disconnect(), r = null), n && (n.disconnect(), n = null), typeof window < "u" && (window.removeEventListener("scroll", a, { capture: !0 }), window.removeEventListener("resize", a)), t && t.style && t.style.visibility === "hidden" && (t.style.visibility = "");
   };
 }
-class et extends A {
+class at extends A {
   init() {
     this.setAttributeSafe(this, "data-ui", "popover"), this._trigger = this.querySelector('[data-part="trigger"]'), this._panel = this.querySelector('[data-part="popover-panel"], [data-part="content"], [popover]'), !(!this._trigger || !this._panel) && (this._setupPopover(), this._bindEvents());
   }
   _setupPopover() {
-    const t = this.id || C("popover"), e = this._panel.id || `${t}-panel`;
+    const t = this.id || I("popover"), e = this._panel.id || `${t}-panel`;
     this.setAttributeSafe(this._panel, "id", e), this.setAttributeSafe(this._panel, "popover", this._panel.getAttribute("popover") || "auto"), this.setAttributeSafe(this._panel, "data-ui", "popover-content"), this.setAttributeSafe(this._panel, "data-part", "popover-panel"), this.setAttributeSafe(this._trigger, "popovertarget", e), this.setAttributeSafe(this._trigger, "aria-haspopup", "dialog"), this.setAttributeSafe(this._trigger, "aria-expanded", "false");
   }
   _bindEvents() {
@@ -731,6 +840,9 @@ class et extends A {
   }
   get isOpen() {
     return this._panel ? typeof this._panel.matches == "function" && this._panel.matches(":popover-open") || this._panel.getAttribute("data-state") === "open" : !1;
+  }
+  set isOpen(t) {
+    t ? this.show() : this.hide();
   }
   _reposition() {
     !this._trigger || !this._panel || R(this._trigger, this._panel, "bottom", 8);
@@ -753,18 +865,21 @@ class et extends A {
       }
   }
 }
-class it extends A {
+class rt extends A {
   static get observedAttributes() {
     return ["delay"];
   }
   get delay() {
     return parseInt(this.getAttribute("delay") || "150", 10);
   }
+  set delay(t) {
+    t != null ? this.setAttributeSafe(this, "delay", String(t)) : this.removeAttributeSafe(this, "delay");
+  }
   init() {
     this.setAttributeSafe(this, "data-ui", "tooltip"), this._trigger = this.querySelector('[data-part="trigger"]'), this._content = this.querySelector('[data-part="content"], [data-ui="tooltip-content"]'), this._timer = null, !(!this._trigger || !this._content) && (this._content.hasAttribute("popover") && this._content.removeAttribute("popover"), this._setupARIA(), this._bindEvents());
   }
   _setupARIA() {
-    const t = this.id || C("tooltip"), e = this._content.id || `${t}-content`;
+    const t = this.id || I("tooltip"), e = this._content.id || `${t}-content`;
     this.setAttributeSafe(this._content, "id", e), this.setAttributeSafe(this._content, "role", "tooltip"), this.setAttributeSafe(this._trigger, "aria-describedby", e);
   }
   _bindEvents() {
@@ -790,7 +905,7 @@ class it extends A {
     this.clearTimer();
   }
 }
-class st extends A {
+class nt extends A {
   static get observedAttributes() {
     return ["open", "shortcut"];
   }
@@ -868,7 +983,7 @@ class st extends A {
   _setActive(t) {
     this._getVisibleItems().forEach((i, s) => {
       const a = s === t;
-      this.setAttributeSafe(i, "data-active", a ? "true" : !1), this.setAttributeSafe(i, "aria-selected", a ? "true" : !1), a && (i.id || (i.id = C("cmd-item")), this._input && this.setAttributeSafe(this._input, "aria-activedescendant", i.id), i.scrollIntoView({ block: "nearest" }));
+      this.setAttributeSafe(i, "data-active", a ? "true" : !1), this.setAttributeSafe(i, "aria-selected", a ? "true" : !1), a && (i.id || (i.id = I("cmd-item")), this._input && this.setAttributeSafe(this._input, "aria-activedescendant", i.id), i.scrollIntoView({ block: "nearest" }));
     }), this._activeIndex = t;
   }
   filter(t) {
@@ -901,7 +1016,7 @@ class st extends A {
     t === "open" && (i !== null && !this._isOpen ? this.showModal() : i === null && this._isOpen && this.close());
   }
 }
-class at extends A {
+class ot extends A {
   static get observedAttributes() {
     return ["open", "side"];
   }
@@ -964,7 +1079,7 @@ class at extends A {
     t === "open" && (i !== null && !this._isOpen ? this.showModal() : i === null && this._isOpen && !this._isClosing && this.close());
   }
 }
-class B extends A {
+class H extends A {
   static get observedAttributes() {
     return ["value", "min", "max", "step", "disabled", "name"];
   }
@@ -972,7 +1087,16 @@ class B extends A {
     super(), typeof this.attachInternals == "function" && (this._internals = this.attachInternals()), this._value = 0, this._isDragging = !1;
   }
   init() {
-    this.warnIfMissing('[data-part="track"]', "Slider track"), this.warnIfMissing('[data-part="thumb"]', "Slider thumb"), this._track = this.querySelector('[data-part="track"]') || this, this._range = this.querySelector('[data-part="range"]'), this._thumb = this.querySelector('[data-part="thumb"]'), this._valueDisplay = this.querySelector('[data-part="value"]');
+    if (this.childElementCount === 0) {
+      const e = document.createElement("div");
+      e.setAttribute("data-part", "track"), e.className = "ui-slider-track";
+      const i = document.createElement("div");
+      i.setAttribute("data-part", "range"), i.className = "ui-slider-range", e.appendChild(i);
+      const s = document.createElement("div");
+      s.setAttribute("data-part", "thumb"), s.className = "ui-slider-thumb", this.appendChild(e), this.appendChild(s);
+    } else
+      this.warnIfMissing('[data-part="track"]', "Slider track"), this.warnIfMissing('[data-part="thumb"]', "Slider thumb");
+    this._track = this.querySelector('[data-part="track"]') || this, this._range = this.querySelector('[data-part="range"]'), this._thumb = this.querySelector('[data-part="thumb"]'), this._valueDisplay = this.querySelector('[data-part="value"]');
     const t = parseFloat(this.getAttribute("value")) || this.min;
     this._value = this._clamp(t), this._setupAria(), this._setupEvents(), this._updateVisuals(), this._updateFormValue();
   }
@@ -1046,6 +1170,17 @@ class B extends A {
   _updateFormValue() {
     this._internals && this._internals.setFormValue(String(this._value));
   }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(t) {
+  }
+  get name() {
+    return this.getAttribute("name") || "";
+  }
+  set name(t) {
+    t ? this.setAttributeSafe("name", t) : this.removeAttributeSafe("name");
+  }
   get value() {
     return this._value;
   }
@@ -1056,11 +1191,20 @@ class B extends A {
   get min() {
     return parseFloat(this.getAttribute("min")) || 0;
   }
+  set min(t) {
+    t != null ? this.setAttribute("min", String(t)) : this.removeAttribute("min");
+  }
   get max() {
     return parseFloat(this.getAttribute("max")) || 100;
   }
+  set max(t) {
+    t != null ? this.setAttribute("max", String(t)) : this.removeAttribute("max");
+  }
   get step() {
     return parseFloat(this.getAttribute("step")) || 1;
+  }
+  set step(t) {
+    t != null ? this.setAttribute("step", String(t)) : this.removeAttribute("step");
   }
   get disabled() {
     return this.hasAttribute("disabled");
@@ -1074,15 +1218,22 @@ class B extends A {
       !isNaN(s) && s !== this._value && (this._value = this._clamp(s), this._updateVisuals(), this._updateFormValue());
     } else ["min", "max", "step"].includes(t) ? (this._value = this._clamp(this._value), this._setupAria(), this._updateVisuals()) : t === "disabled" && this._thumb && this.setAttributeSafe(this._thumb, "tabindex", this.disabled ? "-1" : "0");
   }
+  formResetCallback() {
+    const t = parseFloat(this.getAttribute("value")) || this.min;
+    this.value = t;
+  }
 }
-O(B, "formAssociated", !0);
-class rt extends A {
+x(H, "formAssociated", !0);
+class lt extends A {
   static get observedAttributes() {
     return ["open"];
   }
   get isOpen() {
     var t;
     return this.hasAttribute("open") || ((t = this._menu) == null ? void 0 : t.getAttribute("data-state")) === "open";
+  }
+  set isOpen(t) {
+    t ? this.open() : this.close();
   }
   init() {
     this.setAttributeSafe(this, "data-ui", "dropdown"), this._trigger = this.querySelector('[data-part="trigger"], button'), this._menu = this.querySelector('[data-part="menu"], [role="menu"], ul, ol, div'), this._activeIndex = -1, !(!this._trigger || !this._menu) && (this._setupARIA(), this._bindEvents());
@@ -1093,7 +1244,7 @@ class rt extends A {
     ).filter((t) => !t.hasAttribute("disabled") && t.getAttribute("aria-disabled") !== "true") : [];
   }
   _setupARIA() {
-    const t = this.id || C("dropdown"), e = this._menu.id || `${t}-menu`;
+    const t = this.id || I("dropdown"), e = this._menu.id || `${t}-menu`;
     this.setAttributeSafe(this._trigger, "aria-haspopup", "menu"), this.setAttributeSafe(this._trigger, "aria-expanded", "false"), this.setAttributeSafe(this._trigger, "aria-controls", e), this.setAttributeSafe(this._menu, "id", e), this.setAttributeSafe(this._menu, "role", "menu"), this.setAttributeSafe(this._menu, "data-state", "closed"), this.setAttributeSafe(this._menu, "tabindex", "-1"), this._getItems().forEach((i, s) => {
       const a = i.id || `${t}-item-${s}`;
       this.setAttributeSafe(i, "id", a), this.setAttributeSafe(i, "role", "menuitem"), this.setAttributeSafe(i, "tabindex", "-1");
@@ -1187,19 +1338,28 @@ class rt extends A {
     t === "open" && (i !== null && !this.isOpen ? this.open() : i === null && this.isOpen && this.close());
   }
 }
-let D = null, nt = 0;
-class ot extends A {
+let E = null, ht = 0;
+class ut extends A {
   static get observedAttributes() {
     return ["position", "expand"];
   }
   get position() {
     return this.getAttribute("position") || "bottom-right";
   }
+  set position(t) {
+    t ? this.setAttribute("position", t) : this.removeAttribute("position");
+  }
+  get expand() {
+    return this.hasAttribute("expand");
+  }
+  set expand(t) {
+    t ? this.setAttribute("expand", "") : this.removeAttribute("expand");
+  }
   init() {
-    this.setAttributeSafe(this, "data-ui", "toaster"), this.setAttributeSafe(this, "role", "region"), this.setAttributeSafe(this, "aria-label", "Notifications"), this.setAttributeSafe(this, "position", this.position), D = this;
+    this.setAttributeSafe(this, "data-ui", "toaster"), this.setAttributeSafe(this, "role", "region"), this.setAttributeSafe(this, "aria-label", "Notifications"), this.setAttributeSafe(this, "position", this.position), E = this;
   }
   destroy() {
-    D === this && (D = null);
+    E === this && (E = null);
   }
   createToast({
     title: t = "",
@@ -1209,7 +1369,7 @@ class ot extends A {
     action: a = null,
     onDismiss: r = null
   } = {}) {
-    const n = `toast-${++nt}`, o = document.createElement("div");
+    const n = `toast-${++ht}`, o = document.createElement("div");
     o.id = n, o.setAttribute("data-ui", "toast"), o.setAttribute("data-type", i), o.setAttribute("data-state", "open"), o.setAttribute("role", i === "error" ? "alert" : "status"), o.setAttribute("aria-live", i === "error" ? "assertive" : "polite");
     const l = {
       default: "",
@@ -1232,8 +1392,8 @@ class ot extends A {
       </div>
     `, a != null && a.onClick) {
       const y = o.querySelector('[data-part="toast-action"]');
-      y && y.addEventListener("click", (x) => {
-        a.onClick(x), _();
+      y && y.addEventListener("click", (D) => {
+        a.onClick(D), _();
       });
     }
     const f = o.querySelector('[data-part="toast-close"]');
@@ -1255,21 +1415,21 @@ class ot extends A {
     return this.position.startsWith("top") ? this.prepend(o) : this.appendChild(o), v(), { id: n, dismiss: _, element: o };
   }
 }
-function lt() {
-  if (!D || !D.isConnected) {
+function dt() {
+  if (!E || !E.isConnected) {
     let h = document.querySelector("ui-toaster, nnui-toaster");
-    h ? D = h : (D = document.createElement("ui-toaster"), document.body.appendChild(D));
+    h ? E = h : (E = document.createElement("ui-toaster"), document.body.appendChild(E));
   }
-  return D;
+  return E;
 }
-function E(h, t = {}) {
-  return lt().createToast({ title: h, ...t, type: t.type || "default" });
+function C(h, t = {}) {
+  return dt().createToast({ title: h, ...t, type: t.type || "default" });
 }
-E.success = (h, t = {}) => E(h, { ...t, type: "success" });
-E.error = (h, t = {}) => E(h, { ...t, type: "error" });
-E.warning = (h, t = {}) => E(h, { ...t, type: "warning" });
-E.info = (h, t = {}) => E(h, { ...t, type: "info" });
-E.dismiss = (h) => {
+C.success = (h, t = {}) => C(h, { ...t, type: "success" });
+C.error = (h, t = {}) => C(h, { ...t, type: "error" });
+C.warning = (h, t = {}) => C(h, { ...t, type: "warning" });
+C.info = (h, t = {}) => C(h, { ...t, type: "info" });
+C.dismiss = (h) => {
   if (!h) {
     document.querySelectorAll('[data-ui="toast"]').forEach((e) => e.remove());
     return;
@@ -1277,7 +1437,7 @@ E.dismiss = (h) => {
   const t = document.getElementById(h);
   t && t.remove();
 };
-class ht extends A {
+class ct extends A {
   static get observedAttributes() {
     return ["page-size", "page", "sort-key", "sort-dir", "search"];
   }
@@ -1297,6 +1457,8 @@ class ht extends A {
   }
   get totalPages() {
     return Math.max(1, Math.ceil(this._filteredRows.length / this.pageSize));
+  }
+  set totalPages(t) {
   }
   init() {
     this.setAttributeSafe(this, "data-ui", "data-table"), this._tbody = this.querySelector('tbody[data-part="tbody"], tbody'), this._thead = this.querySelector("thead"), this._searchInput = this.querySelector('input[data-part="search"]'), this._selectAllCheckbox = this.querySelector('input[data-part="select-all"]'), this._prevBtn = this.querySelector('[data-part="prev-btn"]'), this._nextBtn = this.querySelector('[data-part="next-btn"]'), this._pageInfo = this.querySelector('[data-part="pagination-info"], [data-part="page-info"]'), this._selectionCount = this.querySelector('[data-part="selection-count"]'), this._bulkActions = this.querySelector('[data-part="bulk-actions"], [data-part="selection-bar"]'), this._bulkCount = this.querySelector('[data-part="bulk-count"]'), this._exportBtn = this.querySelector('[data-part="export-csv"], [data-action="export-csv"]'), this._exportBtn && this._exportBtn.addEventListener("click", () => this.exportCsv()), this._tbody && (this._allRows = Array.from(this._tbody.querySelectorAll("tr")), this._allRows.forEach((t, e) => {
@@ -1466,7 +1628,7 @@ class ht extends A {
     }), this._selectedIds.clear(), this._updateSelectAllState(), this._updateSelectionDisplay();
   }
 }
-const ut = [
+const pt = [
   "January",
   "February",
   "March",
@@ -1479,21 +1641,21 @@ const ut = [
   "October",
   "November",
   "December"
-], dt = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+], ft = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 function k(h, t, e) {
   const i = String(t).padStart(2, "0"), s = String(e).padStart(2, "0");
   return `${h}-${i}-${s}`;
 }
-function M(h) {
+function P(h) {
   if (!h) return null;
   const t = h.split("-");
   if (t.length !== 3) return null;
   const e = parseInt(t[0], 10), i = parseInt(t[1], 10), s = parseInt(t[2], 10);
   return isNaN(e) || isNaN(i) || isNaN(s) ? null : { year: e, month: i, day: s };
 }
-class H extends A {
+class W extends A {
   static get observedAttributes() {
-    return ["value", "month", "year", "min", "max", "disabled"];
+    return ["value", "name", "month", "year", "min", "max", "disabled"];
   }
   constructor() {
     if (super(), typeof this.attachInternals == "function")
@@ -1501,6 +1663,17 @@ class H extends A {
         this._internals = this.attachInternals();
       } catch {
       }
+  }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(t) {
+  }
+  get name() {
+    return this.getAttribute("name") || "";
+  }
+  set name(t) {
+    t ? this.setAttributeSafe(this, "name", t) : this.removeAttributeSafe(this, "name");
   }
   get value() {
     return this.getAttribute("value") || "";
@@ -1524,7 +1697,7 @@ class H extends A {
   }
   init() {
     this.setAttributeSafe(this, "data-ui", "calendar");
-    const t = M(this.value), e = /* @__PURE__ */ new Date();
+    const t = P(this.value), e = /* @__PURE__ */ new Date();
     this._currentViewDate = t ? new Date(t.year, t.month - 1, t.day) : e, this._focusedDate = t ? new Date(t.year, t.month - 1, t.day) : new Date(e.getFullYear(), e.getMonth(), e.getDate()), this.querySelector('[data-part="calendar-header"]') || this._buildSkeleton(), this._cacheElements(), this._attachEvents(), this._render(), this._updateFormValue();
   }
   _buildSkeleton() {
@@ -1541,7 +1714,7 @@ class H extends A {
       <table data-part="calendar-grid" role="grid" aria-label="Calendar">
         <thead>
           <tr role="row">
-            ${dt.map((t) => `<th role="columnheader" aria-label="${t}">${t}</th>`).join("")}
+            ${ft.map((t) => `<th role="columnheader" aria-label="${t}">${t}</th>`).join("")}
           </tr>
         </thead>
         <tbody data-part="calendar-body"></tbody>
@@ -1619,7 +1792,7 @@ class H extends A {
   }
   _render() {
     const t = this.year, e = this.month;
-    if (this._heading && (this._heading.textContent = `${ut[e - 1]} ${t}`), !this._tbody) return;
+    if (this._heading && (this._heading.textContent = `${pt[e - 1]} ${t}`), !this._tbody) return;
     const i = new Date(t, e - 1, 1).getDay(), s = new Date(t, e, 0).getDate(), a = new Date(t, e - 1, 0).getDate(), r = k((/* @__PURE__ */ new Date()).getFullYear(), (/* @__PURE__ */ new Date()).getMonth() + 1, (/* @__PURE__ */ new Date()).getDate()), n = this.value, o = this.getAttribute("min") || "", l = this.getAttribute("max") || "";
     let d = "", u = 1, f = 1;
     for (let p = 0; p < 6; p++) {
@@ -1628,15 +1801,15 @@ class H extends A {
         let b, v, m = !1;
         if (p === 0 && g < i) {
           b = a - i + g + 1;
-          const I = e === 1 ? 12 : e - 1, T = e === 1 ? t - 1 : t;
-          v = k(T, I, b), m = !0;
+          const O = e === 1 ? 12 : e - 1, T = e === 1 ? t - 1 : t;
+          v = k(T, O, b), m = !0;
         } else if (u > s) {
           b = f++;
-          const I = e === 12 ? 1 : e + 1, T = e === 12 ? t + 1 : t;
-          v = k(T, I, b), m = !0;
+          const O = e === 12 ? 1 : e + 1, T = e === 12 ? t + 1 : t;
+          v = k(T, O, b), m = !0;
         } else
           b = u++, v = k(t, e, b);
-        const _ = v === r, y = v === n, x = this._focusedDate && v === k(this._focusedDate.getFullYear(), this._focusedDate.getMonth() + 1, this._focusedDate.getDate());
+        const _ = v === r, y = v === n, D = this._focusedDate && v === k(this._focusedDate.getFullYear(), this._focusedDate.getMonth() + 1, this._focusedDate.getDate());
         let w = this.hasAttribute("disabled");
         o && v < o && (w = !0), l && v > l && (w = !0), d += `
           <td role="gridcell" 
@@ -1645,7 +1818,7 @@ class H extends A {
             <button type="button"
                     data-part="day-btn"
                     data-date="${v}"
-                    tabindex="${x ? "0" : "-1"}"
+                    tabindex="${D ? "0" : "-1"}"
                     ${m ? 'data-outside="true"' : ""}
                     ${_ ? 'data-today="true"' : ""}
                     ${y ? 'data-selected="true"' : ""}
@@ -1662,7 +1835,7 @@ class H extends A {
   }
   selectDate(t) {
     this.value = t;
-    const e = M(t);
+    const e = P(t);
     e && (this._focusedDate = new Date(e.year, e.month - 1, e.day), (e.month !== this.month || e.year !== this.year) && (this.month = e.month, this.year = e.year)), this._render(), this._updateFormValue(), this.dispatchEvent(new CustomEvent("change", {
       bubbles: !0,
       detail: {
@@ -1700,16 +1873,19 @@ class H extends A {
   attributeChangedCallback(t, e, i) {
     if (e !== i)
       if (t === "value") {
-        const s = M(i);
+        const s = P(i);
         s && (this._currentViewDate = new Date(s.year, s.month - 1, s.day), this._focusedDate = new Date(s.year, s.month - 1, s.day), (s.month !== this.month || s.year !== this.year) && (this.month = s.month, this.year = s.year)), this._render(), this._updateFormValue();
       } else (t === "month" || t === "year" || t === "disabled" || t === "min" || t === "max") && this._render();
   }
+  formResetCallback() {
+    this.value = this.getAttribute("value") || "";
+  }
 }
-O(H, "formAssociated", !0);
-class W extends A {
+x(W, "formAssociated", !0);
+class U extends A {
   constructor() {
     super();
-    O(this, "_reposition", () => {
+    x(this, "_reposition", () => {
       if (!this.isOpen || !this._popover) return;
       const e = this._trigger && this._trigger.isConnected ? this._trigger : this.querySelector('[data-part="trigger"]');
       e && R(e, this._popover, { placement: "bottom-start", offset: 6 });
@@ -1723,6 +1899,17 @@ class W extends A {
   static get observedAttributes() {
     return ["value", "placeholder", "disabled", "open", "min", "max"];
   }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(e) {
+  }
+  get name() {
+    return this.getAttribute("name") || "";
+  }
+  set name(e) {
+    e ? this.setAttributeSafe(this, "name", e) : this.removeAttributeSafe(this, "name");
+  }
   get value() {
     return this.getAttribute("value") || "";
   }
@@ -1732,6 +1919,9 @@ class W extends A {
   get isOpen() {
     var e, i;
     return this.hasAttribute("open") || ((e = this._popover) == null ? void 0 : e.matches(":popover-open")) || ((i = this._popover) == null ? void 0 : i.hasAttribute("open"));
+  }
+  set isOpen(e) {
+    e ? this.open() : this.close();
   }
   init() {
     this.setAttributeSafe(this, "data-ui", "date-picker"), this.querySelector('[data-part="trigger"]') || this._buildSkeleton(), this._trigger = this.querySelector('[data-part="trigger"]'), this._displayValue = this.querySelector('[data-part="display-value"]'), this._clearBtn = this.querySelector('[data-part="clear-btn"]'), this._popover = this.querySelector('[data-part="popover"]'), this._calendar = this.querySelector('ui-calendar, [data-ui="calendar"]'), this._popover && this.setAttributeSafe(this._popover, "popover", "auto"), this._updateDisplay(), this._syncConstraints(), this._attachEvents(), this._updateFormValue();
@@ -1870,9 +2060,12 @@ class W extends A {
     var a, r;
     i !== s && (e === "value" ? (this._updateDisplay(), this._calendar && this._calendar.setAttribute("value", s || ""), this._updateFormValue()) : e === "open" ? this.hasAttribute("open") ? this.open() : this.close() : e === "min" || e === "max" ? (this._syncConstraints(), (r = (a = this._calendar) == null ? void 0 : a._render) == null || r.call(a)) : e === "disabled" && this._trigger && (this.hasAttribute("disabled") ? this._trigger.setAttribute("disabled", "") : this._trigger.removeAttribute("disabled")));
   }
+  formResetCallback() {
+    this.value = this.getAttribute("value") || "";
+  }
 }
-O(W, "formAssociated", !0);
-function q(h, t = {}) {
+x(U, "formAssociated", !0);
+function $(h, t = {}) {
   if (typeof window > "u") return () => {
   };
   const e = h.getAttribute("persist") || t.defaultMode || null, i = h.hasAttribute("sync") || t.sync || !1;
@@ -1900,7 +2093,7 @@ function q(h, t = {}) {
     } catch (g) {
       console.warn("[Persistence] BroadcastChannel init error:", g);
     }
-  const d = Math.random().toString(36).substring(2, 9), u = ct(e, s, n, h);
+  const d = Math.random().toString(36).substring(2, 9), u = gt(e, s, n, h);
   if (u && Object.keys(u).length > 0) {
     l = !0;
     try {
@@ -1919,7 +2112,7 @@ function q(h, t = {}) {
         g[v] !== void 0 && (b[v] = g[v]);
     else
       Object.assign(b, g);
-    if (e && pt(e, s, b, h), o)
+    if (e && _t(e, s, b, h), o)
       try {
         o.postMessage({
           source: s + "_" + d,
@@ -1934,7 +2127,7 @@ function q(h, t = {}) {
   h._persistState = f;
   const p = () => {
     if (e === "url") {
-      const g = V(s, n, h);
+      const g = j(s, n, h);
       if (g && Object.keys(g).length > 0) {
         l = !0;
         try {
@@ -1955,13 +2148,13 @@ function q(h, t = {}) {
     }
   };
 }
-function ct(h, t, e, i) {
-  return h === "url" ? V(t, e, i) : h === "session" ? L(window.sessionStorage, t) : h === "local" ? L(window.localStorage, t) : null;
+function gt(h, t, e, i) {
+  return h === "url" ? j(t, e, i) : h === "session" ? F(window.sessionStorage, t) : h === "local" ? F(window.localStorage, t) : null;
 }
-function pt(h, t, e, i) {
-  h === "url" ? ft(t, e, i) : h === "session" ? F(window.sessionStorage, t, e) : h === "local" && F(window.localStorage, t, e);
+function _t(h, t, e, i) {
+  h === "url" ? bt(t, e, i) : h === "session" ? z(window.sessionStorage, t, e) : h === "local" && z(window.localStorage, t, e);
 }
-function L(h, t) {
+function F(h, t) {
   try {
     const e = h.getItem(`nnui_persist_${t}`);
     return e ? JSON.parse(e) : null;
@@ -1969,13 +2162,13 @@ function L(h, t) {
     return null;
   }
 }
-function F(h, t, e) {
+function z(h, t, e) {
   try {
     h.setItem(`nnui_persist_${t}`, JSON.stringify(e));
   } catch {
   }
 }
-function V(h, t, e) {
+function j(h, t, e) {
   try {
     const i = new URLSearchParams(window.location.search), s = {}, a = (e == null ? void 0 : e.id) || "";
     for (const r of t) {
@@ -1986,7 +2179,7 @@ function V(h, t, e) {
         o.push(`${h}_${l}`), a && a !== h && o.push(`${a}_${l}`), o.push(`grid_${l}`), o.push(`demo-data-grid_${l}`), o.push(`data-grid_${l}`), o.push(l);
       for (const l of o)
         if (i.has(l)) {
-          s[r] = gt(i.get(l));
+          s[r] = mt(i.get(l));
           break;
         }
     }
@@ -2007,7 +2200,7 @@ function V(h, t, e) {
     return null;
   }
 }
-function ft(h, t, e) {
+function bt(h, t, e) {
   try {
     const i = new URL(window.location.href), s = i.searchParams, a = (e == null ? void 0 : e.id) || "";
     for (const [n, o] of Object.entries(t)) {
@@ -2019,7 +2212,7 @@ function ft(h, t, e) {
   } catch {
   }
 }
-function gt(h) {
+function mt(h) {
   if (h === "true") return !0;
   if (h === "false") return !1;
   if (!isNaN(h) && h.trim() !== "") return Number(h);
@@ -2030,7 +2223,7 @@ function gt(h) {
     }
   return h;
 }
-class $ extends A {
+class N extends A {
   static get observedAttributes() {
     return ["row-height", "overscan", "sort-key", "sort-dir", "search", "streaming", "persist", "sync"];
   }
@@ -2041,18 +2234,30 @@ class $ extends A {
     const t = parseInt(this.getAttribute("row-height"), 10);
     return isNaN(t) || t <= 0 ? 40 : t;
   }
+  set rowHeight(t) {
+    t != null ? this.setAttributeSafe("row-height", String(t)) : this.removeAttributeSafe("row-height");
+  }
   get overscan() {
     const t = parseInt(this.getAttribute("overscan"), 10);
     return isNaN(t) || t < 0 ? 6 : t;
   }
+  set overscan(t) {
+    t != null ? this.setAttributeSafe("overscan", String(t)) : this.removeAttributeSafe("overscan");
+  }
   get totalRows() {
     return this._rows.length;
+  }
+  set totalRows(t) {
   }
   get filteredCount() {
     return this._filteredRows.length;
   }
+  set filteredCount(t) {
+  }
   get selectedCount() {
     return this._selectedIds.size;
+  }
+  set selectedCount(t) {
   }
   getAiState() {
     return {
@@ -2075,7 +2280,7 @@ class $ extends A {
   }
   init() {
     if (this.setAttributeSafe(this, "data-ui", "data-grid"), this.setAttributeSafe(this, "role", "region"), this.setAttributeSafe(this, "aria-label", this.getAttribute("aria-label") || "Data Grid"), !this._sortKey && this.hasAttribute("sort-key") && (this._sortKey = this.getAttribute("sort-key"), this._sortDir = this.getAttribute("sort-dir") || "asc"), !this._searchQuery && this.hasAttribute("search") && (this._searchQuery = (this.getAttribute("search") || "").toLowerCase().trim()), this._setupElements(), this._bindEvents(), this.hasAttribute("persist") || this.hasAttribute("sync")) {
-      const e = q(this, {
+      const e = $(this, {
         keys: ["search", "sortKey", "sortDir", "selected"],
         getState: () => ({
           search: this._searchQuery,
@@ -2337,12 +2542,12 @@ class $ extends A {
       }), v.appendChild(m), b.appendChild(v), this._columns.forEach((_) => {
         const y = document.createElement("td");
         y.setAttribute("role", "gridcell"), _.width && (y.style.width = _.width), _.align && (y.style.textAlign = _.align);
-        const x = u[_.key];
+        const D = u[_.key];
         if (typeof _.render == "function") {
-          const w = _.render(x, u);
+          const w = _.render(D, u);
           w instanceof HTMLElement ? y.appendChild(w) : y.innerHTML = String(w);
         } else
-          y.textContent = x != null ? String(x) : "";
+          y.textContent = D != null ? String(D) : "";
         b.appendChild(y);
       }), d.appendChild(b);
     }), o > 0) {
@@ -2444,20 +2649,44 @@ class $ extends A {
     this.stopStreaming(), this._rafId && cancelAnimationFrame(this._rafId);
   }
 }
-typeof customElements < "u" && (customElements.get("ui-data-grid") || customElements.define("ui-data-grid", $), customElements.get("nnui-data-grid") || customElements.define("nnui-data-grid", class extends $ {
+typeof customElements < "u" && (customElements.get("ui-data-grid") || customElements.define("ui-data-grid", N), customElements.get("nnui-data-grid") || customElements.define("nnui-data-grid", class extends N {
 }));
-class P extends A {
+class q extends A {
   constructor() {
     super();
-    O(this, "_reposition", () => {
+    x(this, "_reposition", () => {
       if (!this.isOpen || !this._popover) return;
       const e = this._trigger && this._trigger.isConnected ? this._trigger : this.querySelector('[data-part="trigger"]');
       e && R(e, this._popover, { placement: "bottom-start", offset: 8 });
     });
-    this._startDate = null, this._endDate = null, this._hoverDate = null, this._viewYear = (/* @__PURE__ */ new Date()).getFullYear(), this._viewMonth = (/* @__PURE__ */ new Date()).getMonth(), this._selectingEnd = !1;
+    this._startDate = null, this._endDate = null, this._hoverDate = null, this._viewYear = (/* @__PURE__ */ new Date()).getFullYear(), this._viewMonth = (/* @__PURE__ */ new Date()).getMonth(), this._selectingEnd = !1, typeof this.attachInternals == "function" && (this._internals = this.attachInternals());
   }
   static get observedAttributes() {
-    return ["start-date", "end-date", "placeholder", "disabled", "open", "persist", "sync"];
+    return ["start-date", "end-date", "placeholder", "disabled", "open", "name", "persist", "sync"];
+  }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(e) {
+  }
+  get name() {
+    return this.getAttribute("name") || "";
+  }
+  set name(e) {
+    e ? this.setAttributeSafe("name", e) : this.removeAttributeSafe("name");
+  }
+  get value() {
+    const e = this._startDate ? this._formatDate(this._startDate) : "", i = this._endDate ? this._formatDate(this._endDate) : "";
+    return e && i ? `${e} - ${i}` : e || "";
+  }
+  set value(e) {
+    if (!e)
+      this._startDate = null, this._endDate = null;
+    else {
+      const i = String(e).split(" - ");
+      this._startDate = i[0] ? new Date(i[0].trim()) : null, this._endDate = i[1] ? new Date(i[1].trim()) : null;
+    }
+    this._renderTrigger(), this._renderCalendars(), this._updateFormValue();
   }
   get startDate() {
     return this._startDate;
@@ -2479,6 +2708,9 @@ class P extends A {
       }
     return this.hasAttribute("open");
   }
+  set isOpen(e) {
+    e ? this.open() : this.close();
+  }
   getAiState() {
     return {
       startDate: this._startDate ? this._formatDate(this._startDate) : null,
@@ -2489,7 +2721,7 @@ class P extends A {
   }
   init() {
     if (this.setAttributeSafe(this, "data-ui", "date-range-picker"), this.hasAttribute("start-date") && (this._startDate = new Date(this.getAttribute("start-date"))), this.hasAttribute("end-date") && (this._endDate = new Date(this.getAttribute("end-date"))), this._startDate && !isNaN(this._startDate.getTime()) && (this._viewYear = this._startDate.getFullYear(), this._viewMonth = this._startDate.getMonth()), this._setupDOM(), this._renderTrigger(), this._renderCalendars(), this.hasAttribute("persist") || this.hasAttribute("sync")) {
-      const e = q(this, {
+      const e = $(this, {
         keys: ["start", "end"],
         getState: () => ({
           start: this._startDate ? this._formatDate(this._startDate) : "",
@@ -2513,7 +2745,7 @@ class P extends A {
       var o, l;
       n.newState === "open" ? (this.setAttributeSafe(this, "open", ""), (o = this._trigger) == null || o.setAttribute("aria-expanded", "true"), this._reposition(), typeof requestAnimationFrame == "function" && requestAnimationFrame(this._reposition), setTimeout(this._reposition, 15), this.dispatchCustomEvent("open")) : (this._lastClosedTime = Date.now(), this.removeAttributeSafe(this, "open"), (l = this._trigger) == null || l.setAttribute("aria-expanded", "false"), this.dispatchCustomEvent("close"));
     });
-    const r = tt(this._trigger, this._popover, {
+    const r = st(this._trigger, this._popover, {
       placement: "bottom-start",
       offset: 8
     });
@@ -2682,19 +2914,19 @@ class P extends A {
       const p = new Date(i, s, o), g = this._normalizeDate(p), b = d && g.getTime() === d.getTime(), v = u && g.getTime() === u.getTime();
       let m = !1;
       if (d && u) {
-        const I = Math.min(d.getTime(), u.getTime()), T = Math.max(d.getTime(), u.getTime());
-        m = g.getTime() > I && g.getTime() < T;
+        const O = Math.min(d.getTime(), u.getTime()), T = Math.max(d.getTime(), u.getTime());
+        m = g.getTime() > O && g.getTime() < T;
       } else if (d && f && this._selectingEnd) {
-        const I = Math.min(d.getTime(), f.getTime()), T = Math.max(d.getTime(), f.getTime());
-        m = g.getTime() > I && g.getTime() < T;
+        const O = Math.min(d.getTime(), f.getTime()), T = Math.max(d.getTime(), f.getTime());
+        m = g.getTime() > O && g.getTime() < T;
       }
       let _ = "";
       b && v ? _ = "range-start range-end range-single" : b ? _ = "range-start" + (!u && !f ? " range-single" : "") : v ? _ = "range-end" : m && (_ = "in-range");
       const y = _ ? `class="${_}"` : "";
-      let x = `data-date="${this._formatDate(p)}"`, w = "";
+      let D = `data-date="${this._formatDate(p)}"`, w = "";
       b ? w = 'data-range="start"' : v ? w = 'data-range="end"' : m && (w = 'data-range="in-range"'), n += `
         <td ${y}>
-          <button type="button" class="range-cell-btn" ${x} ${w}>
+          <button type="button" class="range-cell-btn" ${D} ${w}>
             ${o}
           </button>
         </td>
@@ -2814,28 +3046,56 @@ class P extends A {
   attributeChangedCallback(e, i, s) {
     i !== s && (e === "start-date" ? (this._startDate = s ? new Date(s) : null, this._startDate && !isNaN(this._startDate.getTime()) && (this._viewYear = this._startDate.getFullYear(), this._viewMonth = this._startDate.getMonth()), this._renderTrigger(), this._renderCalendars()) : e === "end-date" ? (this._endDate = s ? new Date(s) : null, this._renderTrigger(), this._renderCalendars()) : e === "open" ? s !== null && !this.isOpen ? this.open() : s === null && this.isOpen && this.close() : e === "disabled" && this._trigger && (this.hasAttribute("disabled") ? this._trigger.setAttribute("disabled", "") : this._trigger.removeAttribute("disabled")));
   }
+  _updateFormValue() {
+    this._internals && this._internals.setFormValue(this.value);
+  }
+  formResetCallback() {
+    const e = this.getAttribute("start-date"), i = this.getAttribute("end-date");
+    this._startDate = e ? new Date(e) : null, this._endDate = i ? new Date(i) : null, this._renderTrigger(), this._renderCalendars(), this._updateFormValue();
+  }
   disconnectedCallback() {
     super.disconnectedCallback(), typeof window < "u" && (window.removeEventListener("scroll", this._reposition, { capture: !0 }), window.removeEventListener("resize", this._reposition));
   }
 }
-typeof customElements < "u" && (customElements.get("ui-date-range-picker") || customElements.define("ui-date-range-picker", P), customElements.get("nnui-date-range-picker") || customElements.define("nnui-date-range-picker", class extends P {
+x(q, "formAssociated", !0);
+typeof customElements < "u" && (customElements.get("ui-date-range-picker") || customElements.define("ui-date-range-picker", q), customElements.get("nnui-date-range-picker") || customElements.define("nnui-date-range-picker", class extends q {
 }));
-class N extends A {
+class M extends A {
   static get observedAttributes() {
-    return ["placeholder", "max-tags", "disabled", "delimiter"];
+    return ["placeholder", "max-tags", "disabled", "delimiter", "name", "value"];
   }
   constructor() {
-    super(), this._tags = [];
+    super(), this._tags = [], typeof this.attachInternals == "function" && (this._internals = this.attachInternals());
+  }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(t) {
+  }
+  get name() {
+    return this.getAttribute("name") || "";
+  }
+  set name(t) {
+    t ? this.setAttributeSafe(this, "name", t) : this.removeAttributeSafe(this, "name");
+  }
+  get value() {
+    return this._tags.join(",");
+  }
+  set value(t) {
+    typeof t == "string" && (this._tags = t ? t.split(",").map((e) => e.trim()).filter(Boolean) : [], this._render(), this._updateFormValue());
   }
   get tags() {
     return [...this._tags];
   }
   set tags(t) {
-    Array.isArray(t) && (this._tags = [...t], this._render());
+    Array.isArray(t) && (this._tags = [...t], this._render(), this._updateFormValue());
   }
   get maxTags() {
     const t = parseInt(this.getAttribute("max-tags"), 10);
     return isNaN(t) ? 1 / 0 : t;
+  }
+  set maxTags(t) {
+    t != null ? this.setAttributeSafe(this, "max-tags", String(t)) : this.removeAttributeSafe(this, "max-tags");
   }
   init() {
     this.setAttributeSafe(this, "data-ui", "tags-input"), this.setAttributeSafe(this, "role", "group");
@@ -2894,14 +3154,30 @@ class N extends A {
     }), !0) : !1;
   }
   clear() {
-    this._tags = [], this._render(), this.dispatchCustomEvent("change", { tags: [] });
+    this._tags = [], this._render(), this._updateFormValue(), this.dispatchCustomEvent("change", { tags: [] });
+  }
+  _updateFormValue() {
+    this._internals && this._internals.setFormValue(this._tags.join(","));
+  }
+  formResetCallback() {
+    const t = this.getAttribute("value") || this.getAttribute("tags") || "";
+    this._tags = t ? t.split(",").map((e) => e.trim()).filter(Boolean) : [], this._render(), this._updateFormValue();
   }
 }
-typeof customElements < "u" && (customElements.get("ui-tags-input") || customElements.define("ui-tags-input", N), customElements.get("nnui-tags-input") || customElements.define("nnui-tags-input", class extends N {
+x(M, "formAssociated", !0);
+typeof customElements < "u" && (customElements.get("ui-tags-input") || customElements.define("ui-tags-input", M), customElements.get("nnui-tags-input") || customElements.define("nnui-tags-input", class extends M {
 }));
-class _t extends A {
+class Y extends A {
   static get observedAttributes() {
     return ["value", "name", "disabled", "size"];
+  }
+  constructor() {
+    super(), typeof this.attachInternals == "function" && (this._internals = this.attachInternals());
+  }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(t) {
   }
   get value() {
     return this.getAttribute("value") || "";
@@ -2957,7 +3233,14 @@ class _t extends A {
     t.forEach((a) => {
       const r = a.getAttribute("data-value") === e, n = i || a.hasAttribute("disabled");
       this.setAttributeSafe(a, "aria-checked", r ? "true" : "false"), this.setAttributeSafe(a, "data-state", r ? "checked" : "unchecked"), this.setAttributeSafe(a, "tabindex", r && !n ? "0" : "-1"), n ? this.setAttributeSafe(a, "aria-disabled", "true") : this.removeAttributeSafe(a, "aria-disabled"), r && (s = a);
-    }), this._hiddenInput && (this._hiddenInput.value = e), this._updateIndicator(s);
+    }), this._hiddenInput && (this._hiddenInput.value = e), this._updateFormValue(), this._updateIndicator(s);
+  }
+  _updateFormValue() {
+    this._internals && this._internals.setFormValue(this.value);
+  }
+  formResetCallback() {
+    const t = this._getSegments().find((i) => i.hasAttribute("default-selected") || i.hasAttribute("selected")), e = t ? t.dataset.value || t.getAttribute("value") || t.textContent.trim() : this.getAttribute("value") || "";
+    this.value = e, this._syncState();
   }
   _updateIndicator(t = null) {
     const e = this.querySelector('[data-part="indicator"]');
@@ -3014,13 +3297,31 @@ class _t extends A {
     e !== t && (this.value = t, this.dispatch("change", { value: t, previousValue: e }));
   }
 }
-class bt extends A {
+x(Y, "formAssociated", !0);
+class K extends A {
   static get observedAttributes() {
-    return ["length", "value", "disabled", "type", "mask"];
+    return ["length", "value", "name", "disabled", "type", "mask"];
+  }
+  constructor() {
+    super(), typeof this.attachInternals == "function" && (this._internals = this.attachInternals());
+  }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(t) {
+  }
+  get name() {
+    return this.getAttribute("name") || "";
+  }
+  set name(t) {
+    t ? this.setAttributeSafe("name", t) : this.removeAttributeSafe("name");
   }
   get length() {
     const t = parseInt(this.getAttribute("length"), 10);
     return isNaN(t) || t <= 0 ? 6 : t;
+  }
+  set length(t) {
+    t != null ? this.setAttributeSafe("length", String(t)) : this.removeAttributeSafe("length");
   }
   get value() {
     return this._getSlots().map((e) => e.value || "").join("");
@@ -3033,6 +3334,8 @@ class bt extends A {
   }
   get isComplete() {
     return this.value.length === this.length;
+  }
+  set isComplete(t) {
   }
   get disabled() {
     return this.hasAttribute("disabled");
@@ -3104,9 +3407,16 @@ class bt extends A {
     const r = Math.min(a + 1, i.length - 1);
     i[r].focus(), this._emitChange();
   }
+  _updateFormValue() {
+    this._internals && this._internals.setFormValue(this.value);
+  }
+  formResetCallback() {
+    const t = this.getAttribute("value") || "";
+    this.value = t;
+  }
   _emitChange() {
     const t = this.value, e = this.isComplete;
-    this.dispatch("input", { value: t, isComplete: e }), e && this.dispatch("change", { value: t, isComplete: !0 });
+    this._updateFormValue(), this.dispatch("input", { value: t, isComplete: e }), e && this.dispatch("change", { value: t, isComplete: !0 });
   }
   clear() {
     const t = this._getSlots();
@@ -3115,7 +3425,8 @@ class bt extends A {
     }), t.length > 0 && t[0].focus(), this._emitChange();
   }
 }
-class mt extends A {
+x(K, "formAssociated", !0);
+class vt extends A {
   static get observedAttributes() {
     return ["active-step", "linear", "orientation", "persist", "sync"];
   }
@@ -3135,6 +3446,9 @@ class mt extends A {
   get orientation() {
     return this.getAttribute("orientation") || "horizontal";
   }
+  set orientation(t) {
+    t ? this.setAttributeSafe("orientation", t) : this.removeAttributeSafe("orientation");
+  }
   getAiState() {
     return {
       activeStep: this.activeStep,
@@ -3145,7 +3459,7 @@ class mt extends A {
   }
   init() {
     if (this.setAttributeSafe("data-ui", "stepper"), this.setAttributeSafe("data-orientation", this.orientation), this._setupStructure(), this._syncState(), this._bindEvents(), this.hasAttribute("persist") || this.hasAttribute("sync")) {
-      const t = q(this, {
+      const t = $(this, {
         keys: ["step"],
         getState: () => ({
           step: this.activeStep
@@ -3222,7 +3536,7 @@ class mt extends A {
     this.goToStep(this.activeStep - 1);
   }
 }
-class vt extends A {
+class yt extends A {
   static get observedAttributes() {
     return ["orientation", "disabled"];
   }
@@ -3312,7 +3626,7 @@ class vt extends A {
     return [...this._sizes || []];
   }
 }
-class yt extends A {
+class At extends A {
   static get observedAttributes() {
     return ["accept", "multiple", "max-size", "disabled"];
   }
@@ -3322,15 +3636,27 @@ class yt extends A {
   get files() {
     return [...this._files];
   }
+  set files(t) {
+    Array.isArray(t) && (this._files = [...t], this._renderFileList());
+  }
   get accept() {
     return this.getAttribute("accept") || "";
+  }
+  set accept(t) {
+    t ? this.setAttributeSafe("accept", t) : this.removeAttributeSafe("accept");
   }
   get multiple() {
     return this.hasAttribute("multiple");
   }
+  set multiple(t) {
+    t ? this.setAttributeSafe("multiple", "") : this.removeAttributeSafe("multiple");
+  }
   get maxSize() {
     const t = parseInt(this.getAttribute("max-size"), 10);
     return isNaN(t) ? 1 / 0 : t;
+  }
+  set maxSize(t) {
+    t != null ? this.setAttributeSafe("max-size", String(t)) : this.removeAttributeSafe("max-size");
   }
   get disabled() {
     return this.hasAttribute("disabled");
@@ -3433,7 +3759,7 @@ class yt extends A {
     this._files = [], this._nativeInput && (this._nativeInput.value = ""), this._renderFileList(), this.dispatch("change", { files: [] });
   }
 }
-class At extends A {
+class St extends A {
   static get observedAttributes() {
     return ["disabled"];
   }
@@ -3447,6 +3773,9 @@ class At extends A {
     var e;
     const t = this.querySelector('[data-part="menu"]');
     return t ? ((e = t.matches) == null ? void 0 : e.call(t, ":popover-open")) || t.getAttribute("data-state") === "open" : !1;
+  }
+  set isOpen(t) {
+    t ? this.open() : this.close();
   }
   init() {
     this.setAttributeSafe("data-ui", "context-menu"), this._menu = this.querySelector('[data-part="menu"]'), this._area = this.querySelector('[data-part="area"]') || this, this._menu && (this._menu.hasAttribute("popover") || this._menu.setAttribute("popover", "auto"), this._menu.setAttribute("role", "menu"), this.setAttributeSafe(this._menu, "data-state", "closed")), this._bindEvents();
@@ -3514,7 +3843,7 @@ class At extends A {
     }
   }
 }
-class St extends A {
+class wt extends A {
   static get observedAttributes() {
     return ["delay", "disabled"];
   }
@@ -3522,8 +3851,14 @@ class St extends A {
     const t = parseInt(this.getAttribute("delay"), 10);
     return isNaN(t) ? 150 : t;
   }
+  set delay(t) {
+    t != null ? this.setAttributeSafe("delay", String(t)) : this.removeAttributeSafe("delay");
+  }
   get disabled() {
     return this.hasAttribute("disabled");
+  }
+  set disabled(t) {
+    t ? this.setAttributeSafe("disabled", "") : this.removeAttributeSafe("disabled");
   }
   init() {
     this._initialized || (this.setAttributeSafe("data-ui", "navigation-menu"), this._nav = this.querySelector('[data-part="menubar"], [data-part="list"], nav') || this, this.setAttributeSafe(this._nav, "role", "menubar"), this._activeItem = null, this._hoverTimeout = null, this._setupStructure(), this._bindEvents());
@@ -3600,15 +3935,21 @@ class St extends A {
     this._getItems().forEach((t) => this.closeItem(t));
   }
 }
-class wt extends A {
+class xt extends A {
   static get observedAttributes() {
     return ["selection-mode", "disabled"];
   }
   get selectionMode() {
     return this.getAttribute("selection-mode") || "single";
   }
+  set selectionMode(t) {
+    t ? this.setAttributeSafe("selection-mode", t) : this.removeAttributeSafe("selection-mode");
+  }
   get disabled() {
     return this.hasAttribute("disabled");
+  }
+  set disabled(t) {
+    t ? this.setAttributeSafe("disabled", "") : this.removeAttributeSafe("disabled");
   }
   init() {
     this.setAttributeSafe("data-ui", "tree-view");
@@ -3719,13 +4060,16 @@ class wt extends A {
     this.dispatch("select", { item: t, value: i, selected: !e });
   }
 }
-class xt extends A {
+class Dt extends A {
   static get observedAttributes() {
     return ["max-rows", "loading", "disabled", "placeholder", "persist", "sync"];
   }
   get maxRows() {
     const t = parseInt(this.getAttribute("max-rows"), 10);
     return isNaN(t) ? 6 : t;
+  }
+  set maxRows(t) {
+    t != null ? this.setAttributeSafe("max-rows", String(t)) : this.removeAttributeSafe("max-rows");
   }
   get loading() {
     return this.hasAttribute("loading") && this.getAttribute("loading") !== "false";
@@ -3756,7 +4100,7 @@ class xt extends A {
   }
   init() {
     if (this.setAttributeSafe("data-ui", "ai-prompt-box"), this._textarea = this.querySelector('textarea, [data-part="input"]'), this._textarea || (this._textarea = document.createElement("textarea"), this._textarea.setAttribute("data-part", "input"), this._textarea.placeholder = this.getAttribute("placeholder") || "Ask AI anything... (Shift+Enter for newline)", this.prepend(this._textarea)), this._textarea.rows = 1, this._textarea.style.resize = "none", this._textarea.style.overflowY = "hidden", this._syncState(), this._bindEvents(), this._autoResize(), this.hasAttribute("persist") || this.hasAttribute("sync")) {
-      const t = q(this, {
+      const t = $(this, {
         keys: ["draft"],
         getState: () => ({
           draft: this.value
@@ -3813,9 +4157,17 @@ class xt extends A {
     this.value = "", this._syncState();
   }
 }
-class Dt extends A {
+class G extends A {
   static get observedAttributes() {
     return ["value", "name", "format", "disabled"];
+  }
+  constructor() {
+    super(), typeof this.attachInternals == "function" && (this._internals = this.attachInternals());
+  }
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+  set form(t) {
   }
   get value() {
     return this.getAttribute("value") || "#3b82f6";
@@ -3826,6 +4178,9 @@ class Dt extends A {
   get name() {
     return this.getAttribute("name") || "";
   }
+  set name(t) {
+    t ? this.setAttributeSafe("name", t) : this.removeAttributeSafe("name");
+  }
   get disabled() {
     return this.hasAttribute("disabled");
   }
@@ -3835,6 +4190,9 @@ class Dt extends A {
   get isOpen() {
     const t = this.querySelector('[data-part="popover"]');
     return (t == null ? void 0 : t.getAttribute("data-state")) === "open";
+  }
+  set isOpen(t) {
+    t ? this.open() : this.close();
   }
   init() {
     this.setAttributeSafe("data-ui", "color-picker"), this._setupStructure(), this._syncState(), this._bindEvents();
@@ -3853,7 +4211,7 @@ class Dt extends A {
   }
   _syncState() {
     const t = this.value, e = this.querySelector('[data-part="swatch"]'), i = this.querySelector('[data-part="hex-input"], [data-part="input"]');
-    this.querySelector('[data-part="popover"]'), e && (e.style.backgroundColor = t, e.setAttribute("aria-label", `Selected color: ${t}`)), i && i !== document.activeElement && (i.value = t), this._hiddenInput && (this._hiddenInput.value = t), this.disabled ? (e == null || e.setAttribute("disabled", ""), i == null || i.setAttribute("disabled", "")) : (e == null || e.removeAttribute("disabled"), i == null || i.removeAttribute("disabled"));
+    this.querySelector('[data-part="popover"]'), e && (e.style.backgroundColor = t, e.setAttribute("aria-label", `Selected color: ${t}`)), i && i !== document.activeElement && (i.value = t), this._hiddenInput && (this._hiddenInput.value = t), this._updateFormValue(), this.disabled ? (e == null || e.setAttribute("disabled", ""), i == null || i.setAttribute("disabled", "")) : (e == null || e.removeAttribute("disabled"), i == null || i.removeAttribute("disabled"));
   }
   _bindEvents() {
     const t = this.querySelector('[data-part="swatch"]'), e = this.querySelector('[data-part="popover"]'), i = this.querySelector('[data-part="hex-input"], [data-part="input"]'), s = this.querySelector('[data-part="eyedropper-btn"]'), a = this.querySelector('[data-part="hue-slider"]');
@@ -3888,42 +4246,50 @@ class Dt extends A {
     const t = this.querySelector('[data-part="popover"]');
     !t || this.disabled || (t.setAttribute("data-state", "open"), this.dispatch("open"));
   }
+  _updateFormValue() {
+    this._internals && this._internals.setFormValue(this.value), this._hiddenInput && (this._hiddenInput.value = this.value);
+  }
+  formResetCallback() {
+    const t = this.getAttribute("value") || "#3b82f6";
+    this.value = t;
+  }
   close() {
     const t = this.querySelector('[data-part="popover"]');
     t && (t.setAttribute("data-state", "closed"), this.dispatch("close"));
   }
 }
+x(G, "formAssociated", !0);
 const Et = {
-  "ui-tabs": Q,
-  "ui-combobox": J,
-  "ui-dialog": X,
-  "ui-select": z,
-  "ui-accordion": Z,
-  "ui-popover": et,
-  "ui-tooltip": it,
-  "ui-command": st,
-  "ui-sheet": at,
-  "ui-slider": B,
-  "ui-dropdown": rt,
-  "ui-toaster": ot,
-  "ui-data-table": ht,
-  "ui-calendar": H,
-  "ui-date-picker": W,
-  "ui-data-grid": $,
-  "ui-date-range-picker": P,
-  "ui-tags-input": N,
-  "ui-segmented-control": _t,
-  "ui-otp-input": bt,
-  "ui-stepper": mt,
-  "ui-resizable": vt,
-  "ui-file-upload": yt,
-  "ui-context-menu": At,
-  "ui-navigation-menu": St,
-  "ui-tree-view": wt,
-  "ui-ai-prompt-box": xt,
-  "ui-color-picker": Dt
+  "ui-tabs": tt,
+  "ui-combobox": B,
+  "ui-dialog": et,
+  "ui-select": V,
+  "ui-accordion": it,
+  "ui-popover": at,
+  "ui-tooltip": rt,
+  "ui-command": nt,
+  "ui-sheet": ot,
+  "ui-slider": H,
+  "ui-dropdown": lt,
+  "ui-toaster": ut,
+  "ui-data-table": ct,
+  "ui-calendar": W,
+  "ui-date-picker": U,
+  "ui-data-grid": N,
+  "ui-date-range-picker": q,
+  "ui-tags-input": M,
+  "ui-segmented-control": Y,
+  "ui-otp-input": K,
+  "ui-stepper": vt,
+  "ui-resizable": yt,
+  "ui-file-upload": At,
+  "ui-context-menu": St,
+  "ui-navigation-menu": wt,
+  "ui-tree-view": xt,
+  "ui-ai-prompt-box": Dt,
+  "ui-color-picker": G
 };
-function kt(h = ["nnui", "ui"]) {
+function Ct(h = ["nnui", "ui"]) {
   if (typeof window > "u" || !window.customElements) return;
   const t = Array.isArray(h) ? h : [h], e = /* @__PURE__ */ new Set();
   t.forEach((i) => {
@@ -3937,46 +4303,46 @@ function kt(h = ["nnui", "ui"]) {
     });
   });
 }
-typeof window < "u" && window.customElements && kt(["nnui", "ui"]);
+typeof window < "u" && window.customElements && Ct(["nnui", "ui"]);
 export {
   A as BaseLightElement,
   c as Keys,
-  Z as UiAccordion,
-  xt as UiAiPromptBox,
-  H as UiCalendar,
-  Dt as UiColorPicker,
-  J as UiCombobox,
-  st as UiCommand,
-  At as UiContextMenu,
-  $ as UiDataGrid,
-  ht as UiDataTable,
-  W as UiDatePicker,
-  P as UiDateRangePicker,
-  X as UiDialog,
-  rt as UiDropdown,
-  yt as UiFileUpload,
-  St as UiNavigationMenu,
-  bt as UiOtpInput,
-  et as UiPopover,
-  vt as UiResizable,
-  _t as UiSegmentedControl,
-  z as UiSelect,
-  at as UiSheet,
-  B as UiSlider,
-  mt as UiStepper,
-  Q as UiTabs,
-  N as UiTagsInput,
-  ot as UiToaster,
-  it as UiTooltip,
-  wt as UiTreeView,
+  it as UiAccordion,
+  Dt as UiAiPromptBox,
+  W as UiCalendar,
+  G as UiColorPicker,
+  B as UiCombobox,
+  nt as UiCommand,
+  St as UiContextMenu,
+  N as UiDataGrid,
+  ct as UiDataTable,
+  U as UiDatePicker,
+  q as UiDateRangePicker,
+  et as UiDialog,
+  lt as UiDropdown,
+  At as UiFileUpload,
+  wt as UiNavigationMenu,
+  K as UiOtpInput,
+  at as UiPopover,
+  yt as UiResizable,
+  Y as UiSegmentedControl,
+  V as UiSelect,
+  ot as UiSheet,
+  H as UiSlider,
+  vt as UiStepper,
+  tt as UiTabs,
+  M as UiTagsInput,
+  ut as UiToaster,
+  rt as UiTooltip,
+  xt as UiTreeView,
   R as applyPositionFallback,
-  G as applyRovingTabindex,
-  tt as attachAnchorFallback,
-  q as attachPersistence,
+  Z as applyRovingTabindex,
+  st as attachAnchorFallback,
+  $ as attachPersistence,
   Et as elements,
-  C as generateUniqueId,
+  I as generateUniqueId,
   S as getNextIndex,
-  Tt as isAnchorPositioningSupported,
-  kt as register,
-  E as toast
+  Ot as isAnchorPositioningSupported,
+  Ct as register,
+  C as toast
 };

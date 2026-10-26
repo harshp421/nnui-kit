@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { copyFileSync } from 'fs';
+import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'fs';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -51,10 +51,49 @@ export default defineConfig({
             resolve(__dirname, 'src/types/react.d.ts'),
             resolve(__dirname, 'dist/react.d.ts')
           );
+          if (existsSync(resolve(__dirname, 'vscode.html-data.json'))) {
+            copyFileSync(
+              resolve(__dirname, 'vscode.html-data.json'),
+              resolve(__dirname, 'dist/vscode.html-data.json')
+            );
+          }
+
+          // Generate dist/standalone.css (unlayered bundle for Tailwind preflight coexistence)
+          const indexCssPath = resolve(__dirname, 'dist/index.css');
+          if (existsSync(indexCssPath)) {
+            const rawCss = readFileSync(indexCssPath, 'utf8');
+            let standalone = rawCss.replace(/@layer\s+ui\.[^;]+;/g, '');
+            let result = '';
+            let i = 0;
+            while (i < standalone.length) {
+              const layerIdx = standalone.indexOf('@layer', i);
+              if (layerIdx === -1) {
+                result += standalone.slice(i);
+                break;
+              }
+              result += standalone.slice(i, layerIdx);
+              const openBrace = standalone.indexOf('{', layerIdx);
+              if (openBrace === -1) {
+                result += standalone.slice(layerIdx);
+                break;
+              }
+              let depth = 1;
+              let j = openBrace + 1;
+              while (j < standalone.length && depth > 0) {
+                if (standalone[j] === '{') depth++;
+                else if (standalone[j] === '}') depth--;
+                j++;
+              }
+              result += standalone.slice(openBrace + 1, j - 1);
+              i = j;
+            }
+            writeFileSync(resolve(__dirname, 'dist/standalone.css'), result, 'utf8');
+          }
         } catch (e) {
-          console.warn('Could not copy d.ts to dist:', e.message);
+          console.warn('Could not copy d.ts or html-data to dist:', e.message);
         }
       },
     },
   ],
 });
+

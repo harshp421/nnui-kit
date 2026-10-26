@@ -33,7 +33,7 @@ export class UiCalendar extends BaseLightElement {
   static formAssociated = true;
 
   static get observedAttributes() {
-    return ['value', 'month', 'year', 'min', 'max', 'disabled'];
+    return ['value', 'name', 'month', 'year', 'min', 'max', 'disabled'];
   }
 
   constructor() {
@@ -45,6 +45,21 @@ export class UiCalendar extends BaseLightElement {
         // Fallback for older environments
       }
     }
+  }
+
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
+
+  get name() {
+    return this.getAttribute('name') || '';
+  }
+
+  set name(val) {
+    if (val) this.setAttributeSafe(this, 'name', val);
+    else this.removeAttributeSafe(this, 'name');
   }
 
   get value() {
@@ -430,5 +445,9 @@ export class UiCalendar extends BaseLightElement {
     } else if (name === 'month' || name === 'year' || name === 'disabled' || name === 'min' || name === 'max') {
       this._render();
     }
+  }
+
+  formResetCallback() {
+    this.value = this.getAttribute('value') || '';
   }
 }

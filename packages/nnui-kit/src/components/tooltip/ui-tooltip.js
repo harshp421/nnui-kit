@@ -14,6 +14,11 @@ export class UiTooltip extends BaseLightElement {
     return parseInt(this.getAttribute('delay') || '150', 10);
   }
 
+  set delay(val) {
+    if (val !== null && val !== undefined) this.setAttributeSafe(this, 'delay', String(val));
+    else this.removeAttributeSafe(this, 'delay');
+  }
+
   init() {
     this.setAttributeSafe(this, 'data-ui', 'tooltip');
     this._trigger = this.querySelector('[data-part="trigger"]');

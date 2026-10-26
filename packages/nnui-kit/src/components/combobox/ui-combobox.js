@@ -7,8 +7,32 @@ import { Keys, getNextIndex, generateUniqueId } from '../../utils/a11y.js';
  * Invariant: Mutates attributes, never nodes. Light-DOM native.
  */
 export class UiCombobox extends BaseLightElement {
+  static formAssociated = true;
+
   static get observedAttributes() {
-    return ['value', 'open'];
+    return ['value', 'open', 'name', 'disabled'];
+  }
+
+  constructor() {
+    super();
+    if (typeof this.attachInternals === 'function') {
+      this._internals = this.attachInternals();
+    }
+  }
+
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
+
+  get name() {
+    return this.getAttribute('name') || '';
+  }
+
+  set name(val) {
+    if (val) this.setAttributeSafe(this, 'name', val);
+    else this.removeAttributeSafe(this, 'name');
   }
 
   get value() {
@@ -17,10 +41,16 @@ export class UiCombobox extends BaseLightElement {
 
   set value(val) {
     this.setAttributeSafe(this, 'value', val);
+    this._updateFormValue(val);
   }
 
   get isOpen() {
     return this.hasAttribute('open');
+  }
+
+  set isOpen(val) {
+    if (val) this.open();
+    else this.close();
   }
 
   init() {
@@ -214,5 +244,21 @@ export class UiCombobox extends BaseLightElement {
     if (this._listbox) this.setAttributeSafe(this._listbox, 'data-state', 'closed');
     this._activeIndex = -1;
     this._highlightOption(null);
+  }
+
+  _updateFormValue(val = this.value) {
+    if (this._internals) {
+      this._internals.setFormValue(val);
+    }
+  }
+
+  formResetCallback() {
+    const defaultOpt = this._getOptions().find((opt) => opt.hasAttribute('selected') || opt.hasAttribute('default-selected'));
+    const initialVal = defaultOpt ? (defaultOpt.dataset.value || defaultOpt.textContent.trim()) : (this.getAttribute('value') || '');
+    this.value = initialVal;
+    if (this._input) {
+      this._input.value = defaultOpt ? defaultOpt.textContent.trim() : initialVal;
+    }
+    this._updateFormValue(initialVal);
   }
 }

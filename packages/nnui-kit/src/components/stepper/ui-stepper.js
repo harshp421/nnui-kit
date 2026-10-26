@@ -44,6 +44,11 @@ export class UiStepper extends BaseLightElement {
     return this.getAttribute('orientation') || 'horizontal';
   }
 
+  set orientation(val) {
+    if (val) this.setAttributeSafe('orientation', val);
+    else this.removeAttributeSafe('orientation');
+  }
+
   getAiState() {
     return {
       activeStep: this.activeStep,

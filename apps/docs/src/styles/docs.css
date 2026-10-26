@@ -469,7 +469,9 @@ body::before {
   border-radius: 14px;
   background: var(--bg-card);
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+  z-index: 20;
 }
 
 .showcase-header {
@@ -479,6 +481,8 @@ body::before {
   padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--border-subtle);
   background: var(--bg-secondary);
+  border-top-left-radius: 13px;
+  border-top-right-radius: 13px;
 }
 
 .showcase-tabs {
@@ -511,12 +515,16 @@ body::before {
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle at center, var(--bg-card) 0%, var(--bg-secondary) 100%);
+  position: relative;
+  overflow: visible;
+  border-bottom-left-radius: 13px;
+  border-bottom-right-radius: 13px;
 }
 
 /* Component Documentation Live Preview Stage (Subtle Dot Matrix Blueprint) */
 .comp-preview-stage {
-  padding: 3.5rem 2rem;
-  min-height: 240px;
+  padding: 4rem 2rem 5rem;
+  min-height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -524,7 +532,9 @@ body::before {
   background-image: radial-gradient(var(--border-subtle) 1px, transparent 1px);
   background-size: 20px 20px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  border-bottom-left-radius: 13px;
+  border-bottom-right-radius: 13px;
 }
 
 .comp-preview-viewport {
@@ -534,6 +544,8 @@ body::before {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1.5rem;
+  position: relative;
+  z-index: 30;
 }
 
 .showcase-grid {
@@ -592,6 +604,8 @@ body::before {
   font-size: 0.85rem;
   line-height: 1.6;
   overflow-x: auto;
+  border-bottom-left-radius: 13px;
+  border-bottom-right-radius: 13px;
 }
 
 /* Bento Features */
@@ -1238,5 +1252,227 @@ nnui-segmented-control {
   box-sizing: border-box;
 }
 
+/* =========================================================================
+   Design Tokens & Global CSS Export Studio
+   ========================================================================= */
+.token-export-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--ui-radius-lg, 12px);
+  overflow: hidden;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+}
 
+.token-export-tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.5rem 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
 
+.token-tab-buttons {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.token-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: var(--ui-radius-md, 8px);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.token-tab-btn:hover {
+  color: var(--text-main);
+  background: color-mix(in srgb, var(--text-muted) 10%, transparent);
+}
+
+.token-tab-btn.active {
+  background: var(--bg-card);
+  color: var(--ui-color-brand-500);
+  border-color: var(--border-subtle);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.token-code-stage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: #18181b;
+  border-bottom: 1px solid #27272a;
+  color: #a1a1aa;
+  font-size: 0.78rem;
+  font-family: var(--docs-font-mono);
+}
+
+.token-code-stage-header .filename-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #fafafa;
+  font-weight: 600;
+}
+
+.token-quickstart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.token-quickstart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--ui-radius-md, 8px);
+  padding: 1rem;
+}
+
+.token-quickstart-card h4 {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.token-quickstart-card code {
+  display: block;
+  font-family: var(--docs-font-mono);
+  font-size: 0.75rem;
+  background: var(--bg-secondary);
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  color: var(--ui-color-brand-500);
+  border: 1px solid var(--border-subtle);
+  margin-top: 0.4rem;
+  word-break: break-all;
+}
+
+/* Token Dictionary Table */
+.token-dict-container {
+  padding: 1.5rem;
+}
+
+.token-dict-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.token-dict-search-input {
+  flex: 1;
+  min-width: 240px;
+  max-width: 400px;
+  font-size: 0.85rem;
+}
+
+.token-dict-filter-pills {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.token-dict-filter-btn {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.token-dict-filter-btn:hover {
+  color: var(--text-main);
+  border-color: var(--text-muted);
+}
+
+.token-dict-filter-btn.active {
+  background: var(--ui-color-brand-500);
+  color: #fafafa;
+  border-color: var(--ui-color-brand-500);
+}
+
+.token-dict-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--ui-radius-md, 8px);
+}
+
+.token-dict-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.token-dict-table th {
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.token-dict-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-main);
+}
+
+.token-dict-table tr:last-child td {
+  border-bottom: none;
+}
+
+.token-dict-table tr:hover td {
+  background: var(--bg-secondary);
+}
+
+.token-var-badge {
+  font-family: var(--docs-font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ui-color-brand-500);
+  background: color-mix(in srgb, var(--ui-color-brand-500) 10%, var(--bg-card));
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 25%, transparent);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+}
+
+.token-var-badge:hover {
+  border-color: var(--ui-color-brand-500);
+  transform: translateY(-1px);
+}

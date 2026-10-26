@@ -10,9 +10,14 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <div class="docs-aside-title">Getting Started</div>
         <a href="#introduction" class="docs-aside-link active">Introduction</a>
         <a href="#mental-model" class="docs-aside-link">Three-Tier Architecture</a>
+        <a href="/shadow-vs-light" class="docs-aside-link" style="display: flex; align-items: center; justify-content: space-between; color: #10b981; font-weight: 600;">
+          <span>Light vs Shadow DOM</span>
+          <span style="font-size: 0.65rem; background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 1px 5px; border-radius: 9999px;">WHY</span>
+        </a>
         <a href="#why-light-dom" class="docs-aside-link">Why Light-DOM?</a>
         <a href="#installation" class="docs-aside-link">Installation & Setup</a>
       </div>
+
 
       <div class="docs-aside-group">
         <div class="docs-aside-title">Crown Innovations</div>
@@ -140,14 +145,130 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <h2 style="font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--text-main);">
           Installation & Setup
         </h2>
-        <pre class="code-viewer-pre" style="border-radius: 8px; border: 1px solid var(--border-subtle);"><code># Install universal package
-npm install nnui-kit
+        <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+          Install via npm or use the registry CLI to drop zero-dependency custom elements and copy-pasteable CSS theme tokens directly into your project:
+        </p>
+        <pre class="code-viewer-pre" style="border-radius: 8px; border: 1px solid var(--border-subtle); margin-bottom: 1.5rem;"><code># 1. Install universal package
+npm install nnuikit
 
-# Or initialize the CLI in your existing React/Vue/Svelte/Astro project
+# 2. Or initialize the CLI (automatically generates theme.css and tokens in your app)
 npx nnui init
 
-# Add specific components directly into your codebase
-npx nnui add data-grid stepper combobox toast</code></pre>
+# 3. Add components with your specific framework target:
+npx nnui add dialog --react   # Drops React compound component into src/components/ui/
+npx nnui add dialog --html    # Drops vanilla HTML snippet & JS micro-enhancer
+npx nnui add dialog --rails   # Drops Rails ERB partial & configures importmap.rb</code></pre>
+
+        <!-- Framework Targets Card -->
+        <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; background: var(--bg-card); margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="font-weight: 700; color: var(--text-main); font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>🚀</span>
+              <span>Framework Targets: True Code Ownership Across Stacks</span>
+            </div>
+            <span class="docs-version-pill" style="border-color: #6366f1; color: #6366f1;">CLI v1.0.5</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0 0 1rem;">
+            Unlike shadcn/ui (locked to React) or traditional web components (locked in Shadow DOM), NNUI-KIT provides <strong>100% Light-DOM code ownership</strong> across modern frontend and server-rendered stacks. Run the CLI with your framework target:
+          </p>
+
+          <ui-tabs value="react" style="width: 100%; display: block;">
+            <div data-part="tablist" style="display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.5rem; margin-bottom: 1rem; overflow-x: auto;">
+              <button data-part="tab" data-value="react" style="padding: 0.4rem 0.85rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: var(--bg-canvas); color: var(--text-main); font-size: 0.82rem; font-weight: 600; cursor: pointer;">
+                ⚛️ React / Next.js (--react)
+              </button>
+              <button data-part="tab" data-value="html" style="padding: 0.4rem 0.85rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: var(--bg-canvas); color: var(--text-main); font-size: 0.82rem; font-weight: 600; cursor: pointer;">
+                🌐 Vanilla HTML (--html)
+              </button>
+              <button data-part="tab" data-value="rails" style="padding: 0.4rem 0.85rem; border-radius: 6px; border: 1px solid var(--border-subtle); background: var(--bg-canvas); color: var(--text-main); font-size: 0.82rem; font-weight: 600; cursor: pointer;">
+                💎 Ruby on Rails (--rails)
+              </button>
+            </div>
+
+            <!-- React Tab -->
+            <div data-part="tabpanel" data-value="react">
+              <pre class="code-viewer-pre" style="border-radius: 6px; font-size: 0.8rem; padding: 1rem; margin-bottom: 0.5rem;"><code>{`# Drops React 18/19 compound component into src/components/ui/dialog.jsx
+npx nnui add dialog --react
+
+// In your application:
+import { Dialog, DialogModal } from './components/ui/dialog.jsx';
+
+export function Example() {
+  return (
+    <DialogModal open={isOpen} onClose={() => setIsOpen(false)} title="Confirm Release">
+      <p>You own the markup and internals!</p>
+    </DialogModal>
+  );
+}`}</code></pre>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">
+                Exports raw primitives, typed compound subcomponents (<code style="color: var(--ui-color-brand-500);">Dialog.Trigger</code>, <code style="color: var(--ui-color-brand-500);">Dialog.Content</code>, <code style="color: var(--ui-color-brand-500);">Dialog.Close</code>), and an editable composite modal.
+              </p>
+            </div>
+
+            <!-- HTML Tab -->
+            <div data-part="tabpanel" data-value="html">
+              <pre class="code-viewer-pre" style="border-radius: 6px; font-size: 0.8rem; padding: 1rem; margin-bottom: 0.5rem;"><code>{`# Drops runnable HTML snippet & JS micro-enhancer into components/ui/dialog/
+npx nnui add dialog --html
+
+<!-- components/ui/dialog/dialog.html -->
+<ui-dialog id="my-modal">
+  <button data-part="trigger" type="button">Open Modal</button>
+  <dialog data-part="dialog">
+    <div data-part="panel">
+      <h3>Platform Top-Layer Modal</h3>
+      <p>Zero build step, 100% accessible.</p>
+      <button data-part="close" type="button">Close</button>
+    </div>
+  </dialog>
+</ui-dialog>
+
+<script type="module" src="./ui-dialog.js"></script>`}</code></pre>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">
+                Includes standalone micro-enhancer and semantic Light-DOM HTML snippet. Open directly in any browser.
+              </p>
+            </div>
+
+            <!-- Rails Tab -->
+            <div data-part="tabpanel" data-value="rails">
+              <pre class="code-viewer-pre" style="border-radius: 6px; font-size: 0.8rem; padding: 1rem; margin-bottom: 0.5rem;"><code>{`# Generates ERB partial, asset pipeline JS, and pins nnuikit in importmap.rb
+npx nnui add dialog --rails
+
+<%# app/views/pages/home.html.erb %>
+<%= render "components/dialog", id: "confirm-modal", title: "Canary Rollout" do %>
+  <p>Rendered with native Rails ERB and Light-DOM web components.</p>
+<% end %>`}</code></pre>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">
+                Creates <code style="color: var(--ui-color-brand-500);">app/views/components/_dialog.html.erb</code> with <code style="color: var(--ui-color-brand-500);">local_assigns</code> and block yields, and configures Rails Importmaps automatically.
+              </p>
+            </div>
+          </ui-tabs>
+        </div>
+
+        <!-- Global CSS Theme Callout Box -->
+        <div data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.5rem; background: var(--bg-card); margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="font-weight: 700; color: var(--text-main); font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>🎨</span>
+              <span>Theme & Global CSS Tokens (Turnkey Copy-Paste)</span>
+            </div>
+            <a href="/tokens" data-ui="button" data-variant="secondary" data-size="xs" style="text-decoration: none; font-size: 0.78rem; padding: 0.35rem 0.85rem;">
+              Theme Studio & Exporter →
+            </a>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0 0 1rem;">
+            NNUI-KIT provides standalone, W3C DTCG-compliant global CSS theme files. You can import them directly from the package, or copy-paste them straight into your product's <code style="color: var(--ui-color-brand-500);">globals.css</code> or <code style="color: var(--ui-color-brand-500);">theme.css</code>:
+          </p>
+
+          <pre class="code-viewer-pre" style="border-radius: 6px; font-size: 0.8rem; padding: 1rem; margin-bottom: 0.75rem;"><code>// Option 1: Full Universal Stylesheet (Cascade layers, tokens, reset & base primitives)
+import 'nnuikit/globals.css';
+
+// Option 2: Pure Theme Custom Properties (Zero-dependency CSS variables only)
+import 'nnuikit/theme.css';</code></pre>
+
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+            Want to customize brand color harmonies, light/dark modes, and border radii? Visit our <a href="/tokens" style="color: var(--ui-color-brand-500); font-weight: 600; text-decoration: underline;">Design Tokens & Theme Studio</a> to test components in real time and copy or download your tailored CSS theme file with 1 click.
+          </p>
+        </div>
       </section>
 
       <!-- Crown Innovations -->

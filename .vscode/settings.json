@@ -1,0 +1,5 @@
+{
+  "html.customData": [
+    "./packages/nnui-kit/vscode.html-data.json"
+  ]
+}

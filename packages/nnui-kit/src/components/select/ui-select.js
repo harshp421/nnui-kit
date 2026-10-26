@@ -25,6 +25,8 @@ export class UiSelect extends BaseLightElement {
     return this._internals ? this._internals.form : null;
   }
 
+  set form(_) {}
+
   get name() {
     return this.getAttribute('name') || '';
   }
@@ -47,12 +49,27 @@ export class UiSelect extends BaseLightElement {
     return this.hasAttribute('open');
   }
 
+  set isOpen(val) {
+    if (val) this.open();
+    else this.close();
+  }
+
   get required() {
     return this.hasAttribute('required');
   }
 
+  set required(val) {
+    if (val) this.setAttributeSafe(this, 'required', '');
+    else this.removeAttributeSafe(this, 'required');
+  }
+
   get disabled() {
     return this.hasAttribute('disabled');
+  }
+
+  set disabled(val) {
+    if (val) this.setAttributeSafe(this, 'disabled', '');
+    else this.removeAttributeSafe(this, 'disabled');
   }
 
   init() {

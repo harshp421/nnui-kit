@@ -33,25 +33,25 @@ Safely no-ops in Node.js server pre-rendering (zero `ReferenceError: HTMLElement
 
 ```javascript
 // In app/layout.tsx, src/routes/+layout.svelte, or main entrypoint:
-import 'nnui-kit/css';
-import 'nnui-kit/client'; // SSR-Safe Client Hydration Entry
-import { toast } from 'nnui-kit';
+import 'nnuikit/css';
+import 'nnuikit/client'; // SSR-Safe Client Hydration Entry
+import { toast } from 'nnuikit';
 ```
 
-#### B. First-Class React 18 & 19 Wrapper (`nnui-kit/react`)
+#### B. First-Class React 18 & 19 Wrapper (`nnuikit/react`)
 Idiomatic React components with automatic ref forwarding, typed props, and custom DOM event bridging (`onSelectionChange`, `onChange`, `onSort`, `onOpen`, `onClose`):
 
 ```jsx
 'use client';
 
-import 'nnui-kit/css';
-import 'nnui-kit/client';
-import { Tabs, DataGrid, Stepper, Dialog, toast } from 'nnui-kit/react';
+import 'nnuikit/css';
+import 'nnuikit/client';
+import { Tabs, DataGrid, Stepper, Dialog, toast } from 'nnuikit/react';
 
 export function Dashboard() {
   return (
     <Tabs value="blotter" onChange={(e) => console.log(e.detail.value)}>
-      <DataGrid row-height="40" persist="url" sync="cross-tab">
+      <DataGrid rowHeight={40} persist="url" sync="cross-tab">
         <div data-part="viewport">
           <div data-part="runway">
             <table data-part="grid-table" className="ui-table">
@@ -70,23 +70,107 @@ export function Dashboard() {
 Direct platform-native custom elements (`<nnui-*>` or `<ui-*>`) with zero framework wrappers:
 
 ```javascript
-import 'nnui-kit/css';
-import 'nnui-kit'; // Registers both <nnui-*> and <ui-*> prefixes
+import 'nnuikit/css';
+import 'nnuikit'; // Registers both <nnui-*> and <ui-*> prefixes
 ```
 
 Or via CDN directly in static HTML (zero build step):
 
 ```html
 <!-- Design Tokens & Cascade Layers -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nnui-kit@1.0.0/dist/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nnuikit@1.0.5/dist/index.css" />
 
 <!-- Core JavaScript Module -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/nnui-kit@1.0.0/dist/index.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/nnuikit@1.0.5/dist/index.js"></script>
+```
+
+#### D. Instant VS Code & Cursor IDE Autocomplete
+To enable autocomplete for `<ui-*>` / `<nnui-*>` tags, attributes, and `data-part="..."` slots in HTML, Astro, Vue, and Svelte templates, add to `.vscode/settings.json`:
+
+```json
+{
+  "html.customData": [
+    "./node_modules/nnuikit/dist/vscode.html-data.json"
+  ]
+}
+```
+
+#### E. Component Registry CLI with Framework Targets (Shadcn-Style Code Ownership)
+Rather than a closed black-box dependency, you can drop fully editable component source code directly into your repository:
+
+```bash
+# Initialize tokens & config
+npx nnui init
+
+# Target 1: React 18 & 19 (drops React compound component into src/components/ui/)
+npx nnui add dialog tabs command --react
+
+# Target 2: Vanilla HTML (drops runnable HTML snippet & JS micro-enhancer)
+npx nnui add dialog tabs command --html
+
+# Target 3: Ruby on Rails (drops ERB partial & configures config/importmap.rb)
+npx nnui add dialog tabs command --rails
 ```
 
 ---
 
-## 2. NNUI CLI & Component Registry (`npx nnui`)
+## 2. Global CSS & Design Tokens (`globals.css` / `theme.css`)
+
+NNUI-KIT provides standalone, W3C DTCG-compliant global CSS stylesheets that you can either import directly or copy-paste straight into your project:
+
+```javascript
+// Option A: Universal Master Stylesheet (tokens + reset + primitives)
+import 'nnuikit/globals.css';
+
+// Option B: Pure Standalone Theme Tokens (zero-dependency CSS custom properties only)
+import 'nnuikit/theme.css';
+```
+
+### Turnkey Copy-Paste Design Tokens for Your Product
+
+You can copy `theme.css` directly into your application (e.g. `app/globals.css`, `src/globals.css`, or HTML `<link>`) to instantly control all design system tokens:
+
+```css
+@layer ui.tokens {
+  :root {
+    /* Brand Tonal Ramp (50–950) */
+    --ui-color-brand-500: #71717a; /* Replace with your brand color */
+
+    /* Semantic Canvas & Surfaces */
+    --ui-bg-canvas: #ffffff;
+    --ui-bg-surface: #ffffff;
+    --ui-bg-surface-elevated: #f4f4f5;
+    --ui-bg-subtle: #f4f4f5;
+
+    /* Semantic Text */
+    --ui-text-primary: #09090b;
+    --ui-text-secondary: #52525b;
+    --ui-text-muted: #71717a;
+
+    /* Semantic Borders */
+    --ui-border-default: #e4e4e7;
+    --ui-border-subtle: #f4f4f5;
+
+    /* Radii & Typography */
+    --ui-radius-md: 0.5rem;
+    --ui-font-sans: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Authentic Dark Mode */
+  :root[data-theme="dark"], .dark {
+    --ui-bg-canvas: #09090b;
+    --ui-bg-surface: #09090b;
+    --ui-text-primary: #fafafa;
+    --ui-border-default: #27272a;
+  }
+}
+```
+
+> **Live Theme Studio**: Visit our documentation at `/tokens` to customize 7 curated color harmonies (Zinc, Slate, Violet, Emerald, Rose, Blue, Orange) and download or copy tailored `globals.css` with 1 click.
+
+---
+
+## 3. NNUI CLI & Component Registry (`npx nnui`)
 
 Just like shadcn/ui, you can copy components directly into your project codebase or install individual pieces using the official CLI:
 

@@ -13,9 +13,24 @@ import { BaseLightElement } from '../../utils/base-element.js';
  * - Dispatches 'change' and 'input' CustomEvents with { value }
  */
 export class UiColorPicker extends BaseLightElement {
+  static formAssociated = true;
+
   static get observedAttributes() {
     return ['value', 'name', 'format', 'disabled'];
   }
+
+  constructor() {
+    super();
+    if (typeof this.attachInternals === 'function') {
+      this._internals = this.attachInternals();
+    }
+  }
+
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
 
   get value() {
     return this.getAttribute('value') || '#3b82f6';
@@ -28,6 +43,11 @@ export class UiColorPicker extends BaseLightElement {
 
   get name() {
     return this.getAttribute('name') || '';
+  }
+
+  set name(val) {
+    if (val) this.setAttributeSafe('name', val);
+    else this.removeAttributeSafe('name');
   }
 
   get disabled() {
@@ -46,6 +66,11 @@ export class UiColorPicker extends BaseLightElement {
   get isOpen() {
     const popover = this.querySelector('[data-part="popover"]');
     return popover?.getAttribute('data-state') === 'open';
+  }
+
+  set isOpen(val) {
+    if (val) this.open();
+    else this.close();
   }
 
   init() {
@@ -103,6 +128,7 @@ export class UiColorPicker extends BaseLightElement {
     if (this._hiddenInput) {
       this._hiddenInput.value = color;
     }
+    this._updateFormValue();
 
     if (this.disabled) {
       swatch?.setAttribute('disabled', '');
@@ -203,6 +229,20 @@ export class UiColorPicker extends BaseLightElement {
 
     popover.setAttribute('data-state', 'open');
     this.dispatch('open');
+  }
+
+  _updateFormValue() {
+    if (this._internals) {
+      this._internals.setFormValue(this.value);
+    }
+    if (this._hiddenInput) {
+      this._hiddenInput.value = this.value;
+    }
+  }
+
+  formResetCallback() {
+    const initialVal = this.getAttribute('value') || '#3b82f6';
+    this.value = initialVal;
   }
 
   close() {

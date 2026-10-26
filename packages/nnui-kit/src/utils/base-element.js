@@ -17,6 +17,42 @@ export class BaseLightElement extends SafeBaseElement {
     super();
     this._cleanups = [];
     this._initialized = false;
+    this._ensureSettersForGetters();
+  }
+
+  /**
+   * React 19 reconciler compatibility guard:
+   * React 19 checks `'prop' in element` and executes `element[prop] = value`.
+   * If a class prototype has a getter without a setter, JavaScript strict mode throws
+   * "TypeError: Cannot set property X of #<Element> which has only a getter".
+   * This guard automatically adds a reflecting setter if one was omitted on any subclass.
+   */
+  _ensureSettersForGetters() {
+    let proto = Object.getPrototypeOf(this);
+    while (proto && proto !== SafeBaseElement.prototype && proto !== Object.prototype) {
+      const descriptors = Object.getOwnPropertyDescriptors(proto);
+      for (const [prop, desc] of Object.entries(descriptors)) {
+        if (desc.get && !desc.set) {
+          Object.defineProperty(proto, prop, {
+            get: desc.get,
+            set(val) {
+              const attr = prop.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
+              if (typeof val === 'boolean') {
+                if (val) this.setAttribute(attr, '');
+                else this.removeAttribute(attr);
+              } else if (val !== null && val !== undefined) {
+                this.setAttribute(attr, String(val));
+              } else {
+                this.removeAttribute(attr);
+              }
+            },
+            configurable: true,
+            enumerable: desc.enumerable,
+          });
+        }
+      }
+      proto = Object.getPrototypeOf(proto);
+    }
   }
 
   /**
@@ -142,9 +178,11 @@ export class BaseLightElement extends SafeBaseElement {
 
   /**
    * Diagnostic helper to warn developers when AI-generated markup is missing expected parts.
+   * Only triggers when children were provided but expected parts are absent (avoids false-positives
+   * during deferred V-DOM/React mounting or before auto-scaffolding).
    */
   warnIfMissing(selector, description = '') {
-    if (typeof window !== 'undefined' && !this.querySelector(selector)) {
+    if (typeof window !== 'undefined' && this.childElementCount > 0 && !this.querySelector(selector)) {
       console.warn(
         `[NNUI-KIT] <${this.tagName.toLowerCase()}>: Missing expected child "${selector}" (${description}). ` +
         `Make sure your template includes this element for proper functionality.`

@@ -13,8 +13,10 @@ import { attachPersistence } from '../../utils/persistence.js';
  * - Declarative State Persistence: persist="url|session|local" [sync="cross-tab"]
  */
 export class UiDateRangePicker extends BaseLightElement {
+  static formAssociated = true;
+
   static get observedAttributes() {
-    return ['start-date', 'end-date', 'placeholder', 'disabled', 'open', 'persist', 'sync'];
+    return ['start-date', 'end-date', 'placeholder', 'disabled', 'open', 'name', 'persist', 'sync'];
   }
 
   constructor() {
@@ -25,6 +27,44 @@ export class UiDateRangePicker extends BaseLightElement {
     this._viewYear = new Date().getFullYear();
     this._viewMonth = new Date().getMonth();
     this._selectingEnd = false;
+    if (typeof this.attachInternals === 'function') {
+      this._internals = this.attachInternals();
+    }
+  }
+
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
+
+  get name() {
+    return this.getAttribute('name') || '';
+  }
+
+  set name(val) {
+    if (val) this.setAttributeSafe('name', val);
+    else this.removeAttributeSafe('name');
+  }
+
+  get value() {
+    const s = this._startDate ? this._formatDate(this._startDate) : '';
+    const e = this._endDate ? this._formatDate(this._endDate) : '';
+    return (s && e) ? `${s} - ${e}` : (s || '');
+  }
+
+  set value(val) {
+    if (!val) {
+      this._startDate = null;
+      this._endDate = null;
+    } else {
+      const parts = String(val).split(' - ');
+      this._startDate = parts[0] ? new Date(parts[0].trim()) : null;
+      this._endDate = parts[1] ? new Date(parts[1].trim()) : null;
+    }
+    this._renderTrigger();
+    this._renderCalendars();
+    this._updateFormValue();
   }
 
   get startDate() {
@@ -54,6 +94,11 @@ export class UiDateRangePicker extends BaseLightElement {
       } catch (e) {}
     }
     return this.hasAttribute('open');
+  }
+
+  set isOpen(val) {
+    if (val) this.open();
+    else this.close();
   }
 
   getAiState() {
@@ -784,6 +829,22 @@ export class UiDateRangePicker extends BaseLightElement {
         }
       }
     }
+  }
+
+  _updateFormValue() {
+    if (this._internals) {
+      this._internals.setFormValue(this.value);
+    }
+  }
+
+  formResetCallback() {
+    const startAttr = this.getAttribute('start-date');
+    const endAttr = this.getAttribute('end-date');
+    this._startDate = startAttr ? new Date(startAttr) : null;
+    this._endDate = endAttr ? new Date(endAttr) : null;
+    this._renderTrigger();
+    this._renderCalendars();
+    this._updateFormValue();
   }
 
   disconnectedCallback() {

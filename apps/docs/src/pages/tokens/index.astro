@@ -22,6 +22,70 @@ const radii = [
 ];
 
 const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+
+const tokenDictionary = [
+  { category: 'surface', name: '--ui-bg-canvas', light: '#ffffff', dark: '#09090b', desc: 'Main document canvas & background', type: 'color' },
+  { category: 'surface', name: '--ui-bg-surface', light: '#ffffff', dark: '#09090b', desc: 'Card, dialog, and panel surface container', type: 'color' },
+  { category: 'surface', name: '--ui-bg-surface-elevated', light: '#f4f4f5', dark: '#18181b', desc: 'Floating popovers, dropdowns, and elevated cards', type: 'color' },
+  { category: 'surface', name: '--ui-bg-subtle', light: '#f4f4f5', dark: '#27272a', desc: 'Secondary backgrounds, pill buttons, alternate rows', type: 'color' },
+  { category: 'surface', name: '--ui-bg-hover', light: '#e4e4e7', dark: '#27272a', desc: 'Interactive item hover state', type: 'color' },
+  { category: 'surface', name: '--ui-bg-active', light: '#d4d4d8', dark: '#3f3f46', desc: 'Active/pressed button or item state', type: 'color' },
+  { category: 'surface', name: '--ui-bg', light: 'var(--ui-bg-canvas)', dark: 'var(--ui-bg-canvas)', desc: 'Canonical convenience shortcut alias for canvas', type: 'alias' },
+
+  { category: 'text', name: '--ui-text-primary', light: '#09090b', dark: '#fafafa', desc: 'Headings and high-contrast body copy', type: 'color' },
+  { category: 'text', name: '--ui-text-secondary', light: '#52525b', dark: '#a1a1aa', desc: 'Subheadings, field labels, and secondary copy', type: 'color' },
+  { category: 'text', name: '--ui-text-muted', light: '#71717a', dark: '#71717a', desc: 'Placeholders, helper captions, and subtle timestamps', type: 'color' },
+  { category: 'text', name: '--ui-text-inverted', light: '#fafafa', dark: '#09090b', desc: 'Inverted text for dark tooltips or solid badges', type: 'color' },
+  { category: 'text', name: '--ui-text', light: 'var(--ui-text-primary)', dark: 'var(--ui-text-primary)', desc: 'Canonical convenience shortcut alias for primary text', type: 'alias' },
+
+  { category: 'border', name: '--ui-border-subtle', light: '#f4f4f5', dark: '#18181b', desc: 'Gentle dividers and subtle card section borders', type: 'color' },
+  { category: 'border', name: '--ui-border-default', light: '#e4e4e7', dark: '#27272a', desc: 'Standard border for buttons, inputs, cards, and tables', type: 'color' },
+  { category: 'border', name: '--ui-border-strong', light: '#d4d4d8', dark: '#3f3f46', desc: 'Emphasized borders and active segmented tabs', type: 'color' },
+  { category: 'border', name: '--ui-border-focus', light: '#09090b', dark: '#fafafa', desc: 'High-visibility accessible keyboard focus ring', type: 'color' },
+  { category: 'border', name: '--ui-border', light: 'var(--ui-border-default)', dark: 'var(--ui-border-default)', desc: 'Canonical convenience shortcut alias for default border', type: 'alias' },
+
+  { category: 'brand', name: '--ui-color-brand-500', light: '#71717a', dark: '#71717a', desc: 'Primary brand accent for buttons, switches, and sliders', type: 'color' },
+  { category: 'brand', name: '--ui-color-accent-400', light: '#38bdf8', dark: '#38bdf8', desc: 'Secondary brand accent highlight', type: 'color' },
+  { category: 'brand', name: '--ui-color-accent-500', light: '#0ea5e9', dark: '#0ea5e9', desc: 'Interactive primary brand accent', type: 'color' },
+
+  { category: 'status', name: '--ui-color-success-500', light: '#10b981', dark: '#10b981', desc: 'Success notifications, verified tags, and active status', type: 'color' },
+  { category: 'status', name: '--ui-color-warning-500', light: '#f59e0b', dark: '#f59e0b', desc: 'Warning callouts, pending badges, and caution states', type: 'color' },
+  { category: 'status', name: '--ui-color-danger-500', light: '#ef4444', dark: '#ef4444', desc: 'Destructive buttons, error alerts, and validation errors', type: 'color' },
+
+  { category: 'typography', name: '--ui-font-sans', light: 'Inter, system-ui, sans-serif', dark: 'Inter, system-ui, sans-serif', desc: 'Primary application UI font stack', type: 'font' },
+  { category: 'typography', name: '--ui-font-mono', light: 'JetBrains Mono, monospace', dark: 'JetBrains Mono, monospace', desc: 'Monospace font stack for code and IDs', type: 'font' },
+  { category: 'typography', name: '--ui-font-size-xs', light: '0.75rem (12px)', dark: '0.75rem (12px)', desc: 'Extra small captions and badge labels', type: 'size' },
+  { category: 'typography', name: '--ui-font-size-sm', light: '0.875rem (14px)', dark: '0.875rem (14px)', desc: 'Small text, buttons, table cell labels', type: 'size' },
+  { category: 'typography', name: '--ui-font-size-base', light: '1rem (16px)', dark: '1rem (16px)', desc: 'Standard body text and form inputs', type: 'size' },
+  { category: 'typography', name: '--ui-font-size-lg', light: '1.125rem (18px)', dark: '1.125rem (18px)', desc: 'Card headings and featured paragraphs', type: 'size' },
+  { category: 'typography', name: '--ui-font-size-xl', light: '1.25rem (20px)', dark: '1.25rem (20px)', desc: 'Section titles and modal headers', type: 'size' },
+  { category: 'typography', name: '--ui-font-size-2xl', light: '1.5rem (24px)', dark: '1.5rem (24px)', desc: 'Page headers and hero banners', type: 'size' },
+
+  { category: 'radius', name: '--ui-radius-sm', light: '0.375rem (6px)', dark: '0.375rem (6px)', desc: 'Small badges, chip tags, and tooltips', type: 'radius' },
+  { category: 'radius', name: '--ui-radius-md', light: '0.5rem (8px)', dark: '0.5rem (8px)', desc: 'Default button, input, and card radius', type: 'radius' },
+  { category: 'radius', name: '--ui-radius-lg', light: '0.75rem (12px)', dark: '0.75rem (12px)', desc: 'Dialog modals, sheets, and popovers', type: 'radius' },
+  { category: 'radius', name: '--ui-radius-xl', light: '1rem (16px)', dark: '1rem (16px)', desc: 'Large panels and drawer sheets', type: 'radius' },
+  { category: 'radius', name: '--ui-radius-full', light: '9999px', dark: '9999px', desc: 'Pill buttons, circular avatars, and badges', type: 'radius' },
+
+  { category: 'shadow', name: '--ui-shadow-sm', light: '0 1px 2px rgba(0,0,0,0.05)', dark: '0 1px 2px rgba(0,0,0,0.3)', desc: 'Subtle elevation for cards and buttons', type: 'shadow' },
+  { category: 'shadow', name: '--ui-shadow-md', light: '0 4px 6px -1px rgba(0,0,0,0.08)', dark: '0 4px 6px -1px rgba(0,0,0,0.4)', desc: 'Card hover elevation and dropdowns', type: 'shadow' },
+  { category: 'shadow', name: '--ui-shadow-lg', light: '0 10px 15px -3px rgba(0,0,0,0.1)', dark: '0 10px 15px -3px rgba(0,0,0,0.5)', desc: 'Floating menus and search palettes', type: 'shadow' },
+  { category: 'shadow', name: '--ui-shadow-popover', light: '0 12px 32px -4px rgba(15,23,42,0.18)', dark: '0 16px 36px -4px rgba(0,0,0,0.65)', desc: 'Top-layer anchored popovers and menus', type: 'shadow' },
+
+  { category: 'glass', name: '--ui-glass-bg', light: 'rgba(255,255,255,0.82)', dark: 'rgba(9,9,11,0.85)', desc: 'Frosted glass translucent backdrop', type: 'glass' },
+  { category: 'glass', name: '--ui-glass-border', light: 'rgba(228,228,231,0.8)', dark: 'rgba(39,39,42,0.8)', desc: 'Frosted glass boundary stroke', type: 'glass' },
+  { category: 'glass', name: '--ui-glass-blur', light: 'blur(12px)', dark: 'blur(12px)', desc: 'Glassmorphic backdrop filter blur', type: 'glass' },
+
+  { category: 'zindex', name: '--ui-z-dropdown', light: '1000', dark: '1000', desc: 'Anchored dropdown menus', type: 'zindex' },
+  { category: 'zindex', name: '--ui-z-sticky', light: '1100', dark: '1100', desc: 'Sticky headers and navigation bars', type: 'zindex' },
+  { category: 'zindex', name: '--ui-z-modal', light: '1350', dark: '1350', desc: 'Dialog modals and sheet drawers', type: 'zindex' },
+  { category: 'zindex', name: '--ui-z-toast', light: '1500', dark: '1500', desc: 'Toast notifications floating container', type: 'zindex' },
+  { category: 'zindex', name: '--ui-z-tooltip', light: '1600', dark: '1600', desc: 'Floating tooltips atop all layers', type: 'zindex' },
+
+  { category: 'motion', name: '--ui-ease-spring', light: 'cubic-bezier(0.16, 1, 0.3, 1)', dark: 'cubic-bezier(0.16, 1, 0.3, 1)', desc: 'Natural fluid spring motion curve', type: 'motion' },
+  { category: 'motion', name: '--ui-duration-fast', light: '150ms', dark: '150ms', desc: 'Instant feedback clicks and toggles', type: 'motion' },
+  { category: 'motion', name: '--ui-duration-normal', light: '250ms', dark: '250ms', desc: 'Accordion expand and modal entrance', type: 'motion' },
+];
 ---
 
 <DocsLayout title="Design Tokens & Theme Studio | NNUI-KIT" activePath="/tokens">
@@ -29,12 +93,12 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
     
     <!-- Header -->
     <div style="margin-bottom: 2.5rem;">
-      <div class="announcement-badge" style="margin-bottom: 0.75rem;">W3C DTCG Specification Compliant</div>
+      <div class="announcement-badge" style="margin-bottom: 0.75rem;">W3C DTCG Specification Compliant · Universal Standalone CSS</div>
       <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: var(--text-main);">
-        Design Tokens & Theme Studio
+        Design Tokens & Global Theme Studio
       </h1>
-      <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 720px;">
-        Customize brand color harmonies, light/dark color modes, and border radii in real time. Watch all 45 platform-native components react instantly without re-rendering or Shadow DOM obstacles.
+      <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 780px;">
+        Interactive design token reference and export studio. Customize brand color harmonies, light/dark modes, and border radii in real time — then copy or download the turnkey global CSS theme file (<code style="color: var(--ui-color-brand-500); font-weight: 600;">globals.css</code>) directly into your product.
       </p>
     </div>
 
@@ -52,9 +116,14 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
           <button type="button" class="preset-chip-btn" data-preset="zinc-dark">🖤 Pure Monochrome</button>
         </div>
 
-        <button id="copy-tokens-quick-btn" class="btn-brand" data-ui="button" data-size="xs" style="font-size: 0.78rem; padding: 0.35rem 0.85rem;">
-          <span>Copy Theme CSS 📋</span>
-        </button>
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <button id="copy-tokens-quick-btn" class="btn-brand" data-ui="button" data-size="xs" style="font-size: 0.78rem; padding: 0.35rem 0.85rem;" title="Copy complete globals.css to clipboard">
+            <span>Copy globals.css 📋</span>
+          </button>
+          <button id="download-tokens-quick-btn" class="btn-secondary" data-ui="button" data-variant="secondary" data-size="xs" style="font-size: 0.78rem; padding: 0.35rem 0.85rem;" title="Download globals.css file">
+            <span>Download .css ⬇️</span>
+          </button>
+        </div>
       </div>
 
       <!-- Controls: Palette, Mode, Radius -->
@@ -330,20 +399,203 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
       </div>
     </section>
 
-    <!-- CSS Variable Export Output -->
-    <section>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+    <!-- Design Tokens & Global CSS Export Center -->
+    <section style="margin-top: 3.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
         <div>
-          <h2 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 0.25rem; color: var(--text-main);">Generated CSS Tokens</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Ready to paste into your design system, Tailwind config, or stylesheet.</p>
+          <div class="announcement-badge" style="margin-bottom: 0.5rem;">Turnkey Design Tokens</div>
+          <h2 style="font-size: 1.75rem; font-weight: 800; margin: 0 0 0.35rem; color: var(--text-main);">
+            Copy & Paste Design Tokens for Your Product
+          </h2>
+          <p style="font-size: 0.92rem; color: var(--text-muted); margin: 0; max-width: 760px; line-height: 1.6;">
+            Everything you need to adopt NNUI-KIT design tokens: copy the complete turnkey <code style="color: var(--ui-color-brand-500); font-weight: 600;">globals.css</code> theme file, export Tailwind CSS configuration, or explore all 40+ tokens in our live variable dictionary.
+          </p>
         </div>
 
-        <button id="copy-tokens-btn" class="btn-secondary" data-ui="button" data-variant="secondary" data-size="sm" style="font-size: 0.8rem; padding: 0.4rem 0.95rem;">
-          <span>Copy CSS Variables 📋</span>
-        </button>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <button id="copy-active-tab-btn" class="btn-brand" data-ui="button" data-size="sm" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <span id="copy-active-tab-label">Copy globals.css 📋</span>
+          </button>
+          <button id="download-active-file-btn" class="btn-secondary" data-ui="button" data-variant="secondary" data-size="sm" style="font-size: 0.82rem; padding: 0.45rem 1rem;" title="Download CSS file directly to your disk">
+            <span>Download .css ⬇️</span>
+          </button>
+        </div>
       </div>
 
-      <pre class="code-viewer-pre" style="border-radius: var(--ui-radius-md, 8px); border: 1px solid var(--border-subtle);"><code id="css-export-output">/* Select a palette above to view its CSS variable block */</code></pre>
+      <!-- Export Box Container -->
+      <div class="token-export-box">
+        <!-- Tab Bar -->
+        <div class="token-export-tabs-row">
+          <div class="token-tab-buttons" id="export-tabs-nav">
+            <button type="button" class="token-tab-btn active" data-tab="globals">
+              <span>📄</span>
+              <span>globals.css</span>
+              <span data-ui="badge" data-size="xs" style="font-size: 0.65rem; padding: 1px 6px;">Universal Theme</span>
+            </button>
+            <button type="button" class="token-tab-btn" data-tab="tailwind">
+              <span>🌊</span>
+              <span>Tailwind CSS</span>
+              <span data-ui="badge" data-size="xs" style="font-size: 0.65rem; padding: 1px 6px;">v4 & v3</span>
+            </button>
+            <button type="button" class="token-tab-btn" data-tab="overrides">
+              <span>⚡</span>
+              <span>tokens.css</span>
+              <span data-ui="badge" data-size="xs" style="font-size: 0.65rem; padding: 1px 6px;">Overrides Only</span>
+            </button>
+            <button type="button" class="token-tab-btn" data-tab="dictionary">
+              <span>📚</span>
+              <span>Token Dictionary</span>
+              <span data-ui="badge" data-size="xs" style="font-size: 0.65rem; padding: 1px 6px;">40+ Vars</span>
+            </button>
+          </div>
+
+          <div style="font-size: 0.75rem; font-family: var(--docs-font-mono); color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+            <span>Active Config:</span>
+            <span id="tab-status-pill" style="color: var(--ui-color-brand-500); font-weight: 700; text-transform: uppercase;">
+              ZINC · DARK · 0.5rem
+            </span>
+          </div>
+        </div>
+
+        <!-- Panel 1: globals.css -->
+        <div class="token-tab-panel" id="panel-globals">
+          <div class="token-code-stage-header">
+            <div class="filename-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              <span>src/styles/globals.css (Turnkey Standalone Theme)</span>
+            </div>
+            <span style="font-size: 0.72rem; color: #71717a;">W3C DTCG · Cascade Layers · Light/Dark Modes · Zero External Deps</span>
+          </div>
+          <pre class="code-viewer-pre" style="max-height: 520px; overflow-y: auto;"><code id="globals-css-output">/* Generating globals.css... */</code></pre>
+
+          <!-- Quickstart Guide Cards -->
+          <div class="token-quickstart-grid">
+            <div class="token-quickstart-card">
+              <h4><span>⚛️</span> Next.js (App Router)</h4>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 0.35rem;">Drop in <code>app/globals.css</code> & import in root layout:</p>
+              <code>import '@/app/globals.css';</code>
+            </div>
+            <div class="token-quickstart-card">
+              <h4><span>⚡</span> Vite / React / Vue</h4>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 0.35rem;">Save as <code>src/globals.css</code> & import in main entry:</p>
+              <code>import './globals.css';</code>
+            </div>
+            <div class="token-quickstart-card">
+              <h4><span>🚀</span> Astro</h4>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 0.35rem;">Import in master <code>Layout.astro</code> frontmatter:</p>
+              <code>import '../styles/globals.css';</code>
+            </div>
+            <div class="token-quickstart-card">
+              <h4><span>🌐</span> HTML / Static Web</h4>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin: 0 0 0.35rem;">Link stylesheet in your HTML document <code>&lt;head&gt;</code>:</p>
+              <code>&lt;link rel="stylesheet" href="globals.css"&gt;</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Tailwind CSS -->
+        <div class="token-tab-panel" id="panel-tailwind" style="display: none;">
+          <div class="token-code-stage-header">
+            <div class="filename-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              <span>Tailwind CSS Integration (v4 @theme & v3 config)</span>
+            </div>
+            <span style="font-size: 0.72rem; color: #71717a;">Maps Tailwind utility classes to --ui-* CSS custom properties</span>
+          </div>
+          <pre class="code-viewer-pre" style="max-height: 520px; overflow-y: auto;"><code id="tailwind-output">/* Generating Tailwind configuration... */</code></pre>
+        </div>
+
+        <!-- Panel 3: tokens.css Overrides -->
+        <div class="token-tab-panel" id="panel-overrides" style="display: none;">
+          <div class="token-code-stage-header">
+            <div class="filename-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              <span>Brand Palette & Radius Overrides (Minimal)</span>
+            </div>
+            <span style="font-size: 0.72rem; color: #71717a;">Paste into custom stylesheet when using default nnuikit/css</span>
+          </div>
+          <pre class="code-viewer-pre" style="max-height: 520px; overflow-y: auto;"><code id="overrides-output">/* Generating tokens.css overrides... */</code></pre>
+        </div>
+
+        <!-- Panel 4: Token Variable Dictionary -->
+        <div class="token-tab-panel" id="panel-dictionary" style="display: none;">
+          <div class="token-dict-container">
+            <div class="token-dict-controls">
+              <input 
+                id="token-dict-search-input" 
+                type="text" 
+                data-ui="input" 
+                class="ui-input token-dict-search-input" 
+                placeholder="🔍 Search tokens (e.g. canvas, primary, brand, radius, font)..."
+              />
+
+              <div class="token-dict-filter-pills" id="dict-filter-pills">
+                <button type="button" class="token-dict-filter-btn active" data-filter="all">All</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="surface">Surfaces</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="text">Text</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="border">Borders</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="brand">Brand</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="status">Status</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="typography">Typography</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="radius">Radius</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="shadow">Shadows</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="glass">Glass & Z-Index</button>
+                <button type="button" class="token-dict-filter-btn" data-filter="motion">Motion</button>
+              </div>
+            </div>
+
+            <div class="token-dict-table-wrap">
+              <table class="token-dict-table">
+                <thead>
+                  <tr>
+                    <th style="width: 260px;">CSS Variable (Click to Copy)</th>
+                    <th style="width: 130px;">Category</th>
+                    <th style="width: 180px;">Light Value</th>
+                    <th style="width: 180px;">Dark Value</th>
+                    <th>Target UI Role / Description</th>
+                  </tr>
+                </thead>
+                <tbody id="token-dict-tbody">
+                  {tokenDictionary.map((tok) => (
+                    <tr class="token-dict-row" data-category={tok.category} data-search={`${tok.name} ${tok.category} ${tok.desc} ${tok.light} ${tok.dark}`.toLowerCase()}>
+                      <td>
+                        <span class="token-var-badge copy-token-var-btn" data-var={tok.name} title="Click to copy CSS variable">
+                          <code>{tok.name}</code>
+                          <span style="font-size: 0.65rem; opacity: 0.7;">📋</span>
+                        </span>
+                      </td>
+                      <td>
+                        <span data-ui="badge" data-variant="secondary" style="font-size: 0.7rem; text-transform: capitalize;">
+                          {tok.category}
+                        </span>
+                      </td>
+                      <td>
+                        <div style="display: flex; align-items: center; gap: 0.4rem; font-family: var(--docs-font-mono); font-size: 0.75rem;">
+                          {tok.type === 'color' && (
+                            <span style={`width: 12px; height: 12px; border-radius: 3px; background: ${tok.light}; border: 1px solid var(--border-subtle); display: inline-block; flex-shrink: 0;`}></span>
+                          )}
+                          <span>{tok.light}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div style="display: flex; align-items: center; gap: 0.4rem; font-family: var(--docs-font-mono); font-size: 0.75rem;">
+                          {tok.type === 'color' && (
+                            <span style={`width: 12px; height: 12px; border-radius: 3px; background: ${tok.dark}; border: 1px solid var(--border-subtle); display: inline-block; flex-shrink: 0;`}></span>
+                          )}
+                          <span>{tok.dark}</span>
+                        </div>
+                      </td>
+                      <td style="font-size: 0.8rem; color: var(--text-muted);">
+                        {tok.desc}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </DocsLayout>
@@ -357,12 +609,31 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
   const modeDarkBtn = document.getElementById('mode-btn-dark');
   const presetBtns = document.querySelectorAll('.preset-chip-btn');
   const statusTag = document.getElementById('active-theme-status-tag');
-  const cssOutput = document.getElementById('css-export-output');
-  const copyBtn = document.getElementById('copy-tokens-btn');
+  const tabStatusPill = document.getElementById('tab-status-pill');
+
+  const globalsCssOutput = document.getElementById('globals-css-output');
+  const tailwindOutput = document.getElementById('tailwind-output');
+  const overridesOutput = document.getElementById('overrides-output');
+
+  const copyActiveBtn = document.getElementById('copy-active-tab-btn');
+  const copyActiveLabel = document.getElementById('copy-active-tab-label');
+  const downloadActiveBtn = document.getElementById('download-active-file-btn');
   const copyQuickBtn = document.getElementById('copy-tokens-quick-btn');
+  const downloadQuickBtn = document.getElementById('download-tokens-quick-btn');
+
   const demoSlider = document.getElementById('theme-demo-slider') as HTMLInputElement | null;
   const sliderReadout = document.getElementById('slider-val-readout');
   const toastBtn = document.getElementById('trigger-live-toast-btn');
+
+  const exportTabButtons = document.querySelectorAll('.token-tab-btn');
+  const tabPanels = {
+    globals: document.getElementById('panel-globals'),
+    tailwind: document.getElementById('panel-tailwind'),
+    overrides: document.getElementById('panel-overrides'),
+    dictionary: document.getElementById('panel-dictionary'),
+  };
+
+  let activeTab = 'globals';
 
   // Palette HEX values map for 50-950
   const PALETTE_HEX_MAP: Record<string, Record<number, string>> = {
@@ -425,10 +696,10 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
       }
     });
 
-    // Update Status Tag
-    if (statusTag) {
-      statusTag.textContent = `${currentPalette.toUpperCase()} · ${currentTheme.toUpperCase()} · ${currentRadius} RADIUS`;
-    }
+    // Update Status Tags
+    const statusText = `${currentPalette.toUpperCase()} · ${currentTheme.toUpperCase()} · ${currentRadius} RADIUS`;
+    if (statusTag) statusTag.textContent = statusText;
+    if (tabStatusPill) tabStatusPill.textContent = statusText;
 
     // Update Swatch Hex Labels
     const hexMap = PALETTE_HEX_MAP[currentPalette] || PALETTE_HEX_MAP.zinc;
@@ -439,15 +710,346 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
       }
     });
 
-    // Generate Export Code
-    generateCssCode();
+    // Generate Code for all tabs
+    generateAllCode();
   }
 
-  function generateCssCode() {
-    if (!cssOutput) return;
+  function getRadiusValues(rad: string) {
+    if (rad === '0') return { sm: '0px', md: '0px', lg: '0px', xl: '0px', full: '9999px' };
+    if (rad === 'full') return { sm: '9999px', md: '9999px', lg: '24px', xl: '32px', full: '9999px' };
+    const num = parseFloat(rad);
+    return {
+      sm: `${(num * 0.75).toFixed(3)}rem`,
+      md: `${num}rem`,
+      lg: `${(num * 1.5).toFixed(3)}rem`,
+      xl: `${(num * 2.0).toFixed(3)}rem`,
+      full: '9999px',
+    };
+  }
 
+  function generateAllCode() {
     const hexMap = PALETTE_HEX_MAP[currentPalette] || PALETTE_HEX_MAP.zinc;
-    const code = `/* NNUI-KIT W3C DTCG Token Customization */
+    const radii = getRadiusValues(currentRadius);
+
+    // 1. FULL GLOBALS.CSS CODE
+    const globalsCode = `/**
+ * NNUI-KIT — Design System Theme & Global CSS Variables
+ * Palette: ${currentPalette.toUpperCase()} | Default Mode: ${currentTheme.toUpperCase()} | Radius: ${currentRadius}rem
+ * W3C DTCG Specification Compliant · Universal Standalone CSS
+ *
+ * HOW TO USE IN YOUR PRODUCT:
+ * 1. Save this file as 'globals.css' in your product (e.g. src/globals.css or app/globals.css).
+ * 2. Import it at your application entrypoint:
+ *    - Next.js:    import '@/styles/globals.css' in app/layout.tsx
+ *    - Vite/React: import './globals.css' in src/main.tsx
+ *    - Astro:      import '../styles/globals.css' in src/layouts/Layout.astro
+ *    - HTML:       <link rel="stylesheet" href="globals.css">
+ */
+
+@layer ui.tokens {
+  :root {
+    /* ------------------------------------------------------------------------
+     * Brand Color Palette (${currentPalette.toUpperCase()} 50–950)
+     * ------------------------------------------------------------------------ */
+    --ui-color-brand-50: ${hexMap[50]};
+    --ui-color-brand-100: ${hexMap[100]};
+    --ui-color-brand-200: ${hexMap[200]};
+    --ui-color-brand-300: ${hexMap[300]};
+    --ui-color-brand-400: ${hexMap[400]};
+    --ui-color-brand-500: ${hexMap[500]};
+    --ui-color-brand-600: ${hexMap[600]};
+    --ui-color-brand-700: ${hexMap[700]};
+    --ui-color-brand-800: ${hexMap[800]};
+    --ui-color-brand-900: ${hexMap[900]};
+    --ui-color-brand-950: ${hexMap[950]};
+
+    /* Brand Accents & Status Feedback */
+    --ui-color-accent-400: #38bdf8;
+    --ui-color-accent-500: #0ea5e9;
+    --ui-color-success-500: #10b981;
+    --ui-color-warning-500: #f59e0b;
+    --ui-color-danger-500: #ef4444;
+
+    /* ------------------------------------------------------------------------
+     * Semantic Surfaces & Backgrounds (Light Mode)
+     * ------------------------------------------------------------------------ */
+    --ui-bg-canvas: #ffffff;
+    --ui-bg-surface: #ffffff;
+    --ui-bg-surface-elevated: #f4f4f5;
+    --ui-bg-subtle: #f4f4f5;
+    --ui-bg-hover: #e4e4e7;
+    --ui-bg-active: #d4d4d8;
+
+    /* ------------------------------------------------------------------------
+     * Semantic Text & Content (Light Mode)
+     * ------------------------------------------------------------------------ */
+    --ui-text-primary: #09090b;
+    --ui-text-secondary: #52525b;
+    --ui-text-muted: #71717a;
+    --ui-text-inverted: #fafafa;
+
+    /* ------------------------------------------------------------------------
+     * Semantic Borders & Dividers (Light Mode)
+     * ------------------------------------------------------------------------ */
+    --ui-border-subtle: #f4f4f5;
+    --ui-border-default: #e4e4e7;
+    --ui-border-strong: #d4d4d8;
+    --ui-border-focus: #09090b;
+
+    /* Canonical Convenience Shorthand Aliases */
+    --ui-bg: var(--ui-bg-canvas);
+    --ui-text: var(--ui-text-primary);
+    --ui-border: var(--ui-border-default);
+
+    /* ------------------------------------------------------------------------
+     * Typography Hierarchy
+     * ------------------------------------------------------------------------ */
+    --ui-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --ui-font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+    --ui-font-size-xs: 0.75rem;    /* 12px */
+    --ui-font-size-sm: 0.875rem;   /* 14px */
+    --ui-font-size-base: 1rem;     /* 16px */
+    --ui-font-size-lg: 1.125rem;   /* 18px */
+    --ui-font-size-xl: 1.25rem;    /* 20px */
+    --ui-font-size-2xl: 1.5rem;    /* 24px */
+    --ui-font-size-3xl: 1.875rem;  /* 30px */
+
+    /* ------------------------------------------------------------------------
+     * Spacing Scale
+     * ------------------------------------------------------------------------ */
+    --ui-space-1: 0.25rem;   /* 4px */
+    --ui-space-2: 0.5rem;    /* 8px */
+    --ui-space-3: 0.75rem;   /* 12px */
+    --ui-space-4: 1rem;      /* 16px */
+    --ui-space-5: 1.25rem;   /* 20px */
+    --ui-space-6: 1.5rem;    /* 24px */
+    --ui-space-8: 2rem;      /* 32px */
+    --ui-space-10: 2.5rem;   /* 40px */
+    --ui-space-12: 3rem;     /* 48px */
+
+    /* ------------------------------------------------------------------------
+     * Border Radii (${currentRadius})
+     * ------------------------------------------------------------------------ */
+    --ui-radius-sm: ${radii.sm};
+    --ui-radius-md: ${radii.md};
+    --ui-radius-lg: ${radii.lg};
+    --ui-radius-xl: ${radii.xl};
+    --ui-radius-full: ${radii.full};
+
+    /* ------------------------------------------------------------------------
+     * Elevation & Box Shadows
+     * ------------------------------------------------------------------------ */
+    --ui-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --ui-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    --ui-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+    --ui-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    --ui-shadow-popover: 0 12px 32px -4px rgba(15, 23, 42, 0.18), 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+
+    /* ------------------------------------------------------------------------
+     * Frosted Glassmorphism
+     * ------------------------------------------------------------------------ */
+    --ui-glass-bg: rgba(255, 255, 255, 0.82);
+    --ui-glass-border: rgba(228, 228, 231, 0.8);
+    --ui-glass-blur: blur(12px);
+
+    /* ------------------------------------------------------------------------
+     * Z-Index Layering Scale
+     * ------------------------------------------------------------------------ */
+    --ui-z-base: 0;
+    --ui-z-dropdown: 1000;
+    --ui-z-sticky: 1100;
+    --ui-z-fixed: 1200;
+    --ui-z-modal-backdrop: 1300;
+    --ui-z-modal: 1350;
+    --ui-z-popover: 1400;
+    --ui-z-toast: 1500;
+    --ui-z-tooltip: 1600;
+
+    /* ------------------------------------------------------------------------
+     * Motion & Easing Curves
+     * ------------------------------------------------------------------------ */
+    --ui-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ui-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ui-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ui-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    --ui-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --ui-duration-instant: 75ms;
+    --ui-duration-fast: 150ms;
+    --ui-duration-normal: 250ms;
+    --ui-duration-slow: 400ms;
+
+    --ui-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --ui-transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --ui-transition-spring: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* --------------------------------------------------------------------------
+   * Dark Mode (Activate via .dark class or [data-theme="dark"])
+   * -------------------------------------------------------------------------- */
+  :root[data-theme="dark"],
+  [data-theme="dark"],
+  .dark {
+    --ui-bg-canvas: #09090b;
+    --ui-bg-surface: #09090b;
+    --ui-bg-surface-elevated: #18181b;
+    --ui-bg-subtle: #27272a;
+    --ui-bg-hover: #27272a;
+    --ui-bg-active: #3f3f46;
+
+    --ui-text-primary: #fafafa;
+    --ui-text-secondary: #a1a1aa;
+    --ui-text-muted: #71717a;
+    --ui-text-inverted: #09090b;
+
+    --ui-border-subtle: #18181b;
+    --ui-border-default: #27272a;
+    --ui-border-strong: #3f3f46;
+    --ui-border-focus: #fafafa;
+
+    --ui-shadow-popover: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 4px 16px -2px rgba(0, 0, 0, 0.5);
+    --ui-glass-bg: rgba(9, 9, 11, 0.85);
+    --ui-glass-border: rgba(39, 39, 42, 0.8);
+  }
+
+  /* Automatic OS Dark Mode */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]):not(.light) {
+      --ui-bg-canvas: #09090b;
+      --ui-bg-surface: #09090b;
+      --ui-bg-surface-elevated: #18181b;
+      --ui-bg-subtle: #27272a;
+      --ui-bg-hover: #27272a;
+      --ui-bg-active: #3f3f46;
+
+      --ui-text-primary: #fafafa;
+      --ui-text-secondary: #a1a1aa;
+      --ui-text-muted: #71717a;
+      --ui-text-inverted: #09090b;
+
+      --ui-border-subtle: #18181b;
+      --ui-border-default: #27272a;
+      --ui-border-strong: #3f3f46;
+      --ui-border-focus: #fafafa;
+
+      --ui-shadow-popover: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 4px 16px -2px rgba(0, 0, 0, 0.5);
+      --ui-glass-bg: rgba(9, 9, 11, 0.85);
+      --ui-glass-border: rgba(39, 39, 42, 0.8);
+    }
+  }
+
+  /* Accessibility: Prefers Reduced Motion (WCAG 2.1 AA) */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Accessibility: Windows High Contrast / Forced Colors */
+  @media (forced-colors: active) {
+    :root {
+      --ui-border-default: CanvasText;
+      --ui-border-strong: CanvasText;
+      --ui-border-focus: Highlight;
+      --ui-bg-surface: Canvas;
+      --ui-bg-surface-elevated: Canvas;
+      --ui-text-primary: CanvasText;
+    }
+  }
+}`;
+
+    if (globalsCssOutput) globalsCssOutput.textContent = globalsCode;
+
+    // 2. TAILWIND CSS CONFIG
+    const tailwindCode = `/* ==========================================================================
+ * Option A: Tailwind CSS v4 (@theme directive in your main CSS file)
+ * ========================================================================== */
+@import "tailwindcss";
+
+@theme {
+  /* Colors linked directly to NNUI-KIT tokens */
+  --color-canvas: var(--ui-bg-canvas);
+  --color-surface: var(--ui-bg-surface);
+  --color-surface-elevated: var(--ui-bg-surface-elevated);
+  --color-subtle: var(--ui-bg-subtle);
+
+  --color-primary: var(--ui-text-primary);
+  --color-secondary: var(--ui-text-secondary);
+  --color-muted: var(--ui-text-muted);
+
+  --color-border-subtle: var(--ui-border-subtle);
+  --color-border: var(--ui-border-default);
+  --color-border-strong: var(--ui-border-strong);
+
+  --color-brand-50: var(--ui-color-brand-50);
+  --color-brand-500: var(--ui-color-brand-500);
+  --color-brand-600: var(--ui-color-brand-600);
+  --color-brand-900: var(--ui-color-brand-900);
+
+  /* Border Radii */
+  --radius-sm: var(--ui-radius-sm);
+  --radius-md: var(--ui-radius-md);
+  --radius-lg: var(--ui-radius-lg);
+  --radius-xl: var(--ui-radius-xl);
+
+  /* Shadows */
+  --shadow-popover: var(--ui-shadow-popover);
+}
+
+/* ==========================================================================
+ * Option B: Tailwind CSS v3 (tailwind.config.js)
+ * ========================================================================== */
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ['class', '[data-theme="dark"]'],
+  theme: {
+    extend: {
+      colors: {
+        canvas: 'var(--ui-bg-canvas)',
+        surface: {
+          DEFAULT: 'var(--ui-bg-surface)',
+          elevated: 'var(--ui-bg-surface-elevated)',
+          subtle: 'var(--ui-bg-subtle)',
+        },
+        content: {
+          primary: 'var(--ui-text-primary)',
+          secondary: 'var(--ui-text-secondary)',
+          muted: 'var(--ui-text-muted)',
+        },
+        border: {
+          DEFAULT: 'var(--ui-border-default)',
+          subtle: 'var(--ui-border-subtle)',
+          strong: 'var(--ui-border-strong)',
+        },
+        brand: {
+          50: 'var(--ui-color-brand-50)',
+          100: 'var(--ui-color-brand-100)',
+          500: 'var(--ui-color-brand-500)',
+          600: 'var(--ui-color-brand-600)',
+          900: 'var(--ui-color-brand-900)',
+        },
+      },
+      borderRadius: {
+        sm: 'var(--ui-radius-sm)',
+        DEFAULT: 'var(--ui-radius-md)',
+        md: 'var(--ui-radius-md)',
+        lg: 'var(--ui-radius-lg)',
+        xl: 'var(--ui-radius-xl)',
+      },
+      boxShadow: {
+        popover: 'var(--ui-shadow-popover)',
+      },
+    },
+  },
+};`;
+
+    if (tailwindOutput) tailwindOutput.textContent = tailwindCode;
+
+    // 3. TOKENS.CSS OVERRIDES ONLY
+    const overridesCode = `/* NNUI-KIT W3C DTCG Token Customization */
 :root[data-palette="${currentPalette}"], 
 [data-palette="${currentPalette}"] {
   --ui-color-brand-50: ${hexMap[50]};
@@ -462,13 +1064,15 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
   --ui-color-brand-900: ${hexMap[900]};
   --ui-color-brand-950: ${hexMap[950]};
 
-  /* Border Radius Override (${currentRadius}) */
-  --ui-radius-sm: ${currentRadius === '0' ? '0px' : currentRadius === 'full' ? '9999px' : '0.375rem'};
-  --ui-radius-md: ${currentRadius === '0' ? '0px' : currentRadius === 'full' ? '9999px' : currentRadius + 'rem'};
-  --ui-radius-lg: ${currentRadius === '0' ? '0px' : currentRadius === 'full' ? '24px' : (parseFloat(currentRadius) * 1.5) + 'rem'};
+  /* Border Radius Override (${currentRadius}rem) */
+  --ui-radius-sm: ${radii.sm};
+  --ui-radius-md: ${radii.md};
+  --ui-radius-lg: ${radii.lg};
+  --ui-radius-xl: ${radii.xl};
+  --ui-radius-full: ${radii.full};
 }`;
 
-    cssOutput.textContent = code;
+    if (overridesOutput) overridesOutput.textContent = overridesCode;
   }
 
   // Bind Palette Pill Clicks
@@ -563,24 +1167,143 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
     });
   });
 
-  // Copy CSS Code
-  function copyCss() {
-    if (cssOutput) {
-      navigator.clipboard.writeText(cssOutput.textContent || '').then(() => {
-        if ((window as any).toast) {
-          (window as any).toast.success('CSS custom property block copied to clipboard');
-        }
-        if (copyBtn) {
-          const orig = copyBtn.innerHTML;
-          copyBtn.innerHTML = '<span>✓ Copied!</span>';
-          setTimeout(() => { copyBtn.innerHTML = orig; }, 2000);
+  // Export Tab Navigation
+  exportTabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tabName = btn.getAttribute('data-tab');
+      if (!tabName) return;
+
+      activeTab = tabName;
+
+      // Update button active state
+      exportTabButtons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Update panel visibility
+      Object.entries(tabPanels).forEach(([key, panel]) => {
+        if (panel) {
+          panel.style.display = key === tabName ? 'block' : 'none';
         }
       });
+
+      // Update copy button label
+      if (copyActiveLabel) {
+        if (tabName === 'globals') copyActiveLabel.textContent = 'Copy globals.css 📋';
+        else if (tabName === 'tailwind') copyActiveLabel.textContent = 'Copy Tailwind Config 📋';
+        else if (tabName === 'overrides') copyActiveLabel.textContent = 'Copy Overrides 📋';
+        else copyActiveLabel.textContent = 'Copy All CSS Variables 📋';
+      }
+    });
+  });
+
+  // Download CSS File Helper
+  function triggerDownload(filename: string, content: string) {
+    const blob = new Blob([content], { type: 'text/css;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    if ((window as any).toast) {
+      (window as any).toast.success(`Downloaded ${filename} successfully!`);
     }
   }
 
-  copyBtn?.addEventListener('click', copyCss);
-  copyQuickBtn?.addEventListener('click', copyCss);
+  // Get active code text
+  function getActiveCodeText() {
+    if (activeTab === 'globals') return globalsCssOutput?.textContent || '';
+    if (activeTab === 'tailwind') return tailwindOutput?.textContent || '';
+    if (activeTab === 'overrides') return overridesOutput?.textContent || '';
+    return globalsCssOutput?.textContent || '';
+  }
+
+  // Copy Active Code
+  function copyActiveCode() {
+    const text = getActiveCodeText();
+    if (!text) return;
+
+    navigator.clipboard.writeText(text).then(() => {
+      if ((window as any).toast) {
+        const file = activeTab === 'globals' ? 'globals.css' : activeTab === 'tailwind' ? 'Tailwind config' : 'tokens.css';
+        (window as any).toast.success(`${file} copied to clipboard! Ready to paste into your product.`);
+      }
+
+      if (copyActiveLabel) {
+        const original = copyActiveLabel.textContent;
+        copyActiveLabel.textContent = '✓ Copied to Clipboard!';
+        setTimeout(() => { copyActiveLabel.textContent = original; }, 2000);
+      }
+    });
+  }
+
+  copyActiveBtn?.addEventListener('click', copyActiveCode);
+  copyQuickBtn?.addEventListener('click', () => {
+    activeTab = 'globals';
+    copyActiveCode();
+  });
+
+  // Download Active Code
+  downloadActiveBtn?.addEventListener('click', () => {
+    const filename = activeTab === 'globals' ? 'globals.css' : activeTab === 'tailwind' ? 'tailwind-tokens.css' : 'tokens.css';
+    triggerDownload(filename, getActiveCodeText());
+  });
+
+  downloadQuickBtn?.addEventListener('click', () => {
+    triggerDownload('globals.css', globalsCssOutput?.textContent || '');
+  });
+
+  // Token Dictionary Search & Category Filter
+  const dictSearchInput = document.getElementById('token-dict-search-input') as HTMLInputElement | null;
+  const dictFilterBtns = document.querySelectorAll('.token-dict-filter-btn');
+  const dictRows = document.querySelectorAll('.token-dict-row');
+
+  let activeCategory = 'all';
+
+  function filterDictionary() {
+    const query = dictSearchInput?.value.trim().toLowerCase() || '';
+
+    dictRows.forEach((row) => {
+      const cat = row.getAttribute('data-category') || '';
+      const text = row.getAttribute('data-search') || '';
+
+      const matchesCat = activeCategory === 'all' || cat === activeCategory;
+      const matchesQuery = !query || text.includes(query);
+
+      (row as HTMLElement).style.display = matchesCat && matchesQuery ? '' : 'none';
+    });
+  }
+
+  dictSearchInput?.addEventListener('input', filterDictionary);
+
+  dictFilterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter') || 'all';
+      activeCategory = filter;
+
+      dictFilterBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      filterDictionary();
+    });
+  });
+
+  // Token Variable Click-to-Copy
+  document.querySelectorAll('.copy-token-var-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const varName = btn.getAttribute('data-var');
+      if (varName) {
+        navigator.clipboard.writeText(`var(${varName})`).then(() => {
+          if ((window as any).toast) {
+            (window as any).toast.success(`Copied var(${varName})`);
+          }
+        });
+      }
+    });
+  });
 
   // Initialize on page load
   applyStudioTheme();
@@ -593,3 +1316,4 @@ const colorShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
     }
   });
 </script>
+

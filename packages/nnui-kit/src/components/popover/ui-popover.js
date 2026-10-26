@@ -90,6 +90,11 @@ export class UiPopover extends BaseLightElement {
     );
   }
 
+  set isOpen(val) {
+    if (val) this.show();
+    else this.hide();
+  }
+
   _reposition() {
     if (!this._trigger || !this._panel) return;
     applyPositionFallback(this._trigger, this._panel, 'bottom', 8);

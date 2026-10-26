@@ -15,8 +15,21 @@ export class UiAccordion extends BaseLightElement {
     return this.getAttribute('type') || 'single'; // 'single' | 'multiple'
   }
 
+  set type(val) {
+    if (val) this.setAttribute('type', val);
+    else this.removeAttribute('type');
+  }
+
   get collapsible() {
     return this.getAttribute('collapsible') !== 'false';
+  }
+
+  set collapsible(val) {
+    if (val === false || val === 'false') {
+      this.setAttribute('collapsible', 'false');
+    } else {
+      this.removeAttribute('collapsible');
+    }
   }
 
   init() {

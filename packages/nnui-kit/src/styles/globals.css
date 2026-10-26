@@ -1,0 +1,13 @@
+/**
+ * NNUI-KIT — Universal Global Stylesheet
+ * Includes CSS cascade layers, theme design tokens, reset, and base primitive styles.
+ * 
+ * Usage:
+ *   import 'nnuikit/globals.css';
+ *   // or
+ *   import 'nnuikit/theme.css'; // for pure design tokens only
+ */
+@import './layers.css';
+@import './theme.css';
+@import './reset.css';
+@import './base.css';

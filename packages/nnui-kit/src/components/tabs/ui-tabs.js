@@ -23,11 +23,16 @@ export class UiTabs extends BaseLightElement {
     return this.getAttribute('orientation') || 'horizontal';
   }
 
+  set orientation(val) {
+    if (val) this.setAttributeSafe(this, 'orientation', val);
+    else this.removeAttributeSafe(this, 'orientation');
+  }
+
   init() {
     this.setAttributeSafe(this, 'data-ui', 'tabs');
 
-    // Dev-mode diagnostics
-    if (this._getTabs().length === 0) {
+    // Dev-mode diagnostics: only warn if template content was provided without tab triggers
+    if (this.childElementCount > 0 && this._getTabs().length === 0) {
       console.warn(`[NNUI-KIT] <${this.tagName.toLowerCase()}> has no tab triggers. Add buttons with data-part="tab" or role="tab".`);
     }
 

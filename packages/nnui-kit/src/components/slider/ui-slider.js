@@ -26,8 +26,27 @@ export class UiSlider extends BaseLightElement {
   }
 
   init() {
-    this.warnIfMissing('[data-part="track"]', 'Slider track');
-    this.warnIfMissing('[data-part="thumb"]', 'Slider thumb');
+    // If no children were authored in template, auto-scaffold track, range & thumb
+    if (this.childElementCount === 0) {
+      const track = document.createElement('div');
+      track.setAttribute('data-part', 'track');
+      track.className = 'ui-slider-track';
+
+      const range = document.createElement('div');
+      range.setAttribute('data-part', 'range');
+      range.className = 'ui-slider-range';
+      track.appendChild(range);
+
+      const thumb = document.createElement('div');
+      thumb.setAttribute('data-part', 'thumb');
+      thumb.className = 'ui-slider-thumb';
+
+      this.appendChild(track);
+      this.appendChild(thumb);
+    } else {
+      this.warnIfMissing('[data-part="track"]', 'Slider track');
+      this.warnIfMissing('[data-part="thumb"]', 'Slider thumb');
+    }
 
     this._track = this.querySelector('[data-part="track"]') || this;
     this._range = this.querySelector('[data-part="range"]');
@@ -181,6 +200,21 @@ export class UiSlider extends BaseLightElement {
     }
   }
 
+  get form() {
+    return this._internals ? this._internals.form : null;
+  }
+
+  set form(_) {}
+
+  get name() {
+    return this.getAttribute('name') || '';
+  }
+
+  set name(val) {
+    if (val) this.setAttributeSafe('name', val);
+    else this.removeAttributeSafe('name');
+  }
+
   get value() {
     return this._value;
   }
@@ -199,12 +233,27 @@ export class UiSlider extends BaseLightElement {
     return parseFloat(this.getAttribute('min')) || 0;
   }
 
+  set min(val) {
+    if (val !== null && val !== undefined) this.setAttribute('min', String(val));
+    else this.removeAttribute('min');
+  }
+
   get max() {
     return parseFloat(this.getAttribute('max')) || 100;
   }
 
+  set max(val) {
+    if (val !== null && val !== undefined) this.setAttribute('max', String(val));
+    else this.removeAttribute('max');
+  }
+
   get step() {
     return parseFloat(this.getAttribute('step')) || 1;
+  }
+
+  set step(val) {
+    if (val !== null && val !== undefined) this.setAttribute('step', String(val));
+    else this.removeAttribute('step');
   }
 
   get disabled() {
@@ -233,5 +282,10 @@ export class UiSlider extends BaseLightElement {
         this.setAttributeSafe(this._thumb, 'tabindex', this.disabled ? '-1' : '0');
       }
     }
+  }
+
+  formResetCallback() {
+    const initialVal = parseFloat(this.getAttribute('value')) || this.min;
+    this.value = initialVal;
   }
 }

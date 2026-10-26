@@ -25,17 +25,39 @@ export class UiFileUpload extends BaseLightElement {
     return [...this._files];
   }
 
+  set files(val) {
+    if (Array.isArray(val)) {
+      this._files = [...val];
+      this._renderFileList();
+    }
+  }
+
   get accept() {
     return this.getAttribute('accept') || '';
+  }
+
+  set accept(val) {
+    if (val) this.setAttributeSafe('accept', val);
+    else this.removeAttributeSafe('accept');
   }
 
   get multiple() {
     return this.hasAttribute('multiple');
   }
 
+  set multiple(val) {
+    if (val) this.setAttributeSafe('multiple', '');
+    else this.removeAttributeSafe('multiple');
+  }
+
   get maxSize() {
     const val = parseInt(this.getAttribute('max-size'), 10);
     return isNaN(val) ? Infinity : val;
+  }
+
+  set maxSize(val) {
+    if (val !== null && val !== undefined) this.setAttributeSafe('max-size', String(val));
+    else this.removeAttributeSafe('max-size');
   }
 
   get disabled() {

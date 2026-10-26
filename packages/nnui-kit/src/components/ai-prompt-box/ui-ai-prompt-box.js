@@ -23,6 +23,14 @@ export class UiAiPromptBox extends BaseLightElement {
     return isNaN(r) ? 6 : r;
   }
 
+  set maxRows(val) {
+    if (val !== null && val !== undefined) {
+      this.setAttributeSafe('max-rows', String(val));
+    } else {
+      this.removeAttributeSafe('max-rows');
+    }
+  }
+
   get loading() {
     return this.hasAttribute('loading') && this.getAttribute('loading') !== 'false';
   }
