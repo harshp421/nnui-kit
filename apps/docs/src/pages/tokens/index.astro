@@ -86,9 +86,42 @@ const tokenDictionary = [
   { category: 'motion', name: '--ui-duration-fast', light: '150ms', dark: '150ms', desc: 'Instant feedback clicks and toggles', type: 'motion' },
   { category: 'motion', name: '--ui-duration-normal', light: '250ms', dark: '250ms', desc: 'Accordion expand and modal entrance', type: 'motion' },
 ];
+
+const tokensArticleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  'headline': 'Design System Tokens & Global Theme Studio — All-In-One CSS Variables',
+  'description': 'Interactive design tokens studio conforming to W3C DTCG standards. Configure 11-step tonal harmonies, border radii, and export turnkey CSS tokens.',
+  'inLanguage': 'en-US',
+  'author': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT Team',
+    'url': 'https://github.com/harshp421/nnui-kit'
+  }
+};
 ---
 
-<DocsLayout title="Design Tokens & Theme Studio | NNUI-KIT" activePath="/tokens">
+<DocsLayout 
+  title="Design System Tokens & Theme Studio — All-in-One CSS Variable Generator | NNUI-KIT" 
+  description="Interactive design token studio conforming to W3C DTCG specs. Customize brand harmonies, dark modes, typography, and export production CSS variables in seconds."
+  activePath="/tokens"
+  keywords={[
+    'design system tokens',
+    'theme generator',
+    'css variables studio',
+    'w3c dtcg tokens',
+    'tailwind css variables',
+    'dark mode theme generator',
+    'all-in-one design system',
+    'color palette generator',
+    'nnui'
+  ]}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Themes & Tokens', url: '/tokens' }
+  ]}
+  schema={[tokensArticleSchema]}
+>
   <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
     
     <!-- Header -->

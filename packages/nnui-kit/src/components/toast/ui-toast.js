@@ -108,6 +108,7 @@ export class UiToaster extends BaseLightElement {
       error: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-toast-svg ui-toast-svg--error"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>`,
       warning: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-toast-svg ui-toast-svg--warning"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
       info: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-toast-svg ui-toast-svg--info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`,
+      loading: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ui-toast-svg ui-toast-svg--loading ui-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`,
     };
 
     const iconHtml = icons[type]
@@ -115,7 +116,12 @@ export class UiToaster extends BaseLightElement {
       : '';
 
     const actionHtml = action
-      ? `<button type="button" data-part="toast-action" class="ui-button ui-button--xs">${action.label}</button>`
+      ? `<button type="button" data-part="toast-action" class="ui-toast-action-btn">${action.label}</button>`
+      : '';
+
+    const hasProgressBar = duration > 0 && duration !== Infinity && type !== 'loading';
+    const progressHtml = hasProgressBar
+      ? `<div data-part="toast-progress" style="animation: uiToastProgress ${duration}ms linear forwards;"></div>`
       : '';
 
     toastEl.innerHTML = `
@@ -130,6 +136,7 @@ export class UiToaster extends BaseLightElement {
         ${actionHtml}
         <button type="button" data-part="toast-close" aria-label="Dismiss"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
+      ${progressHtml}
     `;
 
     // Action button listener
@@ -187,12 +194,53 @@ export class UiToaster extends BaseLightElement {
       }, 250);
     };
 
+    const update = ({ title: newTitle, description: newDesc, type: newType, duration: newDuration = 4000 } = {}) => {
+      if (newTitle !== undefined) {
+        const titleEl = toastEl.querySelector('[data-part="toast-title"]');
+        if (titleEl) titleEl.textContent = newTitle;
+        toastEl.dataset.toastTitle = newTitle;
+      }
+      if (newDesc !== undefined) {
+        let descEl = toastEl.querySelector('[data-part="toast-description"]');
+        if (!descEl && newDesc) {
+          descEl = document.createElement('div');
+          descEl.setAttribute('data-part', 'toast-description');
+          toastEl.querySelector('[data-part="toast-text"]')?.appendChild(descEl);
+        }
+        if (descEl) descEl.textContent = newDesc;
+        toastEl.dataset.toastDesc = newDesc;
+      }
+      if (newType) {
+        toastEl.setAttribute('data-type', newType);
+        const iconContainer = toastEl.querySelector('[data-part="toast-icon"]');
+        if (iconContainer && icons[newType]) {
+          iconContainer.setAttribute('data-type', newType);
+          iconContainer.innerHTML = icons[newType];
+        }
+      }
+      if (newDuration > 0 && newDuration !== Infinity) {
+        pauseTimer();
+        remaining = newDuration;
+        startTimer();
+        let progress = toastEl.querySelector('[data-part="toast-progress"]');
+        if (!progress) {
+          progress = document.createElement('div');
+          progress.setAttribute('data-part', 'toast-progress');
+          toastEl.appendChild(progress);
+        }
+        progress.style.animation = 'none';
+        void progress.offsetHeight; // trigger reflow
+        progress.style.animation = `uiToastProgress ${newDuration}ms linear forwards`;
+      }
+    };
+
     toastEl._restartTimer = () => {
       pauseTimer();
       remaining = duration;
       startTimer();
     };
     toastEl._dismiss = dismiss;
+    toastEl._update = update;
 
     // Prepend or append depending on top/bottom
     if (this.position.startsWith('top')) {
@@ -202,7 +250,7 @@ export class UiToaster extends BaseLightElement {
     }
 
     startTimer();
-    return { id, dismiss, element: toastEl };
+    return { id, dismiss, update, element: toastEl };
   }
 }
 
@@ -222,15 +270,48 @@ function ensureToaster() {
   return activeToaster;
 }
 
-export function toast(title, options = {}) {
+export function toast(input, maybeOptions = {}) {
   const toaster = ensureToaster();
-  return toaster.createToast({ title, ...options, type: options.type || 'default' });
+  const options = (typeof input === 'object' && input !== null)
+    ? { ...input, ...maybeOptions }
+    : { title: input, ...maybeOptions };
+
+  return toaster.createToast({
+    title: options.title || '',
+    description: options.description || '',
+    type: options.type || 'default',
+    duration: options.duration !== undefined ? options.duration : 4000,
+    action: options.action || null,
+    onDismiss: options.onDismiss || null,
+  });
 }
 
-toast.success = (title, options = {}) => toast(title, { ...options, type: 'success' });
-toast.error = (title, options = {}) => toast(title, { ...options, type: 'error' });
-toast.warning = (title, options = {}) => toast(title, { ...options, type: 'warning' });
-toast.info = (title, options = {}) => toast(title, { ...options, type: 'info' });
+toast.success = (input, options = {}) => toast(input, { ...options, type: 'success' });
+toast.error = (input, options = {}) => toast(input, { ...options, type: 'error' });
+toast.warning = (input, options = {}) => toast(input, { ...options, type: 'warning' });
+toast.info = (input, options = {}) => toast(input, { ...options, type: 'info' });
+toast.loading = (input, options = {}) => toast(input, { ...options, type: 'loading', duration: Infinity });
+
+toast.promise = async function (promise, { loading = 'Loading...', success = 'Success', error = 'Error' } = {}) {
+  const loadingTitle = typeof loading === 'string' ? loading : (loading?.title || 'Loading...');
+  const loadingOpts = typeof loading === 'object' ? loading : {};
+  const toastRef = toast.loading(loadingTitle, loadingOpts);
+
+  try {
+    const result = await (typeof promise === 'function' ? promise() : promise);
+    const successOpts = typeof success === 'function' ? success(result) : success;
+    const title = typeof successOpts === 'string' ? successOpts : (successOpts?.title || 'Action completed');
+    const opts = typeof successOpts === 'object' ? successOpts : {};
+    toastRef.update({ title, ...opts, type: 'success', duration: 4000 });
+    return result;
+  } catch (err) {
+    const errorOpts = typeof error === 'function' ? error(err) : error;
+    const title = typeof errorOpts === 'string' ? errorOpts : (errorOpts?.title || (err?.message || 'Action failed'));
+    const opts = typeof errorOpts === 'object' ? errorOpts : {};
+    toastRef.update({ title, ...opts, type: 'error', duration: 5000 });
+    throw err;
+  }
+};
 
 toast.dismiss = (id) => {
   if (!id) {

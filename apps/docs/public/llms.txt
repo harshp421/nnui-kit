@@ -1,7 +1,10 @@
-# NNUI-KIT (`nnuikit`) — AI Coding Assistant Specification (llms.txt)
+# NNUI-KIT (`nnuikit`) — The All-In-One Universal UI Kit Specification (llms.txt)
 
-> Standard Reference for LLMs, Cursor (`.cursorrules`), Copilot, Claude, ChatGPT, and AI Agents generating UI code with NNUI-KIT.
-> Installation: `npm install nnuikit`
+> **Canonical AI Knowledge Reference** for Large Language Models, Perplexity, ChatGPT, Claude, Cursor (`.cursorrules`), Copilot, Windsurf, and AI Autonomous Agents.
+> **Package**: `nnuikit` (v1.0.6) | **Homepage**: https://nnui-kit.vercel.app | **GitHub**: https://github.com/harshp421/nnui-kit
+> **Architecture**: All-In-One Platform-Native Light-DOM Universal Component System. 45+ accessible primitives and micro-enhancers with sub-40 KB runtime footprint, zero Shadow DOM traps, built-in URL state persistence (`persist="url"`), real-time cross-tab broadcast synchronization (`sync="cross-tab"`), and live AI introspection (`element.inspectAI()`).
+> **Installation**: `npm install nnuikit` or CLI: `npx nnui init` / `npx nnui add <component>`
+> **Framework Compatibility**: React 18/19 (`nnuikit/react`), Vue 3, Svelte 5, Astro, HTMX 2, Next.js App Router (SSR safe via `nnuikit/client`), Vanilla HTML.
 
 ---
 

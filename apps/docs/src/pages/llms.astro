@@ -9,12 +9,41 @@ const rawLlmsContent = fs.existsSync(llmsFilePath) ? fs.readFileSync(llmsFilePat
 const lineCount = rawLlmsContent.split('\n').length;
 const charCount = rawLlmsContent.length;
 const kbSize = (charCount / 1024).toFixed(1);
+
+const llmsArticleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  'headline': 'llms.txt Specification & AI Assistant Context — All-In-One UI Kit',
+  'description': 'Official llms.txt machine-readable specification of NNUI-KIT for Cursor, Windsurf, Claude, ChatGPT, and Copilot.',
+  'inLanguage': 'en-US',
+  'author': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT Team',
+    'url': 'https://github.com/harshp421/nnui-kit'
+  }
+};
 ---
 
 <DocsLayout 
-  title="llms.txt — AI Assistant Context & Prompt Specification | NNUI-KIT"
-  description="Full llms.txt specification for Cursor, Claude, ChatGPT, Windsurf, and Copilot. Feed NNUI-KIT's complete light-DOM component architecture directly into your AI assistant."
+  title="llms.txt AI Specification & Context — All-in-One AI-Ready UI Kit | NNUI-KIT"
+  description="Full llms.txt context file for Cursor, Claude, ChatGPT, Windsurf, and Copilot. Ingest NNUI-KIT's complete all-in-one Light-DOM UI architecture directly into your AI assistant."
   activePath="/llms"
+  keywords={[
+    'llms.txt',
+    'cursor rules',
+    'copilot instructions',
+    'claude prompt specification',
+    'chatgpt system prompt',
+    'ai ui kit',
+    'all in one ai component library',
+    'windsurf rules',
+    'nnui'
+  ]}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'llms.txt', url: '/llms' }
+  ]}
+  schema={[llmsArticleSchema]}
 >
   <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
     <!-- Breadcrumb & Badge -->
@@ -22,7 +51,7 @@ const kbSize = (charCount / 1024).toFixed(1);
       <a href="/docs" style="color: var(--text-muted); font-size: 0.85rem; text-decoration: none;">Docs</a>
       <span style="color: var(--border-strong);">/</span>
       <span style="color: var(--text-main); font-size: 0.85rem; font-weight: 600;">llms.txt</span>
-      <span class="announcement-badge" style="margin-left: 0.5rem; background: rgba(99, 102, 241, 0.15); color: var(--brand-400, #818cf8); border: 1px solid rgba(99, 102, 241, 0.3);">
+      <span class="announcement-badge" style="margin-left: 0.5rem; background: color-mix(in srgb, var(--ui-color-brand-500) 12%, transparent); color: var(--ui-color-brand-500); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 30%, transparent);">
         AI Specification Standard
       </span>
     </div>
@@ -31,7 +60,7 @@ const kbSize = (charCount / 1024).toFixed(1);
     <div style="margin-bottom: 2.5rem;">
       <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: var(--text-main); display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
         <span>AI Coding Specification</span>
-        <code style="font-size: 1.6rem; font-family: var(--font-mono); background: var(--bg-surface); padding: 0.2rem 0.65rem; border-radius: 8px; border: 1px solid var(--border-subtle); color: var(--brand-400, #818cf8);">llms.txt</code>
+        <code style="font-size: 1.6rem; font-family: var(--font-mono); background: var(--bg-surface); padding: 0.2rem 0.65rem; border-radius: 8px; border: 1px solid var(--border-subtle); color: var(--ui-color-brand-500);">llms.txt</code>
       </h1>
       <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 780px;">
         Feed this standardized specification directly into <strong>Cursor</strong>, <strong>Claude</strong>, <strong>ChatGPT</strong>, <strong>Windsurf</strong>, or <strong>GitHub Copilot</strong>. It trains any AI model on all 45 components, light-DOM markup rules, React wrappers, and state synchronization contracts in a single prompt.
@@ -39,7 +68,7 @@ const kbSize = (charCount / 1024).toFixed(1);
     </div>
 
     <!-- Quick Action Banner -->
-    <div data-ui="card" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%), var(--bg-card); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 14px; padding: 1.75rem; margin-bottom: 3rem; display: flex; flex-direction: column; gap: 1.25rem;">
+    <div data-ui="card" style="background: linear-gradient(135deg, color-mix(in srgb, var(--ui-color-brand-500) 10%, transparent) 0%, color-mix(in srgb, var(--ui-color-brand-600) 5%, transparent) 100%), var(--bg-card); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 25%, transparent); border-radius: 14px; padding: 1.75rem; margin-bottom: 3rem; display: flex; flex-direction: column; gap: 1.25rem;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
         <div>
           <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-main); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
@@ -114,7 +143,7 @@ const kbSize = (charCount / 1024).toFixed(1);
         <!-- Cursor & Windsurf -->
         <div data-ui="card" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem;">
           <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.85rem;">
-            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: color-mix(in srgb, var(--ui-color-brand-500) 15%, transparent); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
               ⚡️
             </div>
             <div>

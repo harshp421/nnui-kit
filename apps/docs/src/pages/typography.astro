@@ -1,8 +1,40 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
+
+const typographyArticleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  'headline': 'Modern Typography System & Font Scale — All-in-One Fluid Text Hierarchy',
+  'description': 'Proportional typographic scale with optical letter-spacing, fluid font hierarchies, and standardized semantic text tokens in NNUI-KIT.',
+  'inLanguage': 'en-US',
+  'author': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT Team',
+    'url': 'https://github.com/harshp421/nnui-kit'
+  }
+};
 ---
 
-<DocsLayout title="Typography System | NNUI-KIT" activePath="/typography">
+<DocsLayout 
+  title="Modern Typography System & Font Scale — All-in-One Fluid Text Hierarchy | NNUI-KIT" 
+  description="Proportional typographic scale with optical letter-spacing, fluid font hierarchies, and standardized semantic text tokens. 100% accessible, responsive, and platform-native."
+  activePath="/typography"
+  keywords={[
+    'typography system',
+    'font scale',
+    'fluid typography',
+    'css font scale',
+    'optical tracking',
+    'responsive type hierarchy',
+    'design system typography',
+    'nnui'
+  ]}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Typography', url: '/typography' }
+  ]}
+  schema={[typographyArticleSchema]}
+>
   <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
     
     <!-- Header -->

@@ -13,9 +13,76 @@ const { comp } = Astro.props as { comp: any };
 const allComponents = Object.values(componentsData) as any[];
 const tier0 = allComponents.filter((c) => c.tier === 0);
 const tier2 = allComponents.filter((c) => c.tier === 2);
+
+const componentArticleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  'headline': `${comp.title} Component — All-In-One Light-DOM Universal UI`,
+  'description': `Comprehensive developer documentation, installation, and framework examples for the ${comp.title} component (<ui-${comp.slug}>) in NNUI-KIT.`,
+  'inLanguage': 'en-US',
+  'proficiencyLevel': 'Beginner to Advanced',
+  'keywords': `${comp.title}, <ui-${comp.slug}>, all in one ui kit, react 19, vue 3, svelte 5, astro, web components, accessible ui, light-dom`,
+  'about': {
+    '@type': 'SoftwareSourceCode',
+    'name': `<ui-${comp.slug}>`,
+    'programmingLanguage': 'HTML, JavaScript, TypeScript, CSS',
+    'runtimePlatform': 'Web Browser, Node.js SSR, React 18/19, Vue 3, Svelte 5, Astro',
+    'codeRepository': 'https://github.com/harshp421/nnui-kit'
+  },
+  'author': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT Team',
+    'url': 'https://github.com/harshp421/nnui-kit'
+  }
+};
+
+const componentFaqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': [
+    {
+      '@type': 'Question',
+      'name': `How do I install the ${comp.title} component in my application?`,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': `Run 'npx nnui add ${comp.slug}' using the CLI to add the component to your codebase, or install 'npm install nnuikit' to import it across React, Vue, Svelte, Astro, or plain HTML.`
+      }
+    },
+    {
+      '@type': 'Question',
+      'name': `Does ${comp.title} work with React 19, Next.js, and SSR without hydration errors?`,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': `Yes. NNUI-KIT executes strictly in the Light DOM without Shadow DOM barriers. Its 'Mutate Attributes, Never Nodes' invariant guarantees seamless reconciler compatibility with zero hydration mismatch errors.`
+      }
+    }
+  ]
+};
 ---
 
-<DocsLayout title={`${comp.title} Component — NNUI-KIT`} description={comp.description} activePath={`/components/${comp.slug}`}>
+<DocsLayout 
+  title={`${comp.title} Component — All-In-One Light-DOM UI for React, Vue, Svelte, Astro | NNUI-KIT`} 
+  description={`The ${comp.title} component (<ui-${comp.slug}>) is an accessible, platform-native Light-DOM UI primitive for React 19, Vue 3, Svelte 5, Astro, and HTML. Sub-40 KB runtime with zero Shadow DOM traps.`}
+  activePath={`/components/${comp.slug}`}
+  keywords={[
+    `${comp.title.toLowerCase()} component`,
+    `<ui-${comp.slug}>`,
+    `${comp.slug} react`,
+    `${comp.slug} vue`,
+    `${comp.slug} svelte`,
+    `accessible ${comp.slug}`,
+    'light-dom web component',
+    'all-in-one ui kit',
+    'nnui-kit',
+    'nnuikit'
+  ]}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Components', url: '/components' },
+    { name: comp.title, url: `/components/${comp.slug}` }
+  ]}
+  schema={[componentArticleSchema, componentFaqSchema]}
+>
   <div class="docs-layout-container">
     
     <!-- Left Navigation Sidebar -->
@@ -72,6 +139,13 @@ const tier2 = allComponents.filter((c) => c.tier === 2);
         <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 750px;">
           {comp.description}
         </p>
+
+        <!-- AEO Component Quick Summary Callout -->
+        <div class="aeo-summary-box" data-ui="card" style="margin-top: 1rem; background: color-mix(in srgb, var(--ui-color-brand-500) 5%, var(--bg-card)); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 20%, var(--border-subtle)); border-radius: 8px; padding: 0.75rem 1rem;">
+          <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+            <strong style="color: var(--text-main);">All-In-One Architecture Advantage:</strong> The <code>&lt;ui-{comp.slug}&gt;</code> component operates strictly in the Light DOM. It eliminates Shadow DOM encapsulation barriers, supports seamless global styling (Tailwind CSS / design tokens), and integrates natively across React 19, Vue 3, Svelte 5, Astro, and SSR frameworks.
+          </p>
+        </div>
       </div>
 
       <!-- Installation / Add Section (Shadcn style) -->

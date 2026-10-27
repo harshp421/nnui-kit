@@ -1,8 +1,83 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const docsArticleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  'headline': 'NNUI-KIT: The All-In-One Universal Light-DOM UI Architecture',
+  'description': 'Comprehensive architectural guide to NNUI-KIT. Explains three-tier Light-DOM components, zero Shadow DOM accessibility traps, declarative URL state persistence, cross-tab broadcast sync, and universal framework adapters.',
+  'inLanguage': 'en-US',
+  'author': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT Team',
+    'url': 'https://github.com/harshp421/nnui-kit'
+  },
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT',
+    'logo': {
+      '@type': 'ImageObject',
+      'url': 'https://nnui-kit.vercel.app/logo.png'
+    }
+  }
+};
+
+const docsFaqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': [
+    {
+      '@type': 'Question',
+      'name': 'What is the Three-Tier Architecture in NNUI-KIT?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'NNUI-KIT organizes components into 3 strict tiers: Tier 0 consists of 17 zero-JS semantic primitives (buttons, inputs, cards, badges); Tier 1 is headless functional behavioral engines; and Tier 2 consists of 28 micro-enhancers (custom elements like ui-data-grid, ui-stepper, ui-tabs) living strictly in the Light DOM without Shadow DOM barriers.'
+      }
+    },
+    {
+      '@type': 'Question',
+      'name': 'Why is NNUI-KIT built with Light-DOM instead of Shadow DOM?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Shadow DOM isolates component markup inside shadow roots, which fundamentally breaks screen reader ARIA hierarchies, prevents form data submission via standard HTML forms, and blocks global Tailwind and CSS cascades. Light-DOM keeps the DOM completely open, accessible, and style-transparent.'
+      }
+    },
+    {
+      '@type': 'Question',
+      'name': 'How does NNUI-KIT achieve declarative persistence and cross-tab sync without libraries?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'NNUI-KIT components observe declarative attributes. Adding persist="url" hooks into history.replaceState to sync component values to URL search parameters. Adding sync="cross-tab" binds to the browser BroadcastChannel API to mirror state across multiple browser tabs in real-time.'
+      }
+    }
+  ]
+};
 ---
 
-<DocsLayout title="Documentation & Architecture | NNUI-KIT" activePath="/docs">
+<DocsLayout 
+  title="All-in-One Light-DOM Universal UI Architecture Documentation | NNUI-KIT" 
+  description="Comprehensive guide to NNUI-KIT: the all-in-one universal Light-DOM UI architecture. Learn the 3-tier mental model, declarative persistence, cross-tab sync, and React 19/Vue/Svelte setup."
+  activePath="/docs"
+  keywords={[
+    'all in one ui documentation',
+    'universal ui kit architecture',
+    'light dom web components',
+    'zero shadow dom',
+    'three tier architecture',
+    'state persistence',
+    'cross tab broadcast sync',
+    'ai introspection protocol',
+    'react 19 ui kit',
+    'vue 3 ui components',
+    'svelte 5 runes',
+    'astro components'
+  ]}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Docs', url: '/docs' }
+  ]}
+  schema={[docsArticleSchema, docsFaqSchema]}
+>
   <div class="docs-layout-container">
     <!-- Left Navigation Sidebar -->
     <aside class="docs-aside">
@@ -24,9 +99,9 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <a href="#persistence" class="docs-aside-link">Declarative Persistence</a>
         <a href="#cross-tab" class="docs-aside-link">Cross-Tab Broadcast Sync</a>
         <a href="#ai-introspection" class="docs-aside-link">AI Introspection Protocol</a>
-        <a href="/llms" class="docs-aside-link" style="display: flex; align-items: center; justify-content: space-between; color: var(--brand-400, #818cf8);">
+        <a href="/llms" class="docs-aside-link" style="display: flex; align-items: center; justify-content: space-between; color: var(--ui-color-brand-500);">
           <span>llms.txt (AI Spec)</span>
-          <span style="font-size: 0.65rem; background: rgba(99, 102, 241, 0.2); color: var(--brand-400, #818cf8); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">NEW</span>
+          <span style="font-size: 0.65rem; background: color-mix(in srgb, var(--ui-color-brand-500) 15%, transparent); color: var(--ui-color-brand-500); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">NEW</span>
         </a>
       </div>
 
@@ -54,9 +129,20 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <h1 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; color: var(--text-main);">
           Introduction & Architecture
         </h1>
-        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 2rem;">
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem;">
           NNUI-KIT is a platform-native, three-tier Light-DOM universal UI system. It delivers accessible, composable interface components that execute identically across every modern web framework with zero Shadow DOM barriers and sub-40 KB runtime footprint.
         </p>
+
+        <!-- AEO Quick Summary for Docs Page -->
+        <div class="aeo-summary-box" data-ui="card" style="margin-bottom: 2rem; background: color-mix(in srgb, var(--ui-color-brand-500) 6%, var(--bg-card)); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 22%, var(--border-subtle)); border-radius: 10px; padding: 1rem 1.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+            <span style="font-size: 0.75rem; font-weight: 800; background: var(--ui-color-brand-500); color: #fff; padding: 2px 6px; border-radius: 4px;">AEO</span>
+            <strong style="color: var(--text-main); font-size: 0.92rem;">At a Glance: The Universal Light-DOM Principle</strong>
+          </div>
+          <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55;">
+            NNUI-KIT solves the web component dilemma by keeping all elements in the <strong>Light DOM</strong> while using custom elements strictly as behavioral micro-enhancers that <em>"Mutate Attributes, Never Nodes"</em>. This gives you 100% code ownership, zero Shadow DOM accessibility traps, native form participation, and seamless compatibility with React 19, Vue 3, Svelte 5, Astro, and SSR frameworks.
+          </p>
+        </div>
 
         <!-- 3-Tier Architecture Flow -->
         <div id="mental-model" data-ui="card" style="border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; background: var(--bg-card); margin-bottom: 2.5rem;">
@@ -166,7 +252,7 @@ npx nnui add dialog --rails   # Drops Rails ERB partial & configures importmap.r
               <span>🚀</span>
               <span>Framework Targets: True Code Ownership Across Stacks</span>
             </div>
-            <span class="docs-version-pill" style="border-color: #6366f1; color: #6366f1;">CLI v1.0.5</span>
+            <span class="docs-version-pill" style="border-color: var(--ui-color-brand-500); color: var(--ui-color-brand-500);">CLI v1.0.5</span>
           </div>
           <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0 0 1rem;">
             Unlike shadcn/ui (locked to React) or traditional web components (locked in Shadow DOM), NNUI-KIT provides <strong>100% Light-DOM code ownership</strong> across modern frontend and server-rendered stacks. Run the CLI with your framework target:
@@ -334,7 +420,7 @@ console.log(schema.liveState);         // Active rows, sort column, search query
 console.log(schema.frameworkSnippets); // Idiomatic React 19, Vue 3, Svelte 5 snippets</code></pre>
 
         <!-- AI Specification (llms.txt) Banner -->
-        <div data-ui="card" style="margin-top: 1.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%), var(--bg-card); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 10px; padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div data-ui="card" style="margin-top: 1.5rem; background: linear-gradient(135deg, color-mix(in srgb, var(--ui-color-brand-500) 10%, transparent) 0%, color-mix(in srgb, var(--ui-color-brand-600) 5%, transparent) 100%), var(--bg-card); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 30%, transparent); border-radius: 10px; padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
           <div>
             <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem; margin-bottom: 0.25rem;">
               🤖 Using Cursor, Copilot, or Claude? Use llms.txt

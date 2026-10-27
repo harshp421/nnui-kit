@@ -170,7 +170,14 @@ export class UiAccordion extends BaseLightElement {
       }
       if (content) {
         content.removeAttribute('hidden');
-        this.setAttributeSafe(content, 'data-state', 'open');
+        // Double rAF ensures browser paints the unhidden 0fr grid box before transitioning to 1fr
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (item.getAttribute('data-state') === 'open') {
+              this.setAttributeSafe(content, 'data-state', 'open');
+            }
+          });
+        });
       }
     } else {
       this.setAttributeSafe(item, 'data-state', 'closed');

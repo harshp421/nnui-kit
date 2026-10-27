@@ -1,0 +1,53 @@
+# Robots.txt for NNUI-KIT (https://nnui-kit.vercel.app)
+# Optimized for Web Search Crawlers (SEO) and Answer Engine Crawlers (AEO)
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+# OpenAI / ChatGPT & SearchGPT
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+
+# Google Search & Google Extended (Gemini / AI Overviews)
+User-agent: Googlebot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# Bing / Copilot
+User-agent: Bingbot
+Allow: /
+
+# Common Crawl & Open AI Training
+User-agent: CCBot
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: cohere-ai
+Allow: /
+
+# Direct AI Context File
+# AI assistants and agents can directly ingest our specification:
+#https://nnuikit.com/llms.txt
+
+Sitemap: https://nnuikit.com/sitemap.xml

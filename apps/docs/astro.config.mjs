@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
+  site: process.env.SITE_URL || 'https://nnuikit.com',
   vite: {
     resolve: {
       alias: [

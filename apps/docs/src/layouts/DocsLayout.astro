@@ -3,17 +3,123 @@ import 'nnui-kit/css';
 import '../styles/docs.css';
 import componentsData from '../data/components-data.json';
 
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface ArticleMeta {
+  datePublished?: string;
+  dateModified?: string;
+  author?: string;
+  tags?: string[];
+}
+
 interface Props {
   title?: string;
   description?: string;
   activePath?: string;
+  keywords?: string | string[];
+  canonicalUrl?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  schema?: Record<string, any> | Array<Record<string, any>>;
+  articleMeta?: ArticleMeta;
 }
 
 const {
-  title = 'NNUI-KIT — Universal Light-DOM UI Architecture',
-  description = 'Platform-Native, Three-Tier Light-DOM Universal UI Architecture with Zero Shadow DOM A11y Traps.',
-  activePath = '/'
+  title = 'NNUI-KIT — The All-In-One Universal UI Kit & Component Architecture',
+  description = 'NNUI-KIT is the all-in-one universal Light-DOM UI toolkit. 45+ accessible primitives and micro-enhancers with built-in state persistence, cross-tab sync, React 19 wrapper, and zero Shadow DOM traps.',
+  activePath = '/',
+  keywords,
+  canonicalUrl,
+  ogType = 'website',
+  ogImage = '/og-image.png',
+  breadcrumbs,
+  schema,
+  articleMeta
 } = Astro.props;
+
+const defaultSiteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://nnui-kit.vercel.app';
+const currentCanonical = canonicalUrl || `${defaultSiteUrl}${activePath.startsWith('/') ? activePath : `/${activePath}`}`;
+const currentOgImage = ogImage 
+  ? (ogImage.startsWith('http') ? ogImage : `${defaultSiteUrl}${ogImage.startsWith('/') ? ogImage : `/${ogImage}`}`)
+  : `${defaultSiteUrl}/og-image.png`;
+
+const keywordsString = Array.isArray(keywords)
+  ? keywords.join(', ')
+  : keywords || 'all in one ui kit, all-in-one component library, universal ui kit, light dom web components, zero shadow dom, react 19 ui kit, vue 3 ui components, svelte 5 ui library, astro ui components, accessible design system, state persistence, cross tab sync, ai introspection protocol, nnui, nnuikit, modern web components, design tokens';
+
+// Global WebSite Schema
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  'name': 'NNUI-KIT',
+  'alternateName': ['nnuikit', 'NNUI', 'New Age UI Kit', 'All-In-One Universal UI Kit'],
+  'url': defaultSiteUrl,
+  'description': 'The All-In-One Universal Light-DOM UI Architecture. 45+ accessible primitives and micro-enhancers across React 19, Vue 3, Svelte 5, Astro, and HTML.',
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT',
+    'logo': {
+      '@type': 'ImageObject',
+      'url': `${defaultSiteUrl}/logo.png`
+    }
+  },
+  'potentialAction': {
+    '@type': 'SearchAction',
+    'target': {
+      '@type': 'EntryPoint',
+      'urlTemplate': `${defaultSiteUrl}/components?q={search_term_string}`
+    },
+    'query-input': 'required name=search_term_string'
+  }
+};
+
+// Global SoftwareApplication Schema
+const softwareAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  'name': 'NNUI-KIT',
+  'applicationCategory': 'DeveloperApplication',
+  'applicationSubCategory': 'All-in-One UI Component Library and Design System',
+  'operatingSystem': 'Any (Web, React 18/19, Next.js, Vue 3, Nuxt, Svelte 5, SvelteKit, Astro, HTMX, Rails, SSR)',
+  'description': 'All-in-one universal Light-DOM UI architecture with zero Shadow DOM accessibility traps, declarative state persistence, real-time cross-tab sync, and AI introspection protocol.',
+  'softwareVersion': '1.0.6',
+  'license': 'https://opensource.org/licenses/MIT',
+  'offers': {
+    '@type': 'Offer',
+    'price': '0',
+    'priceCurrency': 'USD'
+  },
+  'url': defaultSiteUrl,
+  'downloadUrl': 'https://www.npmjs.com/package/nnuikit',
+  'sameAs': [
+    'https://github.com/harshp421/nnui-kit',
+    'https://www.npmjs.com/package/nnuikit'
+  ]
+};
+
+// Breadcrumbs Schema
+const breadcrumbsSchema = breadcrumbs && breadcrumbs.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': breadcrumbs.map((crumb, idx) => ({
+    '@type': 'ListItem',
+    'position': idx + 1,
+    'name': crumb.name,
+    'item': crumb.url.startsWith('http') ? crumb.url : `${defaultSiteUrl}${crumb.url}`
+  }))
+} : null;
+
+// Aggregated schemas to render
+const allSchemas = [
+  websiteSchema,
+  softwareAppSchema,
+  ...(breadcrumbsSchema ? [breadcrumbsSchema] : []),
+  ...(Array.isArray(schema) ? schema : schema ? [schema] : [])
+];
 
 const componentsList = Object.values(componentsData) as any[];
 ---
@@ -22,7 +128,63 @@ const componentsList = Object.values(componentsData) as any[];
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <!-- Primary Title & Standard SEO Metadata -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywordsString} />
+    <meta name="author" content="NNUI-KIT Authors" />
+    <meta name="creator" content="NNUI-KIT" />
+    <meta name="publisher" content="NNUI-KIT" />
+    <link rel="canonical" href={currentCanonical} />
+
+    <!-- Crawlers & Search Engine Directives (SEO & AEO) -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- Open Graph / Facebook / LinkedIn / Discord / Slack -->
+    <meta property="og:site_name" content="NNUI-KIT — All-In-One Universal UI Kit" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={currentCanonical} />
+    <meta property="og:image" content={currentOgImage} />
+    <meta property="og:image:secure_url" content={currentOgImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="NNUI-KIT — The All-In-One Universal UI Kit" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@nnuikit" />
+    <meta name="twitter:creator" content="@nnuikit" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={currentOgImage} />
+    <meta name="twitter:image:alt" content="NNUI-KIT — The All-In-One Universal UI Kit" />
+
+    <!-- Mobile & Application Meta -->
+    <meta name="application-name" content="NNUI-KIT" />
+    <meta name="apple-mobile-web-app-title" content="NNUI-KIT" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
+
+    <!-- AI & Model Context Links (AEO) -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="AI Model Context (llms.txt)" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+    <!-- JSON-LD Structured Data (Schema.org for Google Rich Results & AEO) -->
+    {allSchemas.map((schemaObj) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schemaObj)} />
+    ))}
 
     <!-- 0ms Synchronous Theme & Palette Hydration (Executes before paint to eliminate FOUC / flicker) -->
     <script is:inline>
@@ -44,8 +206,6 @@ const componentsList = Object.values(componentsData) as any[];
         } catch (e) {}
       })();
     </script>
-    <title>{title}</title>
-    <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,7 +232,7 @@ const componentsList = Object.values(componentsData) as any[];
           </a>
           <a href="/llms" class={`docs-nav-link ${activePath.startsWith('/llms') ? 'active' : ''}`} style="display: inline-flex; align-items: center; gap: 0.35rem;">
             <span>llms.txt</span>
-            <span style="font-size: 0.65rem; background: rgba(99, 102, 241, 0.2); color: var(--brand-400, #818cf8); border: 1px solid rgba(99, 102, 241, 0.4); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">AI</span>
+            <span style="font-size: 0.65rem; background: color-mix(in srgb, var(--ui-color-brand-500) 15%, transparent); color: var(--ui-color-brand-500); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 35%, transparent); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">AI</span>
           </a>
           <a href="https://github.com/harshp421/nnui-kit" target="_blank" rel="noopener noreferrer" class="docs-nav-link">GitHub ↗</a>
         </nav>

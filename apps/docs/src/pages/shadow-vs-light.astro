@@ -1,11 +1,79 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
+
+const manifestoArticleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  'headline': 'Light DOM vs Shadow DOM: Why Light-DOM Solves All Web Component Traps',
+  'description': 'An in-depth technical analysis and interactive battle lab demonstrating why pure Light-DOM web components outperform Shadow DOM in accessibility, CSS styling, form serialization, and SSR performance.',
+  'inLanguage': 'en-US',
+  'author': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT Team',
+    'url': 'https://github.com/harshp421/nnui-kit'
+  },
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'NNUI-KIT',
+    'logo': {
+      '@type': 'ImageObject',
+      'url': 'https://nnui-kit.vercel.app/logo.png'
+    }
+  }
+};
+
+const manifestoFaqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': [
+    {
+      '@type': 'Question',
+      'name': 'Why did Shadow DOM cause developers to reject web components?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Shadow DOM enforces rigid encapsulation that breaks screen reader accessibility trees, blocks global CSS and Tailwind cascades, breaks native HTML <form> data serialization, and introduces FOUC (flash of unstyled content) during server-side rendering.'
+      }
+    },
+    {
+      '@type': 'Question',
+      'name': 'How does NNUI-KIT achieve component modularity without Shadow DOM?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'NNUI-KIT uses Light-DOM custom elements strictly as behavioral micro-enhancers that follow the invariant: "Mutate Attributes, Never Nodes". Components manage data-parts and ARIA attributes while leaving the DOM hierarchy open to standard stylesheets and framework reconcilers.'
+      }
+    },
+    {
+      '@type': 'Question',
+      'name': 'Can Tailwind CSS style NNUI-KIT Light-DOM components?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Yes, 100%. Because there is zero Shadow DOM boundary, utility classes from Tailwind CSS (like className="p-4 bg-zinc-900 rounded-lg") apply directly to component tags and their inner data-parts without CSS ::part() piercing.'
+      }
+    }
+  ]
+};
 ---
 
 <DocsLayout 
-  title="Shadow DOM vs Light DOM Manifesto — NNUI-KIT"
-  description="An interactive deep-dive and justification: Why NNUI-KIT rejected Shadow DOM to build the web's most composable, accessible, and style-transparent UI architecture."
+  title="Light DOM vs Shadow DOM: Why Light-DOM Solves All Web Component Traps | NNUI-KIT"
+  description="The definitive architectural comparison: Why NNUI-KIT rejected Shadow DOM to eliminate accessibility traps, form serialization bugs, and CSS cascade barriers across modern frameworks."
   activePath="/shadow-vs-light"
+  keywords={[
+    'light dom vs shadow dom',
+    'why light dom',
+    'shadow dom accessibility traps',
+    'web components light dom',
+    'web components tailwind css',
+    'zero shadow dom',
+    'nnui-kit manifesto',
+    'elementinternals form participation',
+    'shadow root styling issues'
+  ]}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Why Light-DOM', url: '/shadow-vs-light' }
+  ]}
+  schema={[manifestoArticleSchema, manifestoFaqSchema]}
 >
   <div class="docs-layout-container">
     <!-- Left Navigation Sidebar -->
@@ -445,7 +513,7 @@ import DocsLayout from '../layouts/DocsLayout.astro';
               </div>
             </div>
 
-            <button type="button" id="calc-fit-btn" style="padding: 0.6rem 1.25rem; font-size: 0.9rem; font-weight: 700; border-radius: 8px; background: #6366f1; color: white; border: none; cursor: pointer;">
+            <button type="button" id="calc-fit-btn" data-ui="button" class="btn-primary" style="padding: 0.6rem 1.25rem; font-size: 0.9rem; font-weight: 700; border-radius: 8px; background: var(--ui-color-brand-600); color: var(--ui-text-inverted, #ffffff); border: none; cursor: pointer;">
               Calculate Technical Recommendation
             </button>
           </form>
@@ -659,8 +727,8 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     color: var(--text-main);
   }
   .css-preset-btn.active {
-    background: #6366f1;
-    color: white;
-    border-color: #6366f1;
+    background: var(--ui-color-brand-600);
+    color: var(--ui-text-inverted, #ffffff);
+    border-color: var(--ui-color-brand-600);
   }
 </style>

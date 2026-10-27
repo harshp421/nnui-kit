@@ -5,19 +5,65 @@ import registry from 'nnui-kit/registry.json';
 const componentsList = Object.values(registry.components);
 const tier0 = componentsList.filter((c: any) => c.tier === 0);
 const tier2 = componentsList.filter((c: any) => c.tier === 2);
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  'name': 'NNUI-KIT All-in-One Component Catalog',
+  'description': 'Complete catalog of 45+ platform-native Light-DOM UI components and primitives across React, Vue, Svelte, Astro, and HTML.',
+  'numberOfItems': componentsList.length,
+  'itemListElement': componentsList.map((comp: any, idx: number) => ({
+    '@type': 'ListItem',
+    'position': idx + 1,
+    'name': `<ui-${comp.name}> (${comp.title || comp.name})`,
+    'description': comp.description,
+    'url': `https://nnui-kit.vercel.app/components/${comp.name}`
+  }))
+};
 ---
 
-<DocsLayout title="Components Catalog (45) | NNUI-KIT" activePath="/components">
+<DocsLayout 
+  title="All-in-One UI Components Catalog (45+) — Accessible Light-DOM Primitives | NNUI-KIT" 
+  description="Explore all 45+ platform-native Light-DOM UI components in NNUI-KIT. Accessible primitives and micro-enhancers for React 19, Vue 3, Svelte 5, Astro, and HTML with zero Shadow DOM traps."
+  activePath="/components"
+  keywords={[
+    'all in one ui components',
+    'component catalog',
+    'light dom components',
+    'react 19 components',
+    'vue 3 components',
+    'svelte 5 components',
+    'astro ui components',
+    'web components directory',
+    'accessible design system',
+    'data grid component',
+    'accordion component',
+    'stepper component',
+    'nnui'
+  ]}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Components', url: '/components' }
+  ]}
+  schema={[itemListSchema]}
+>
   <div class="page-container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
     <!-- Title and Search -->
     <div style="margin-bottom: 3rem;">
-      <div class="announcement-badge" style="margin-bottom: 0.75rem;">Platform-Native Directory</div>
+      <div class="announcement-badge" style="margin-bottom: 0.75rem;">All-In-One Platform Directory</div>
       <h1 style="font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.75rem; color: var(--text-main);">
-        Components ({componentsList.length})
+        All-In-One Components ({componentsList.length})
       </h1>
-      <p style="color: var(--text-muted); font-size: 1.15rem; max-width: 650px; margin-bottom: 2rem;">
-        Every component is crafted for direct Light-DOM composition. Copy-paste via CLI or import as universal web components.
+      <p style="color: var(--text-muted); font-size: 1.15rem; max-width: 720px; margin-bottom: 1.5rem; line-height: 1.6;">
+        Every component is crafted for direct Light-DOM composition with zero Shadow DOM traps. Copy-paste via CLI or import as universal web components.
       </p>
+
+      <!-- AEO Directory Summary Box -->
+      <div class="aeo-summary-box" data-ui="card" style="margin-bottom: 2rem; max-width: 720px; background: color-mix(in srgb, var(--ui-color-brand-500) 6%, var(--bg-card)); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 22%, var(--border-subtle)); border-radius: 10px; padding: 0.85rem 1.25rem;">
+        <p style="margin: 0; font-size: 0.86rem; color: var(--text-secondary); line-height: 1.55;">
+          <strong>Architecture Breakdown:</strong> Contains <strong>{tier0.length} Tier 0 Zero-JS Primitives</strong> (buttons, inputs, alerts, badges, tables) powered purely by CSS tokens, and <strong>{tier2.length} Tier 2 Micro-Enhancers</strong> (virtualized data grids, accordions, steppers, AI prompt boxes) that execute natively in the Light DOM without framework lock-in.
+        </p>
+      </div>
 
       <div style="display: flex; gap: 1rem; align-items: center; max-width: 520px;">
         <input 
