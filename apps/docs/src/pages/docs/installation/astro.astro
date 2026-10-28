@@ -1,0 +1,228 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import DocsSidebar from "../../../components/DocsSidebar.astro";
+
+const astroSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "NNUI-KIT Astro Installation Guide",
+  description:
+    "Step-by-step instructions to install and configure NNUI-KIT in Astro. Platform-native Light-DOM components with zero JavaScript overhead by default.",
+  author: {
+    "@type": "Organization",
+    name: "NNUI-KIT Team",
+    url: "https://github.com/harshp421/nnui-kit",
+  },
+};
+---
+
+<DocsLayout
+  title="Astro Installation — NNUI-KIT"
+  description="Install and configure NNUI-KIT in Astro. Learn how to import design tokens, configure layout, and use Light-DOM components with zero JS overhead."
+  activePath="/docs/installation/astro"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Docs", url: "/docs" },
+    { name: "Installation", url: "/docs/installation" },
+    { name: "Astro", url: "/docs/installation/astro" },
+  ]}
+  schema={astroSchema}
+>
+  <div class="docs-layout-container">
+    <DocsSidebar activePath="/docs/installation/astro" />
+
+    <main class="docs-body">
+      <!-- Breadcrumbs -->
+      <nav class="docs-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs">Docs</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs/installation">Installation</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <span class="docs-breadcrumbs-current">Astro</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header style="margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <div
+            class="framework-card-icon"
+            style="width: 36px; height: 36px; margin-bottom: 0; background: rgba(255, 93, 1, 0.12); color: #ff5d01;"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4.5c1.45-1.47 4.5-2 4.5-2"/><path d="M15 15v5s3.03-.55 4.5-2c1.47-1.45 2-4.5 2-4.5"/></svg>
+          </div>
+          <h1
+            style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--text-main);"
+          >
+            Astro
+          </h1>
+        </div>
+        <p
+          style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 720px;"
+        >
+          Install and configure NNUI-KIT for Astro. Because NNUI-KIT primitives are 100% Light-DOM, they render cleanly at build time with zero client JavaScript by default.
+        </p>
+      </header>
+
+      <!-- Steps List -->
+      <div class="installation-steps">
+        <!-- Step 1: Create project -->
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h2 class="step-title">Create project</h2>
+            <p class="step-desc">
+              Create a new Astro project using <code>create astro</code>:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm create astro@latest my-app
+cd my-app</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Install dependencies -->
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h2 class="step-title">Install NNUI-KIT</h2>
+            <p class="step-desc">
+              Install the package from npm:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm install nnuikit</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Configure Root Layout -->
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h2 class="step-title">Configure Root Layout & Tokens</h2>
+            <p class="step-desc">
+              Import the design token stylesheet in your base Astro layout:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/layouts/Layout.astro</span>
+                <span>astro</span>
+              </div>
+              <pre><code>---
+// 1. Import NNUI design tokens (CSS variables & cascade layers)
+import 'nnuikit/tokens/theme.css';
+---
+
+&lt;!doctype html&gt;
+&lt;html lang="en" data-theme="dark"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width" /&gt;
+    &lt;title&gt;NNUI Astro App&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;slot /&gt;
+
+    &lt;!-- Optional: Load client micro-enhancers for interactive Tier 2 components --&gt;
+    &lt;script&gt;
+      import 'nnuikit/client';
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Add components -->
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h2 class="step-title">Add components to your page</h2>
+            <p class="step-desc">
+              In Astro, you can use semantic Light-DOM attributes directly with zero JavaScript overhead:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/pages/index.astro</span>
+                <span>astro</span>
+              </div>
+              <pre><code>---
+import Layout from '../layouts/Layout.astro';
+---
+
+&lt;Layout&gt;
+  &lt;main style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;"&gt;
+    &lt;div data-ui="card" style="width: 100%; max-width: 440px; padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;"&gt;
+      &lt;div style="display: flex; justify-content: space-between; align-items: center;"&gt;
+        &lt;h1 style="margin: 0; font-size: 1.35rem; font-weight: 700;"&gt;Astro + NNUI-KIT&lt;/h1&gt;
+        &lt;span data-ui="badge" data-variant="primary"&gt;Zero JS&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;p style="margin: 0; color: var(--ui-text-secondary, #a1a1aa); font-size: 0.875rem;"&gt;
+        Pure HTML Light-DOM primitives rendered at build time with CSS Cascade Layers.
+      &lt;/p&gt;
+
+      &lt;input data-ui="input" placeholder="Enter your email..." type="email" /&gt;
+
+      &lt;button data-ui="button" data-variant="primary"&gt;
+        Get Started
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+&lt;/Layout&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Run dev server -->
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h2 class="step-title">Run development server</h2>
+            <p class="step-desc">
+              Start the Astro local development server:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm run dev</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Next Navigation -->
+      <div
+        style="border-top: 1px solid var(--border-subtle); padding-top: 2rem; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"
+      >
+        <a
+          href="/docs/installation"
+          class="btn-secondary"
+          style="font-size: 0.85rem;"
+        >
+          ← All Frameworks
+        </a>
+        <a
+          href="/components"
+          class="btn-primary"
+          style="font-size: 0.85rem;"
+        >
+          Explore All Components →
+        </a>
+      </div>
+    </main>
+  </div>
+</DocsLayout>

@@ -1,0 +1,198 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import DocsSidebar from "../../../components/DocsSidebar.astro";
+
+const installationSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "NNUI-KIT Installation & Framework Setup Guides",
+  description:
+    "Step-by-step installation guides for NNUI-KIT across Next.js 15, Vite (React 18/19), Astro, Vue 3, Svelte 5, Remix, and Vanilla HTML Light-DOM.",
+  author: {
+    "@type": "Organization",
+    name: "NNUI-KIT Team",
+    url: "https://github.com/harshp421/nnui-kit",
+  },
+};
+
+const frameworks = [
+  {
+    name: "Next.js",
+    href: "/docs/installation/next",
+    badge: "React 19 Ready",
+    description: "Full-featured React framework with App Router, Server Components, and zero hydration mismatch.",
+    iconColor: "var(--text-main)",
+    iconBg: "rgba(255, 255, 255, 0.05)",
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 180 180" fill="none"><mask id="next-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180" style="mask-type:alpha"><circle cx="90" cy="90" r="90" fill="currentColor"/></mask><g mask="url(#next-mask)"><circle cx="90" cy="90" r="90" fill="currentColor"/><path d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="var(--bg-primary)"/><path d="M115.455 54H127.568V126H115.455V54Z" fill="var(--bg-primary)"/></g></svg>`,
+  },
+  {
+    name: "Vite (React)",
+    href: "/docs/installation/vite",
+    badge: "Most Popular",
+    description: "Lightning-fast frontend tooling for React 18 & 19 with instant Hot Module Replacement.",
+    iconColor: "#a855f7",
+    iconBg: "rgba(168, 85, 247, 0.12)",
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path d="M29.5 5.5L16.8 28.5C16.5 29.1 15.5 29.1 15.2 28.5L2.5 5.5C2.1 4.7 2.8 3.8 3.6 4L16 6.3L28.4 4C29.2 3.8 29.9 4.7 29.5 5.5Z" fill="#bd34fe"/><path d="M21.5 2L10.8 17.5H16.2L12.5 27L23.5 11.5H17.8L21.5 2Z" fill="#ffea83"/></svg>`,
+  },
+  {
+    name: "Astro",
+    href: "/docs/installation/astro",
+    badge: "Zero JS by Default",
+    description: "Content-driven web architecture with platform-native Light-DOM and sub-40 KB runtime footprint.",
+    iconColor: "#ff5d01",
+    iconBg: "rgba(255, 93, 1, 0.12)",
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4.5c1.45-1.47 4.5-2 4.5-2"/><path d="M15 15v5s3.03-.55 4.5-2c1.47-1.45 2-4.5 2-4.5"/></svg>`,
+  },
+  {
+    name: "Vue & Nuxt",
+    href: "/docs/installation/vue",
+    badge: "Vue 3",
+    description: "Progressive framework with intuitive reactivity and seamless Light-DOM custom element binding.",
+    iconColor: "#42b883",
+    iconBg: "rgba(66, 184, 131, 0.12)",
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 256 221" fill="none"><path d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36z" fill="#42b883"/><path d="M0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0z" fill="#35495e"/><path d="M50.56 0L128 133.12L204.8 0h-47.36L128 51.2L97.92 0H50.56z" fill="#42b883"/></svg>`,
+  },
+  {
+    name: "Svelte 5",
+    href: "/docs/installation/svelte",
+    badge: "Runes ($state)",
+    description: "Cybernetically enhanced applications with Svelte 5 Runes and platform-native custom element slots.",
+    iconColor: "#ff3e00",
+    iconBg: "rgba(255, 62, 0, 0.12)",
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`,
+  },
+  {
+    name: "Remix / React Router",
+    href: "/docs/installation/remix",
+    badge: "v7 Web Standards",
+    description: "Focused on standard web fetch API, nested route loaders, and resilient Light-DOM form participation.",
+    iconColor: "#38bdf8",
+    iconBg: "rgba(56, 189, 248, 0.12)",
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`,
+  },
+  {
+    name: "Manual / CDN",
+    href: "/docs/installation/manual",
+    badge: "No Build Step",
+    description: "Add NNUI-KIT manually to any project or vanilla HTML page via unpkg CDN or direct npm import.",
+    iconColor: "#10b981",
+    iconBg: "rgba(16, 185, 129, 0.12)",
+    iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
+  },
+];
+---
+
+<DocsLayout
+  title="Installation — Select Your Framework | NNUI-KIT"
+  description="How to install dependencies and configure NNUI-KIT for your favorite framework. Step-by-step guides for Next.js, Vite, Astro, Vue, SvelteKit, and Vanilla HTML."
+  activePath="/docs/installation"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Docs", url: "/docs" },
+    { name: "Installation", url: "/docs/installation" },
+  ]}
+  schema={installationSchema}
+>
+  <div class="docs-layout-container">
+    <DocsSidebar activePath="/docs/installation" />
+
+    <main class="docs-body">
+      <!-- Breadcrumbs -->
+      <nav class="docs-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs">Docs</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <span class="docs-breadcrumbs-current">Installation</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header style="margin-bottom: 2.5rem;">
+        <h1
+          style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 0.75rem; color: var(--text-main);"
+        >
+          Installation
+        </h1>
+        <p
+          style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 720px;"
+        >
+          Select your framework below to view the tailored, step-by-step installation guide. NNUI-KIT provides 100% Light-DOM code ownership with zero Shadow DOM traps across every modern stack.
+        </p>
+      </header>
+
+      <!-- Framework Selection Grid (shadcn/ui style) -->
+      <div class="framework-grid">
+        {
+          frameworks.map((fw) => (
+            <a href={fw.href} class="framework-card">
+              <div
+                class="framework-card-icon"
+                style={`background: ${fw.iconBg}; color: ${fw.iconColor};`}
+                set:html={fw.iconSvg}
+              />
+              <div class="framework-card-title">
+                <span>{fw.name}</span>
+                <span class="docs-version-pill" style="font-size: 0.65rem;">
+                  {fw.badge}
+                </span>
+              </div>
+              <p class="framework-card-desc">{fw.description}</p>
+              <div
+                style="margin-top: 1.25rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.82rem; font-weight: 600; color: var(--brand-accent);"
+              >
+                <span>View Guide</span>
+                <span>→</span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Quick CLI Overview -->
+      <section
+        style="border: 1px solid var(--border-subtle); border-radius: 12px; background: var(--bg-card); padding: 1.75rem; margin-top: 3rem;"
+      >
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+          <h2 style="font-size: 1.25rem; font-weight: 700; margin: 0; color: var(--text-main);">
+            Quick Installation (Universal Package)
+          </h2>
+          <span class="docs-version-pill" style="border-color: #10b981; color: #10b981;">
+            npm: nnuikit
+          </span>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0 0 1.25rem;">
+          If you already have a configured project, simply install the universal package and import the design token stylesheet:
+        </p>
+
+        <div class="code-block-box">
+          <div class="code-block-header">
+            <span>Terminal</span>
+            <span>bash</span>
+          </div>
+          <pre><code># 1. Install universal package
+npm install nnuikit
+
+# 2. Or initialize the CLI to generate theme tokens
+npx nnui init</code></pre>
+        </div>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+          <a
+            href="/docs/installation/vite"
+            class="btn-primary"
+            style="font-size: 0.85rem; padding: 0.5rem 1rem;"
+          >
+            Start with Vite & React →
+          </a>
+          <a
+            href="/docs/installation/next"
+            class="btn-secondary"
+            style="font-size: 0.85rem; padding: 0.5rem 1rem;"
+          >
+            Start with Next.js 15 →
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+</DocsLayout>

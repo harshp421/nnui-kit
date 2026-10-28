@@ -1,0 +1,253 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import DocsSidebar from "../../../components/DocsSidebar.astro";
+
+const viteSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "NNUI-KIT Vite + React Installation Guide",
+  description:
+    "Step-by-step instructions to install and configure NNUI-KIT in a Vite React TypeScript project. Clean setup with design tokens and zero Shadow DOM traps.",
+  author: {
+    "@type": "Organization",
+    name: "NNUI-KIT Team",
+    url: "https://github.com/harshp421/nnui-kit",
+  },
+};
+---
+
+<DocsLayout
+  title="Vite + React Installation — NNUI-KIT"
+  description="Install and configure NNUI-KIT in a Vite React project. Includes token import, cleaning default Vite styles, and typed React 18/19 components."
+  activePath="/docs/installation/vite"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Docs", url: "/docs" },
+    { name: "Installation", url: "/docs/installation" },
+    { name: "Vite", url: "/docs/installation/vite" },
+  ]}
+  schema={viteSchema}
+>
+  <div class="docs-layout-container">
+    <DocsSidebar activePath="/docs/installation/vite" />
+
+    <main class="docs-body">
+      <!-- Breadcrumbs -->
+      <nav class="docs-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs">Docs</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs/installation">Installation</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <span class="docs-breadcrumbs-current">Vite</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header style="margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <div
+            class="framework-card-icon"
+            style="width: 36px; height: 36px; margin-bottom: 0; background: rgba(168, 85, 247, 0.12); color: #a855f7;"
+          >
+            <svg width="20" height="20" viewBox="0 0 32 32" fill="none"><path d="M29.5 5.5L16.8 28.5C16.5 29.1 15.5 29.1 15.2 28.5L2.5 5.5C2.1 4.7 2.8 3.8 3.6 4L16 6.3L28.4 4C29.2 3.8 29.9 4.7 29.5 5.5Z" fill="#bd34fe"/><path d="M21.5 2L10.8 17.5H16.2L12.5 27L23.5 11.5H17.8L21.5 2Z" fill="#ffea83"/></svg>
+          </div>
+          <h1
+            style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--text-main);"
+          >
+            Vite
+          </h1>
+        </div>
+        <p
+          style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 720px;"
+        >
+          Install and configure NNUI-KIT with Vite and React. Works out-of-the-box with both React 18 and React 19.
+        </p>
+      </header>
+
+      <!-- Steps List (shadcn/ui style) -->
+      <div class="installation-steps">
+        <!-- Step 1: Create project -->
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h2 class="step-title">Create project</h2>
+            <p class="step-desc">
+              Create a new Vite project using the React TypeScript template:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm create vite@latest my-app -- --template react-ts
+cd my-app</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Install dependencies -->
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h2 class="step-title">Install NNUI-KIT</h2>
+            <p class="step-desc">
+              Install the universal package from npm:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm install nnuikit</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Clean up Vite default styles & configure tokens -->
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h2 class="step-title">Clean up default Vite styles</h2>
+            
+            <div class="step-callout">
+              <strong style="color: #f59e0b; display: block; margin-bottom: 0.25rem;">⚠️ Important: Remove Vite's Default Root Centering</strong>
+              Default Vite templates include a <code>#root &#123; max-width: 1280px; margin: 0 auto; padding: 2rem; text-align: center; &#125;</code> rule inside <code>src/App.css</code>. This forces all text to be centered and adds 32px of unwanted padding.
+              <br /><br />
+              <strong>Delete the contents of <code>src/App.css</code> or remove the file.</strong>
+            </div>
+
+            <p class="step-desc">
+              Update <code>src/main.tsx</code> to import the NNUI-KIT design tokens:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/main.tsx</span>
+                <span>tsx</span>
+              </div>
+              <pre><code>import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+
+// 1. Import NNUI design tokens (CSS variables & cascade layers)
+import 'nnuikit/tokens/theme.css'
+
+// 2. Global app styling
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;,
+)</code></pre>
+            </div>
+
+            <p class="step-desc" style="margin-top: 1.25rem;">
+              Set up your base canvas background and font in <code>src/index.css</code>:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/index.css</span>
+                <span>css</span>
+              </div>
+              <pre><code>:root &#123;
+  color-scheme: dark light;
+&#125;
+
+body &#123;
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--ui-bg-canvas, #09090b);
+  color: var(--ui-text-primary, #fafafa);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+&#125;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Add components -->
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h2 class="step-title">Add components to your app</h2>
+            <p class="step-desc">
+              Import and use components from <code>nnuikit/react</code> in your application:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/App.tsx</span>
+                <span>tsx</span>
+              </div>
+              <pre><code>import &#123; Button, Card, Input, Badge &#125; from 'nnuikit/react'
+
+export default function App() &#123;
+  return (
+    &lt;main style=&#123;&#123; minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' &#125;&#125;&gt;
+      &lt;Card style=&#123;&#123; width: '100%', maxWidth: '420px', padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem' &#125;&#125;&gt;
+        &lt;div style=&#123;&#123; display: 'flex', justifyContent: 'space-between', alignItems: 'center' &#125;&#125;&gt;
+          &lt;h1 style=&#123;&#123; margin: 0, fontSize: '1.25rem', fontWeight: 700 &#125;&#125;&gt;Vite + NNUI-KIT&lt;/h1&gt;
+          &lt;Badge variant="success"&gt;Active&lt;/Badge&gt;
+        &lt;/div&gt;
+
+        &lt;p style=&#123;&#123; margin: 0, color: 'var(--ui-text-secondary, #a1a1aa)', fontSize: '0.875rem' &#125;&#125;&gt;
+          Platform-native Light-DOM UI primitives with zero Shadow DOM traps.
+        &lt;/p&gt;
+
+        &lt;Input placeholder="name@example.com" type="email" /&gt;
+        
+        &lt;Button variant="primary" onClick=&#123;() =&gt; alert('Hello from NNUI-KIT!')&#125;&gt;
+          Get Started
+        &lt;/Button&gt;
+      &lt;/Card&gt;
+    &lt;/main&gt;
+  )
+&#125;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Run dev server -->
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h2 class="step-title">Run development server</h2>
+            <p class="step-desc">
+              Start the Vite local development server:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm run dev</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Next Navigation -->
+      <div
+        style="border-top: 1px solid var(--border-subtle); padding-top: 2rem; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"
+      >
+        <a
+          href="/docs/installation"
+          class="btn-secondary"
+          style="font-size: 0.85rem;"
+        >
+          ← All Frameworks
+        </a>
+        <a
+          href="/components"
+          class="btn-primary"
+          style="font-size: 0.85rem;"
+        >
+          Explore All Components →
+        </a>
+      </div>
+    </main>
+  </div>
+</DocsLayout>

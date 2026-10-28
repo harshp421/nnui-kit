@@ -461,4 +461,136 @@ export declare const Input: React.ForwardRefExoticComponent<InputProps & React.R
 export declare const InputGroup: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>;
 export declare const Kbd: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>>;
 
+// Tier 0 Semantic Primitives
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  as?: any;
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'danger' | 'link' | 'subtle';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'icon';
+  fullWidth?: boolean;
+}
+export declare const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>>;
+
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  as?: any;
+  variant?: 'default' | 'secondary' | 'outline' | 'destructive' | 'success' | 'warning' | 'info';
+  size?: 'sm' | 'md' | 'lg';
+}
+export declare const Badge: React.ForwardRefExoticComponent<BadgeProps & React.RefAttributes<HTMLSpanElement>>;
+
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  as?: any;
+}
+export interface CardComponent extends React.ForwardRefExoticComponent<CardProps & React.RefAttributes<HTMLDivElement>> {
+  Root: React.ForwardRefExoticComponent<CardProps & React.RefAttributes<HTMLDivElement>>;
+  Header: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
+  Title: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLHeadingElement>>;
+  Description: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLParagraphElement>>;
+  Content: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
+  Body: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
+  Footer: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
+}
+export declare const Card: CardComponent;
+
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  as?: any;
+  variant?: 'info' | 'success' | 'warning' | 'destructive' | 'error';
+}
+export interface AlertComponent extends React.ForwardRefExoticComponent<AlertProps & React.RefAttributes<HTMLDivElement>> {
+  Root: React.ForwardRefExoticComponent<AlertProps & React.RefAttributes<HTMLDivElement>>;
+  Title: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLHeadingElement>>;
+  Description: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
+}
+export declare const Alert: AlertComponent;
+
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
+  as?: any;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  src?: string;
+  alt?: string;
+  fallback?: React.ReactNode;
+}
+export interface AvatarComponent extends React.ForwardRefExoticComponent<AvatarProps & React.RefAttributes<HTMLDivElement>> {
+  Root: React.ForwardRefExoticComponent<AvatarProps & React.RefAttributes<HTMLDivElement>>;
+  Image: React.ForwardRefExoticComponent<React.ImgHTMLAttributes<HTMLImageElement>>;
+  Fallback: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLSpanElement>>;
+}
+export declare const Avatar: AvatarComponent;
+
+export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  label?: React.ReactNode;
+  description?: React.ReactNode;
+  error?: boolean;
+}
+export declare const Checkbox: React.ForwardRefExoticComponent<CheckboxProps & React.RefAttributes<HTMLInputElement>>;
+
+export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  label?: React.ReactNode;
+}
+export declare const Switch: React.ForwardRefExoticComponent<SwitchProps & React.RefAttributes<HTMLInputElement>>;
+
+export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
+  value?: number;
+  max?: number;
+}
+export declare const Progress: React.ForwardRefExoticComponent<ProgressProps & React.RefAttributes<HTMLDivElement>>;
+
+export interface SeparatorProps extends React.HTMLAttributes<HTMLElement> {
+  orientation?: 'horizontal' | 'vertical';
+  label?: string;
+}
+export declare const Separator: React.ForwardRefExoticComponent<SeparatorProps & React.RefAttributes<HTMLElement>>;
+
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
+  width?: string | number;
+  height?: string | number;
+  circle?: boolean;
+}
+export declare const Skeleton: React.ForwardRefExoticComponent<SkeletonProps & React.RefAttributes<HTMLDivElement>>;
+
+export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+}
+export declare const Spinner: React.ForwardRefExoticComponent<SpinnerProps & React.RefAttributes<HTMLDivElement>>;
+
+export interface EmptyProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface EmptyComponent extends React.ForwardRefExoticComponent<EmptyProps & React.RefAttributes<HTMLDivElement>> {
+  Root: React.ForwardRefExoticComponent<EmptyProps & React.RefAttributes<HTMLDivElement>>;
+  Icon: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
+  Title: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLHeadingElement>>;
+  Description: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLParagraphElement>>;
+  Action: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement>>;
+}
+export declare const Empty: EmptyComponent;
+
+export interface StackProps extends React.HTMLAttributes<HTMLDivElement> {
+  direction?: 'row' | 'column';
+  gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | string;
+  align?: 'start' | 'center' | 'end' | 'stretch';
+  justify?: 'start' | 'center' | 'end' | 'between';
+}
+export declare const Stack: React.ForwardRefExoticComponent<StackProps & React.RefAttributes<HTMLDivElement>>;
+
+export interface GridProps extends React.HTMLAttributes<HTMLDivElement> {
+  cols?: number | string;
+  gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | string;
+}
+export declare const Grid: React.ForwardRefExoticComponent<GridProps & React.RefAttributes<HTMLDivElement>>;
+
+export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'fluid';
+}
+export declare const Container: React.ForwardRefExoticComponent<ContainerProps & React.RefAttributes<HTMLDivElement>>;
+
+export interface TableProps extends React.TableHTMLAttributes<HTMLTableElement> {}
+export interface TableComponent extends React.ForwardRefExoticComponent<TableProps & React.RefAttributes<HTMLTableElement>> {
+  Root: React.ForwardRefExoticComponent<TableProps & React.RefAttributes<HTMLTableElement>>;
+  Header: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLTableSectionElement>>;
+  Body: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLTableSectionElement>>;
+  Row: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLTableRowElement>>;
+  Head: React.ForwardRefExoticComponent<React.ThHTMLAttributes<HTMLTableCellElement>>;
+  Cell: React.ForwardRefExoticComponent<React.TdHTMLAttributes<HTMLTableCellElement>>;
+}
+export declare const Table: TableComponent;
+
 export { toast, register };
+

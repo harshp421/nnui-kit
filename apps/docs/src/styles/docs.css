@@ -1495,3 +1495,391 @@ nnui-segmented-control {
   border-color: var(--ui-color-brand-500);
   transform: translateY(-1px);
 }
+
+/* =========================================================================
+   Shadcn-Style Framework Installation Hub & Step Indicators
+   ========================================================================= */
+.docs-aside-sublink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.docs-aside-sublink:hover {
+  color: var(--text-main);
+  background: var(--bg-secondary);
+}
+
+.docs-aside-sublink.active {
+  color: var(--brand-accent);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--brand-accent) 12%, transparent);
+}
+
+.docs-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.docs-breadcrumbs a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.docs-breadcrumbs a:hover {
+  color: var(--text-main);
+}
+
+.docs-breadcrumbs-sep {
+  opacity: 0.4;
+  font-size: 0.75rem;
+}
+
+.docs-breadcrumbs-current {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.framework-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0 3.5rem;
+}
+
+.framework-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.framework-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-accent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--brand-accent) 15%, transparent);
+}
+
+.framework-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--text-main);
+  transition: transform 0.2s ease;
+}
+
+.framework-card:hover .framework-card-icon {
+  transform: scale(1.08);
+}
+
+.framework-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.framework-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Step-by-Step Installation */
+.installation-steps {
+  position: relative;
+  margin: 2.5rem 0 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.step-item {
+  position: relative;
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.step-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: 17px;
+  bottom: -2.5rem;
+  width: 2px;
+  background: var(--border-subtle);
+  z-index: 0;
+}
+
+.step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s ease;
+}
+
+.step-item:hover .step-num {
+  border-color: var(--brand-accent);
+  color: var(--brand-accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--brand-accent) 30%, transparent);
+}
+
+.step-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.step-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.step-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.code-block-box {
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: #09090b;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #121215;
+  border-bottom: 1px solid #27272a;
+  font-family: var(--docs-font-mono);
+  font-size: 0.78rem;
+  color: #a1a1aa;
+}
+
+.code-block-box pre {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  color: #f4f4f5;
+  font-family: var(--docs-font-mono);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  overflow-x: auto;
+}
+
+.code-block-box code {
+  font-family: inherit;
+}
+
+.step-callout {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, #f59e0b 8%, var(--bg-card));
+  border: 1px solid color-mix(in srgb, #f59e0b 28%, var(--border-subtle));
+  margin-bottom: 1.25rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-main);
+}
+
+.step-callout.info {
+  background: color-mix(in srgb, var(--brand-accent) 8%, var(--bg-card));
+  border-color: color-mix(in srgb, var(--brand-accent) 28%, var(--border-subtle));
+}
+
+/* =========================================================================
+   Table of Contents (On This Page), Code Copy Buttons & Quick-Action Grid
+   ========================================================================= */
+.docs-toc {
+  width: 240px;
+  flex-shrink: 0;
+  padding: 2.5rem 1.25rem 5rem 1rem;
+  position: sticky;
+  top: var(--docs-header-h);
+  height: calc(100vh - var(--docs-header-h));
+  overflow-y: auto;
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .docs-toc {
+    display: block;
+  }
+}
+
+.docs-toc-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-main);
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.docs-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.docs-toc-link {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.25rem 0 0.25rem 0.85rem;
+  display: block;
+  line-height: 1.45;
+  transition: all 0.15s ease;
+  position: relative;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+}
+
+.docs-toc-link:hover {
+  color: var(--text-main);
+}
+
+.docs-toc-link.active {
+  color: var(--brand-accent);
+  font-weight: 600;
+  border-left-color: var(--brand-accent);
+}
+
+/* Code Block Copy Button */
+.code-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #a1a1aa;
+  padding: 0.22rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-family: var(--docs-font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.code-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.code-copy-btn.copied {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* Quick Action Links Grid */
+.docs-quick-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0 3rem;
+}
+
+.docs-quick-link-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.4rem;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.docs-quick-link-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-accent);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--brand-accent) 12%, transparent);
+}
+
+.docs-quick-link-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.docs-quick-link-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.docs-quick-link-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+

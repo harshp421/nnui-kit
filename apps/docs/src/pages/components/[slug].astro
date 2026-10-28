@@ -1,6 +1,6 @@
 ---
-import DocsLayout from '../../layouts/DocsLayout.astro';
-import componentsData from '../../data/components-data.json';
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import componentsData from "../../data/components-data.json";
 
 export async function getStaticPaths() {
   return Object.values(componentsData).map((comp: any) => ({
@@ -15,53 +15,54 @@ const tier0 = allComponents.filter((c) => c.tier === 0);
 const tier2 = allComponents.filter((c) => c.tier === 2);
 
 const componentArticleSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'TechArticle',
-  'headline': `${comp.title} Component — All-In-One Light-DOM Universal UI`,
-  'description': `Comprehensive developer documentation, installation, and framework examples for the ${comp.title} component (<ui-${comp.slug}>) in NNUI-KIT.`,
-  'inLanguage': 'en-US',
-  'proficiencyLevel': 'Beginner to Advanced',
-  'keywords': `${comp.title}, <ui-${comp.slug}>, all in one ui kit, react 19, vue 3, svelte 5, astro, web components, accessible ui, light-dom`,
-  'about': {
-    '@type': 'SoftwareSourceCode',
-    'name': `<ui-${comp.slug}>`,
-    'programmingLanguage': 'HTML, JavaScript, TypeScript, CSS',
-    'runtimePlatform': 'Web Browser, Node.js SSR, React 18/19, Vue 3, Svelte 5, Astro',
-    'codeRepository': 'https://github.com/harshp421/nnui-kit'
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: `${comp.title} Component — All-In-One Light-DOM Universal UI`,
+  description: `Comprehensive developer documentation, installation, and framework examples for the ${comp.title} component (<ui-${comp.slug}>) in NNUI-KIT.`,
+  inLanguage: "en-US",
+  proficiencyLevel: "Beginner to Advanced",
+  keywords: `${comp.title}, <ui-${comp.slug}>, all in one ui kit, react 19, vue 3, svelte 5, astro, web components, accessible ui, light-dom`,
+  about: {
+    "@type": "SoftwareSourceCode",
+    name: `<ui-${comp.slug}>`,
+    programmingLanguage: "HTML, JavaScript, TypeScript, CSS",
+    runtimePlatform:
+      "Web Browser, Node.js SSR, React 18/19, Vue 3, Svelte 5, Astro",
+    codeRepository: "https://github.com/harshp421/nnui-kit",
   },
-  'author': {
-    '@type': 'Organization',
-    'name': 'NNUI-KIT Team',
-    'url': 'https://github.com/harshp421/nnui-kit'
-  }
+  author: {
+    "@type": "Organization",
+    name: "NNUI-KIT Team",
+    url: "https://github.com/harshp421/nnui-kit",
+  },
 };
 
 const componentFaqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  'mainEntity': [
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
     {
-      '@type': 'Question',
-      'name': `How do I install the ${comp.title} component in my application?`,
-      'acceptedAnswer': {
-        '@type': 'Answer',
-        'text': `Run 'npx nnui add ${comp.slug}' using the CLI to add the component to your codebase, or install 'npm install nnuikit' to import it across React, Vue, Svelte, Astro, or plain HTML.`
-      }
+      "@type": "Question",
+      name: `How do I install the ${comp.title} component in my application?`,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `Run 'npx nnui add ${comp.slug}' using the CLI to add the component to your codebase, or install 'npm install nnuikit' to import it across React, Vue, Svelte, Astro, or plain HTML.`,
+      },
     },
     {
-      '@type': 'Question',
-      'name': `Does ${comp.title} work with React 19, Next.js, and SSR without hydration errors?`,
-      'acceptedAnswer': {
-        '@type': 'Answer',
-        'text': `Yes. NNUI-KIT executes strictly in the Light DOM without Shadow DOM barriers. Its 'Mutate Attributes, Never Nodes' invariant guarantees seamless reconciler compatibility with zero hydration mismatch errors.`
-      }
-    }
-  ]
+      "@type": "Question",
+      name: `Does ${comp.title} work with React 19, Next.js, and SSR without hydration errors?`,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `Yes. NNUI-KIT executes strictly in the Light DOM without Shadow DOM barriers. Its 'Mutate Attributes, Never Nodes' invariant guarantees seamless reconciler compatibility with zero hydration mismatch errors.`,
+      },
+    },
+  ],
 };
 ---
 
-<DocsLayout 
-  title={`${comp.title} Component — All-In-One Light-DOM UI for React, Vue, Svelte, Astro | NNUI-KIT`} 
+<DocsLayout
+  title={`${comp.title} Component — All-In-One Light-DOM UI for React, Vue, Svelte, Astro | NNUI-KIT`}
   description={`The ${comp.title} component (<ui-${comp.slug}>) is an accessible, platform-native Light-DOM UI primitive for React 19, Vue 3, Svelte 5, Astro, and HTML. Sub-40 KB runtime with zero Shadow DOM traps.`}
   activePath={`/components/${comp.slug}`}
   keywords={[
@@ -71,20 +72,19 @@ const componentFaqSchema = {
     `${comp.slug} vue`,
     `${comp.slug} svelte`,
     `accessible ${comp.slug}`,
-    'light-dom web component',
-    'all-in-one ui kit',
-    'nnui-kit',
-    'nnuikit'
+    "light-dom web component",
+    "all-in-one ui kit",
+    "nnui-kit",
+    "nnuikit",
   ]}
   breadcrumbs={[
-    { name: 'Home', url: '/' },
-    { name: 'Components', url: '/components' },
-    { name: comp.title, url: `/components/${comp.slug}` }
+    { name: "Home", url: "/" },
+    { name: "Components", url: "/components" },
+    { name: comp.title, url: `/components/${comp.slug}` },
   ]}
   schema={[componentArticleSchema, componentFaqSchema]}
 >
   <div class="docs-layout-container">
-    
     <!-- Left Navigation Sidebar -->
     <aside class="docs-aside">
       <div class="docs-aside-group">
@@ -97,79 +97,152 @@ const componentFaqSchema = {
 
       <div class="docs-aside-group">
         <div class="docs-aside-title">Tier 2: Micro-Enhancers</div>
-        {tier2.map((c) => (
-          <a href={`/components/${c.slug}`} class={`docs-aside-link ${c.slug === comp.slug ? 'active' : ''}`}>
-            <span>{c.title}</span>
-            {c.slug === 'data-grid' || c.slug === 'stepper' ? (
-              <span class="docs-version-pill" style="border-color: #10b981; color: #10b981;">Crown</span>
-            ) : null}
-          </a>
-        ))}
+        {
+          tier2.map((c) => (
+            <a
+              href={`/components/${c.slug}`}
+              class={`docs-aside-link ${c.slug === comp.slug ? "active" : ""}`}
+            >
+              <span>{c.title}</span>
+              {c.slug === "data-grid" || c.slug === "stepper" ? (
+                <span
+                  class="docs-version-pill"
+                  style="border-color: #10b981; color: #10b981;"
+                >
+                  Crown
+                </span>
+              ) : null}
+            </a>
+          ))
+        }
       </div>
 
       <div class="docs-aside-group">
         <div class="docs-aside-title">Tier 0: Primitives</div>
-        {tier0.map((c) => (
-          <a href={`/components/${c.slug}`} class={`docs-aside-link ${c.slug === comp.slug ? 'active' : ''}`}>
-            <span>{c.title}</span>
-          </a>
-        ))}
+        {
+          tier0.map((c) => (
+            <a
+              href={`/components/${c.slug}`}
+              class={`docs-aside-link ${c.slug === comp.slug ? "active" : ""}`}
+            >
+              <span>{c.title}</span>
+            </a>
+          ))
+        }
       </div>
     </aside>
 
     <!-- Main Component Documentation -->
     <main class="docs-body">
       <!-- Breadcrumb -->
-      <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-        <a href="/components" style="color: var(--text-muted); text-decoration: none;">Components</a>
+      <div
+        style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;"
+      >
+        <a
+          href="/components"
+          style="color: var(--text-muted); text-decoration: none;">Components</a
+        >
         <span>/</span>
-        <span style="color: var(--text-main); font-weight: 600;">{comp.title}</span>
+        <span style="color: var(--text-main); font-weight: 600;"
+          >{comp.title}</span
+        >
       </div>
 
       <!-- Component Header -->
       <div style="margin-bottom: 2rem;">
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-          <h1 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--text-main);">
+        <div
+          style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;"
+        >
+          <h1
+            style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--text-main);"
+          >
             {comp.title}
           </h1>
           <span class="docs-version-pill" style="font-size: 0.75rem;">
-            {comp.tier === 0 ? 'Tier 0: Zero-JS' : 'Tier 2: Light-DOM'}
+            {comp.tier === 0 ? "Tier 0: Zero-JS" : "Tier 2: Light-DOM"}
           </span>
         </div>
-        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 750px;">
+        <p
+          style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 750px;"
+        >
           {comp.description}
         </p>
 
         <!-- AEO Component Quick Summary Callout -->
-        <div class="aeo-summary-box" data-ui="card" style="margin-top: 1rem; background: color-mix(in srgb, var(--ui-color-brand-500) 5%, var(--bg-card)); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 20%, var(--border-subtle)); border-radius: 8px; padding: 0.75rem 1rem;">
-          <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
-            <strong style="color: var(--text-main);">All-In-One Architecture Advantage:</strong> The <code>&lt;ui-{comp.slug}&gt;</code> component operates strictly in the Light DOM. It eliminates Shadow DOM encapsulation barriers, supports seamless global styling (Tailwind CSS / design tokens), and integrates natively across React 19, Vue 3, Svelte 5, Astro, and SSR frameworks.
+        <div
+          class="aeo-summary-box"
+          data-ui="card"
+          style="margin-top: 1rem; background: color-mix(in srgb, var(--ui-color-brand-500) 5%, var(--bg-card)); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 20%, var(--border-subtle)); border-radius: 8px; padding: 0.75rem 1rem;"
+        >
+          <p
+            style="margin: 0; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;"
+          >
+            <strong style="color: var(--text-main);"
+              >All-In-One Architecture Advantage:</strong
+            > The <code>&lt;ui-{comp.slug}&gt;</code> component operates strictly
+            in the Light DOM. It eliminates Shadow DOM encapsulation barriers, supports
+            seamless global styling (Tailwind CSS / design tokens), and integrates
+            natively across React 19, Vue 3, Svelte 5, Astro, and SSR frameworks.
           </p>
         </div>
       </div>
 
       <!-- Installation / Add Section (Shadcn style) -->
       <section style="margin-bottom: 2.5rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-          <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0; color: var(--text-main);">Installation</h3>
+        <div
+          style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;"
+        >
+          <h3
+            style="font-size: 1.1rem; font-weight: 700; margin: 0; color: var(--text-main);"
+          >
+            Installation
+          </h3>
           <div style="display: flex; gap: 0.35rem;">
-            <button class="install-tab-btn active" data-type="cli" data-ui="button" data-variant="secondary" data-size="xs">CLI</button>
-            <button class="install-tab-btn" data-type="npm" data-ui="button" data-variant="ghost" data-size="xs">Manual</button>
+            <button
+              class="install-tab-btn active"
+              data-type="cli"
+              data-ui="button"
+              data-variant="secondary"
+              data-size="xs">CLI</button
+            >
+            <button
+              class="install-tab-btn"
+              data-type="npm"
+              data-ui="button"
+              data-variant="ghost"
+              data-size="xs">Manual</button
+            >
           </div>
         </div>
 
-        <div id="install-cli-box" class="cli-copy-bar" style="width: 100%;" title="Click to copy CLI command">
+        <div
+          id="install-cli-box"
+          class="cli-copy-bar"
+          style="width: 100%;"
+          title="Click to copy CLI command"
+        >
           <div style="display: flex; align-items: center; gap: 0.5rem;">
             <span style="color: var(--text-muted);">$</span>
-            <span style="color: var(--text-main); font-weight: 600;">npx nnui add {comp.slug}</span>
+            <span style="color: var(--text-main); font-weight: 600;"
+              >npx nnui add {comp.slug}</span
+            >
           </div>
-          <span class="copy-badge" data-copy={`npx nnui add ${comp.slug}`}>copy</span>
+          <span class="copy-badge" data-copy={`npx nnui add ${comp.slug}`}
+            >copy</span
+          >
         </div>
 
-        <div id="install-npm-box" class="cli-copy-bar" style="width: 100%; display: none;" title="Click to copy NPM command">
+        <div
+          id="install-npm-box"
+          class="cli-copy-bar"
+          style="width: 100%; display: none;"
+          title="Click to copy NPM command"
+        >
           <div style="display: flex; align-items: center; gap: 0.5rem;">
             <span style="color: var(--text-muted);">$</span>
-            <span style="color: var(--text-main); font-weight: 600;">npm install nnui-kit</span>
+            <span style="color: var(--text-main); font-weight: 600;"
+              >npm install nnui-kit</span
+            >
           </div>
           <span class="copy-badge" data-copy="npm install nnui-kit">copy</span>
         </div>
@@ -177,20 +250,53 @@ const componentFaqSchema = {
 
       <!-- Interactive Preview & Ready-To-Copy Code Stage (Dogfooding <ui-tabs>) -->
       <section style="margin-bottom: 3.5rem;">
-        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-main);">Interactive Preview & Code</h3>
+        <h3
+          style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-main);"
+        >
+          Interactive Preview & Code
+        </h3>
 
         <div class="showcase-wrapper" style="margin: 0;">
           <!-- Tabs Bar -->
           <div class="showcase-header">
             <div class="showcase-tabs">
-              <button class="comp-tab active" data-pane="preview">Preview</button>
-              <button class="comp-tab" data-pane="html">HTML / Web Component</button>
-              {comp.reactCode ? <button class="comp-tab" data-pane="react">React 19</button> : null}
-              {comp.vueCode ? <button class="comp-tab" data-pane="vue">Vue 3</button> : null}
-              {comp.svelteCode ? <button class="comp-tab" data-pane="svelte">Svelte 5</button> : null}
+              <button class="comp-tab active" data-pane="preview"
+                >Preview</button
+              >
+              <button class="comp-tab" data-pane="html"
+                >HTML / Web Component</button
+              >
+              {
+                comp.reactCode ? (
+                  <button class="comp-tab" data-pane="react">
+                    React 19
+                  </button>
+                ) : null
+              }
+              {
+                comp.vueCode ? (
+                  <button class="comp-tab" data-pane="vue">
+                    Vue 3
+                  </button>
+                ) : null
+              }
+              {
+                comp.svelteCode ? (
+                  <button class="comp-tab" data-pane="svelte">
+                    Svelte 5
+                  </button>
+                ) : null
+              }
             </div>
 
-            <button id="copy-active-code-btn" data-ui="button" data-variant="secondary" data-size="sm" class="btn-secondary" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">
+            <button
+              id="copy-active-code-btn"
+              data-ui="button"
+              data-variant="secondary"
+              data-size="sm"
+              class="btn-secondary"
+              style="padding: 0.25rem 0.65rem; font-size: 0.75rem;"
+            >
               <span>Copy Code</span>
             </button>
           </div>
@@ -204,52 +310,85 @@ const componentFaqSchema = {
 
           <!-- Code Panes (Pre-formatted & Copy-Ready) -->
           <div id="pane-html" style="display: none;">
-            <pre class="code-viewer-pre"><code id="code-html-content">{comp.rawCode}</code></pre>
+            <pre
+              class="code-viewer-pre"><code id="code-html-content">{comp.rawCode}</code></pre>
           </div>
 
-          {comp.reactCode ? (
-            <div id="pane-react" style="display: none;">
-              <pre class="code-viewer-pre"><code id="code-react-content">{comp.reactCode}</code></pre>
-            </div>
-          ) : null}
+          {
+            comp.reactCode ? (
+              <div id="pane-react" style="display: none;">
+                <pre class="code-viewer-pre">
+                  <code id="code-react-content">{comp.reactCode}</code>
+                </pre>
+              </div>
+            ) : null
+          }
 
-          {comp.vueCode ? (
-            <div id="pane-vue" style="display: none;">
-              <pre class="code-viewer-pre"><code id="code-vue-content">{comp.vueCode}</code></pre>
-            </div>
-          ) : null}
+          {
+            comp.vueCode ? (
+              <div id="pane-vue" style="display: none;">
+                <pre class="code-viewer-pre">
+                  <code id="code-vue-content">{comp.vueCode}</code>
+                </pre>
+              </div>
+            ) : null
+          }
 
-          {comp.svelteCode ? (
-            <div id="pane-svelte" style="display: none;">
-              <pre class="code-viewer-pre"><code id="code-svelte-content">{comp.svelteCode}</code></pre>
-            </div>
-          ) : null}
+          {
+            comp.svelteCode ? (
+              <div id="pane-svelte" style="display: none;">
+                <pre class="code-viewer-pre">
+                  <code id="code-svelte-content">{comp.svelteCode}</code>
+                </pre>
+              </div>
+            ) : null
+          }
         </div>
       </section>
 
       <!-- Usage & Framework Integration -->
       <section style="margin-bottom: 3.5rem;">
-        <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text-main);">How to Utilize</h3>
-        
-        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
-          NNUI-KIT components live directly in the document Light DOM. You can use them via declarative HTML, with our first-class React wrapper, or platform-natively in Svelte, Vue, Astro, and HTMX:
+        <h3
+          style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text-main);"
+        >
+          How to Utilize
+        </h3>
+
+        <p
+          style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;"
+        >
+          NNUI-KIT components live directly in the document Light DOM. You can
+          use them via declarative HTML, with our first-class React wrapper, or
+          platform-natively in Svelte, Vue, Astro, and HTMX:
         </p>
 
         <div style="display: flex; flex-direction: column; gap: 1rem;">
-          <div style="border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card); overflow: hidden;">
-            <div style="padding: 0.65rem 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem; font-weight: 700;">
+          <div
+            style="border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card); overflow: hidden;"
+          >
+            <div
+              style="padding: 0.65rem 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem; font-weight: 700;"
+            >
               React 18 & 19 (Next.js 15 App Router)
             </div>
-            <pre class="code-viewer-pre" style="margin: 0;"><code>import 'nnui-kit/css';
+            <pre
+              class="code-viewer-pre"
+              style="margin: 0;"><code>import 'nnui-kit/css';
 import 'nnui-kit/client';
 import &#123; {comp.title.replace(/[^a-zA-Z]/g, '')} &#125; from 'nnui-kit/react';</code></pre>
           </div>
 
-          <div style="border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card); overflow: hidden;">
-            <div style="padding: 0.65rem 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem; font-weight: 700;">
+          <div
+            style="border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card); overflow: hidden;"
+          >
+            <div
+              style="padding: 0.65rem 1rem; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem; font-weight: 700;"
+            >
               Universal Web Components (Vue 3, Svelte 5, Astro, HTMX)
             </div>
-            <pre class="code-viewer-pre" style="margin: 0;"><code>&lt;!-- Automatically registers &lt;ui-{comp.slug}&gt; and &lt;nnui-{comp.slug}&gt; --&gt;
+            <pre
+              class="code-viewer-pre"
+              style="margin: 0;"><code>&lt;!-- Automatically registers &lt;ui-{comp.slug}&gt; and &lt;nnui-{comp.slug}&gt; --&gt;
 import 'nnui-kit/css';
 import 'nnui-kit/client';</code></pre>
           </div>
@@ -258,55 +397,87 @@ import 'nnui-kit/client';</code></pre>
 
       <!-- Crown Features Available on this component -->
       <section style="margin-bottom: 4rem;">
-        <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text-main);">Platform Features</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
-          <div style="padding: 1rem; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card);">
-            <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">Zero Shadow DOM</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Element lives in the Light DOM. Tailwind and global CSS apply directly.</div>
+        <h3
+          style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text-main);"
+        >
+          Platform Features
+        </h3>
+        <div
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;"
+        >
+          <div
+            style="padding: 1rem; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card);"
+          >
+            <div
+              style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;"
+            >
+              Zero Shadow DOM
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              Element lives in the Light DOM. Tailwind and global CSS apply
+              directly.
+            </div>
           </div>
 
-          <div style="padding: 1rem; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card);">
-            <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">persist="url | local"</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Add declarative persistence attribute to auto-sync state with URL search params.</div>
+          <div
+            style="padding: 1rem; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card);"
+          >
+            <div
+              style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;"
+            >
+              persist="url | local"
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              Add declarative persistence attribute to auto-sync state with URL
+              search params.
+            </div>
           </div>
 
-          <div style="padding: 1rem; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card);">
-            <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">sync="cross-tab"</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Synchronize changes across all open browser tabs via BroadcastChannel.</div>
+          <div
+            style="padding: 1rem; border: 1px solid var(--border-subtle); border-radius: 8px; background: var(--bg-card);"
+          >
+            <div
+              style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;"
+            >
+              sync="cross-tab"
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              Synchronize changes across all open browser tabs via
+              BroadcastChannel.
+            </div>
           </div>
         </div>
       </section>
     </main>
-
   </div>
 </DocsLayout>
 
 <script>
   // Install Command Switcher
-  const installTabs = document.querySelectorAll('.install-tab-btn');
-  const cliBox = document.getElementById('install-cli-box');
-  const npmBox = document.getElementById('install-npm-box');
+  const installTabs = document.querySelectorAll(".install-tab-btn");
+  const cliBox = document.getElementById("install-cli-box");
+  const npmBox = document.getElementById("install-npm-box");
 
   installTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      installTabs.forEach((t) => t.classList.remove('active'));
-      tab.classList.add('active');
-      const type = tab.getAttribute('data-type');
+    tab.addEventListener("click", () => {
+      installTabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      const type = tab.getAttribute("data-type");
       if (cliBox && npmBox) {
-        cliBox.style.display = type === 'cli' ? 'flex' : 'none';
-        npmBox.style.display = type === 'npm' ? 'flex' : 'none';
+        cliBox.style.display = type === "cli" ? "flex" : "none";
+        npmBox.style.display = type === "npm" ? "flex" : "none";
       }
     });
   });
 
   // Copy Badges in CLI bar
-  document.querySelectorAll('.copy-badge').forEach((badge) => {
-    badge.addEventListener('click', async (e) => {
+  document.querySelectorAll(".copy-badge").forEach((badge) => {
+    badge.addEventListener("click", async (e) => {
       e.stopPropagation();
-      const text = badge.getAttribute('data-copy') || '';
+      const text = badge.getAttribute("data-copy") || "";
       await navigator.clipboard.writeText(text);
       const original = badge.textContent;
-      badge.textContent = '✓ copied!';
+      badge.textContent = "✓ copied!";
       setTimeout(() => {
         badge.textContent = original;
       }, 2000);
@@ -314,44 +485,47 @@ import 'nnui-kit/client';</code></pre>
   });
 
   // Showcase Tabs Switcher
-  const compTabs = document.querySelectorAll('.comp-tab');
+  const compTabs = document.querySelectorAll(".comp-tab");
   const panes: Record<string, HTMLElement | null> = {
-    preview: document.getElementById('pane-preview'),
-    html: document.getElementById('pane-html'),
-    react: document.getElementById('pane-react'),
-    vue: document.getElementById('pane-vue'),
-    svelte: document.getElementById('pane-svelte'),
+    preview: document.getElementById("pane-preview"),
+    html: document.getElementById("pane-html"),
+    react: document.getElementById("pane-react"),
+    vue: document.getElementById("pane-vue"),
+    svelte: document.getElementById("pane-svelte"),
   };
 
-  let activePane = 'preview';
+  let activePane = "preview";
 
   compTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      compTabs.forEach((t) => t.classList.remove('active'));
-      tab.classList.add('active');
+    tab.addEventListener("click", () => {
+      compTabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
 
-      const target = tab.getAttribute('data-pane') || 'preview';
+      const target = tab.getAttribute("data-pane") || "preview";
       activePane = target;
 
       Object.entries(panes).forEach(([key, el]) => {
         if (el) {
-          el.style.display = key === target ? (key === 'preview' ? 'flex' : 'block') : 'none';
+          el.style.display =
+            key === target ? (key === "preview" ? "flex" : "block") : "none";
         }
       });
     });
   });
 
   // Copy Active Code Button
-  const copyBtn = document.getElementById('copy-active-code-btn');
+  const copyBtn = document.getElementById("copy-active-code-btn");
   if (copyBtn) {
-    copyBtn.addEventListener('click', async () => {
-      const codeEl = document.getElementById(`code-${activePane === 'preview' ? 'html' : activePane}-content`);
+    copyBtn.addEventListener("click", async () => {
+      const codeEl = document.getElementById(
+        `code-${activePane === "preview" ? "html" : activePane}-content`,
+      );
       if (codeEl) {
-        await navigator.clipboard.writeText(codeEl.textContent || '');
-        const span = copyBtn.querySelector('span');
+        await navigator.clipboard.writeText(codeEl.textContent || "");
+        const span = copyBtn.querySelector("span");
         if (span) {
           const orig = span.textContent;
-          span.textContent = '✓ Copied!';
+          span.textContent = "✓ Copied!";
           setTimeout(() => {
             span.textContent = orig;
           }, 2000);
@@ -361,54 +535,54 @@ import 'nnui-kit/client';</code></pre>
   }
 
   // --- Interactive Preview Demo Triggers ---
-  import { toast } from 'nnui-kit';
+  import { toast } from "nnui-kit";
 
   // Toast Component Live Triggers
-  const btnToastDefault = document.getElementById('btn-toast-default');
-  const btnToastSuccess = document.getElementById('btn-toast-success');
-  const btnToastError = document.getElementById('btn-toast-error');
-  const btnToastWarning = document.getElementById('btn-toast-warning');
-  const btnToastAction = document.getElementById('btn-toast-action');
+  const btnToastDefault = document.getElementById("btn-toast-default");
+  const btnToastSuccess = document.getElementById("btn-toast-success");
+  const btnToastError = document.getElementById("btn-toast-error");
+  const btnToastWarning = document.getElementById("btn-toast-warning");
+  const btnToastAction = document.getElementById("btn-toast-action");
 
   if (btnToastDefault) {
-    btnToastDefault.addEventListener('click', () => {
-      toast('Event scheduled for tomorrow at 10:00 AM.');
+    btnToastDefault.addEventListener("click", () => {
+      toast("Event scheduled for tomorrow at 10:00 AM.");
     });
   }
 
   if (btnToastSuccess) {
-    btnToastSuccess.addEventListener('click', () => {
-      toast.success('Changes saved successfully!', {
-        description: 'All 45 Light-DOM components synchronized.',
+    btnToastSuccess.addEventListener("click", () => {
+      toast.success("Changes saved successfully!", {
+        description: "All 45 Light-DOM components synchronized.",
       });
     });
   }
 
   if (btnToastError) {
-    btnToastError.addEventListener('click', () => {
-      toast.error('Network request failed', {
-        description: 'Could not connect to deployment edge. Please retry.',
+    btnToastError.addEventListener("click", () => {
+      toast.error("Network request failed", {
+        description: "Could not connect to deployment edge. Please retry.",
       });
     });
   }
 
   if (btnToastWarning) {
-    btnToastWarning.addEventListener('click', () => {
-      toast.warning('Storage threshold reached', {
-        description: 'You have used 94% of your allocated workspace memory.',
+    btnToastWarning.addEventListener("click", () => {
+      toast.warning("Storage threshold reached", {
+        description: "You have used 94% of your allocated workspace memory.",
       });
     });
   }
 
   if (btnToastAction) {
-    btnToastAction.addEventListener('click', () => {
-      toast('Project Archived', {
-        description: 'Moved to your archived repositories folder.',
+    btnToastAction.addEventListener("click", () => {
+      toast("Project Archived", {
+        description: "Moved to your archived repositories folder.",
         action: {
-          label: 'Undo',
+          label: "Undo",
           onClick: () => {
-            toast.success('Action Reverted', {
-              description: 'Project restored to your active workspace.',
+            toast.success("Action Reverted", {
+              description: "Project restored to your active workspace.",
             });
           },
         },
@@ -417,112 +591,128 @@ import 'nnui-kit/client';</code></pre>
   }
 
   // Calendar Component Live Helpers
-  const cal = document.getElementById('demo-calendar') as any;
-  const calVal = document.getElementById('cal-selected-val');
+  const cal = document.getElementById("demo-calendar") as any;
+  const calVal = document.getElementById("cal-selected-val");
   if (cal) {
-    document.getElementById('cal-set-today')?.addEventListener('click', () => {
-      const today = new Date().toISOString().split('T')[0];
+    document.getElementById("cal-set-today")?.addEventListener("click", () => {
+      const today = new Date().toISOString().split("T")[0];
       cal.value = today;
       if (calVal) calVal.textContent = today;
     });
-    document.getElementById('cal-set-nextweek')?.addEventListener('click', () => {
-      const d = new Date();
-      d.setDate(d.getDate() + 7);
-      const nextWeek = d.toISOString().split('T')[0];
-      cal.value = nextWeek;
-      if (calVal) calVal.textContent = nextWeek;
+    document
+      .getElementById("cal-set-nextweek")
+      ?.addEventListener("click", () => {
+        const d = new Date();
+        d.setDate(d.getDate() + 7);
+        const nextWeek = d.toISOString().split("T")[0];
+        cal.value = nextWeek;
+        if (calVal) calVal.textContent = nextWeek;
+      });
+    document.getElementById("cal-set-clear")?.addEventListener("click", () => {
+      cal.value = "";
+      if (calVal) calVal.textContent = "None";
     });
-    document.getElementById('cal-set-clear')?.addEventListener('click', () => {
-      cal.value = '';
-      if (calVal) calVal.textContent = 'None';
-    });
-    cal.addEventListener('change', (e: any) => {
+    cal.addEventListener("change", (e: any) => {
       if (calVal) calVal.textContent = e.detail?.value || cal.value;
     });
   }
 
   // Context Menu Live Helper
-  const ctxMenu = document.querySelector('ui-context-menu');
-  const menuActionDisplay = document.getElementById('menu-action-display');
+  const ctxMenu = document.querySelector("ui-context-menu");
+  const menuActionDisplay = document.getElementById("menu-action-display");
   if (ctxMenu && menuActionDisplay) {
-    ctxMenu.addEventListener('select', (e: any) => {
-      menuActionDisplay.textContent = e.detail?.value || '(none)';
+    ctxMenu.addEventListener("select", (e: any) => {
+      menuActionDisplay.textContent = e.detail?.value || "(none)";
     });
   }
 
   // Virtualized Data Grid Live Demo Setup
   function initDataGridDemo() {
-    const grid = document.getElementById('demo-data-grid') as any;
+    const grid = document.getElementById("demo-data-grid") as any;
     if (!grid) return;
 
     // Define enterprise columns
     grid.setColumns([
-      { 
-        key: 'id', 
-        label: 'ID', 
-        width: '80px', 
+      {
+        key: "id",
+        label: "ID",
+        width: "80px",
         sortable: true,
-        render: (val: any) => `<span style="font-family: var(--ui-font-mono, monospace); font-size: 0.8rem; color: var(--ui-text-muted);">#${val}</span>`
+        render: (val: any) =>
+          `<span style="font-family: var(--ui-font-mono, monospace); font-size: 0.8rem; color: var(--ui-text-muted);">#${val}</span>`,
       },
-      { 
-        key: 'timestamp', 
-        label: 'Time', 
-        width: '110px', 
+      {
+        key: "timestamp",
+        label: "Time",
+        width: "110px",
         sortable: true,
-        render: (val: any) => `<span style="font-family: var(--ui-font-mono, monospace); font-size: 0.8rem; color: var(--ui-text-secondary);">${val}</span>`
+        render: (val: any) =>
+          `<span style="font-family: var(--ui-font-mono, monospace); font-size: 0.8rem; color: var(--ui-text-secondary);">${val}</span>`,
       },
-      { 
-        key: 'symbol', 
-        label: 'Asset Pair', 
-        width: '130px', 
+      {
+        key: "symbol",
+        label: "Asset Pair",
+        width: "130px",
         sortable: true,
-        render: (val: any) => `<span style="font-weight: 600; color: var(--ui-text-primary); letter-spacing: -0.01em;">${val}</span>`
+        render: (val: any) =>
+          `<span style="font-weight: 600; color: var(--ui-text-primary); letter-spacing: -0.01em;">${val}</span>`,
       },
-      { 
-        key: 'action', 
-        label: 'Order Type', 
-        width: '110px', 
+      {
+        key: "action",
+        label: "Order Type",
+        width: "110px",
         sortable: true,
         render: (val: any) => {
-          const isBuy = val === 'BUY';
+          const isBuy = val === "BUY";
           return `<span style="display: inline-flex; align-items: center; justify-content: center; padding: 0.15rem 0.55rem; border-radius: 9999px; font-size: 0.725rem; font-weight: 700; letter-spacing: 0.04em; ${
-            isBuy 
-              ? 'background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);' 
-              : 'background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3);'
+            isBuy
+              ? "background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);"
+              : "background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3);"
           }">${val}</span>`;
-        }
+        },
       },
-      { 
-        key: 'price', 
-        label: 'Exec Price', 
-        width: '120px', 
+      {
+        key: "price",
+        label: "Exec Price",
+        width: "120px",
         sortable: true,
-        render: (val: any) => `<span style="font-family: var(--ui-font-mono, monospace); font-weight: 600; color: var(--ui-text-primary);">${val}</span>`
+        render: (val: any) =>
+          `<span style="font-family: var(--ui-font-mono, monospace); font-weight: 600; color: var(--ui-text-primary);">${val}</span>`,
       },
-      { 
-        key: 'volume', 
-        label: 'Volume', 
-        width: '110px', 
+      {
+        key: "volume",
+        label: "Volume",
+        width: "110px",
         sortable: true,
-        render: (val: any) => `<span style="font-family: var(--ui-font-mono, monospace); color: var(--ui-text-secondary);">${val}</span>`
+        render: (val: any) =>
+          `<span style="font-family: var(--ui-font-mono, monospace); color: var(--ui-text-secondary);">${val}</span>`,
       },
-      { 
-        key: 'status', 
-        label: 'Status', 
-        width: '120px', 
+      {
+        key: "status",
+        label: "Status",
+        width: "120px",
         sortable: true,
         render: (val: any) => {
-          const isExec = val === 'Executed';
-          return `<span style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.775rem; font-weight: 500; color: ${isExec ? 'var(--ui-color-success-500, #10b981)' : 'var(--ui-color-warning-500, #f59e0b)'};">
-            <span style="width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 6px ${isExec ? 'rgba(16, 185, 129, 0.6)' : 'rgba(245, 158, 11, 0.6)'};"></span>
+          const isExec = val === "Executed";
+          return `<span style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.775rem; font-weight: 500; color: ${isExec ? "var(--ui-color-success-500, #10b981)" : "var(--ui-color-warning-500, #f59e0b)"};">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 6px ${isExec ? "rgba(16, 185, 129, 0.6)" : "rgba(245, 158, 11, 0.6)"};"></span>
             ${val}
           </span>`;
-        }
-      }
+        },
+      },
     ]);
 
-    const SYMBOLS = ['BTC/USD', 'ETH/USD', 'SOL/USD', 'NVDA', 'AAPL', 'MSFT', 'AMZN', 'TSLA'];
-    const ACTIONS = ['BUY', 'SELL'];
+    const SYMBOLS = [
+      "BTC/USD",
+      "ETH/USD",
+      "SOL/USD",
+      "NVDA",
+      "AAPL",
+      "MSFT",
+      "AMZN",
+      "TSLA",
+    ];
+    const ACTIONS = ["BUY", "SELL"];
 
     function createRows(count: number, startId = 1) {
       const list = [];
@@ -532,16 +722,22 @@ import 'nnui-kit/client';</code></pre>
         const action = ACTIONS[id % ACTIONS.length];
         const price = (Math.random() * 2500 + 40).toFixed(2);
         const volume = (Math.random() * 8 + 0.1).toFixed(3);
-        const isExec = (id % 7) !== 0;
+        const isExec = id % 7 !== 0;
 
         list.push({
           id,
-          timestamp: new Date(Date.now() - (count - i) * 1200).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+          timestamp: new Date(
+            Date.now() - (count - i) * 1200,
+          ).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          }),
           symbol,
           action,
           price: `$${price}`,
           volume,
-          status: isExec ? 'Executed' : 'Pending'
+          status: isExec ? "Executed" : "Pending",
         });
       }
       return list;
@@ -551,17 +747,24 @@ import 'nnui-kit/client';</code></pre>
     grid.setRows(createRows(10000));
 
     // Search input binding
-    const searchInput = document.getElementById('grid-search-input') as HTMLInputElement | null;
+    const searchInput = document.getElementById(
+      "grid-search-input",
+    ) as HTMLInputElement | null;
     if (searchInput) {
       if (grid._searchQuery) {
         searchInput.value = grid._searchQuery;
       }
-      searchInput.addEventListener('input', (e: any) => {
+      searchInput.addEventListener("input", (e: any) => {
         grid.setSearch(e.target.value);
       });
       // Quick keyboard shortcut '/'
-      window.addEventListener('keydown', (e) => {
-        if (e.key === '/' && document.activeElement !== searchInput && !(document.activeElement instanceof HTMLInputElement) && !(document.activeElement instanceof HTMLTextAreaElement)) {
+      window.addEventListener("keydown", (e) => {
+        if (
+          e.key === "/" &&
+          document.activeElement !== searchInput &&
+          !(document.activeElement instanceof HTMLInputElement) &&
+          !(document.activeElement instanceof HTMLTextAreaElement)
+        ) {
           e.preventDefault();
           searchInput.focus();
         }
@@ -569,18 +772,18 @@ import 'nnui-kit/client';</code></pre>
     }
 
     // Live streaming toggle
-    const streamBtn = document.getElementById('toggle-stream-btn');
+    const streamBtn = document.getElementById("toggle-stream-btn");
     let isStreaming = false;
 
     if (streamBtn) {
-      streamBtn.addEventListener('click', () => {
+      streamBtn.addEventListener("click", () => {
         isStreaming = !isStreaming;
         if (isStreaming) {
           streamBtn.innerHTML = `
             <span style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
             <span>Pause Live Stream</span>
           `;
-          streamBtn.className = 'ui-button ui-button--destructive';
+          streamBtn.className = "ui-button ui-button--destructive";
           grid.startStreaming(80, () => {
             return createRows(2, grid.totalRows + 1);
           });
@@ -589,43 +792,43 @@ import 'nnui-kit/client';</code></pre>
             <span class="stream-dot" style="width: 7px; height: 7px; border-radius: 50%; background: var(--ui-color-success-500); display: inline-block;"></span>
             <span id="stream-btn-text">Start Live Stream</span>
           `;
-          streamBtn.className = 'ui-button ui-button--secondary';
+          streamBtn.className = "ui-button ui-button--secondary";
           grid.stopStreaming();
         }
       });
     }
 
     // Add 5,000 rows batch
-    const addBatchBtn = document.getElementById('add-batch-btn');
+    const addBatchBtn = document.getElementById("add-batch-btn");
     if (addBatchBtn) {
-      addBatchBtn.addEventListener('click', () => {
+      addBatchBtn.addEventListener("click", () => {
         const batch = createRows(5000, grid.totalRows + 1);
         grid.appendRows(batch);
       });
     }
 
     // Export CSV
-    const exportBtn = document.getElementById('export-csv-btn');
+    const exportBtn = document.getElementById("export-csv-btn");
     if (exportBtn) {
-      exportBtn.addEventListener('click', () => {
-        grid.exportCsv('market-data-grid.csv');
+      exportBtn.addEventListener("click", () => {
+        grid.exportCsv("market-data-grid.csv");
       });
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      if (customElements.get('ui-data-grid')) {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      if (customElements.get("ui-data-grid")) {
         initDataGridDemo();
       } else {
-        customElements.whenDefined('ui-data-grid').then(initDataGridDemo);
+        customElements.whenDefined("ui-data-grid").then(initDataGridDemo);
       }
     });
   } else {
-    if (customElements.get('ui-data-grid')) {
+    if (customElements.get("ui-data-grid")) {
       initDataGridDemo();
     } else {
-      customElements.whenDefined('ui-data-grid').then(initDataGridDemo);
+      customElements.whenDefined("ui-data-grid").then(initDataGridDemo);
     }
   }
 </script>

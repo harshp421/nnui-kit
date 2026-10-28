@@ -1,0 +1,232 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import DocsSidebar from "../../../components/DocsSidebar.astro";
+
+const remixSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "NNUI-KIT Remix & React Router Installation Guide",
+  description:
+    "Step-by-step instructions to install and configure NNUI-KIT in Remix and React Router v7. Includes stylesheet linking and typed React components.",
+  author: {
+    "@type": "Organization",
+    name: "NNUI-KIT Team",
+    url: "https://github.com/harshp421/nnui-kit",
+  },
+};
+---
+
+<DocsLayout
+  title="Remix & React Router Installation — NNUI-KIT"
+  description="Install and configure NNUI-KIT in Remix and React Router v7. Learn how to link stylesheets in root.tsx and use React Light-DOM primitives."
+  activePath="/docs/installation/remix"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Docs", url: "/docs" },
+    { name: "Installation", url: "/docs/installation" },
+    { name: "Remix", url: "/docs/installation/remix" },
+  ]}
+  schema={remixSchema}
+>
+  <div class="docs-layout-container">
+    <DocsSidebar activePath="/docs/installation/remix" />
+
+    <main class="docs-body">
+      <!-- Breadcrumbs -->
+      <nav class="docs-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs">Docs</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs/installation">Installation</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <span class="docs-breadcrumbs-current">Remix</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header style="margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <div
+            class="framework-card-icon"
+            style="width: 36px; height: 36px; margin-bottom: 0; background: rgba(56, 189, 248, 0.12); color: #38bdf8;"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          </div>
+          <h1
+            style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--text-main);"
+          >
+            Remix / React Router
+          </h1>
+        </div>
+        <p
+          style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 720px;"
+        >
+          Install and configure NNUI-KIT for Remix and React Router v7 with web standards and native form participation.
+        </p>
+      </header>
+
+      <!-- Steps List -->
+      <div class="installation-steps">
+        <!-- Step 1: Create project -->
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h2 class="step-title">Create project</h2>
+            <p class="step-desc">
+              Create a new Remix project:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npx create-remix@latest my-app
+cd my-app</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Install dependencies -->
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h2 class="step-title">Install NNUI-KIT</h2>
+            <p class="step-desc">
+              Install the package from npm:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm install nnuikit</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Configure Root Links -->
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h2 class="step-title">Link Stylesheets in root.tsx</h2>
+            <p class="step-desc">
+              Export a <code>links</code> function in <code>app/root.tsx</code> to load NNUI design tokens:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>app/root.tsx</span>
+                <span>tsx</span>
+              </div>
+              <pre><code>import type &#123; LinksFunction &#125; from '@remix-run/node'
+import &#123; Links, Meta, Outlet, Scripts, ScrollRestoration &#125; from '@remix-run/react'
+
+// 1. Import NNUI design tokens stylesheet URL
+import nnuiTokensStyles from 'nnuikit/tokens/theme.css?url'
+
+export const links: LinksFunction = () =&gt; [
+  &#123; rel: 'stylesheet', href: nnuiTokensStyles &#125;,
+]
+
+export default function App() &#123;
+  return (
+    &lt;html lang="en" data-theme="dark"&gt;
+      &lt;head&gt;
+        &lt;Meta /&gt;
+        &lt;Links /&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;Outlet /&gt;
+        &lt;ScrollRestoration /&gt;
+        &lt;Scripts /&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  )
+&#125;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Add components -->
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h2 class="step-title">Add components to your route</h2>
+            <p class="step-desc">
+              Use typed React components from <code>nnuikit/react</code> in your route files:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>app/routes/_index.tsx</span>
+                <span>tsx</span>
+              </div>
+              <pre><code>import &#123; Button, Card, Input, Badge &#125; from 'nnuikit/react'
+
+export default function Index() &#123;
+  return (
+    &lt;main style=&#123;&#123; minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' &#125;&#125;&gt;
+      &lt;Card style=&#123;&#123; width: '100%', maxWidth: '440px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' &#125;&#125;&gt;
+        &lt;div style=&#123;&#123; display: 'flex', justifyContent: 'space-between', alignItems: 'center' &#125;&#125;&gt;
+          &lt;h1 style=&#123;&#123; margin: 0, fontSize: '1.35rem', fontWeight: 700 &#125;&#125;&gt;Remix + NNUI-KIT&lt;/h1&gt;
+          &lt;Badge variant="info"&gt;Remix&lt;/Badge&gt;
+        &lt;/div&gt;
+
+        &lt;p style=&#123;&#123; margin: 0, color: 'var(--ui-text-secondary, #a1a1aa)', fontSize: '0.875rem' &#125;&#125;&gt;
+          Full web standards compliance. Native Light-DOM form participation works out of the box with Remix Actions.
+        &lt;/p&gt;
+
+        &lt;Input placeholder="Search records..." /&gt;
+
+        &lt;Button variant="primary"&gt;
+          Search
+        &lt;/Button&gt;
+      &lt;/Card&gt;
+    &lt;/main&gt;
+  )
+&#125;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Run dev server -->
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h2 class="step-title">Run development server</h2>
+            <p class="step-desc">
+              Start the Remix development server:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm run dev</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Next Navigation -->
+      <div
+        style="border-top: 1px solid var(--border-subtle); padding-top: 2rem; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"
+      >
+        <a
+          href="/docs/installation"
+          class="btn-secondary"
+          style="font-size: 0.85rem;"
+        >
+          ← All Frameworks
+        </a>
+        <a
+          href="/components"
+          class="btn-primary"
+          style="font-size: 0.85rem;"
+        >
+          Explore All Components →
+        </a>
+      </div>
+    </main>
+  </div>
+</DocsLayout>

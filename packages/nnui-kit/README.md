@@ -78,10 +78,10 @@ Or via CDN directly in static HTML (zero build step):
 
 ```html
 <!-- Design Tokens & Cascade Layers -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nnuikit@1.0.5/dist/index.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nnuikit@1.0.7/dist/index.css" />
 
 <!-- Core JavaScript Module -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/nnuikit@1.0.5/dist/index.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/nnuikit@1.0.7/dist/index.js"></script>
 ```
 
 #### D. Instant VS Code & Cursor IDE Autocomplete

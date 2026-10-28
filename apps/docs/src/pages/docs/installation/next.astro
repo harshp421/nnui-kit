@@ -1,0 +1,256 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import DocsSidebar from "../../../components/DocsSidebar.astro";
+
+const nextSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "NNUI-KIT Next.js 15 Installation Guide",
+  description:
+    "Step-by-step instructions to install and configure NNUI-KIT in Next.js 15 App Router. Works with React 19, Server Components, and zero hydration errors.",
+  author: {
+    "@type": "Organization",
+    name: "NNUI-KIT Team",
+    url: "https://github.com/harshp421/nnui-kit",
+  },
+};
+---
+
+<DocsLayout
+  title="Next.js 15 App Router Installation — NNUI-KIT"
+  description="Install and configure NNUI-KIT in Next.js 15 with App Router and React 19. Learn how to import design tokens, configure root layout, and use Light-DOM components."
+  activePath="/docs/installation/next"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Docs", url: "/docs" },
+    { name: "Installation", url: "/docs/installation" },
+    { name: "Next.js", url: "/docs/installation/next" },
+  ]}
+  schema={nextSchema}
+>
+  <div class="docs-layout-container">
+    <DocsSidebar activePath="/docs/installation/next" />
+
+    <main class="docs-body">
+      <!-- Breadcrumbs -->
+      <nav class="docs-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs">Docs</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs/installation">Installation</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <span class="docs-breadcrumbs-current">Next.js</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header style="margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <div
+            class="framework-card-icon"
+            style="width: 36px; height: 36px; margin-bottom: 0; background: rgba(255, 255, 255, 0.08); color: var(--text-main);"
+          >
+            <svg width="20" height="20" viewBox="0 0 180 180" fill="none"><mask id="next-mask-page" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180" style="mask-type:alpha"><circle cx="90" cy="90" r="90" fill="currentColor"/></mask><g mask="url(#next-mask-page)"><circle cx="90" cy="90" r="90" fill="currentColor"/><path d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="var(--bg-primary)"/><path d="M115.455 54H127.568V126H115.455V54Z" fill="var(--bg-primary)"/></g></svg>
+          </div>
+          <h1
+            style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--text-main);"
+          >
+            Next.js
+          </h1>
+        </div>
+        <p
+          style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 720px;"
+        >
+          Install and configure NNUI-KIT for Next.js 15 with App Router and React 19.
+        </p>
+      </header>
+
+      <!-- Steps List -->
+      <div class="installation-steps">
+        <!-- Step 1: Create project -->
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h2 class="step-title">Create project</h2>
+            <p class="step-desc">
+              Create a new Next.js project using <code>create-next-app</code>:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npx create-next-app@latest my-app --typescript --eslint --app --no-tailwind --src-dir
+cd my-app</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Install dependencies -->
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h2 class="step-title">Install NNUI-KIT</h2>
+            <p class="step-desc">
+              Install the package from npm:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm install nnuikit</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Configure Root Layout -->
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h2 class="step-title">Configure Root Layout & Tokens</h2>
+            <p class="step-desc">
+              Import the design token stylesheet in <code>src/app/layout.tsx</code> and set your default theme:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/app/layout.tsx</span>
+                <span>tsx</span>
+              </div>
+              <pre><code>import type &#123; Metadata &#125; from 'next'
+
+// 1. Import NNUI design tokens (CSS variables & cascade layers)
+import 'nnuikit/tokens/theme.css'
+
+// 2. Global app styling
+import './globals.css'
+
+export const metadata: Metadata = &#123;
+  title: 'My NNUI App',
+  description: 'Built with Next.js 15 and NNUI-KIT',
+&#125;
+
+export default function RootLayout(&#123;
+  children,
+&#125;: &#123;
+  children: React.ReactNode
+&#125;) &#123;
+  return (
+    &lt;html lang="en" data-theme="dark"&gt;
+      &lt;body&gt;&#123;children&#125;&lt;/body&gt;
+    &lt;/html&gt;
+  )
+&#125;</code></pre>
+            </div>
+
+            <p class="step-desc" style="margin-top: 1.25rem;">
+              Add clean default reset styles in <code>src/app/globals.css</code>:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/app/globals.css</span>
+                <span>css</span>
+              </div>
+              <pre><code>:root &#123;
+  color-scheme: dark light;
+&#125;
+
+body &#123;
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--ui-bg-canvas, #09090b);
+  color: var(--ui-text-primary, #fafafa);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+&#125;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Add components -->
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h2 class="step-title">Add components to your page</h2>
+            <p class="step-desc">
+              NNUI-KIT primitives render cleanly in Server Components. For interactive event handlers, add <code>'use client'</code> at the top of your page or component:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/app/page.tsx</span>
+                <span>tsx</span>
+              </div>
+              <pre><code>'use client'
+
+import &#123; Button, Card, Input, Badge &#125; from 'nnuikit/react'
+
+export default function Home() &#123;
+  return (
+    &lt;main style=&#123;&#123; minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' &#125;&#125;&gt;
+      &lt;Card style=&#123;&#123; width: '100%', maxWidth: '440px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' &#125;&#125;&gt;
+        &lt;div style=&#123;&#123; display: 'flex', justifyContent: 'space-between', alignItems: 'center' &#125;&#125;&gt;
+          &lt;h1 style=&#123;&#123; margin: 0, fontSize: '1.35rem', fontWeight: 700 &#125;&#125;&gt;Next.js + NNUI-KIT&lt;/h1&gt;
+          &lt;Badge variant="primary"&gt;App Router&lt;/Badge&gt;
+        &lt;/div&gt;
+
+        &lt;p style=&#123;&#123; margin: 0, color: 'var(--ui-text-secondary, #a1a1aa)', fontSize: '0.875rem' &#125;&#125;&gt;
+          Universal Light-DOM UI primitives with zero Shadow DOM accessibility traps.
+        &lt;/p&gt;
+
+        &lt;Input placeholder="Enter username..." /&gt;
+
+        &lt;Button variant="primary" onClick=&#123;() =&gt; alert('Submitted!')&#125;&gt;
+          Launch Dashboard
+        &lt;/Button&gt;
+      &lt;/Card&gt;
+    &lt;/main&gt;
+  )
+&#125;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Run dev server -->
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h2 class="step-title">Run development server</h2>
+            <p class="step-desc">
+              Start the Next.js local development server:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm run dev</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Next Navigation -->
+      <div
+        style="border-top: 1px solid var(--border-subtle); padding-top: 2rem; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"
+      >
+        <a
+          href="/docs/installation"
+          class="btn-secondary"
+          style="font-size: 0.85rem;"
+        >
+          ← All Frameworks
+        </a>
+        <a
+          href="/components"
+          class="btn-primary"
+          style="font-size: 0.85rem;"
+        >
+          Explore All Components →
+        </a>
+      </div>
+    </main>
+  </div>
+</DocsLayout>

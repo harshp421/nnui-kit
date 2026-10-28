@@ -128,11 +128,11 @@
   :root[data-theme="dark"],
   [data-theme="dark"] {
     --ui-bg-canvas: #09090b;
-    --ui-bg-surface: #09090b;
-    --ui-bg-surface-elevated: #18181b;
-    --ui-bg-subtle: #27272a;
-    --ui-bg-hover: #27272a;
-    --ui-bg-active: #3f3f46;
+    --ui-bg-surface: #141417;
+    --ui-bg-surface-elevated: #1c1c21;
+    --ui-bg-subtle: #222228;
+    --ui-bg-hover: #2a2a32;
+    --ui-bg-active: #383842;
 
     --ui-text-primary: #fafafa;
     --ui-text-secondary: #a1a1aa;

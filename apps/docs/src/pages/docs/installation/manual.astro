@@ -1,0 +1,226 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import DocsSidebar from "../../../components/DocsSidebar.astro";
+
+const manualSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "NNUI-KIT Manual & CDN Installation Guide",
+  description:
+    "Step-by-step instructions to install NNUI-KIT manually without build steps. Add via CDN unpkg or direct HTML script tags with zero dependencies.",
+  author: {
+    "@type": "Organization",
+    name: "NNUI-KIT Team",
+    url: "https://github.com/harshp421/nnui-kit",
+  },
+};
+---
+
+<DocsLayout
+  title="Manual & CDN Installation — NNUI-KIT"
+  description="Add NNUI-KIT to any HTML project or backend framework (Rails, Django, Laravel, Go, PHP) without a JavaScript build step via CDN or direct files."
+  activePath="/docs/installation/manual"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Docs", url: "/docs" },
+    { name: "Installation", url: "/docs/installation" },
+    { name: "Manual", url: "/docs/installation/manual" },
+  ]}
+  schema={manualSchema}
+>
+  <div class="docs-layout-container">
+    <DocsSidebar activePath="/docs/installation/manual" />
+
+    <main class="docs-body">
+      <!-- Breadcrumbs -->
+      <nav class="docs-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs">Docs</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs/installation">Installation</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <span class="docs-breadcrumbs-current">Manual / CDN</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header style="margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <div
+            class="framework-card-icon"
+            style="width: 36px; height: 36px; margin-bottom: 0; background: rgba(16, 185, 129, 0.12); color: #10b981;"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          </div>
+          <h1
+            style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--text-main);"
+          >
+            Manual / CDN
+          </h1>
+        </div>
+        <p
+          style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 720px;"
+        >
+          Add NNUI-KIT to any project without Node.js, npm, or a JavaScript build step. Perfect for vanilla HTML, HTMX, Django, Ruby on Rails, Laravel, Go, and PHP.
+        </p>
+      </header>
+
+      <!-- Steps List -->
+      <div class="installation-steps">
+        <!-- Step 1: Add CDN Links -->
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h2 class="step-title">Add CDN tags to &lt;head&gt;</h2>
+            <p class="step-desc">
+              Include the design token stylesheet and the lightweight client engine from the unpkg CDN:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>index.html</span>
+                <span>html</span>
+              </div>
+              <pre><code>&lt;!-- 1. NNUI Design Tokens & CSS Cascade Layers --&gt;
+&lt;link rel="stylesheet" href="https://unpkg.com/nnuikit/dist/theme.css"&gt;
+
+&lt;!-- 2. Light-DOM Behavioral Client (Sub-40 KB) --&gt;
+&lt;script type="module" src="https://unpkg.com/nnuikit/dist/client.js"&gt;&lt;/script&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Use Tier 0 Semantic Primitives -->
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h2 class="step-title">Use Tier 0 Semantic Primitives</h2>
+            <p class="step-desc">
+              Add <code>data-ui</code> attributes to any standard HTML elements. They render immediately without waiting for JavaScript:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>index.html</span>
+                <span>html</span>
+              </div>
+              <pre><code>&lt;!-- Button Primitives --&gt;
+&lt;button data-ui="button" data-variant="primary"&gt;Primary Action&lt;/button&gt;
+&lt;button data-ui="button" data-variant="secondary"&gt;Secondary Action&lt;/button&gt;
+&lt;button data-ui="button" data-variant="outline"&gt;Outline Action&lt;/button&gt;
+
+&lt;!-- Input & Form Controls --&gt;
+&lt;input data-ui="input" type="text" placeholder="Your name..." /&gt;
+
+&lt;!-- Badge & Status --&gt;
+&lt;span data-ui="badge" data-variant="success"&gt;Active&lt;/span&gt;
+
+&lt;!-- Container Card --&gt;
+&lt;div data-ui="card" style="padding: 1.5rem; max-width: 400px;"&gt;
+  &lt;h3 style="margin-top: 0;"&gt;Instant Card&lt;/h3&gt;
+  &lt;p style="color: var(--ui-text-secondary);"&gt;Zero JavaScript required.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Use Tier 2 Micro-Enhancers -->
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h2 class="step-title">Use Tier 2 Micro-Enhancers</h2>
+            <p class="step-desc">
+              Use custom elements like <code>&lt;ui-dialog&gt;</code>, <code>&lt;ui-tabs&gt;</code>, or <code>&lt;ui-dropdown&gt;</code> directly in HTML with declarative state persistence:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>index.html</span>
+                <span>html</span>
+              </div>
+              <pre><code>&lt;!-- Declarative Tabs with URL persistence --&gt;
+&lt;ui-tabs value="overview" persist="url"&gt;
+  &lt;div data-part="tablist"&gt;
+    &lt;button data-part="tab" data-value="overview"&gt;Overview&lt;/button&gt;
+    &lt;button data-part="tab" data-value="billing"&gt;Billing&lt;/button&gt;
+    &lt;button data-part="tab" data-value="settings"&gt;Settings&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div data-part="panel" data-value="overview"&gt;Overview content here...&lt;/div&gt;
+  &lt;div data-part="panel" data-value="billing"&gt;Billing content here...&lt;/div&gt;
+  &lt;div data-part="panel" data-value="settings"&gt;Settings content here...&lt;/div&gt;
+&lt;/ui-tabs&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Complete Standalone Template -->
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h2 class="step-title">Complete Standalone HTML Template</h2>
+            <p class="step-desc">
+              Copy and paste this complete boilerplate into an <code>index.html</code> file and open it directly in any browser:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>index.html</span>
+                <span>html</span>
+              </div>
+              <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" data-theme="dark"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;NNUI-KIT Standalone Page&lt;/title&gt;
+    &lt;link rel="stylesheet" href="https://unpkg.com/nnuikit/dist/theme.css"&gt;
+    &lt;script type="module" src="https://unpkg.com/nnuikit/dist/client.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+      body &#123;
+        margin: 0;
+        min-height: 100vh;
+        background: var(--ui-bg-canvas, #09090b);
+        color: var(--ui-text-primary, #fafafa);
+        font-family: system-ui, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      &#125;
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div data-ui="card" style="width: 100%; maxWidth: 440px; padding: 2rem; display: flex; flex-direction: column; gap: 1rem;"&gt;
+      &lt;h2 style="margin: 0;"&gt;Manual HTML Setup&lt;/h2&gt;
+      &lt;p style="color: var(--ui-text-secondary); margin: 0;"&gt;No build tool required.&lt;/p&gt;
+      &lt;input data-ui="input" placeholder="Enter text..." /&gt;
+      &lt;button data-ui="button" data-variant="primary"&gt;Submit&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Next Navigation -->
+      <div
+        style="border-top: 1px solid var(--border-subtle); padding-top: 2rem; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"
+      >
+        <a
+          href="/docs/installation"
+          class="btn-secondary"
+          style="font-size: 0.85rem;"
+        >
+          ← All Frameworks
+        </a>
+        <a
+          href="/components"
+          class="btn-primary"
+          style="font-size: 0.85rem;"
+        >
+          Explore All Components →
+        </a>
+      </div>
+    </main>
+  </div>
+</DocsLayout>

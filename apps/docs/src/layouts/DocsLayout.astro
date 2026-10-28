@@ -1,7 +1,7 @@
 ---
-import 'nnui-kit/css';
-import '../styles/docs.css';
-import componentsData from '../data/components-data.json';
+import "nnuikit/css";
+import "../styles/docs.css";
+import componentsData from "../data/components-data.json";
 
 interface BreadcrumbItem {
   name: string;
@@ -21,7 +21,7 @@ interface Props {
   activePath?: string;
   keywords?: string | string[];
   canonicalUrl?: string;
-  ogType?: 'website' | 'article';
+  ogType?: "website" | "article";
   ogImage?: string;
   breadcrumbs?: BreadcrumbItem[];
   schema?: Record<string, any> | Array<Record<string, any>>;
@@ -29,96 +29,116 @@ interface Props {
 }
 
 const {
-  title = 'NNUI-KIT — The All-In-One Universal UI Kit & Component Architecture',
-  description = 'NNUI-KIT is the all-in-one universal Light-DOM UI toolkit. 45+ accessible primitives and micro-enhancers with built-in state persistence, cross-tab sync, React 19 wrapper, and zero Shadow DOM traps.',
-  activePath = '/',
+  title = "NNUI-KIT — The All-In-One Universal UI Kit & Component Architecture",
+  description = "NNUI-KIT is the all-in-one universal Light-DOM UI toolkit. 45+ accessible primitives and micro-enhancers with built-in state persistence, cross-tab sync, React 19 wrapper, and zero Shadow DOM traps.",
+  activePath = "/",
   keywords,
   canonicalUrl,
-  ogType = 'website',
-  ogImage = '/og-image.png',
+  ogType = "website",
+  ogImage = "/og-image.png",
   breadcrumbs,
   schema,
-  articleMeta
+  articleMeta,
 } = Astro.props;
 
-const defaultSiteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://nnui-kit.vercel.app';
-const currentCanonical = canonicalUrl || `${defaultSiteUrl}${activePath.startsWith('/') ? activePath : `/${activePath}`}`;
-const currentOgImage = ogImage 
-  ? (ogImage.startsWith('http') ? ogImage : `${defaultSiteUrl}${ogImage.startsWith('/') ? ogImage : `/${ogImage}`}`)
+const defaultSiteUrl = Astro.site
+  ? Astro.site.toString().replace(/\/$/, "")
+  : "https://nnui-kit.vercel.app";
+const currentCanonical =
+  canonicalUrl ||
+  `${defaultSiteUrl}${activePath.startsWith("/") ? activePath : `/${activePath}`}`;
+const currentOgImage = ogImage
+  ? ogImage.startsWith("http")
+    ? ogImage
+    : `${defaultSiteUrl}${ogImage.startsWith("/") ? ogImage : `/${ogImage}`}`
   : `${defaultSiteUrl}/og-image.png`;
 
 const keywordsString = Array.isArray(keywords)
-  ? keywords.join(', ')
-  : keywords || 'all in one ui kit, all-in-one component library, universal ui kit, light dom web components, zero shadow dom, react 19 ui kit, vue 3 ui components, svelte 5 ui library, astro ui components, accessible design system, state persistence, cross tab sync, ai introspection protocol, nnui, nnuikit, modern web components, design tokens';
+  ? keywords.join(", ")
+  : keywords ||
+    "all in one ui kit, all-in-one component library, universal ui kit, light dom web components, zero shadow dom, react 19 ui kit, vue 3 ui components, svelte 5 ui library, astro ui components, accessible design system, state persistence, cross tab sync, ai introspection protocol, nnui, nnuikit, modern web components, design tokens";
 
 // Global WebSite Schema
 const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  'name': 'NNUI-KIT',
-  'alternateName': ['nnuikit', 'NNUI', 'New Age UI Kit', 'All-In-One Universal UI Kit'],
-  'url': defaultSiteUrl,
-  'description': 'The All-In-One Universal Light-DOM UI Architecture. 45+ accessible primitives and micro-enhancers across React 19, Vue 3, Svelte 5, Astro, and HTML.',
-  'publisher': {
-    '@type': 'Organization',
-    'name': 'NNUI-KIT',
-    'logo': {
-      '@type': 'ImageObject',
-      'url': `${defaultSiteUrl}/logo.png`
-    }
-  },
-  'potentialAction': {
-    '@type': 'SearchAction',
-    'target': {
-      '@type': 'EntryPoint',
-      'urlTemplate': `${defaultSiteUrl}/components?q={search_term_string}`
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "NNUI-KIT",
+  alternateName: [
+    "nnuikit",
+    "NNUI",
+    "New Age UI Kit",
+    "All-In-One Universal UI Kit",
+  ],
+  url: defaultSiteUrl,
+  description:
+    "The All-In-One Universal Light-DOM UI Architecture. 45+ accessible primitives and micro-enhancers across React 19, Vue 3, Svelte 5, Astro, and HTML.",
+  publisher: {
+    "@type": "Organization",
+    name: "NNUI-KIT",
+    logo: {
+      "@type": "ImageObject",
+      url: `${defaultSiteUrl}/logo.png`,
     },
-    'query-input': 'required name=search_term_string'
-  }
+  },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${defaultSiteUrl}/components?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
 };
 
 // Global SoftwareApplication Schema
 const softwareAppSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  'name': 'NNUI-KIT',
-  'applicationCategory': 'DeveloperApplication',
-  'applicationSubCategory': 'All-in-One UI Component Library and Design System',
-  'operatingSystem': 'Any (Web, React 18/19, Next.js, Vue 3, Nuxt, Svelte 5, SvelteKit, Astro, HTMX, Rails, SSR)',
-  'description': 'All-in-one universal Light-DOM UI architecture with zero Shadow DOM accessibility traps, declarative state persistence, real-time cross-tab sync, and AI introspection protocol.',
-  'softwareVersion': '1.0.6',
-  'license': 'https://opensource.org/licenses/MIT',
-  'offers': {
-    '@type': 'Offer',
-    'price': '0',
-    'priceCurrency': 'USD'
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "NNUI-KIT",
+  applicationCategory: "DeveloperApplication",
+  applicationSubCategory: "All-in-One UI Component Library and Design System",
+  operatingSystem:
+    "Any (Web, React 18/19, Next.js, Vue 3, Nuxt, Svelte 5, SvelteKit, Astro, HTMX, Rails, SSR)",
+  description:
+    "All-in-one universal Light-DOM UI architecture with zero Shadow DOM accessibility traps, declarative state persistence, real-time cross-tab sync, and AI introspection protocol.",
+  softwareVersion: "1.0.7",
+  license: "https://opensource.org/licenses/MIT",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
   },
-  'url': defaultSiteUrl,
-  'downloadUrl': 'https://www.npmjs.com/package/nnuikit',
-  'sameAs': [
-    'https://github.com/harshp421/nnui-kit',
-    'https://www.npmjs.com/package/nnuikit'
-  ]
+  url: defaultSiteUrl,
+  downloadUrl: "https://www.npmjs.com/package/nnuikit",
+  sameAs: [
+    "https://github.com/harshp421/nnui-kit",
+    "https://www.npmjs.com/package/nnuikit",
+  ],
 };
 
 // Breadcrumbs Schema
-const breadcrumbsSchema = breadcrumbs && breadcrumbs.length > 0 ? {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  'itemListElement': breadcrumbs.map((crumb, idx) => ({
-    '@type': 'ListItem',
-    'position': idx + 1,
-    'name': crumb.name,
-    'item': crumb.url.startsWith('http') ? crumb.url : `${defaultSiteUrl}${crumb.url}`
-  }))
-} : null;
+const breadcrumbsSchema =
+  breadcrumbs && breadcrumbs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbs.map((crumb, idx) => ({
+          "@type": "ListItem",
+          position: idx + 1,
+          name: crumb.name,
+          item: crumb.url.startsWith("http")
+            ? crumb.url
+            : `${defaultSiteUrl}${crumb.url}`,
+        })),
+      }
+    : null;
 
 // Aggregated schemas to render
 const allSchemas = [
   websiteSchema,
   softwareAppSchema,
   ...(breadcrumbsSchema ? [breadcrumbsSchema] : []),
-  ...(Array.isArray(schema) ? schema : schema ? [schema] : [])
+  ...(Array.isArray(schema) ? schema : schema ? [schema] : []),
 ];
 
 const componentsList = Object.values(componentsData) as any[];
@@ -128,7 +148,10 @@ const componentsList = Object.values(componentsData) as any[];
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
 
     <!-- Primary Title & Standard SEO Metadata -->
     <title>{title}</title>
@@ -141,12 +164,24 @@ const componentsList = Object.values(componentsData) as any[];
     <link rel="canonical" href={currentCanonical} />
 
     <!-- Crawlers & Search Engine Directives (SEO & AEO) -->
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta
+      name="googlebot"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta
+      name="bingbot"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
 
     <!-- Open Graph / Facebook / LinkedIn / Discord / Slack -->
-    <meta property="og:site_name" content="NNUI-KIT — All-In-One Universal UI Kit" />
+    <meta
+      property="og:site_name"
+      content="NNUI-KIT — All-In-One Universal UI Kit"
+    />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -156,7 +191,10 @@ const componentsList = Object.values(componentsData) as any[];
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="NNUI-KIT — The All-In-One Universal UI Kit" />
+    <meta
+      property="og:image:alt"
+      content="NNUI-KIT — The All-In-One Universal UI Kit"
+    />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter / X Cards -->
@@ -166,136 +204,258 @@ const componentsList = Object.values(componentsData) as any[];
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={currentOgImage} />
-    <meta name="twitter:image:alt" content="NNUI-KIT — The All-In-One Universal UI Kit" />
+    <meta
+      name="twitter:image:alt"
+      content="NNUI-KIT — The All-In-One Universal UI Kit"
+    />
 
     <!-- Mobile & Application Meta -->
     <meta name="application-name" content="NNUI-KIT" />
     <meta name="apple-mobile-web-app-title" content="NNUI-KIT" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#09090b"
+    />
 
     <!-- AI & Model Context Links (AEO) -->
-    <link rel="alternate" type="text/plain" href="/llms.txt" title="AI Model Context (llms.txt)" />
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link
+      rel="alternate"
+      type="text/plain"
+      href="/llms.txt"
+      title="AI Model Context (llms.txt)"
+    />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      title="Sitemap"
+      href="/sitemap.xml"
+    />
 
     <!-- JSON-LD Structured Data (Schema.org for Google Rich Results & AEO) -->
-    {allSchemas.map((schemaObj) => (
-      <script type="application/ld+json" set:html={JSON.stringify(schemaObj)} />
-    ))}
+    {
+      allSchemas.map((schemaObj) => (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(schemaObj)}
+        />
+      ))
+    }
 
     <!-- 0ms Synchronous Theme & Palette Hydration (Executes before paint to eliminate FOUC / flicker) -->
     <script is:inline>
       (function () {
         try {
-          const savedTheme = localStorage.getItem('nnui-theme') || 
-            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          const savedPalette = localStorage.getItem('nnui-palette') || 'zinc';
-          const savedRadius = localStorage.getItem('nnui-radius') || '0.5';
+          const savedTheme =
+            localStorage.getItem("nnui-theme") ||
+            (window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light");
+          const savedPalette = localStorage.getItem("nnui-palette") || "zinc";
+          const savedRadius = localStorage.getItem("nnui-radius") || "0.5";
           const root = document.documentElement;
-          root.setAttribute('data-theme', savedTheme);
-          root.setAttribute('data-palette', savedPalette);
-          root.setAttribute('data-radius', savedRadius);
-          if (savedTheme === 'dark') {
-            root.classList.add('dark');
+          root.setAttribute("data-theme", savedTheme);
+          root.setAttribute("data-palette", savedPalette);
+          root.setAttribute("data-radius", savedRadius);
+          if (savedTheme === "dark") {
+            root.classList.add("dark");
           } else {
-            root.classList.remove('dark');
+            root.classList.remove("dark");
           }
         } catch (e) {}
       })();
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- Top Sticky Frosted Glass Header -->
     <header class="docs-header">
       <div style="display: flex; align-items: center; gap: 2rem;">
         <a href="/" class="docs-logo">
-          <img src="/logo.svg" alt="NNUI-KIT" class="docs-logo-img" width="24" height="24" />
+          <img
+            src="/logo.svg"
+            alt="NNUI-KIT"
+            class="docs-logo-img"
+            width="24"
+            height="24"
+          />
           <span>nnui-kit</span>
-          <span class="docs-version-pill">v1.0.5</span>
+          <span class="docs-version-pill">v1.0.7</span>
         </a>
 
         <nav class="docs-nav-links">
-          <a href="/docs" class={`docs-nav-link ${activePath.startsWith('/docs') ? 'active' : ''}`}>Docs</a>
-          <a href="/components" class={`docs-nav-link ${activePath.startsWith('/components') ? 'active' : ''}`}>Components</a>
-          <a href="/tokens" class={`docs-nav-link ${activePath.startsWith('/tokens') ? 'active' : ''}`}>Themes</a>
-          <a href="/typography" class={`docs-nav-link ${activePath.startsWith('/typography') ? 'active' : ''}`}>Typography</a>
-          <a href="/shadow-vs-light" class={`docs-nav-link ${activePath.startsWith('/shadow-vs-light') ? 'active' : ''}`} style="display: inline-flex; align-items: center; gap: 0.35rem;">
+          <a
+            href="/docs"
+            class={`docs-nav-link ${activePath.startsWith("/docs") ? "active" : ""}`}
+            >Docs</a
+          >
+          <a
+            href="/components"
+            class={`docs-nav-link ${activePath.startsWith("/components") ? "active" : ""}`}
+            >Components</a
+          >
+          <a
+            href="/tokens"
+            class={`docs-nav-link ${activePath.startsWith("/tokens") ? "active" : ""}`}
+            >Themes</a
+          >
+          <a
+            href="/typography"
+            class={`docs-nav-link ${activePath.startsWith("/typography") ? "active" : ""}`}
+            >Typography</a
+          >
+          <a
+            href="/shadow-vs-light"
+            class={`docs-nav-link ${activePath.startsWith("/shadow-vs-light") ? "active" : ""}`}
+            style="display: inline-flex; align-items: center; gap: 0.35rem;"
+          >
             <span>Light vs Shadow</span>
-            <span style="font-size: 0.65rem; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">WHY</span>
+            <span
+              style="font-size: 0.65rem; background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); padding: 1px 5px; border-radius: 9999px; font-weight: 700;"
+              >WHY</span
+            >
           </a>
-          <a href="/llms" class={`docs-nav-link ${activePath.startsWith('/llms') ? 'active' : ''}`} style="display: inline-flex; align-items: center; gap: 0.35rem;">
+          <a
+            href="/llms"
+            class={`docs-nav-link ${activePath.startsWith("/llms") ? "active" : ""}`}
+            style="display: inline-flex; align-items: center; gap: 0.35rem;"
+          >
             <span>llms.txt</span>
-            <span style="font-size: 0.65rem; background: color-mix(in srgb, var(--ui-color-brand-500) 15%, transparent); color: var(--ui-color-brand-500); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 35%, transparent); padding: 1px 5px; border-radius: 9999px; font-weight: 700;">AI</span>
+            <span
+              style="font-size: 0.65rem; background: color-mix(in srgb, var(--ui-color-brand-500) 15%, transparent); color: var(--ui-color-brand-500); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500) 35%, transparent); padding: 1px 5px; border-radius: 9999px; font-weight: 700;"
+              >AI</span
+            >
           </a>
-          <a href="https://github.com/harshp421/nnui-kit" target="_blank" rel="noopener noreferrer" class="docs-nav-link">GitHub ↗</a>
+          <a
+            href="https://github.com/harshp421/nnui-kit"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="docs-nav-link">GitHub ↗</a
+          >
         </nav>
-
       </div>
 
       <div class="header-actions">
         <!-- Search Trigger (⌘K) -->
-        <button class="search-trigger-btn" data-ui="button" data-variant="secondary" id="search-trigger" title="Quick Search (⌘K)">
+        <button
+          class="search-trigger-btn"
+          data-ui="button"
+          data-variant="secondary"
+          id="search-trigger"
+          title="Quick Search (⌘K)"
+        >
           <span>Search docs...</span>
           <kbd class="search-kbd">⌘K</kbd>
         </button>
 
         <!-- Brand Palette Selector (Dogfooding <ui-dropdown>) -->
         <ui-dropdown id="palette-dropdown" style="display: inline-block;">
-          <button data-part="trigger" data-ui="button" data-variant="outline" class="palette-dropdown" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; height: 32px; padding: 0.35rem 0.65rem;" title="Select color harmony palette">
-            <span id="active-palette-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #71717a; display: inline-block; flex-shrink: 0;"></span>
-            <span id="active-palette-name" style="text-transform: capitalize; font-weight: 500; font-size: 0.8rem;">Zinc</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6; margin-left: 2px;">
-              <path d="m6 9 6 6 6-6"/>
+          <button
+            data-part="trigger"
+            data-ui="button"
+            data-variant="outline"
+            class="palette-dropdown"
+            style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; height: 32px; padding: 0.35rem 0.65rem;"
+            title="Select color harmony palette"
+          >
+            <span
+              id="active-palette-dot"
+              style="width: 8px; height: 8px; border-radius: 50%; background: #71717a; display: inline-block; flex-shrink: 0;"
+            ></span>
+            <span
+              id="active-palette-name"
+              style="text-transform: capitalize; font-weight: 500; font-size: 0.8rem;"
+              >Zinc</span
+            >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="opacity: 0.6; margin-left: 2px;"
+            >
+              <path d="m6 9 6 6 6-6"></path>
             </svg>
           </button>
 
-          <div data-part="menu" style="min-width: 145px; border-radius: 8px; padding: 0.25rem;">
+          <div
+            data-part="menu"
+            style="min-width: 145px; border-radius: 8px; padding: 0.25rem;"
+          >
             <div data-part="item" data-value="zinc">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #71717a;"></span>
+                <span
+                  style="width: 8px; height: 8px; border-radius: 50%; background: #71717a;"
+                ></span>
                 <span>Zinc</span>
               </div>
             </div>
             <div data-part="item" data-value="slate">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #64748b;"></span>
+                <span
+                  style="width: 8px; height: 8px; border-radius: 50%; background: #64748b;"
+                ></span>
                 <span>Slate</span>
               </div>
             </div>
             <div data-part="item" data-value="violet">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #8b5cf6;"></span>
+                <span
+                  style="width: 8px; height: 8px; border-radius: 50%; background: #8b5cf6;"
+                ></span>
                 <span>Violet</span>
               </div>
             </div>
             <div data-part="item" data-value="rose">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #f43f5e;"></span>
+                <span
+                  style="width: 8px; height: 8px; border-radius: 50%; background: #f43f5e;"
+                ></span>
                 <span>Rose</span>
               </div>
             </div>
             <div data-part="item" data-value="emerald">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+                <span
+                  style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"
+                ></span>
                 <span>Emerald</span>
               </div>
             </div>
             <div data-part="item" data-value="blue">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #3b82f6;"></span>
+                <span
+                  style="width: 8px; height: 8px; border-radius: 50%; background: #3b82f6;"
+                ></span>
                 <span>Blue</span>
               </div>
             </div>
             <div data-part="item" data-value="orange">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="width: 8px; height: 8px; border-radius: 50%; background: #f97316;"></span>
+                <span
+                  style="width: 8px; height: 8px; border-radius: 50%; background: #f97316;"
+                ></span>
                 <span>Orange</span>
               </div>
             </div>
@@ -303,22 +463,30 @@ const componentsList = Object.values(componentsData) as any[];
         </ui-dropdown>
 
         <!-- Dark / Light Theme Mode Toggle Button -->
-        <button id="theme-toggle" data-ui="button" data-variant="ghost" class="theme-toggle-btn" title="Toggle Theme (Light/Dark)">
+        <button
+          id="theme-toggle"
+          data-ui="button"
+          data-variant="ghost"
+          class="theme-toggle-btn"
+          title="Toggle Theme (Light/Dark)"
+        >
           <span id="theme-icon">☀️</span>
         </button>
 
         <!-- GitHub Stars Badge -->
-        <a 
-          href="https://github.com/harshp421/nnui-kit" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="btn-secondary" 
-          data-ui="button" 
+        <a
+          href="https://github.com/harshp421/nnui-kit"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary"
+          data-ui="button"
           data-variant="secondary"
           style="padding: 0.35rem 0.75rem; font-size: 0.8rem; gap: 0.4rem;"
         >
           <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+            ></path>
           </svg>
           <span>Star</span>
         </a>
@@ -326,107 +494,267 @@ const componentsList = Object.values(componentsData) as any[];
     </header>
 
     <!-- Quick Search Command Modal Dialog (⌘K) -->
-    <dialog id="search-modal-dialog" data-ui="dialog" class="search-modal-dialog">
+    <dialog
+      id="search-modal-dialog"
+      data-ui="dialog"
+      class="search-modal-dialog"
+    >
       <div class="search-modal-header">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); flex-shrink: 0;">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="color: var(--text-muted); flex-shrink: 0;"
+        >
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input 
-          id="search-modal-input" 
-          type="search" 
+        <input
+          id="search-modal-input"
+          type="search"
           data-ui="input"
-          class="search-modal-input" 
-          placeholder="Search documentation, components, frameworks... (⌘K)" 
+          class="search-modal-input"
+          placeholder="Search documentation, components, frameworks... (⌘K)"
           autocomplete="off"
         />
-        <kbd class="search-kbd" id="search-modal-close" style="cursor: pointer;" title="Close dialog">ESC</kbd>
+        <kbd
+          class="search-kbd"
+          id="search-modal-close"
+          style="cursor: pointer;"
+          title="Close dialog">ESC</kbd
+        >
       </div>
 
       <div class="search-modal-body" id="search-modal-results">
         <!-- Group: Frameworks & Guides -->
         <div class="search-group" data-group="guides">
           <div class="search-group-title">Documentation & Guides</div>
-          <a href="/docs#introduction" class="search-result-item" data-text="introduction overview architecture platform native">
+          <a
+            href="/docs#introduction"
+            class="search-result-item"
+            data-text="introduction overview architecture platform native"
+          >
             <span>Introduction & Vision</span>
             <span class="item-meta">Docs</span>
           </a>
-          <a href="/docs#mental-model" class="search-result-item" data-text="three tier architecture mental model zero js primitives">
+          <a
+            href="/docs#mental-model"
+            class="search-result-item"
+            data-text="three tier architecture mental model zero js primitives"
+          >
             <span>Three-Tier Architecture</span>
             <span class="item-meta">Architecture</span>
           </a>
-          <a href="/docs#why-light-dom" class="search-result-item" data-text="why light dom shadow dom traps accessibility a11y tailwind form">
+          <a
+            href="/docs#why-light-dom"
+            class="search-result-item"
+            data-text="why light dom shadow dom traps accessibility a11y tailwind form"
+          >
             <span>Why Light-DOM? (Solving Shadow Traps)</span>
             <span class="item-meta">Core Principle</span>
           </a>
-          <a href="/docs#installation" class="search-result-item" data-text="installation setup cli npx nnui add init npm">
-            <span>Installation & CLI Setup</span>
+          <a
+            href="/docs/installation"
+            class="search-result-item"
+            data-text="installation setup cli framework select vite next astro vue svelte remix manual"
+          >
+            <span>Installation (Framework Hub)</span>
             <span class="item-meta">Quickstart</span>
           </a>
-          <a href="/docs#persistence" class="search-result-item" data-text="declarative persistence persist url local storage query params">
+          <a
+            href="/docs/installation/vite"
+            class="search-result-item"
+            data-text="vite react 18 19 installation setup clean app.css root padding"
+          >
+            <span>Vite (React 18 & 19) Setup</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a
+            href="/docs/installation/next"
+            class="search-result-item"
+            data-text="nextjs next.js 15 app router react 19 server components layout globals.css"
+          >
+            <span>Next.js 15 App Router Setup</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a
+            href="/docs/installation/astro"
+            class="search-result-item"
+            data-text="astro setup zero js light-dom layout static ssr"
+          >
+            <span>Astro Setup Guide</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a
+            href="/docs/installation/vue"
+            class="search-result-item"
+            data-text="vue 3 nuxt 3 setup iscustomelement vite compiler options"
+          >
+            <span>Vue 3 & Nuxt 3 Setup</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a
+            href="/docs/installation/svelte"
+            class="search-result-item"
+            data-text="svelte 5 sveltekit runes state props setup layout"
+          >
+            <span>Svelte 5 & SvelteKit Setup</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a
+            href="/docs/installation/remix"
+            class="search-result-item"
+            data-text="remix react router v7 root.tsx links setup"
+          >
+            <span>Remix & React Router v7 Setup</span>
+            <span class="item-meta">Framework</span>
+          </a>
+          <a
+            href="/docs/installation/manual"
+            class="search-result-item"
+            data-text="manual cdn unpkg vanilla html htmx backend rails django laravel go php"
+          >
+            <span>Manual & CDN HTML Setup</span>
+            <span class="item-meta">Framework</span>
+          </a>
+
+          <a
+            href="/docs#persistence"
+            class="search-result-item"
+            data-text="declarative persistence persist url local storage query params"
+          >
             <span>Declarative State Persistence</span>
             <span class="item-meta">Crown Feature</span>
           </a>
-          <a href="/docs#cross-tab" class="search-result-item" data-text="cross tab broadcast sync multi tab broadcastchannel synchronization">
+          <a
+            href="/docs#cross-tab"
+            class="search-result-item"
+            data-text="cross tab broadcast sync multi tab broadcastchannel synchronization"
+          >
             <span>Cross-Tab Broadcast Sync</span>
             <span class="item-meta">Crown Feature</span>
           </a>
-          <a href="/docs#ai-introspection" class="search-result-item" data-text="ai introspection inspectai protocol copilot cursor llm schema">
+          <a
+            href="/docs#ai-introspection"
+            class="search-result-item"
+            data-text="ai introspection inspectai protocol copilot cursor llm schema"
+          >
             <span>AI Introspection Protocol</span>
             <span class="item-meta">nnui.ai.v1</span>
           </a>
-          <a href="/llms" class="search-result-item" data-text="llms.txt ai assistant context cursor copilot claude chatgpt windsurf prompt specification rules">
+          <a
+            href="/llms"
+            class="search-result-item"
+            data-text="llms.txt ai assistant context cursor copilot claude chatgpt windsurf prompt specification rules"
+          >
             <span>AI Assistant Context (llms.txt)</span>
             <span class="item-meta">AI Spec</span>
           </a>
-          <a href="/docs#react" class="search-result-item" data-text="react 18 19 nextjs next.js app router server components typescript wrappers">
+          <a
+            href="/docs#react"
+            class="search-result-item"
+            data-text="react 18 19 nextjs next.js app router server components typescript wrappers"
+          >
             <span>React 18 & 19 (Next.js 15 App Router)</span>
             <span class="item-meta">Framework</span>
           </a>
-          <a href="/docs#svelte" class="search-result-item" data-text="svelte 5 runes state derived effect custom element">
+          <a
+            href="/docs#svelte"
+            class="search-result-item"
+            data-text="svelte 5 runes state derived effect custom element"
+          >
             <span>Svelte 5 (Runes Architecture)</span>
             <span class="item-meta">Framework</span>
           </a>
-          <a href="/docs#vue" class="search-result-item" data-text="vue 3 nuxt 3 composition api custom element iscustomelement">
+          <a
+            href="/docs#vue"
+            class="search-result-item"
+            data-text="vue 3 nuxt 3 composition api custom element iscustomelement"
+          >
             <span>Vue 3 & Nuxt 3 (Composition API)</span>
             <span class="item-meta">Framework</span>
           </a>
-          <a href="/docs#htmx" class="search-result-item" data-text="htmx 2 backend ssr django rails laravel go templ partials">
+          <a
+            href="/docs#htmx"
+            class="search-result-item"
+            data-text="htmx 2 backend ssr django rails laravel go templ partials"
+          >
             <span>HTMX 2 & Backend SSR</span>
             <span class="item-meta">Framework</span>
           </a>
-          <a href="/tokens" class="search-result-item" data-text="tokens themes dtcg palettes colors zinc slate violet emerald rose blue orange customizer radius">
+          <a
+            href="/tokens"
+            class="search-result-item"
+            data-text="tokens themes dtcg palettes colors zinc slate violet emerald rose blue orange customizer radius"
+          >
             <span>Design Tokens & Theme Studio</span>
             <span class="item-meta">Themes</span>
           </a>
-          <a href="/typography" class="search-result-item" data-text="typography system font type scale heading text lead muted optical tracking monospace sans">
+          <a
+            href="/typography"
+            class="search-result-item"
+            data-text="typography system font type scale heading text lead muted optical tracking monospace sans"
+          >
             <span>Typography System & Scale</span>
             <span class="item-meta">Design System</span>
           </a>
-          <a href="/docs#layout-primitives" class="search-result-item" data-text="layout primitives stack grid container separator flex layout zero js">
+          <a
+            href="/docs#layout-primitives"
+            class="search-result-item"
+            data-text="layout primitives stack grid container separator flex layout zero js"
+          >
             <span>Layout Primitives (Stack, Grid, Container)</span>
             <span class="item-meta">Primitives</span>
           </a>
-          <a href="/docs#feedback-primitives" class="search-result-item" data-text="feedback status primitives spinner empty state loading indicator zero js">
+          <a
+            href="/docs#feedback-primitives"
+            class="search-result-item"
+            data-text="feedback status primitives spinner empty state loading indicator zero js"
+          >
             <span>Feedback & Status Primitives (Spinner, Empty)</span>
             <span class="item-meta">Primitives</span>
           </a>
         </div>
 
         <!-- Group: All Components -->
-        <div class="search-group" data-group="components" style="margin-top: 0.75rem;">
-          <div class="search-group-title">Components ({componentsList.length})</div>
-          {componentsList.map((comp: any) => (
-            <a href={`/components/${comp.slug}`} class="search-result-item" data-text={`${comp.slug} ${comp.name} ${comp.title} ${comp.description}`}>
-              <span>{comp.title}</span>
-              <span class="item-meta">{comp.tier === 0 ? 'Tier 0: Pure HTML' : 'Tier 2: Micro-Enhancer'}</span>
-            </a>
-          ))}
+        <div
+          class="search-group"
+          data-group="components"
+          style="margin-top: 0.75rem;"
+        >
+          <div class="search-group-title">
+            Components ({componentsList.length})
+          </div>
+          {
+            componentsList.map((comp: any) => (
+              <a
+                href={`/components/${comp.slug}`}
+                class="search-result-item"
+                data-text={`${comp.slug} ${comp.name} ${comp.title} ${comp.description}`}
+              >
+                <span>{comp.title}</span>
+                <span class="item-meta">
+                  {comp.tier === 0
+                    ? "Tier 0: Pure HTML"
+                    : "Tier 2: Micro-Enhancer"}
+                </span>
+              </a>
+            ))
+          }
         </div>
       </div>
 
       <div class="search-modal-footer">
-        <div>Navigate <kbd class="search-kbd">↑</kbd> <kbd class="search-kbd">↓</kbd> · Select <kbd class="search-kbd">↵</kbd></div>
+        <div>
+          Navigate <kbd class="search-kbd">↑</kbd>
+          <kbd class="search-kbd">↓</kbd> · Select <kbd class="search-kbd"
+            >↵</kbd>
+        </div>
         <div>Close <kbd class="search-kbd">ESC</kbd></div>
       </div>
     </dialog>
@@ -439,66 +767,83 @@ const componentsList = Object.values(componentsData) as any[];
 
     <!-- Theme, Palette & Search Controller Script -->
     <script>
-      import 'nnui-kit/client';
-      import { toast } from 'nnui-kit';
+      import "nnuikit/client";
+      import { toast } from "nnuikit";
 
       // Ensure global availability for inline scripts and interactive previews
       (window as any).toast = toast;
 
       function initDocsApp() {
         // --- 1. Theme & Palette Management ---
-        const currentTheme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('nnui-theme') || 'dark';
-        const currentPalette = document.documentElement.getAttribute('data-palette') || localStorage.getItem('nnui-palette') || 'zinc';
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme") ||
+          localStorage.getItem("nnui-theme") ||
+          "dark";
+        const currentPalette =
+          document.documentElement.getAttribute("data-palette") ||
+          localStorage.getItem("nnui-palette") ||
+          "zinc";
 
         // Synchronize UI button icon and dropdown dot without triggering re-render
         syncThemeControls(currentTheme);
         syncPaletteControls(currentPalette);
 
         // Bind Theme Toggle Button
-        const themeBtn = document.getElementById('theme-toggle');
+        const themeBtn = document.getElementById("theme-toggle");
         if (themeBtn) {
-          themeBtn.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme') || 'dark';
-            const next = current === 'dark' ? 'light' : 'dark';
+          themeBtn.addEventListener("click", () => {
+            const current =
+              document.documentElement.getAttribute("data-theme") || "dark";
+            const next = current === "dark" ? "light" : "dark";
 
             // Only transition colors when user explicitly clicks the toggle
-            document.documentElement.classList.add('theme-transition');
+            document.documentElement.classList.add("theme-transition");
             applyThemeMode(next);
-            localStorage.setItem('nnui-theme', next);
+            localStorage.setItem("nnui-theme", next);
 
             setTimeout(() => {
-              document.documentElement.classList.remove('theme-transition');
+              document.documentElement.classList.remove("theme-transition");
             }, 300);
           });
         }
 
         // Bind Palette Selector (<ui-dropdown>)
-        const paletteDropdown = document.getElementById('palette-dropdown');
+        const paletteDropdown = document.getElementById("palette-dropdown");
         if (paletteDropdown) {
-          paletteDropdown.addEventListener('select', (e: any) => {
+          paletteDropdown.addEventListener("select", (e: any) => {
             const pal = e.detail?.value;
             if (pal) {
               applyPalette(pal);
-              localStorage.setItem('nnui-palette', pal);
-              window.dispatchEvent(new CustomEvent('nnui-palette-changed', { detail: { palette: pal } }));
+              localStorage.setItem("nnui-palette", pal);
+              window.dispatchEvent(
+                new CustomEvent("nnui-palette-changed", {
+                  detail: { palette: pal },
+                }),
+              );
             }
           });
         }
 
         // --- 2. Quick Search Command Modal (⌘K) ---
-        const searchDialog = document.getElementById('search-modal-dialog') as HTMLDialogElement | null;
-        const searchTrigger = document.getElementById('search-trigger');
-        const searchInput = document.getElementById('search-modal-input') as HTMLInputElement | null;
-        const searchClose = document.getElementById('search-modal-close');
-        const resultsContainer = document.getElementById('search-modal-results');
+        const searchDialog = document.getElementById(
+          "search-modal-dialog",
+        ) as HTMLDialogElement | null;
+        const searchTrigger = document.getElementById("search-trigger");
+        const searchInput = document.getElementById(
+          "search-modal-input",
+        ) as HTMLInputElement | null;
+        const searchClose = document.getElementById("search-modal-close");
+        const resultsContainer = document.getElementById(
+          "search-modal-results",
+        );
 
         function openSearchModal() {
           if (!searchDialog) return;
           searchDialog.showModal();
           if (searchInput) {
-            searchInput.value = '';
+            searchInput.value = "";
             searchInput.focus();
-            filterSearchResults('');
+            filterSearchResults("");
           }
         }
 
@@ -510,52 +855,58 @@ const componentsList = Object.values(componentsData) as any[];
         function filterSearchResults(query: string) {
           if (!resultsContainer) return;
           const q = query.toLowerCase().trim();
-          const items = resultsContainer.querySelectorAll('.search-result-item') as NodeListOf<HTMLElement>;
+          const items = resultsContainer.querySelectorAll(
+            ".search-result-item",
+          ) as NodeListOf<HTMLElement>;
           let firstVisible: HTMLElement | null = null;
 
           items.forEach((item) => {
-            const dataText = (item.getAttribute('data-text') || '').toLowerCase();
-            const textContent = (item.textContent || '').toLowerCase();
+            const dataText = (
+              item.getAttribute("data-text") || ""
+            ).toLowerCase();
+            const textContent = (item.textContent || "").toLowerCase();
             if (!q || dataText.includes(q) || textContent.includes(q)) {
-              item.style.display = 'flex';
+              item.style.display = "flex";
               if (!firstVisible) firstVisible = item;
             } else {
-              item.style.display = 'none';
-              item.classList.remove('selected');
+              item.style.display = "none";
+              item.classList.remove("selected");
             }
           });
 
           // Toggle visibility of group titles
-          document.querySelectorAll('.search-group').forEach((group) => {
-            const visibleInGroup = group.querySelectorAll('.search-result-item:not([style*="display: none"])');
-            (group as HTMLElement).style.display = visibleInGroup.length > 0 ? 'block' : 'none';
+          document.querySelectorAll(".search-group").forEach((group) => {
+            const visibleInGroup = group.querySelectorAll(
+              '.search-result-item:not([style*="display: none"])',
+            );
+            (group as HTMLElement).style.display =
+              visibleInGroup.length > 0 ? "block" : "none";
           });
 
           // Highlight the first visible item
-          items.forEach(i => i.classList.remove('selected'));
+          items.forEach((i) => i.classList.remove("selected"));
           if (firstVisible) {
-            (firstVisible as HTMLElement).classList.add('selected');
+            (firstVisible as HTMLElement).classList.add("selected");
           }
         }
 
         if (searchTrigger) {
-          searchTrigger.addEventListener('click', openSearchModal);
+          searchTrigger.addEventListener("click", openSearchModal);
         }
 
         if (searchClose) {
-          searchClose.addEventListener('click', closeSearchModal);
+          searchClose.addEventListener("click", closeSearchModal);
         }
 
         // Close when clicking outside modal backdrop
         if (searchDialog) {
-          searchDialog.addEventListener('click', (e) => {
+          searchDialog.addEventListener("click", (e) => {
             const rect = searchDialog.getBoundingClientRect();
-            const isInDialog = (
+            const isInDialog =
               rect.top <= e.clientY &&
               e.clientY <= rect.top + rect.height &&
               rect.left <= e.clientX &&
-              e.clientX <= rect.left + rect.width
-            );
+              e.clientX <= rect.left + rect.width;
             if (!isInDialog) {
               closeSearchModal();
             }
@@ -564,15 +915,15 @@ const componentsList = Object.values(componentsData) as any[];
 
         // Real-time Search Input filtering
         if (searchInput) {
-          searchInput.addEventListener('input', (e) => {
+          searchInput.addEventListener("input", (e) => {
             filterSearchResults((e.target as HTMLInputElement).value);
           });
         }
 
         // Keyboard Shortcut Navigation: ⌘K, Esc, Up/Down, Enter
-        window.addEventListener('keydown', (e) => {
+        window.addEventListener("keydown", (e) => {
           // Open on ⌘K or Ctrl+K
-          if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          if ((e.metaKey || e.ctrlKey) && e.key === "k") {
             e.preventDefault();
             if (searchDialog?.open) {
               closeSearchModal();
@@ -585,31 +936,37 @@ const componentsList = Object.values(componentsData) as any[];
           // If search modal is open, handle arrows and Enter
           if (searchDialog?.open && resultsContainer) {
             const visibleItems = Array.from(
-              resultsContainer.querySelectorAll('.search-result-item:not([style*="display: none"])')
+              resultsContainer.querySelectorAll(
+                '.search-result-item:not([style*="display: none"])',
+              ),
             ) as HTMLElement[];
 
             if (visibleItems.length === 0) return;
 
-            let currentIndex = visibleItems.findIndex(item => item.classList.contains('selected'));
+            let currentIndex = visibleItems.findIndex((item) =>
+              item.classList.contains("selected"),
+            );
 
-            if (e.key === 'ArrowDown') {
+            if (e.key === "ArrowDown") {
               e.preventDefault();
-              const nextIndex = currentIndex < visibleItems.length - 1 ? currentIndex + 1 : 0;
-              visibleItems.forEach(i => i.classList.remove('selected'));
-              visibleItems[nextIndex].classList.add('selected');
-              visibleItems[nextIndex].scrollIntoView({ block: 'nearest' });
-            } else if (e.key === 'ArrowUp') {
+              const nextIndex =
+                currentIndex < visibleItems.length - 1 ? currentIndex + 1 : 0;
+              visibleItems.forEach((i) => i.classList.remove("selected"));
+              visibleItems[nextIndex].classList.add("selected");
+              visibleItems[nextIndex].scrollIntoView({ block: "nearest" });
+            } else if (e.key === "ArrowUp") {
               e.preventDefault();
-              const prevIndex = currentIndex > 0 ? currentIndex - 1 : visibleItems.length - 1;
-              visibleItems.forEach(i => i.classList.remove('selected'));
-              visibleItems[prevIndex].classList.add('selected');
-              visibleItems[prevIndex].scrollIntoView({ block: 'nearest' });
-            } else if (e.key === 'Enter') {
+              const prevIndex =
+                currentIndex > 0 ? currentIndex - 1 : visibleItems.length - 1;
+              visibleItems.forEach((i) => i.classList.remove("selected"));
+              visibleItems[prevIndex].classList.add("selected");
+              visibleItems[prevIndex].scrollIntoView({ block: "nearest" });
+            } else if (e.key === "Enter") {
               if (currentIndex >= 0 && visibleItems[currentIndex]) {
                 e.preventDefault();
                 visibleItems[currentIndex].click();
               }
-            } else if (e.key === 'Escape') {
+            } else if (e.key === "Escape") {
               closeSearchModal();
             }
           }
@@ -617,37 +974,37 @@ const componentsList = Object.values(componentsData) as any[];
       }
 
       function syncThemeControls(theme: string) {
-        const icon = document.getElementById('theme-icon');
+        const icon = document.getElementById("theme-icon");
         if (icon) {
-          icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+          icon.textContent = theme === "dark" ? "☀️" : "🌙";
         }
       }
 
       function applyThemeMode(theme: string) {
-        document.documentElement.setAttribute('data-theme', theme);
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute("data-theme", theme);
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
         } else {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.remove("dark");
         }
         syncThemeControls(theme);
       }
 
       const PALETTE_DOT_COLORS: Record<string, string> = {
-        zinc: '#71717a',
-        slate: '#64748b',
-        violet: '#8b5cf6',
-        rose: '#f43f5e',
-        emerald: '#10b981',
-        blue: '#3b82f6',
-        orange: '#f97316'
+        zinc: "#71717a",
+        slate: "#64748b",
+        violet: "#8b5cf6",
+        rose: "#f43f5e",
+        emerald: "#10b981",
+        blue: "#3b82f6",
+        orange: "#f97316",
       };
 
       function syncPaletteControls(palette: string) {
-        const dot = document.getElementById('active-palette-dot');
-        const name = document.getElementById('active-palette-name');
+        const dot = document.getElementById("active-palette-dot");
+        const name = document.getElementById("active-palette-name");
         if (dot) {
-          dot.style.background = PALETTE_DOT_COLORS[palette] || '#71717a';
+          dot.style.background = PALETTE_DOT_COLORS[palette] || "#71717a";
         }
         if (name) {
           name.textContent = palette.charAt(0).toUpperCase() + palette.slice(1);
@@ -655,12 +1012,70 @@ const componentsList = Object.values(componentsData) as any[];
       }
 
       function applyPalette(palette: string) {
-        document.documentElement.setAttribute('data-palette', palette);
+        document.documentElement.setAttribute("data-palette", palette);
         syncPaletteControls(palette);
       }
 
-      // Initialize on load
+      // --- 3. Universal Copy-to-Clipboard for Docs Code Blocks ---
+      function initCodeCopyButtons() {
+        document.querySelectorAll("pre").forEach((pre) => {
+          if (pre.querySelector(".code-copy-btn")) return;
+
+          const parentBox = pre.closest(".code-block-box");
+          const header = parentBox ? parentBox.querySelector(".code-block-header") : null;
+
+          const copyBtn = document.createElement("button");
+          copyBtn.className = "code-copy-btn";
+          copyBtn.type = "button";
+          copyBtn.title = "Copy code to clipboard";
+          copyBtn.innerHTML = `
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span>Copy</span>
+          `;
+
+          copyBtn.addEventListener("click", async (e) => {
+            e.stopPropagation();
+            const codeEl = pre.querySelector("code");
+            const textToCopy = (codeEl ? codeEl.innerText : pre.innerText).trim();
+            try {
+              await navigator.clipboard.writeText(textToCopy);
+              copyBtn.classList.add("copied");
+              copyBtn.innerHTML = `
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>Copied!</span>
+              `;
+              setTimeout(() => {
+                copyBtn.classList.remove("copied");
+                copyBtn.innerHTML = `
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span>Copy</span>
+                `;
+              }, 2000);
+            } catch (err) {
+              console.error("Failed to copy text: ", err);
+            }
+          });
+
+          if (header) {
+            header.appendChild(copyBtn);
+          } else {
+            pre.style.position = "relative";
+            copyBtn.style.position = "absolute";
+            copyBtn.style.top = "0.65rem";
+            copyBtn.style.right = "0.65rem";
+            pre.appendChild(copyBtn);
+          }
+        });
+      }
+
+      // Initialize on load and after DOM updates
       initDocsApp();
+      initCodeCopyButtons();
+      document.addEventListener("astro:page-load", () => {
+        initDocsApp();
+        initCodeCopyButtons();
+      });
     </script>
   </body>
 </html>
+

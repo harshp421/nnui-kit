@@ -404,5 +404,315 @@ export const Kbd = forwardRef(function Kbd({ className = '', children, ...rest }
 
 Kbd.displayName = 'Kbd';
 
+/**
+ * =========================================================================
+ * Tier 0: Platform-Native Semantic Primitives (React Wrappers)
+ * =========================================================================
+ */
+
+export const Button = forwardRef(function Button({ as: Tag = 'button', variant = 'primary', size = 'md', fullWidth, className = '', children, ...props }, ref) {
+  const isNativeButton = Tag === 'button';
+  return React.createElement(
+    Tag,
+    {
+      ref,
+      type: isNativeButton ? (props.type || 'button') : undefined,
+      'data-ui': 'button',
+      'data-variant': variant,
+      'data-size': size !== 'md' ? size : undefined,
+      'data-full-width': fullWidth ? '' : undefined,
+      className: `ui-button ${variant ? `ui-button--${variant}` : ''} ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Button.displayName = 'Button';
+
+export const Badge = forwardRef(function Badge({ as: Tag = 'span', variant = 'default', size = 'md', className = '', children, ...props }, ref) {
+  return React.createElement(
+    Tag,
+    {
+      ref,
+      'data-ui': 'badge',
+      'data-variant': variant,
+      'data-size': size !== 'md' ? size : undefined,
+      className: `ui-badge ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Badge.displayName = 'Badge';
+
+export const Card = forwardRef(function Card({ as: Tag = 'div', className = '', children, ...props }, ref) {
+  return React.createElement(
+    Tag,
+    {
+      ref,
+      'data-ui': 'card',
+      className: `ui-card ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Card.displayName = 'Card';
+Card.Root = Card;
+Card.Header = createPart('card-header', 'div', 'Card.Header');
+Card.Title = createPart('card-title', 'h3', 'Card.Title');
+Card.Description = createPart('card-description', 'p', 'Card.Description');
+Card.Content = createPart('card-content', 'div', 'Card.Content');
+Card.Body = Card.Content;
+Card.Footer = createPart('card-footer', 'div', 'Card.Footer');
+
+export const Alert = forwardRef(function Alert({ as: Tag = 'div', variant = 'info', className = '', children, ...props }, ref) {
+  return React.createElement(
+    Tag,
+    {
+      ref,
+      role: 'alert',
+      'data-ui': 'alert',
+      'data-variant': variant,
+      className: `ui-alert ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Alert.displayName = 'Alert';
+Alert.Root = Alert;
+Alert.Title = createPart('alert-title', 'h5', 'Alert.Title');
+Alert.Description = createPart('alert-description', 'div', 'Alert.Description');
+
+export const Avatar = forwardRef(function Avatar({ as: Tag = 'div', size = 'md', src, alt = '', fallback, className = '', children, ...props }, ref) {
+  return React.createElement(
+    Tag,
+    {
+      ref,
+      'data-ui': 'avatar',
+      'data-size': size !== 'md' ? size : undefined,
+      className: `ui-avatar ${className}`.trim(),
+      ...props,
+    },
+    src ? React.createElement('img', { key: 'avatar-img', src, alt, 'data-part': 'image' }) : null,
+    fallback ? React.createElement('span', { key: 'avatar-fallback', 'data-part': 'fallback' }, fallback) : null,
+    children
+  );
+});
+Avatar.displayName = 'Avatar';
+Avatar.Root = Avatar;
+Avatar.Image = createPart('image', 'img', 'Avatar.Image');
+Avatar.Fallback = createPart('fallback', 'span', 'Avatar.Fallback');
+
+export const Checkbox = forwardRef(function Checkbox({ label, description, className = '', error, ...props }, ref) {
+  return React.createElement(
+    'label',
+    {
+      'data-ui': 'checkbox',
+      className: `ui-checkbox ${error ? 'is-invalid' : ''} ${className}`.trim(),
+    },
+    React.createElement('input', {
+      ref,
+      type: 'checkbox',
+      'aria-invalid': error ? 'true' : undefined,
+      ...props,
+    }),
+    label ? React.createElement('span', { key: 'chk-lbl', 'data-part': 'label' }, label) : null,
+    description ? React.createElement('span', { key: 'chk-desc', 'data-part': 'description' }, description) : null
+  );
+});
+Checkbox.displayName = 'Checkbox';
+
+export const Switch = forwardRef(function Switch({ label, className = '', ...props }, ref) {
+  return React.createElement(
+    'label',
+    {
+      'data-ui': 'switch',
+      className: `ui-switch ${className}`.trim(),
+    },
+    React.createElement('input', {
+      ref,
+      type: 'checkbox',
+      role: 'switch',
+      ...props,
+    }),
+    React.createElement('span', { key: 'sw-thumb', 'data-part': 'thumb' }),
+    label ? React.createElement('span', { key: 'sw-lbl', 'data-part': 'label' }, label) : null
+  );
+});
+Switch.displayName = 'Switch';
+
+export const Progress = forwardRef(function Progress({ value = 0, max = 100, className = '', ...props }, ref) {
+  const percentage = Math.min(100, Math.max(0, (value / max) * 100));
+  return React.createElement(
+    'div',
+    {
+      ref,
+      role: 'progressbar',
+      'aria-valuenow': value,
+      'aria-valuemin': 0,
+      'aria-valuemax': max,
+      'data-ui': 'progress',
+      className: `ui-progress ${className}`.trim(),
+      ...props,
+    },
+    React.createElement('div', {
+      'data-part': 'indicator',
+      style: { width: `${percentage}%` },
+    })
+  );
+});
+Progress.displayName = 'Progress';
+
+export const Separator = forwardRef(function Separator({ orientation = 'horizontal', label, className = '', ...props }, ref) {
+  if (label) {
+    return React.createElement(
+      'div',
+      {
+        ref,
+        role: 'separator',
+        'data-ui': 'separator',
+        'data-orientation': orientation,
+        className: `ui-separator ${className}`.trim(),
+        ...props,
+      },
+      React.createElement('span', { 'data-part': 'label' }, label)
+    );
+  }
+  return React.createElement('hr', {
+    ref,
+    'data-ui': 'separator',
+    'data-orientation': orientation,
+    className: `ui-separator ${className}`.trim(),
+    ...props,
+  });
+});
+Separator.displayName = 'Separator';
+
+export const Skeleton = forwardRef(function Skeleton({ className = '', width, height, circle, style, ...props }, ref) {
+  return React.createElement(
+    'div',
+    {
+      ref,
+      'data-ui': 'skeleton',
+      className: `ui-skeleton ${circle ? 'ui-skeleton--circle' : ''} ${className}`.trim(),
+      style: {
+        width,
+        height,
+        borderRadius: circle ? '50%' : undefined,
+        ...style,
+      },
+      ...props,
+    }
+  );
+});
+Skeleton.displayName = 'Skeleton';
+
+export const Spinner = forwardRef(function Spinner({ size = 'md', className = '', ...props }, ref) {
+  return React.createElement(
+    'div',
+    {
+      ref,
+      role: 'status',
+      'aria-label': 'Loading',
+      'data-ui': 'spinner',
+      'data-size': size !== 'md' ? size : undefined,
+      className: `ui-spinner ${className}`.trim(),
+      ...props,
+    }
+  );
+});
+Spinner.displayName = 'Spinner';
+
+export const Empty = forwardRef(function Empty({ className = '', children, ...props }, ref) {
+  return React.createElement(
+    'div',
+    {
+      ref,
+      'data-ui': 'empty',
+      className: `ui-empty ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Empty.displayName = 'Empty';
+Empty.Root = Empty;
+Empty.Icon = createPart('empty-icon', 'div', 'Empty.Icon');
+Empty.Title = createPart('empty-title', 'h4', 'Empty.Title');
+Empty.Description = createPart('empty-description', 'p', 'Empty.Description');
+Empty.Action = createPart('empty-action', 'div', 'Empty.Action');
+
+export const Stack = forwardRef(function Stack({ direction = 'column', gap = 'md', align, justify, className = '', children, ...props }, ref) {
+  return React.createElement(
+    'div',
+    {
+      ref,
+      'data-ui': 'stack',
+      'data-direction': direction,
+      'data-gap': gap,
+      'data-align': align,
+      'data-justify': justify,
+      className: `ui-stack ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Stack.displayName = 'Stack';
+
+export const Grid = forwardRef(function Grid({ cols = 1, gap = 'md', className = '', children, ...props }, ref) {
+  return React.createElement(
+    'div',
+    {
+      ref,
+      'data-ui': 'grid',
+      'data-cols': cols,
+      'data-gap': gap,
+      className: `ui-grid ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Grid.displayName = 'Grid';
+
+export const Container = forwardRef(function Container({ size = 'lg', className = '', children, ...props }, ref) {
+  return React.createElement(
+    'div',
+    {
+      ref,
+      'data-ui': 'container',
+      'data-size': size,
+      className: `ui-container ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Container.displayName = 'Container';
+
+export const Table = forwardRef(function Table({ className = '', children, ...props }, ref) {
+  return React.createElement(
+    'table',
+    {
+      ref,
+      'data-ui': 'table',
+      className: `ui-table ${className}`.trim(),
+      ...props,
+    },
+    children
+  );
+});
+Table.displayName = 'Table';
+Table.Root = Table;
+Table.Header = createPart('table-header', 'thead', 'Table.Header');
+Table.Body = createPart('table-body', 'tbody', 'Table.Body');
+Table.Row = createPart('table-row', 'tr', 'Table.Row');
+Table.Head = createPart('table-head', 'th', 'Table.Head');
+Table.Cell = createPart('table-cell', 'td', 'Table.Cell');
+
 export { toast, register };
+
 

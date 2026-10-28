@@ -1,5 +1,19 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "nnui-kit": ["../../packages/nnui-kit/dist/index.d.ts"],
+      "nnui-kit/client": ["../../packages/nnui-kit/dist/client.d.ts"],
+      "nnui-kit/react": ["../../packages/nnui-kit/dist/react.d.ts"],
+      "nnui-kit/*": ["../../packages/nnui-kit/*"],
+      "nnuikit": ["../../packages/nnui-kit/dist/index.d.ts"],
+      "nnuikit/client": ["../../packages/nnui-kit/dist/client.d.ts"],
+      "nnuikit/react": ["../../packages/nnui-kit/dist/react.d.ts"],
+      "nnuikit/*": ["../../packages/nnui-kit/*"]
+    }
+  },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]
 }
+

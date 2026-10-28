@@ -1,0 +1,256 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import DocsSidebar from "../../../components/DocsSidebar.astro";
+
+const vueSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "NNUI-KIT Vue 3 & Nuxt Installation Guide",
+  description:
+    "Step-by-step instructions to install and configure NNUI-KIT in Vue 3 and Nuxt. Configure Vite isCustomElement compiler options and use Light-DOM primitives.",
+  author: {
+    "@type": "Organization",
+    name: "NNUI-KIT Team",
+    url: "https://github.com/harshp421/nnui-kit",
+  },
+};
+---
+
+<DocsLayout
+  title="Vue 3 & Nuxt Installation — NNUI-KIT"
+  description="Install and configure NNUI-KIT in Vue 3 and Nuxt. Learn how to configure Vite compiler options, import design tokens, and bind reactive state."
+  activePath="/docs/installation/vue"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Docs", url: "/docs" },
+    { name: "Installation", url: "/docs/installation" },
+    { name: "Vue", url: "/docs/installation/vue" },
+  ]}
+  schema={vueSchema}
+>
+  <div class="docs-layout-container">
+    <DocsSidebar activePath="/docs/installation/vue" />
+
+    <main class="docs-body">
+      <!-- Breadcrumbs -->
+      <nav class="docs-breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs">Docs</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <a href="/docs/installation">Installation</a>
+        <span class="docs-breadcrumbs-sep">/</span>
+        <span class="docs-breadcrumbs-current">Vue & Nuxt</span>
+      </nav>
+
+      <!-- Page Header -->
+      <header style="margin-bottom: 2.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+          <div
+            class="framework-card-icon"
+            style="width: 36px; height: 36px; margin-bottom: 0; background: rgba(66, 184, 131, 0.12); color: #42b883;"
+          >
+            <svg width="20" height="20" viewBox="0 0 256 221" fill="none"><path d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0h47.36z" fill="#42b883"/><path d="M0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0H0z" fill="#35495e"/><path d="M50.56 0L128 133.12L204.8 0h-47.36L128 51.2L97.92 0H50.56z" fill="#42b883"/></svg>
+          </div>
+          <h1
+            style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--text-main);"
+          >
+            Vue & Nuxt
+          </h1>
+        </div>
+        <p
+          style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin: 0; max-width: 720px;"
+        >
+          Install and configure NNUI-KIT with Vue 3 (Composition API) or Nuxt 3.
+        </p>
+      </header>
+
+      <!-- Steps List -->
+      <div class="installation-steps">
+        <!-- Step 1: Create project -->
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h2 class="step-title">Create project</h2>
+            <p class="step-desc">
+              Create a new Vue 3 project using <code>create-vue</code>:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm create vue@latest my-app
+cd my-app</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Install dependencies -->
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h2 class="step-title">Install NNUI-KIT</h2>
+            <p class="step-desc">
+              Install the package from npm:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm install nnuikit</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Configure Vite for Custom Elements -->
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h2 class="step-title">Configure Vite Compiler Options</h2>
+            <p class="step-desc">
+              Instruct Vue to recognize <code>&lt;ui-*&gt;</code> custom elements so it doesn't emit component resolution warnings:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>vite.config.ts</span>
+                <span>ts</span>
+              </div>
+              <pre><code>import &#123; defineConfig &#125; from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig(&#123;
+  plugins: [
+    vue(&#123;
+      template: &#123;
+        compilerOptions: &#123;
+          // Treat all tags starting with 'ui-' as platform custom elements
+          isCustomElement: (tag) =&gt; tag.startsWith('ui-'),
+        &#125;,
+      &#125;,
+    &#125;),
+  ],
+&#125;)</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Import Tokens & Client Hydration -->
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h2 class="step-title">Configure Main Entrypoint</h2>
+            <p class="step-desc">
+              Import the design tokens and the lightweight client engine in <code>src/main.ts</code>:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/main.ts</span>
+                <span>ts</span>
+              </div>
+              <pre><code>import &#123; createApp &#125; from 'vue'
+import App from './App.vue'
+
+// 1. Import NNUI design tokens (CSS variables & cascade layers)
+import 'nnuikit/tokens/theme.css'
+
+// 2. Import Light-DOM client runtime for Tier 2 custom elements
+import 'nnuikit/client'
+
+// 3. Global CSS reset
+import './style.css'
+
+createApp(App).mount('#app')</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Add components -->
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h2 class="step-title">Add components in Vue templates</h2>
+            <p class="step-desc">
+              Use semantic Light-DOM elements with Vue Composition API:
+            </p>
+
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>src/App.vue</span>
+                <span>vue</span>
+              </div>
+              <pre><code>&lt;script setup lang="ts"&gt;
+import &#123; ref &#125; from 'vue'
+
+const email = ref('')
+const count = ref(0)
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;main style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;"&gt;
+    &lt;div data-ui="card" style="width: 100%; max-width: 440px; padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;"&gt;
+      &lt;div style="display: flex; justify-content: space-between; align-items: center;"&gt;
+        &lt;h1 style="margin: 0; font-size: 1.35rem; font-weight: 700;"&gt;Vue + NNUI-KIT&lt;/h1&gt;
+        &lt;span data-ui="badge" data-variant="primary"&gt;Vue 3&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;p style="margin: 0; color: var(--ui-text-secondary, #a1a1aa); font-size: 0.875rem;"&gt;
+        100% Light-DOM custom elements with native Vue v-model reactivity.
+      &lt;/p&gt;
+
+      &lt;input data-ui="input" v-model="email" placeholder="Enter your email..." type="email" /&gt;
+
+      &lt;button data-ui="button" data-variant="primary" @click="count++"&gt;
+        Clicked &#123;&#123; count &#125;&#125; times
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+&lt;/template&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 6: Run dev server -->
+        <div class="step-item">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h2 class="step-title">Run development server</h2>
+            <p class="step-desc">
+              Start the Vue development server:
+            </p>
+            <div class="code-block-box">
+              <div class="code-block-header">
+                <span>Terminal</span>
+                <span>bash</span>
+              </div>
+              <pre><code>npm run dev</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Next Navigation -->
+      <div
+        style="border-top: 1px solid var(--border-subtle); padding-top: 2rem; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;"
+      >
+        <a
+          href="/docs/installation"
+          class="btn-secondary"
+          style="font-size: 0.85rem;"
+        >
+          ← All Frameworks
+        </a>
+        <a
+          href="/components"
+          class="btn-primary"
+          style="font-size: 0.85rem;"
+        >
+          Explore All Components →
+        </a>
+      </div>
+    </main>
+  </div>
+</DocsLayout>

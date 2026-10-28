@@ -12,6 +12,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: fit-content;
+    max-width: 100%;
     gap: var(--ui-space-2);
     padding: 0.5rem 1rem;
     font-family: var(--ui-font-sans);
@@ -27,6 +29,13 @@
     background-color: var(--ui-color-brand-600);
     color: var(--ui-text-inverted);
     box-shadow: var(--ui-shadow-sm);
+  }
+
+  [data-ui="button"][data-full-width],
+  [data-ui="button"].w-full,
+  .ui-button[data-full-width],
+  .ui-button.w-full {
+    width: 100%;
   }
 
   [data-ui="button"]:hover,
