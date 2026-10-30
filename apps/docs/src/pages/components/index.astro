@@ -10,7 +10,7 @@ const itemListSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   'name': 'NNUI-KIT All-in-One Component Catalog',
-  'description': 'Complete catalog of 45+ platform-native Light-DOM UI components and primitives across React, Vue, Svelte, Astro, and HTML.',
+  'description': 'Complete catalog of 51 platform-native Light-DOM UI components and primitives across React, Vue, Svelte, Astro, and HTML.',
   'numberOfItems': componentsList.length,
   'itemListElement': componentsList.map((comp: any, idx: number) => ({
     '@type': 'ListItem',
@@ -23,8 +23,8 @@ const itemListSchema = {
 ---
 
 <DocsLayout 
-  title="All-in-One UI Components Catalog (45+) — Accessible Light-DOM Primitives | NNUI-KIT" 
-  description="Explore all 45+ platform-native Light-DOM UI components in NNUI-KIT. Accessible primitives and micro-enhancers for React 19, Vue 3, Svelte 5, Astro, and HTML with zero Shadow DOM traps."
+  title="All-in-One UI Components Catalog (51) — Accessible Light-DOM Primitives | NNUI-KIT" 
+  description="Explore all 51 platform-native Light-DOM UI components in NNUI-KIT. Accessible primitives and micro-enhancers for React 19, Vue 3, Svelte 5, Astro, and HTML with zero Shadow DOM traps."
   activePath="/components"
   keywords={[
     'all in one ui components',
@@ -102,7 +102,7 @@ const itemListSchema = {
               </p>
             </div>
             <div style="font-family: var(--docs-font-mono); font-size: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-subtle); padding: 0.45rem 0.65rem; border-radius: 6px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
-              <span>npx nnui add {comp.name}</span>
+              <span>npx nnuikit add {comp.name}</span>
               <span style="color: var(--text-main); font-weight: 600; font-family: var(--docs-font-sans); font-size: 0.75rem;">View &rarr;</span>
             </div>
           </a>
@@ -136,7 +136,7 @@ const itemListSchema = {
               </p>
             </div>
             <div style="font-family: var(--docs-font-mono); font-size: 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-subtle); padding: 0.45rem 0.65rem; border-radius: 6px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center;">
-              <span>npx nnui add {comp.name}</span>
+              <span>npx nnuikit add {comp.name}</span>
               <span style="color: var(--text-main); font-weight: 600; font-family: var(--docs-font-sans); font-size: 0.75rem;">View &rarr;</span>
             </div>
           </a>

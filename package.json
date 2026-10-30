@@ -8,13 +8,13 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "cd apps/docs && npm run dev",
-    "dev:dashboard": "cd apps/dashboard && npm run dev",
-    "dev:pkg": "cd packages/nnui-kit && npm run dev",
-    "build:pkg": "cd packages/nnui-kit && npm run build",
-    "build:docs": "cd apps/docs && npm run build",
-    "build:dashboard": "cd apps/dashboard && npm run build",
-    "build": "node scripts/build.js",
+    "dev": "node init && cd apps/docs && npm run dev",
+    "dev:dashboard": "node init && cd apps/dashboard && npm run dev",
+    "dev:pkg": "node init && cd packages/nnui-kit && npm run dev",
+    "build:pkg": "node init && cd packages/nnui-kit && npm run build",
+    "build:docs": "node init && cd apps/docs && npm run build",
+    "build:dashboard": "node init && cd apps/dashboard && npm run build",
+    "build": "node init && node scripts/build.js",
     "test": "node packages/nnui-kit/tests/run-all.js",
     "pack:check": "cd packages/nnui-kit && npm run pack:check",
     "publish:pkg": "cd packages/nnui-kit && npm publish"

@@ -5,5 +5,4 @@ dist-docs/
 .DS_Store
 *.tgz
 *.log
-.env
-.env.*
+config.bat

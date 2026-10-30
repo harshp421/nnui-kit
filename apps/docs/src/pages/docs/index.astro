@@ -122,7 +122,7 @@ const docsFaqSchema = {
                 <span>🧩</span>
                 <span>Component Library</span>
               </span>
-              <span class="docs-version-pill" style="font-size: 0.65rem;">45+ Primitives</span>
+              <span class="docs-version-pill" style="font-size: 0.65rem;">51 Components</span>
             </div>
             <p class="docs-quick-link-desc">
               Accessible buttons, virtualized Data Grid, Dialog, Stepper, Tabs, Toast, and micro-enhancers.
@@ -236,8 +236,8 @@ const docsFaqSchema = {
               <p
                 style="margin: 0; font-size: 0.85rem; color: var(--text-muted);"
               >
-                W3C DTCG tokens specification with 6 color palettes (Zinc,
-                Slate, Neutral, Violet, Rose, Emerald). Layered defensively
+                W3C DTCG tokens specification with 7 color palettes (Zinc,
+                Slate, Violet, Blue, Emerald, Rose, Orange). Layered defensively
                 across <code
                   >@layer ui.tokens, ui.base, ui.components, ui.overrides</code
                 >.
@@ -400,12 +400,12 @@ const docsFaqSchema = {
 npm install nnuikit
 
 # 2. Or initialize the CLI (automatically generates theme.css and tokens in your app)
-npx nnui init
+npx nnuikit init
 
 # 3. Add components with your specific framework target:
-npx nnui add dialog --react   # Drops React compound component into src/components/ui/
-npx nnui add dialog --html    # Drops vanilla HTML snippet & JS micro-enhancer
-npx nnui add dialog --rails   # Drops Rails ERB partial & configures importmap.rb</code></pre>
+npx nnuikit add dialog --react   # Drops React compound component into src/components/ui/
+npx nnuikit add dialog --html    # Drops vanilla HTML snippet & JS micro-enhancer
+npx nnuikit add dialog --rails   # Drops Rails ERB partial & configures importmap.rb</code></pre>
 
         <!-- Framework Targets Card -->
         <div
@@ -470,7 +470,7 @@ npx nnui add dialog --rails   # Drops Rails ERB partial & configures importmap.r
               <pre
                 class="code-viewer-pre"
                 style="border-radius: 6px; font-size: 0.8rem; padding: 1rem; margin-bottom: 0.5rem;"><code>{`# Drops React 18/19 compound component into src/components/ui/dialog.jsx
-npx nnui add dialog --react
+npx nnuikit add dialog --react
 
 // In your application:
 import { Dialog, DialogModal } from './components/ui/dialog.jsx';
@@ -500,7 +500,7 @@ export function Example() {
               <pre
                 class="code-viewer-pre"
                 style="border-radius: 6px; font-size: 0.8rem; padding: 1rem; margin-bottom: 0.5rem;"><code>{`# Drops runnable HTML snippet & JS micro-enhancer into components/ui/dialog/
-npx nnui add dialog --html
+npx nnuikit add dialog --html
 
 <!-- components/ui/dialog/dialog.html -->
 <ui-dialog id="my-modal">
@@ -528,7 +528,7 @@ npx nnui add dialog --html
               <pre
                 class="code-viewer-pre"
                 style="border-radius: 6px; font-size: 0.8rem; padding: 1rem; margin-bottom: 0.5rem;"><code>{`# Generates ERB partial, asset pipeline JS, and pins nnuikit in importmap.rb
-npx nnui add dialog --rails
+npx nnuikit add dialog --rails
 
 <%# app/views/pages/home.html.erb %>
 <%= render "components/dialog", id: "confirm-modal", title: "Canary Rollout" do %>
@@ -751,7 +751,7 @@ console.log(schema.frameworkSnippets); // Idiomatic React 19, Vue 3, Svelte 5 sn
           style="font-size: 1rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;"
         >
           NNUI-KIT provides official React 18 & 19 bindings exported from <code
-            >nnui-kit/react</code
+            >nnuikit/react</code
           >. Built with forward-ref semantics, TypeScript interfaces, and
           Next.js 15 App Router SSR safety:
         </p>
@@ -769,7 +769,7 @@ console.log(schema.frameworkSnippets); // Idiomatic React 19, Vue 3, Svelte 5 sn
             style="margin: 0;"><code>'use client';
 
 import React, &#123; useState &#125; from 'react';
-import 'nnuikit/tokens/theme.css';
+import 'nnuikit/css';
 import 'nnuikit/client';
 import &#123; Button, Card, Input, Badge &#125; from 'nnuikit/react';
 
@@ -886,7 +886,7 @@ export default function DashboardPage() &#123;
           <pre
             class="code-viewer-pre"
             style="margin: 0;"><code>&lt;script&gt;
-  import 'nnuikit/tokens/theme.css';
+  import 'nnuikit/css';
   import 'nnuikit/client';
 
   let activeStep = $state(1);
@@ -975,7 +975,7 @@ export default defineConfig(&#123;
             class="code-viewer-pre"
             style="margin: 0;"><code>&lt;script setup&gt;
 import &#123; ref &#125; from 'vue';
-import 'nnuikit/tokens/theme.css';
+import 'nnuikit/css';
 import 'nnuikit/client';
 
 const selectedItem = ref('');

@@ -46,7 +46,7 @@ const componentFaqSchema = {
       name: `How do I install the ${comp.title} component in my application?`,
       acceptedAnswer: {
         "@type": "Answer",
-        text: `Run 'npx nnui add ${comp.slug}' using the CLI to add the component to your codebase, or install 'npm install nnuikit' to import it across React, Vue, Svelte, Astro, or plain HTML.`,
+        text: `Run 'npx nnuikit add ${comp.slug}' using the CLI to add the component to your codebase, or install 'npm install nnuikit' to import it across React, Vue, Svelte, Astro, or plain HTML.`,
       },
     },
     {
@@ -224,10 +224,10 @@ const componentFaqSchema = {
           <div style="display: flex; align-items: center; gap: 0.5rem;">
             <span style="color: var(--text-muted);">$</span>
             <span style="color: var(--text-main); font-weight: 600;"
-              >npx nnui add {comp.slug}</span
+              >npx nnuikit add {comp.slug}</span
             >
           </div>
-          <span class="copy-badge" data-copy={`npx nnui add ${comp.slug}`}
+          <span class="copy-badge" data-copy={`npx nnuikit add ${comp.slug}`}
             >copy</span
           >
         </div>
@@ -373,9 +373,9 @@ const componentFaqSchema = {
             </div>
             <pre
               class="code-viewer-pre"
-              style="margin: 0;"><code>import 'nnui-kit/css';
-import 'nnui-kit/client';
-import &#123; {comp.title.replace(/[^a-zA-Z]/g, '')} &#125; from 'nnui-kit/react';</code></pre>
+              style="margin: 0;"><code>import 'nnuikit/css';
+import 'nnuikit/client';
+import &#123; {comp.title.replace(/[^a-zA-Z]/g, '')} &#125; from 'nnuikit/react';</code></pre>
           </div>
 
           <div
@@ -389,8 +389,8 @@ import &#123; {comp.title.replace(/[^a-zA-Z]/g, '')} &#125; from 'nnui-kit/react
             <pre
               class="code-viewer-pre"
               style="margin: 0;"><code>&lt;!-- Automatically registers &lt;ui-{comp.slug}&gt; and &lt;nnui-{comp.slug}&gt; --&gt;
-import 'nnui-kit/css';
-import 'nnui-kit/client';</code></pre>
+import 'nnuikit/css';
+import 'nnuikit/client';</code></pre>
           </div>
         </div>
       </section>
@@ -553,7 +553,7 @@ import 'nnui-kit/client';</code></pre>
   if (btnToastSuccess) {
     btnToastSuccess.addEventListener("click", () => {
       toast.success("Changes saved successfully!", {
-        description: "All 45 Light-DOM components synchronized.",
+        description: "All 51 Light-DOM components synchronized.",
       });
     });
   }

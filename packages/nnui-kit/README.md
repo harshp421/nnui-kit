@@ -1,7 +1,7 @@
 # NNUI-KIT (`nnuikit`)
 
 > **Platform-Native, Three-Tier Light-DOM Universal UI Architecture**  
-> 45 Components & Primitives • Zero Shadow DOM a11y traps • SSR Safe (`nnuikit/client`) • First-class React 18/19 wrapper (`nnuikit/react`) • React 19, Vue 3, Svelte 5, Astro, HTMX 2 & Node SSR ready • Sub-40 KB gzipped total runtime.
+> 51 Components & Primitives • Zero Shadow DOM a11y traps • SSR Safe (`nnuikit/client`) • First-class React 18/19 wrapper (`nnuikit/react`) • React 19, Vue 3, Svelte 5, Astro, HTMX 2 & Node SSR ready • Sub-40 KB gzipped total runtime.
 
 [![npm version](https://img.shields.io/npm/v/nnuikit.svg?style=flat-square)](https://www.npmjs.com/package/nnuikit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://opensource.org/licenses/MIT)
@@ -100,16 +100,16 @@ Rather than a closed black-box dependency, you can drop fully editable component
 
 ```bash
 # Initialize tokens & config
-npx nnui init
+npx nnuikit init
 
 # Target 1: React 18 & 19 (drops React compound component into src/components/ui/)
-npx nnui add dialog tabs command --react
+npx nnuikit add dialog tabs command --react
 
 # Target 2: Vanilla HTML (drops runnable HTML snippet & JS micro-enhancer)
-npx nnui add dialog tabs command --html
+npx nnuikit add dialog tabs command --html
 
 # Target 3: Ruby on Rails (drops ERB partial & configures config/importmap.rb)
-npx nnui add dialog tabs command --rails
+npx nnuikit add dialog tabs command --rails
 ```
 
 ---
@@ -176,13 +176,13 @@ Just like shadcn/ui, you can copy components directly into your project codebase
 
 ```bash
 # Initialize NNUI configuration and styles
-npx nnui init
+npx nnuikit init
 
 # List all available components in the registry
-npx nnui list
+npx nnuikit list
 
 # Add specific components and their dependencies directly into your project
-npx nnui add data-grid stepper combobox toast
+npx nnuikit add data-grid stepper combobox toast
 ```
 
 ---
@@ -280,9 +280,9 @@ console.log(schema.frameworkSnippets); // React 19, Vue 3, Svelte 5 snippets
 ```jsx
 'use client';
 
-import 'nnui-kit/client';
-import { toast } from 'nnui-kit';
-import { Tabs, DataGrid } from 'nnui-kit/react';
+import 'nnuikit/client';
+import { toast } from 'nnuikit';
+import { Tabs, DataGrid } from 'nnuikit/react';
 
 export default function App() {
   return (
@@ -296,8 +296,8 @@ export default function App() {
 ### Svelte 5 (Runes)
 ```svelte
 <script>
-  import 'nnui-kit/css';
-  import 'nnui-kit/client';
+  import 'nnuikit/css';
+  import 'nnuikit/client';
   let activeTab = $state('blotter');
 </script>
 
@@ -313,8 +313,8 @@ export default function App() {
 ### Vue 3 (Composition API)
 ```html
 <script setup>
-import 'nnui-kit/css';
-import 'nnui-kit/client';
+import 'nnuikit/css';
+import 'nnuikit/client';
 import { ref } from 'vue';
 
 const role = ref('engineer');
@@ -351,15 +351,16 @@ const role = ref('engineer');
 
 ---
 
-## 6. W3C DTCG Design Tokens & 6 Themes
+## 6. W3C DTCG Design Tokens & 7 Curated Palettes
 
-NNUI-KIT includes a full implementation of the W3C Design Tokens Community Group (DTCG) specification in [`tokens.json`](./tokens.json) and [`tokens.css`](./src/styles/tokens.css), with 6 curated color themes:
-* **Zinc** (Default Authentic Shadcn)
-* **Slate** (Cold Technical Precision)
-* **Neutral** (Pure Minimalist Balanced)
-* **Violet** (Modern Creative Accent)
-* **Rose** (Warm Dynamic Accent)
-* **Emerald** (Fintech & Data Terminal Accent)
+NNUI-KIT includes a full implementation of the W3C Design Tokens Community Group (DTCG) specification in [`tokens.json`](./tokens.json) and [`tokens.css`](./src/styles/tokens.css), with 7 curated color palettes:
+* **Zinc** (Monochrome neutral)
+* **Slate** (Cool technical gray)
+* **Violet** (Modern electric accent)
+* **Blue** (Corporate fintech accent)
+* **Emerald** (Forest & data terminal accent)
+* **Rose** (Warm dynamic accent)
+* **Orange** (Warm sunset accent)
 
 Switch themes by applying `data-theme` and `data-palette` attributes to `<html>`:
 
@@ -370,26 +371,25 @@ Switch themes by applying `data-theme` and `data-palette` attributes to `<html>`
 
 ---
 
-## 7. The 4 Engineering Invariants
+## 7. Core Architectural Invariants
 
-1. **Zero Shadow DOM (`attachShadow()` is strictly forbidden):**  
-   Every element lives in the main document DOM. Screen readers (VoiceOver, NVDA, JAWS) parse unbroken accessibility trees with native ARIA and form ID resolutions.
+1. **Zero Shadow DOM (Guarded via `attachShadow()`):**  
+   Every element lives 100% in the document Light DOM. Screen readers (VoiceOver, NVDA, JAWS) parse unbroken accessibility trees with native ARIA and form ID resolutions. The base class explicitly overrides `attachShadow()` to throw a runtime error, preventing third-party script shadow injection.
 2. **"Mutate Attributes, Never Nodes":**  
    Micro-enhancers coordinate exclusively via attributes (`aria-*`, `data-*`, `tabindex`), guaranteeing 100% hydration and reconciliation safety in React 19, Vue 3, and Svelte 5 without V-DOM thrashing.
 3. **Defensive Cascade Layers (`@layer`):**  
    All styles are contained within `@layer ui.tokens, ui.reset, ui.base, ui.components, ui.overrides;`. Consumer utility classes (Tailwind, UnoCSS, custom CSS) can override library defaults cleanly without `!important`.
-4. **Sub-40 KB Complete Runtime:**  
-   The entire library of 40 components + themes + virtualized data grid bundles into under **39.8 kB gzipped JavaScript**, running 3x to 5x lighter than MUI, Ant Design, or Radix + AG Grid.
+4. **Lean Modular Runtime (~1–3 kB per component):**  
+   Individual components tree-shake down to ~1–3 kB gzipped each. The full 51-component monolithic suite is ~50.7 kB gzipped JS (~72 kB with complete CSS), with zero heavy virtual DOM runtime or CSS-in-JS emotion injection.
 
 ---
 
-## 8. Local Development & Testing
+## 8. Verification & Test Suite
+
+The codebase includes 16 automated test suites executing hundreds of unit, integration, and SSR checks:
 
 ```bash
-# Start Vite development documentation server
-npm run dev
-
-# Run comprehensive test suite across all 40 components, tracks, and SSR safety
+# Run all 16 test suites (SSR, React 19, FACE, Anchor fallbacks, AI primitives, Tokens)
 npm test
 
 # Build NPM distribution bundle (dist/index.js, dist/client.js, dist/react.js, dist/index.css)

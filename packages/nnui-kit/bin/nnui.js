@@ -4,10 +4,10 @@
  * NNUI-KIT Command Line Interface (CLI)
  * Component registry installer inspired by shadcn/ui.
  * Usage:
- *   npx nnui init
- *   npx nnui add <component...>
- *   npx nnui add --all
- *   npx nnui list
+ *   npx nnuikit init
+ *   npx nnuikit add <component...>
+ *   npx nnuikit add --all
+ *   npx nnuikit list
  */
 
 import fs from 'node:fs';
@@ -27,14 +27,14 @@ async function getRegistry() {
 
   // Remote CDN Fallback when executed via npx without local repo
   try {
-    const res = await fetch('https://cdn.jsdelivr.net/npm/nnui-kit/registry.json');
+    const res = await fetch('https://cdn.jsdelivr.net/npm/nnuikit/registry.json');
     if (res.ok) {
       return await res.json();
     }
   } catch (e) {
     // try github raw fallback
     try {
-      const ghRes = await fetch('https://raw.githubusercontent.com/harshparmar/new_age_uiKit/main/new_age_uikit/registry.json');
+      const ghRes = await fetch('https://raw.githubusercontent.com/harshp421/nnui-kit/main/packages/nnui-kit/registry.json');
       if (ghRes.ok) {
         return await ghRes.json();
       }
@@ -654,7 +654,7 @@ async function handleAdd(componentNames, options, cwd) {
 function printHelp() {
   printBanner();
   console.log(`Usage:
-  npx nnui <command> [options]
+  npx nnuikit <command> [options]  (or npx nnui)
 
 Commands:
   init                       Initialize NNUI in your project directory
