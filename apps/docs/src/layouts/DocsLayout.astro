@@ -317,6 +317,17 @@ const componentsList = Object.values(componentsData) as any[];
             >Themes</a
           >
           <a
+            href="/motion"
+            class={`docs-nav-link ${activePath.startsWith("/motion") ? "active" : ""}`}
+            style="display: inline-flex; align-items: center; gap: 0.35rem;"
+          >
+            <span>Motion</span>
+            <span
+              style="font-size: 0.65rem; background: color-mix(in srgb, var(--ui-color-brand-500, #8b5cf6) 15%, transparent); color: var(--ui-color-brand-500, #8b5cf6); padding: 1px 5px; border-radius: 9999px; font-weight: 700;"
+              >SPRING</span
+            >
+          </a>
+          <a
             href="/typography"
             class={`docs-nav-link ${activePath.startsWith("/typography") ? "active" : ""}`}
             >Typography</a
@@ -1020,6 +1031,7 @@ const componentsList = Object.values(componentsData) as any[];
       function initCodeCopyButtons() {
         document.querySelectorAll("pre").forEach((pre) => {
           if (pre.querySelector(".code-copy-btn")) return;
+          if (pre.closest(".comp-preview-stage") || pre.closest(".comp-preview-viewport") || pre.closest("[data-ui]") || pre.closest("ui-ai-tool-call") || pre.closest("ui-ai-reasoning") || pre.closest("ui-ai-approval")) return;
 
           const parentBox = pre.closest(".code-block-box");
           const header = parentBox ? parentBox.querySelector(".code-block-header") : null;

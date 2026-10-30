@@ -49,6 +49,12 @@ const componentsMap = {
   'tree-view': (await import('../src/components/tree-view/ui-tree-view.js')).UiTreeView,
   'ai-prompt-box': (await import('../src/components/ai-prompt-box/ui-ai-prompt-box.js')).UiAiPromptBox,
   'color-picker': (await import('../src/components/color-picker/ui-color-picker.js')).UiColorPicker,
+  'sparkline': (await import('../src/components/sparkline/ui-sparkline.js')).UiSparkline,
+  'dock': (await import('../src/components/dock/ui-dock.js')).UiDock,
+  'timeline': (await import('../src/components/timeline/ui-timeline.js')).UiTimeline,
+  'ai-reasoning': (await import('../src/components/ai-reasoning/ui-ai-reasoning.js')).UiAiReasoning,
+  'ai-tool-call': (await import('../src/components/ai-tool-call/ui-ai-tool-call.js')).UiAiToolCall,
+  'ai-approval': (await import('../src/components/ai-approval/ui-ai-approval.js')).UiAiApproval,
 };
 
 for (const [name, CompClass] of Object.entries(componentsMap)) {
@@ -74,7 +80,7 @@ assert.strictEqual(registry.name, 'nnui-kit', 'Registry name must be nnui-kit');
 assert.strictEqual(typeof registry.components, 'object', 'registry.components must be an object');
 
 const componentKeys = Object.keys(registry.components);
-assert.strictEqual(componentKeys.length, 45, `Registry must contain 45 components, found ${componentKeys.length}`);
+assert.strictEqual(componentKeys.length, 51, `Registry must contain 51 components, found ${componentKeys.length}`);
 
 for (const [name, comp] of Object.entries(registry.components)) {
   assert(comp.name, `Component ${name} must have a name`);
@@ -91,7 +97,7 @@ for (const [name, comp] of Object.entries(registry.components)) {
     assert(file.content.length > 20, `File ${file.path} in ${name} must have substantial code payload`);
   }
 }
-console.log(`    ✓ All 45 components verified with non-empty installation payloads`);
+console.log(`    ✓ All 51 components verified with non-empty installation payloads`);
 
 // =========================================================================
 // TEST 2: W3C DTCG Token Specification Conformance
@@ -191,7 +197,13 @@ const microEnhancers = [
   'navigation-menu',
   'tree-view',
   'ai-prompt-box',
-  'color-picker'
+  'color-picker',
+  'sparkline',
+  'dock',
+  'timeline',
+  'ai-reasoning',
+  'ai-tool-call',
+  'ai-approval',
 ];
 
 for (const name of microEnhancers) {

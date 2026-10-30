@@ -17,13 +17,13 @@
 }
 
 :root[data-theme="dark"], [data-theme="dark"] {
-  --bg-primary: var(--ui-bg-canvas, #09090b);
-  --bg-secondary: var(--ui-bg-subtle, #18181b);
-  --bg-card: var(--ui-bg-surface, #09090b);
-  --text-main: var(--ui-text-primary, #fafafa);
-  --text-muted: var(--ui-text-secondary, #a1a1aa);
-  --border-subtle: var(--ui-border-default, #27272a);
-  --brand-accent: var(--ui-color-brand-500, #818cf8);
+  --bg-primary: var(--ui-bg-canvas, #090a0f);
+  --bg-secondary: var(--ui-bg-subtle, #1c2434);
+  --bg-card: var(--ui-bg-surface, #0f131c);
+  --text-main: var(--ui-text-primary, #f8fafc);
+  --text-muted: var(--ui-text-secondary, #94a3b8);
+  --border-subtle: var(--ui-border-default, rgba(255, 255, 255, 0.1));
+  --brand-accent: var(--ui-color-brand-500, #38bdf8);
 }
 
 * {

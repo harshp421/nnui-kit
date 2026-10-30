@@ -1,0 +1,355 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+
+<DocsLayout
+  title="Spring Motion & Physics Studio — NNUI-KIT"
+  description="Interactive visual testbed for CSS linear() spring physics tokens, natural easing curves, discrete transitions, and container queries."
+  activePath="/motion"
+>
+  <div style="max-width: 1040px; margin: 0 auto; padding: 2rem 1.5rem 5rem 1.5rem;">
+    <!-- Header Section -->
+    <div style="margin-bottom: 2.5rem; text-align: left;">
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: color-mix(in srgb, var(--ui-color-brand-500, #8b5cf6) 12%, transparent); border: 1px solid color-mix(in srgb, var(--ui-color-brand-500, #8b5cf6) 25%, transparent); padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; color: var(--ui-color-brand-500, #8b5cf6); margin-bottom: 1rem;">
+        <span>✨ Modern Motion Engine</span>
+        <span style="opacity: 0.5;">·</span>
+        <span>Zero-JS CSS linear() Springs</span>
+      </div>
+      <h1 style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em; color: var(--ui-text-primary); margin: 0 0 0.75rem 0;">
+        Spring Motion & Physics Studio
+      </h1>
+      <p style="font-size: 1.05rem; color: var(--ui-text-secondary); max-width: 720px; line-height: 1.6; margin: 0;">
+        Experience authentic physical damping and realistic spring momentum. NNUI-KIT leverages multi-stop CSS <code>linear()</code> easing curves for 60fps natural transitions with zero JavaScript runtime overhead.
+      </p>
+    </div>
+
+    <!-- Speed Controller & Play Bar -->
+    <div data-ui="card" style="padding: 1.25rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; background: var(--ui-bg-surface-elevated); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="btn-trigger-all" type="button" class="ui-button ui-button--primary" style="display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; padding: 0.6rem 1.25rem; border-radius: var(--ui-radius-lg);">
+          <span style="font-size: 1.1rem;">▶</span>
+          <span>Trigger Spring Simulation</span>
+        </button>
+        <span style="font-size: 0.85rem; color: var(--ui-text-muted);">Watch the overshoot & damping settle below</span>
+      </div>
+
+      <!-- Playback Speed Controls -->
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span style="font-size: 0.8rem; font-weight: 600; color: var(--ui-text-secondary);">Playback Speed:</span>
+        <div style="display: inline-flex; background: var(--ui-bg-subtle); padding: 2px; border-radius: var(--ui-radius-md); border: 1px solid var(--ui-border-subtle);">
+          <button type="button" class="speed-btn active" data-speed="1" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; border: none; background: transparent; color: var(--ui-text-primary); border-radius: var(--ui-radius-sm); cursor: pointer; font-weight: 600;">1.0x</button>
+          <button type="button" class="speed-btn" data-speed="0.5" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; border: none; background: transparent; color: var(--ui-text-secondary); border-radius: var(--ui-radius-sm); cursor: pointer;">0.5x</button>
+          <button type="button" class="speed-btn" data-speed="0.25" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; border: none; background: transparent; color: var(--ui-text-secondary); border-radius: var(--ui-radius-sm); cursor: pointer;">0.25x (Slow-Mo)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side-by-Side Motion Tracks -->
+    <div style="display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 3rem;">
+      <!-- Track 1: Snappy Spring -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <div>
+            <span style="font-weight: 700; font-size: 0.95rem; color: var(--ui-text-primary);">--ui-spring-snappy</span>
+            <span style="font-size: 0.75rem; color: #10b981; font-weight: 600; margin-left: 0.5rem; background: rgba(16, 185, 129, 0.12); padding: 2px 7px; border-radius: 9999px;">Micro-Interactions</span>
+          </div>
+          <span style="font-family: var(--ui-font-mono); font-size: 0.75rem; color: var(--ui-text-muted);">Duration: 350ms · 15-stop linear()</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--ui-text-secondary); margin: 0 0 1rem 0;">Used for Segmented Controls, Pill Tabs, Dropdowns, and Cursor Followers. Snaps rapidly into place with tiny elastic settlement.</p>
+        
+        <div class="track-container" style="position: relative; height: 56px; background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); border: 1px solid var(--ui-border-subtle); overflow: hidden; display: flex; align-items: center; padding: 0 12px;">
+          <div class="track-finish-line" style="position: absolute; right: 24px; top: 0; bottom: 0; width: 2px; background: color-mix(in srgb, var(--ui-color-brand-500, #8b5cf6) 40%, transparent); border-right: 1px dashed var(--ui-color-brand-500, #8b5cf6);"></div>
+          <div id="puck-snappy" class="spring-puck" style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #10b981, #059669); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35); transform: translateX(0);">
+            ⚡
+          </div>
+        </div>
+      </div>
+
+      <!-- Track 2: Bouncy Spring -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <div>
+            <span style="font-weight: 700; font-size: 0.95rem; color: var(--ui-text-primary);">--ui-spring-bouncy</span>
+            <span style="font-size: 0.75rem; color: #8b5cf6; font-weight: 600; margin-left: 0.5rem; background: rgba(139, 92, 246, 0.12); padding: 2px 7px; border-radius: 9999px;">Attention & Feedback</span>
+          </div>
+          <span style="font-family: var(--ui-font-mono); font-size: 0.75rem; color: var(--ui-text-muted);">Duration: 500ms · Playful Overshoot</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--ui-text-secondary); margin: 0 0 1rem 0;">Used for Toasts, Floating Badges, and Dialog entrances. Demonstrates clear mechanical overshoot with 2 micro-rebounds.</p>
+        
+        <div class="track-container" style="position: relative; height: 56px; background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); border: 1px solid var(--ui-border-subtle); overflow: hidden; display: flex; align-items: center; padding: 0 12px;">
+          <div class="track-finish-line" style="position: absolute; right: 24px; top: 0; bottom: 0; width: 2px; background: color-mix(in srgb, var(--ui-color-brand-500, #8b5cf6) 40%, transparent); border-right: 1px dashed var(--ui-color-brand-500, #8b5cf6);"></div>
+          <div id="puck-bouncy" class="spring-puck" style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35); transform: translateX(0);">
+            ✨
+          </div>
+        </div>
+      </div>
+
+      <!-- Track 3: Gentle Spring -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <div>
+            <span style="font-weight: 700; font-size: 0.95rem; color: var(--ui-text-primary);">--ui-spring-gentle</span>
+            <span style="font-size: 0.75rem; color: #0284c7; font-weight: 600; margin-left: 0.5rem; background: rgba(2, 132, 199, 0.12); padding: 2px 7px; border-radius: 9999px;">Surface Navigation</span>
+          </div>
+          <span style="font-family: var(--ui-font-mono); font-size: 0.75rem; color: var(--ui-text-muted);">Duration: 400ms · Critically Damped</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--ui-text-secondary); margin: 0 0 1rem 0;">Used for Sheets, Drawers, Modals, and Accordions. Provides silk-smooth inertia without disorienting bounce.</p>
+        
+        <div class="track-container" style="position: relative; height: 56px; background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); border: 1px solid var(--ui-border-subtle); overflow: hidden; display: flex; align-items: center; padding: 0 12px;">
+          <div class="track-finish-line" style="position: absolute; right: 24px; top: 0; bottom: 0; width: 2px; background: color-mix(in srgb, var(--ui-color-brand-500, #8b5cf6) 40%, transparent); border-right: 1px dashed var(--ui-color-brand-500, #8b5cf6);"></div>
+          <div id="puck-gentle" class="spring-puck" style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35); transform: translateX(0);">
+            🌊
+          </div>
+        </div>
+      </div>
+
+      <!-- Track 4: Traditional Standard Easing (Comparison) -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl); opacity: 0.85;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <div>
+            <span style="font-weight: 700; font-size: 0.95rem; color: var(--ui-text-muted);">Traditional cubic-bezier(0.4, 0, 0.2, 1)</span>
+            <span style="font-size: 0.75rem; color: var(--ui-text-muted); font-weight: 600; margin-left: 0.5rem; background: var(--ui-bg-subtle); padding: 2px 7px; border-radius: 9999px;">Standard Web Default</span>
+          </div>
+          <span style="font-family: var(--ui-font-mono); font-size: 0.75rem; color: var(--ui-text-muted);">Rigid Bezier Curve</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--ui-text-muted); margin: 0 0 1rem 0;">Standard mathematical ease-in-out. Notice how it abruptly halts at 100% without authentic physical momentum.</p>
+        
+        <div class="track-container" style="position: relative; height: 56px; background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); border: 1px solid var(--ui-border-subtle); overflow: hidden; display: flex; align-items: center; padding: 0 12px;">
+          <div class="track-finish-line" style="position: absolute; right: 24px; top: 0; bottom: 0; width: 2px; background: var(--ui-border-default);"></div>
+          <div id="puck-bezier" class="spring-puck" style="width: 38px; height: 38px; border-radius: 10px; background: #71717a; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; transform: translateX(0);">
+            ⏹
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Interactive Component Testbed -->
+    <h2 style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ui-text-primary); margin: 0 0 1.25rem 0;">
+      Interactive Component Showcase
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+      <!-- Component 1: Segmented Control with Spring Snappy -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+        <h3 style="font-size: 1rem; font-weight: 700; color: var(--ui-text-primary); margin: 0 0 0.5rem 0;">
+          1. Sliding Segmented Control
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0 0 1.25rem 0;">
+          Click between options to feel <code>--ui-transition-spring-snappy</code> gliding the active pill indicator.
+        </p>
+
+        <ui-segmented-control id="live-segmented" name="viewMode" value="analytics" style="width: 100%; display: flex;">
+          <button data-part="segment" data-value="overview" type="button">Overview</button>
+          <button data-part="segment" data-value="analytics" type="button">Analytics</button>
+          <button data-part="segment" data-value="reports" type="button">Reports</button>
+          <button data-part="segment" data-value="settings" type="button">Settings</button>
+        </ui-segmented-control>
+      </div>
+
+      <!-- Component 2: Bouncy Toast Dispatcher -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+        <h3 style="font-size: 1rem; font-weight: 700; color: var(--ui-text-primary); margin: 0 0 0.5rem 0;">
+          2. Bouncy Toast Notification
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0 0 1.25rem 0;">
+          Trigger a toast notification to observe <code>--ui-spring-bouncy</code> micro-overshoot on entry.
+        </p>
+
+        <button id="btn-fire-toast" type="button" class="ui-button ui-button--secondary" style="width: 100%; padding: 0.65rem 1rem; font-weight: 600;">
+          🚀 Dispatch Bouncy Toast
+        </button>
+      </div>
+
+      <!-- Component 3: Gentle Native Dialog -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+        <h3 style="font-size: 1rem; font-weight: 700; color: var(--ui-text-primary); margin: 0 0 0.5rem 0;">
+          3. Gentle Modal Dialog
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0 0 1.25rem 0;">
+          Opens native <code>&lt;dialog&gt;</code> with <code>@starting-style</code> and <code>--ui-spring-gentle</code>.
+        </p>
+
+        <button id="btn-open-dialog" type="button" class="ui-button ui-button--outline" style="width: 100%; padding: 0.65rem 1rem; font-weight: 600;">
+          🪟 Open Spring Modal
+        </button>
+      </div>
+
+      <!-- Component 4: Floating macOS Spring Dock -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl); grid-column: 1 / -1;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--ui-text-primary); margin: 0;">
+            4. macOS Proximity Spring Dock (&lt;ui-dock&gt;)
+          </h3>
+          <span style="font-size: 0.75rem; color: var(--ui-color-brand-500); font-weight: 600;">Hover cursor across icons</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0 0 1.5rem 0;">
+          Calculates proximity distance in real-time and scales icons with <code>--ui-spring-snappy</code> and tooltips.
+        </p>
+
+        <div style="display: flex; justify-content: center; padding: 1.5rem 0; background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); border: 1px solid var(--ui-border-subtle);">
+          <ui-dock distance="140" max-scale="1.45">
+            <button data-part="item" aria-label="Dashboard" type="button">📊</button>
+            <button data-part="item" aria-label="Messages" type="button">💬</button>
+            <button data-part="item" aria-label="Cloud Servers" type="button">☁️</button>
+            <button data-part="item" aria-label="Analytics Chart" type="button">📈</button>
+            <button data-part="item" aria-label="AI Intelligence" type="button">🤖</button>
+            <button data-part="item" aria-label="Settings" type="button">⚙️</button>
+          </ui-dock>
+        </div>
+      </div>
+
+      <!-- Component 5: Interactive Sparkline -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+        <h3 style="font-size: 1rem; font-weight: 700; color: var(--ui-text-primary); margin: 0 0 0.5rem 0;">
+          5. Interactive Trend Sparkline
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0 0 1rem 0;">
+          Hover across the chart to scrub through live data points with spring-snapped tooltip.
+        </p>
+        <div style="padding: 0.75rem 1rem; background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); border: 1px solid var(--ui-border-subtle); display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 0.75rem; color: var(--ui-text-muted);">Throughput</div>
+            <div style="font-size: 1.15rem; font-weight: 700; color: var(--ui-text-primary);">2,840 req/s</div>
+          </div>
+          <ui-sparkline data="[14, 22, 18, 32, 28, 44, 40, 52]" hoverable fill="gradient" style="width: 150px; height: 46px;"></ui-sparkline>
+        </div>
+      </div>
+
+      <!-- Component 6: Event Timeline -->
+      <div data-ui="card" style="padding: 1.5rem; background: var(--ui-bg-surface); border: 1px solid var(--ui-border-default); border-radius: var(--ui-radius-xl);">
+        <h3 style="font-size: 1rem; font-weight: 700; color: var(--ui-text-primary); margin: 0 0 0.5rem 0;">
+          6. Radar Beacon Timeline
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--ui-text-secondary); margin: 0 0 1rem 0;">
+          Vertical workflow step timeline with active radar beacon animation.
+        </p>
+        <ui-timeline active-step="1">
+          <div data-part="item" data-status="completed">
+            <span data-part="marker"></span>
+            <span data-part="connector"></span>
+            <div data-part="content">
+              <span data-part="time">10:00 AM</span>
+              <h5 data-part="title">Container Built</h5>
+            </div>
+          </div>
+          <div data-part="item" data-status="active">
+            <span data-part="marker"></span>
+            <div data-part="content">
+              <span data-part="time">10:15 AM</span>
+              <h5 data-part="title">Live Traffic Canaried</h5>
+            </div>
+          </div>
+        </ui-timeline>
+      </div>
+    </div>
+
+    <!-- Modal Dialog instance -->
+    <ui-dialog id="demo-spring-dialog">
+      <dialog data-part="dialog" style="max-width: 440px;">
+        <div data-part="dialog-header">
+          <h4 data-part="dialog-title" style="font-size: 1.25rem; font-weight: 700; margin: 0 0 0.35rem 0;">Spring Physics in Top-Layer</h4>
+          <p data-part="dialog-description" style="font-size: 0.85rem; color: var(--ui-text-muted); margin: 0;">
+            This modal scales smoothly from 0.94 to 1.0 using CSS <code>@starting-style</code> and <code>--ui-spring-gentle</code> with zero JavaScript frame calculations.
+          </p>
+        </div>
+        <div data-part="dialog-footer" style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+          <button type="button" class="ui-button ui-button--secondary" onclick="document.getElementById('demo-spring-dialog').close()">
+            Close Modal
+          </button>
+        </div>
+      </dialog>
+    </ui-dialog>
+
+    <ui-toaster id="demo-spring-toaster" position="bottom-right"></ui-toaster>
+  </div>
+
+  <style>
+    .speed-btn.active {
+      background: var(--ui-bg-surface) !important;
+      color: var(--ui-text-primary) !important;
+      font-weight: 700 !important;
+      box-shadow: var(--ui-shadow-sm) !important;
+    }
+  </style>
+
+  <script>
+    import { toast } from 'nnuikit';
+
+    let speedMultiplier = 1.0;
+    let isTrackOpen = false;
+
+    // Speed buttons
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+        const target = e.currentTarget;
+        target.classList.add('active');
+        speedMultiplier = parseFloat(target.getAttribute('data-speed') || '1');
+        applySpeeds();
+      });
+    });
+
+    function applySpeeds() {
+      const snappyDuration = (350 / speedMultiplier) + 'ms';
+      const bouncyDuration = (500 / speedMultiplier) + 'ms';
+      const gentleDuration = (400 / speedMultiplier) + 'ms';
+      const bezierDuration = (350 / speedMultiplier) + 'ms';
+
+      const snappyPuck = document.getElementById('puck-snappy');
+      const bouncyPuck = document.getElementById('puck-bouncy');
+      const gentlePuck = document.getElementById('puck-gentle');
+      const bezierPuck = document.getElementById('puck-bezier');
+
+      if (snappyPuck) snappyPuck.style.transition = `transform ${snappyDuration} var(--ui-spring-snappy)`;
+      if (bouncyPuck) bouncyPuck.style.transition = `transform ${bouncyDuration} var(--ui-spring-bouncy)`;
+      if (gentlePuck) gentlePuck.style.transition = `transform ${gentleDuration} var(--ui-spring-gentle)`;
+      if (bezierPuck) bezierPuck.style.transition = `transform ${bezierDuration} cubic-bezier(0.4, 0, 0.2, 1)`;
+    }
+
+    applySpeeds();
+
+    // Trigger simulation
+    const triggerBtn = document.getElementById('btn-trigger-all');
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', () => {
+        isTrackOpen = !isTrackOpen;
+        const containers = document.querySelectorAll('.track-container');
+        const targetX = isTrackOpen ? (containers[0].clientWidth - 70) : 0;
+
+        const snappyPuck = document.getElementById('puck-snappy');
+        const bouncyPuck = document.getElementById('puck-bouncy');
+        const gentlePuck = document.getElementById('puck-gentle');
+        const bezierPuck = document.getElementById('puck-bezier');
+
+        if (snappyPuck) snappyPuck.style.transform = `translateX(${targetX}px)`;
+        if (bouncyPuck) bouncyPuck.style.transform = `translateX(${targetX}px)`;
+        if (gentlePuck) gentlePuck.style.transform = `translateX(${targetX}px)`;
+        if (bezierPuck) bezierPuck.style.transform = `translateX(${targetX}px)`;
+
+        triggerBtn.innerHTML = isTrackOpen ? '<span>◀ Reset Track</span>' : '<span style="font-size: 1.1rem;">▶</span><span>Trigger Spring Simulation</span>';
+      });
+    }
+
+    // Live Toast Dispatcher
+    const toastBtn = document.getElementById('btn-fire-toast');
+    if (toastBtn) {
+      toastBtn.addEventListener('click', () => {
+        toast.success('Spring Physics Activated', {
+          description: 'This toast slid in using --ui-transition-spring-bouncy!',
+        });
+      });
+    }
+
+    // Live Modal Dialog Trigger
+    const dialogBtn = document.getElementById('btn-open-dialog');
+    if (dialogBtn) {
+      dialogBtn.addEventListener('click', () => {
+        const dialog = document.getElementById('demo-spring-dialog');
+        if (dialog && typeof dialog.showModal === 'function') {
+          dialog.showModal();
+        } else if (dialog && dialog.open !== undefined) {
+          dialog.open = true;
+        }
+      });
+    }
+  </script>
+</DocsLayout>

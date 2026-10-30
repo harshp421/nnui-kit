@@ -248,6 +248,68 @@ ColorPicker.Root = ColorPicker;
 ColorPicker.Swatch = createPart('swatch', 'button', 'ColorPicker.Swatch');
 ColorPicker.Input = createPart('input', 'input', 'ColorPicker.Input');
 
+export const Sparkline = createReactComponent('ui-sparkline', 'Sparkline', { onHoverPoint: 'hoverpoint' });
+
+export const Dock = createReactComponent('ui-dock', 'Dock', { onSelect: 'select' });
+Dock.Root = Dock;
+Dock.Item = createPart('item', 'button', 'Dock.Item');
+
+export const Timeline = createReactComponent('ui-timeline', 'Timeline', { onStepClick: 'stepclick' });
+Timeline.Root = Timeline;
+Timeline.Item = createPart('item', 'div', 'Timeline.Item');
+Timeline.Marker = createPart('marker', 'span', 'Timeline.Marker');
+Timeline.Connector = createPart('connector', 'span', 'Timeline.Connector');
+Timeline.Content = createPart('content', 'div', 'Timeline.Content');
+Timeline.Title = createPart('title', 'h5', 'Timeline.Title');
+Timeline.Description = createPart('description', 'p', 'Timeline.Description');
+Timeline.Time = createPart('time', 'span', 'Timeline.Time');
+
+export const AiReasoning = createReactComponent('ui-ai-reasoning', 'AiReasoning', {
+  onToggle: 'toggle',
+  onCopy: 'copy',
+  onStatusChange: 'statuschange',
+});
+AiReasoning.Root = AiReasoning;
+AiReasoning.Header = createPart('header', 'div', 'AiReasoning.Header');
+AiReasoning.Beacon = createPart('beacon', 'span', 'AiReasoning.Beacon');
+AiReasoning.Summary = createPart('summary', 'span', 'AiReasoning.Summary');
+AiReasoning.Actions = createPart('actions', 'div', 'AiReasoning.Actions');
+AiReasoning.Copy = createPart('copy', 'button', 'AiReasoning.Copy');
+AiReasoning.Toggle = createPart('toggle', 'button', 'AiReasoning.Toggle');
+AiReasoning.Stream = createPart('stream', 'div', 'AiReasoning.Stream');
+
+export const AiToolCall = createReactComponent('ui-ai-tool-call', 'AiToolCall', {
+  onToggle: 'toggle',
+  onRetry: 'retry',
+  onCopy: 'copy',
+});
+AiToolCall.Root = AiToolCall;
+AiToolCall.Header = createPart('header', 'div', 'AiToolCall.Header');
+AiToolCall.Info = createPart('info', 'div', 'AiToolCall.Info');
+AiToolCall.Name = createPart('name', 'span', 'AiToolCall.Name');
+AiToolCall.StatusBadge = createPart('status-badge', 'span', 'AiToolCall.StatusBadge');
+AiToolCall.Latency = createPart('latency', 'span', 'AiToolCall.Latency');
+AiToolCall.Actions = createPart('actions', 'div', 'AiToolCall.Actions');
+AiToolCall.Retry = createPart('retry', 'button', 'AiToolCall.Retry');
+AiToolCall.Copy = createPart('copy', 'button', 'AiToolCall.Copy');
+AiToolCall.Inspector = createPart('inspector', 'div', 'AiToolCall.Inspector');
+AiToolCall.Args = createPart('args', 'div', 'AiToolCall.Args');
+AiToolCall.Output = createPart('output', 'div', 'AiToolCall.Output');
+
+export const AiApproval = createReactComponent('ui-ai-approval', 'AiApproval', {
+  onApprove: 'approve',
+  onReject: 'reject',
+});
+AiApproval.Root = AiApproval;
+AiApproval.Header = createPart('header', 'div', 'AiApproval.Header');
+AiApproval.Title = createPart('title', 'h5', 'AiApproval.Title');
+AiApproval.SeverityBadge = createPart('severity-badge', 'span', 'AiApproval.SeverityBadge');
+AiApproval.Payload = createPart('payload', 'div', 'AiApproval.Payload');
+AiApproval.Actions = createPart('actions', 'div', 'AiApproval.Actions');
+AiApproval.Approve = createPart('approve', 'button', 'AiApproval.Approve');
+AiApproval.Reject = createPart('reject', 'button', 'AiApproval.Reject');
+AiApproval.AuditBadge = createPart('audit-badge', 'div', 'AiApproval.AuditBadge');
+
 /**
  * Platform-Native Input Component
  * Automatically wraps with input-group when icons or kbd badges are provided.

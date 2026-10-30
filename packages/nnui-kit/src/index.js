@@ -33,6 +33,12 @@ import { UiNavigationMenu } from './components/navigation-menu/ui-navigation-men
 import { UiTreeView } from './components/tree-view/ui-tree-view.js';
 import { UiAiPromptBox } from './components/ai-prompt-box/ui-ai-prompt-box.js';
 import { UiColorPicker } from './components/color-picker/ui-color-picker.js';
+import { UiSparkline } from './components/sparkline/ui-sparkline.js';
+import { UiDock } from './components/dock/ui-dock.js';
+import { UiTimeline } from './components/timeline/ui-timeline.js';
+import { UiAiReasoning } from './components/ai-reasoning/ui-ai-reasoning.js';
+import { UiAiToolCall } from './components/ai-tool-call/ui-ai-tool-call.js';
+import { UiAiApproval } from './components/ai-approval/ui-ai-approval.js';
 
 export {
   BaseLightElement,
@@ -64,6 +70,12 @@ export {
   UiTreeView,
   UiAiPromptBox,
   UiColorPicker,
+  UiSparkline,
+  UiDock,
+  UiTimeline,
+  UiAiReasoning,
+  UiAiToolCall,
+  UiAiApproval,
   toast,
 };
 
@@ -100,6 +112,12 @@ export const elements = {
   'ui-tree-view': UiTreeView,
   'ui-ai-prompt-box': UiAiPromptBox,
   'ui-color-picker': UiColorPicker,
+  'ui-sparkline': UiSparkline,
+  'ui-dock': UiDock,
+  'ui-timeline': UiTimeline,
+  'ui-ai-reasoning': UiAiReasoning,
+  'ui-ai-tool-call': UiAiToolCall,
+  'ui-ai-approval': UiAiApproval,
 };
 
 /**

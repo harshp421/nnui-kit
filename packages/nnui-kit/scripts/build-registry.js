@@ -35,6 +35,12 @@ const TIER_2_COMPONENTS = [
   { name: 'tree-view', title: 'Tree View', desc: 'WAI-ARIA APG hierarchical folder and node explorer with 4-way keyboard traversal', file: 'src/components/tree-view/ui-tree-view.js' },
   { name: 'ai-prompt-box', title: 'AI Prompt Box', desc: 'AI Copilot prompt box with auto-expanding textarea, action toolbar, and stop state', file: 'src/components/ai-prompt-box/ui-ai-prompt-box.js' },
   { name: 'color-picker', title: 'Color Picker', desc: 'Modern color canvas with native EyeDropper API integration and format sync', file: 'src/components/color-picker/ui-color-picker.js' },
+  { name: 'sparkline', title: 'Sparkline', desc: 'Lightweight SVG micro-trendline and area chart with interactive hover tooltip', file: 'src/components/sparkline/ui-sparkline.js' },
+  { name: 'dock', title: 'Dock / Island', desc: 'macOS-inspired floating dock and action island with distance-weighted spring magnification', file: 'src/components/dock/ui-dock.js' },
+  { name: 'timeline', title: 'Timeline', desc: 'Accessible event stream & workflow step timeline with radar beacon status', file: 'src/components/timeline/ui-timeline.js' },
+  { name: 'ai-reasoning', title: 'AI Reasoning Stream', desc: 'Accessible chain-of-thought token stream with live timer, spring disclosure, and copy trigger', file: 'src/components/ai-reasoning/ui-ai-reasoning.js' },
+  { name: 'ai-tool-call', title: 'AI Tool Call', desc: 'Agent function execution inspector with latency indicator, collapsible JSON payload, and retry event', file: 'src/components/ai-tool-call/ui-ai-tool-call.js' },
+  { name: 'ai-approval', title: 'AI Approval Gate', desc: 'Human-in-the-Loop action governance gate with risk severity levels and approve/reject triggers', file: 'src/components/ai-approval/ui-ai-approval.js' },
 ];
 
 const TIER_0_COMPONENTS = [

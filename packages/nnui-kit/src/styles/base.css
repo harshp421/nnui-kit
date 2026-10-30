@@ -742,6 +742,7 @@
      ------------------------------------------------------------------------- */
   [data-ui="card"],
   .ui-card {
+    container-type: inline-size;
     background-color: var(--ui-bg-surface);
     border: 1px solid var(--ui-border-default);
     border-radius: var(--ui-radius-lg);

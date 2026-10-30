@@ -19,6 +19,9 @@ const testFiles = [
   'tests/ssr-react.test.js',
   'tests/react19-properties.test.js',
   'tests/intellisense.test.js',
+  'tests/motion-springs.test.js',
+  'tests/craft-components.test.js',
+  'tests/ai-primitives.test.js',
 ];
 
 console.log('🚀 Running NNUI-KIT Complete Test Suite...\n');

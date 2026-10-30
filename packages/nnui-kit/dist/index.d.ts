@@ -241,6 +241,50 @@ export interface UiColorPickerElement extends HTMLElement {
   close(): void;
 }
 
+export interface UiSparklineElement extends HTMLElement {
+  data: number[] | string;
+  color: string;
+  strokeWidth: number;
+  fill: 'gradient' | 'solid' | 'none';
+  hoverable: boolean;
+  smooth: boolean;
+}
+
+export interface UiDockElement extends HTMLElement {
+  position: 'bottom' | 'top' | 'floating';
+  distance: number;
+  maxScale: number;
+}
+
+export interface UiTimelineElement extends HTMLElement {
+  orientation: 'vertical' | 'horizontal';
+  activeStep: number;
+}
+
+export interface UiAiReasoningElement extends HTMLElement {
+  status: 'thinking' | 'done';
+  duration: number;
+  open: boolean;
+  autoCollapse: boolean;
+  collapsible: boolean;
+}
+
+export interface UiAiToolCallElement extends HTMLElement {
+  name: string;
+  status: 'pending' | 'running' | 'success' | 'error';
+  latency: string;
+  open: boolean;
+  collapsible: boolean;
+}
+
+export interface UiAiApprovalElement extends HTMLElement {
+  severity: 'info' | 'warning' | 'critical';
+  status: 'pending' | 'approved' | 'rejected';
+  actionName: string;
+  approve(): void;
+  reject(reason?: string): void;
+}
+
 export interface ToastOptions {
   description?: string;
   type?: 'default' | 'success' | 'error' | 'warning' | 'info';
@@ -327,6 +371,18 @@ declare global {
     'ui-ai-prompt-box': UiAiPromptBoxElement;
     'nnui-color-picker': UiColorPickerElement;
     'ui-color-picker': UiColorPickerElement;
+    'nnui-sparkline': UiSparklineElement;
+    'ui-sparkline': UiSparklineElement;
+    'nnui-dock': UiDockElement;
+    'ui-dock': UiDockElement;
+    'nnui-timeline': UiTimelineElement;
+    'ui-timeline': UiTimelineElement;
+    'nnui-ai-reasoning': UiAiReasoningElement;
+    'ui-ai-reasoning': UiAiReasoningElement;
+    'nnui-ai-tool-call': UiAiToolCallElement;
+    'ui-ai-tool-call': UiAiToolCallElement;
+    'nnui-ai-approval': UiAiApprovalElement;
+    'ui-ai-approval': UiAiApprovalElement;
   }
 
   // React 19 / JSX Support
@@ -735,6 +791,59 @@ declare global {
         onChange?: (e: CustomEvent<{ value: string }>) => void;
         onInput?: (e: CustomEvent<{ value: string }>) => void;
       }, UiColorPickerElement>;
+
+      'nnui-ai-reasoning': React.DetailedHTMLProps<React.HTMLAttributes<UiAiReasoningElement> & {
+        status?: 'thinking' | 'done';
+        duration?: number | string;
+        open?: boolean;
+        'auto-collapse'?: boolean;
+        collapsible?: boolean;
+        onToggle?: (e: CustomEvent<{ open: boolean; duration: number }>) => void;
+        onCopy?: (e: CustomEvent<{ text: string }>) => void;
+      }, UiAiReasoningElement>;
+      'ui-ai-reasoning': React.DetailedHTMLProps<React.HTMLAttributes<UiAiReasoningElement> & {
+        status?: 'thinking' | 'done';
+        duration?: number | string;
+        open?: boolean;
+        'auto-collapse'?: boolean;
+        collapsible?: boolean;
+        onToggle?: (e: CustomEvent<{ open: boolean; duration: number }>) => void;
+        onCopy?: (e: CustomEvent<{ text: string }>) => void;
+      }, UiAiReasoningElement>;
+
+      'nnui-ai-tool-call': React.DetailedHTMLProps<React.HTMLAttributes<UiAiToolCallElement> & {
+        name?: string;
+        status?: 'pending' | 'running' | 'success' | 'error';
+        latency?: string;
+        open?: boolean;
+        collapsible?: boolean;
+        onRetry?: (e: CustomEvent<{ name: string; args: string }>) => void;
+        onToggle?: (e: CustomEvent<{ open: boolean; name: string; status: string }>) => void;
+      }, UiAiToolCallElement>;
+      'ui-ai-tool-call': React.DetailedHTMLProps<React.HTMLAttributes<UiAiToolCallElement> & {
+        name?: string;
+        status?: 'pending' | 'running' | 'success' | 'error';
+        latency?: string;
+        open?: boolean;
+        collapsible?: boolean;
+        onRetry?: (e: CustomEvent<{ name: string; args: string }>) => void;
+        onToggle?: (e: CustomEvent<{ open: boolean; name: string; status: string }>) => void;
+      }, UiAiToolCallElement>;
+
+      'nnui-ai-approval': React.DetailedHTMLProps<React.HTMLAttributes<UiAiApprovalElement> & {
+        severity?: 'info' | 'warning' | 'critical';
+        status?: 'pending' | 'approved' | 'rejected';
+        'action-name'?: string;
+        onApprove?: (e: CustomEvent<{ action: string; severity: string; timestamp: string }>) => void;
+        onReject?: (e: CustomEvent<{ action: string; severity: string; reason: string; timestamp: string }>) => void;
+      }, UiAiApprovalElement>;
+      'ui-ai-approval': React.DetailedHTMLProps<React.HTMLAttributes<UiAiApprovalElement> & {
+        severity?: 'info' | 'warning' | 'critical';
+        status?: 'pending' | 'approved' | 'rejected';
+        'action-name'?: string;
+        onApprove?: (e: CustomEvent<{ action: string; severity: string; timestamp: string }>) => void;
+        onReject?: (e: CustomEvent<{ action: string; severity: string; reason: string; timestamp: string }>) => void;
+      }, UiAiApprovalElement>;
     }
   }
 }
@@ -892,6 +1001,12 @@ declare module 'nnui-kit/react' {
   export const TreeView: React.ForwardRefExoticComponent<any> & { Root: any; Item: any };
   export const AiPromptBox: React.ForwardRefExoticComponent<any>;
   export const ColorPicker: React.ForwardRefExoticComponent<any> & { Root: any; Swatch: any; Input: any };
+  export const Sparkline: React.ForwardRefExoticComponent<any>;
+  export const Dock: React.ForwardRefExoticComponent<any> & { Root: any; Item: any };
+  export const Timeline: React.ForwardRefExoticComponent<any> & { Root: any; Item: any; Marker: any; Connector: any; Content: any; Title: any; Description: any; Time: any };
+  export const AiReasoning: React.ForwardRefExoticComponent<any> & { Root: any; Header: any; Beacon: any; Summary: any; Actions: any; Copy: any; Toggle: any; Stream: any };
+  export const AiToolCall: React.ForwardRefExoticComponent<any> & { Root: any; Header: any; Info: any; Name: any; StatusBadge: any; Latency: any; Actions: any; Retry: any; Copy: any; Inspector: any; Args: any; Output: any };
+  export const AiApproval: React.ForwardRefExoticComponent<any> & { Root: any; Header: any; Title: any; SeverityBadge: any; Payload: any; Actions: any; Approve: any; Reject: any; AuditBadge: any };
   export const Input: React.ForwardRefExoticComponent<any>;
   export const toast: any;
 }
