@@ -26,10 +26,10 @@ const htmlSnippet = `<!-- 100% Platform-Native Light-DOM Syntax (Zero React/Virt
   <button data-part="segment" data-value="owner">Owner</button>
 </ui-segmented-control>`;
 
-const reactSnippet = `// React 18 & 19 First-Class Wrapper (nnui-kit/react)
-import 'nnui-kit/css';
-import 'nnui-kit/client';
-import { Stepper, SegmentedControl, AiPromptBox, toast } from 'nnui-kit/react';
+const reactSnippet = `// React 18 & 19 First-Class Wrapper (nnuikit/react)
+import 'nnuikit/css';
+import 'nnuikit/client';
+import { Stepper, SegmentedControl, AiPromptBox, toast } from 'nnuikit/react';
 
 export function Dashboard() {
   const [role, setRole] = useState('admin');
@@ -45,8 +45,8 @@ export function Dashboard() {
 
 const svelteSnippet = `<!-- Svelte 5 (Runes) Integration -->
 <script>
-  import 'nnui-kit/css';
-  import 'nnui-kit/client';
+  import 'nnuikit/css';
+  import 'nnuikit/client';
   let role = $state('admin');
 </script>
 
@@ -59,8 +59,8 @@ const svelteSnippet = `<!-- Svelte 5 (Runes) Integration -->
 const vueSnippet = `<!-- Vue 3 (Composition API) -->
 <script setup>
 import { ref } from 'vue';
-import 'nnui-kit/css';
-import 'nnui-kit/client';
+import 'nnuikit/css';
+import 'nnuikit/client';
 
 const role = ref('admin');
 </script>
@@ -82,7 +82,7 @@ const homeFaqSchema = {
       name: "What is NNUI-KIT and why is it an all-in-one UI kit?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "NNUI-KIT is an all-in-one universal Light-DOM UI architecture engineered with 45+ accessible primitives and micro-enhancers that execute identically across React 18/19, Vue 3, Svelte 5, Astro, HTMX 2, and Vanilla HTML. It replaces fragmented component setups by unifying UI primitives, virtualized data tables, built-in URL/local state persistence, cross-tab broadcast synchronization, and AI introspection in a sub-40 KB package.",
+        text: "NNUI-KIT is an all-in-one universal Light-DOM UI architecture engineered with 51 accessible primitives and micro-enhancers that execute identically across React 18/19, Vue 3, Svelte 5, Astro, HTMX 2, and Vanilla HTML. It replaces fragmented component setups by unifying UI primitives, virtualized data tables, built-in URL/local state persistence, cross-tab broadcast synchronization, and AI introspection in a modular package (1–3 kB per component, ~50 kB gzipped JS full suite).",
       },
     },
     {
@@ -98,7 +98,7 @@ const homeFaqSchema = {
       name: "Does NNUI-KIT support React 19 and Next.js 15 App Router?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. NNUI-KIT features a dedicated nnui-kit/react entrypoint tailored for React 18 and 19, offering typed components with ref forwarding and custom DOM event bridging, alongside an SSR-safe nnui-kit/client hydration entry that prevents hydration mismatches.",
+        text: "Yes. NNUI-KIT features a dedicated nnuikit/react entrypoint tailored for React 18 and 19, offering typed components with ref forwarding and custom DOM event bridging, alongside an SSR-safe nnuikit/client hydration entry that prevents hydration mismatches.",
       },
     },
     {
@@ -123,7 +123,7 @@ const homeFaqSchema = {
 
 <DocsLayout
   title="NNUI-KIT — The All-In-One Universal UI Kit & Component Library (React, Vue, Svelte, Astro, HTML)"
-  description="NNUI-KIT is the all-in-one universal UI kit and design system. 45+ accessible Light-DOM components, React 19 wrapper, zero Shadow DOM traps, built-in URL persistence, cross-tab sync, and AI introspection."
+  description="NNUI-KIT is the all-in-one universal UI kit and design system. 51 accessible Light-DOM components, React 19 wrapper, zero Shadow DOM traps, built-in URL persistence, cross-tab sync, and AI introspection."
   activePath="/"
   keywords={[
     "all in one ui kit",
@@ -168,9 +168,9 @@ const homeFaqSchema = {
       </h1>
 
       <p class="hero-description">
-        45 accessible components & primitives living 100% in the Light DOM.
+        51 accessible components & primitives living 100% in the Light DOM.
         First-class React 18/19 wrapper, Svelte 5, Vue 3, Astro, and HTMX 2
-        ready. Sub-40 KB runtime with native form participation.
+        ready. 1–3 kB per component footprint (~50 kB gzipped JS full suite) with native form participation.
       </p>
 
       <!-- AEO Direct Answer Quick Definition Box (Targeted for AI Answer Engines & Search Snippets) -->
@@ -199,11 +199,11 @@ const homeFaqSchema = {
         >
           <strong>NNUI-KIT</strong> is an <strong
             >all-in-one universal UI architecture and component library</strong
-          >. It unifies <strong>45+ accessible Light-DOM components</strong> across
+          >. It unifies <strong>51 accessible Light-DOM components</strong> across
           React 18/19, Vue 3, Svelte 5, Astro, HTMX, and HTML. Unlike fragmented libraries,
           it provides built-in virtualized data grids, declarative URL/local state
           persistence, zero-setup cross-tab broadcast synchronization, and an AI introspection
-          protocol in a single &lt;40 KB gzipped runtime.
+          API with a lean 1–3 kB per-component footprint (~50 kB gzipped JS full suite).
         </p>
       </div>
 
@@ -215,7 +215,7 @@ const homeFaqSchema = {
           data-ui="button"
           data-size="lg"
         >
-          Explore Components (45)
+          Explore Components (51)
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none"
             ><path
               d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.6498 10.6151 7.84212L6.86514 11.8421C6.67627 12.0436 6.35985 12.0538 6.1584 11.8649C5.95694 11.676 5.94673 11.3596 6.1356 11.1581L9.535 7.5L6.1356 3.84188C5.94673 3.64042 5.95694 3.32401 6.1584 3.13508Z"
@@ -245,7 +245,7 @@ const homeFaqSchema = {
             <code
               id="pm-command-text"
               style="color: var(--text-main); font-weight: 600;"
-              >npx nnui init</code
+              >npx nnuikit init</code
             >
           </div>
           <button
@@ -768,12 +768,12 @@ const homeFaqSchema = {
         <h3
           style="font-size: 1.15rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0;"
         >
-          Complete Production Suite (45 Components)
+          Complete Production Suite (51 Components)
         </h3>
         <span
           data-ui="badge"
           data-variant="secondary"
-          style="font-size: 0.75rem;">Sub-40 kB</span
+          style="font-size: 0.75rem;">~50 kB JS</span
         >
       </div>
 
@@ -834,14 +834,13 @@ const homeFaqSchema = {
           </p>
         </div>
 
-        <!-- 2. Sub-40 KB Complete Suite -->
+        <!-- 2. Lean Modular Footprint -->
         <div class="bento-card" data-ui="card">
           <div class="bento-icon">⚡</div>
-          <h3>Sub-40 KB Complete Suite</h3>
+          <h3>Lean Modular Footprint</h3>
           <p>
-            All 45 components + virtualized data grid + calendar bundle into
-            only <strong>38.9 kB gzipped JavaScript</strong> — running 5x lighter
-            than MUI, Mantine, or Radix + AG Grid.
+            Each component weighs only <strong>1–3 kB gzipped</strong> via tree-shaking or CLI code generation.
+            The entire 51-component monolithic library is just <strong>~50 kB gzipped JS</strong> (~72 kB with full CSS) — with zero heavy virtual DOM or emotion engine overhead.
           </p>
         </div>
 
@@ -1106,10 +1105,10 @@ const homeFaqSchema = {
             Rather than cobbling together separate libraries for base primitives
             (Radix), complex tables (TanStack Table), popovers (Floating UI),
             local storage hooks, and multi-tab synchronization, NNUI-KIT
-            delivers <strong>all 45+ components in a single package</strong>. It
+            delivers <strong>all 51 components in a single package</strong>. It
             includes built-in declarative URL/localStorage persistence,
             zero-backend cross-tab broadcast sync, and an AI introspection
-            protocol within an ultra-lean &lt;40 KB runtime.
+            protocol within a lean 1–3 kB per-component footprint (~50 kB JS full suite).
           </p>
         </details>
 
@@ -1153,9 +1152,9 @@ const homeFaqSchema = {
             style="margin: 0.75rem 0 0; color: var(--text-secondary); line-height: 1.6; font-size: 0.92rem;"
           >
             Yes, natively across all of them! For React 18 and 19, import
-            idiomatic compound components from <code>nnui-kit/react</code> with full
+            idiomatic compound components from <code>nnuikit/react</code> with full
             typed ref forwarding. For Next.js App Router and full-stack SSR frameworks,
-            import <code>nnui-kit/client</code> to safely hydrate in the browser with
+            import <code>nnuikit/client</code> to safely hydrate in the browser with
             zero Node.js server errors.
           </p>
         </details>
@@ -1238,7 +1237,7 @@ const homeFaqSchema = {
             data-size="lg"
             class="btn-primary"
           >
-            Explore 45 Components →
+            Explore 51 Components →
           </a>
           <a
             href="https://github.com/harshp421/nnui-kit"
@@ -1258,7 +1257,7 @@ const homeFaqSchema = {
 </DocsLayout>
 
 <script>
-  import { toast } from "nnui-kit";
+  import { toast } from "nnuikit";
 
   // 1. Package Manager Switcher with <ui-segmented-control>
   const pmControl = document.getElementById("pm-segmented-control");
@@ -1267,9 +1266,9 @@ const homeFaqSchema = {
   const pmCopyLabel = document.getElementById("pm-copy-label");
 
   const pmCommands: Record<string, string> = {
-    npm: "npx nnui init",
-    pnpm: "pnpm dlx nnui init",
-    bun: "bunx nnui init",
+    npm: "npx nnuikit init",
+    pnpm: "pnpm dlx nnuikit init",
+    bun: "bunx nnuikit init",
   };
 
   let activePm = "npm";
@@ -1278,13 +1277,13 @@ const homeFaqSchema = {
     pmControl.addEventListener("change", (e: any) => {
       activePm = e.detail?.value || "npm";
       if (pmCmdText)
-        pmCmdText.textContent = pmCommands[activePm] || "npx nnui init";
+        pmCmdText.textContent = pmCommands[activePm] || "npx nnuikit init";
     });
   }
 
   if (pmCopyBtn && pmCopyLabel) {
     pmCopyBtn.addEventListener("click", async () => {
-      const cmd = pmCommands[activePm] || "npx nnui init";
+      const cmd = pmCommands[activePm] || "npx nnuikit init";
       await navigator.clipboard.writeText(cmd);
       pmCopyLabel.textContent = "✓ copied!";
       setTimeout(() => {
@@ -1418,7 +1417,7 @@ const homeFaqSchema = {
   if (toastBtn) {
     toastBtn.addEventListener("click", () => {
       toast.success("Pipeline Deployed", {
-        description: "Universal Light-DOM sync active across 45 components.",
+        description: "Universal Light-DOM sync active across 51 components.",
         action: {
           label: "View Logs",
           onClick: () => {
