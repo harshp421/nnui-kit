@@ -47,21 +47,66 @@ async function getRegistry() {
   process.exit(1);
 }
 
+// Detect if running inside a React or src-based project
+function detectProjectInfo(cwd) {
+  const hasSrc = fs.existsSync(path.join(cwd, 'src'));
+  let isReact = false;
+
+  const pkgPath = path.join(cwd, 'package.json');
+  if (fs.existsSync(pkgPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+      const deps = {
+        ...pkg.dependencies,
+        ...pkg.devDependencies,
+        ...pkg.peerDependencies,
+      };
+      if (deps['react'] || deps['react-dom'] || deps['next'] || deps['@types/react']) {
+        isReact = true;
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  return { hasSrc, isReact };
+}
+
 // Read or create nnui.json configuration
-function getConfig(cwd) {
+function getConfig(cwd, options = {}) {
   const configPath = path.join(cwd, 'nnui.json');
   if (fs.existsSync(configPath)) {
     try {
-      return JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+      const cfg = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+      if (options.path) {
+        cfg.componentsDir = options.path;
+        cfg.utilsDir = path.join(options.path, 'utils');
+      }
+      return cfg;
     } catch (e) {
       // fallback
     }
   }
+
+  const { hasSrc, isReact } = detectProjectInfo(cwd);
+  const isReactProject = options.react || isReact;
+  const useSrc = hasSrc || isReactProject;
+
+  let componentsDir = 'components/ui';
+  if (options.path) {
+    componentsDir = options.path;
+  } else if (useSrc) {
+    componentsDir = 'src/components/ui';
+  }
+
+  const utilsDir = path.join(componentsDir, 'utils');
+
   return {
     $schema: 'https://nnui.dev/schema.json',
     style: 'default',
-    componentsDir: 'components/ui',
-    utilsDir: 'components/ui/utils',
+    framework: isReactProject ? 'react' : 'vanilla',
+    componentsDir,
+    utilsDir,
   };
 }
 
@@ -95,10 +140,15 @@ async function handleList() {
 }
 
 // Command: init
-async function handleInit(cwd) {
+async function handleInit(cwd, options = {}) {
   printBanner();
-  const config = getConfig(cwd);
+  const config = getConfig(cwd, options);
   const reg = await getRegistry();
+
+  const { hasSrc, isReact } = detectProjectInfo(cwd);
+  if (isReact || options.react || hasSrc) {
+    console.log(`\x1b[90mDetected ${isReact || options.react ? 'React' : 'src/'} project structure. Setting up in \x1b[1m${config.componentsDir}/\x1b[0m\x1b[90m\x1b[0m\n`);
+  }
 
   const componentsDir = path.join(cwd, config.componentsDir);
   const utilsDir = path.join(cwd, config.utilsDir);
@@ -381,7 +431,7 @@ ${innerContent}
 async function handleAdd(componentNames, options, cwd) {
   printBanner();
   const reg = await getRegistry();
-  const config = getConfig(cwd);
+  const config = getConfig(cwd, options);
 
   // If --all, grab every component in registry
   let namesToInstall = componentNames;
@@ -402,13 +452,14 @@ async function handleAdd(componentNames, options, cwd) {
   let installedCount = 0;
 
   // -------------------------------------------------------------
-  // TARGET 1: REACT (--react)
+  // TARGET 1: REACT (--react or framework: 'react')
   // -------------------------------------------------------------
-  if (options.react) {
-    const defaultReactDir = fs.existsSync(path.join(cwd, 'src'))
-      ? path.join(cwd, 'src/components/ui')
-      : path.join(cwd, 'components/ui');
-    const targetDir = options.path ? path.resolve(cwd, options.path) : defaultReactDir;
+  const isReactTarget = options.react || config.framework === 'react';
+  if (isReactTarget && !options.html && !options.rails) {
+    const defaultReactDir = config.componentsDir || (fs.existsSync(path.join(cwd, 'src'))
+      ? 'src/components/ui'
+      : 'components/ui');
+    const targetDir = options.path ? path.resolve(cwd, options.path) : path.join(cwd, defaultReactDir);
 
     fs.mkdirSync(targetDir, { recursive: true });
 
@@ -674,7 +725,7 @@ async function run() {
       await handleList();
       break;
     case 'init':
-      await handleInit(cwd);
+      await handleInit(cwd, options);
       break;
     case 'add':
       await handleAdd(componentNames, options, cwd);

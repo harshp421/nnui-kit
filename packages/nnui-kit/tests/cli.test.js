@@ -119,7 +119,43 @@ try {
   const railsErbContent = fs.readFileSync(railsErbFile, 'utf-8');
   assert(railsErbContent.includes('<ui-dialog id="<%= local_assigns[:id] %>"'), 'Rails ERB partial contains ui-dialog with local_assigns');
   assert(railsErbContent.includes('yield if block_given?'), 'Rails ERB partial contains block yield');
-  console.log('  ✓ CLI add --rails (dialog, tabs) passed');
+  // Test 8: nnui init in a React project with src/ directory
+  const reactProjectDir = path.join(rootDir, 'tests/temp_react_test_project');
+  if (fs.existsSync(reactProjectDir)) {
+    fs.rmSync(reactProjectDir, { recursive: true, force: true });
+  }
+  fs.mkdirSync(path.join(reactProjectDir, 'src'), { recursive: true });
+  fs.writeFileSync(
+    path.join(reactProjectDir, 'package.json'),
+    JSON.stringify({
+      name: 'test-react-app',
+      dependencies: { react: '^19.0.0', 'react-dom': '^19.0.0' }
+    }, null, 2)
+  );
+
+  const reactInitOutput = execSync(`node "${path.join(rootDir, 'bin/nnui.js')}" init`, {
+    cwd: reactProjectDir,
+    encoding: 'utf-8'
+  });
+
+  assert(fs.existsSync(path.join(reactProjectDir, 'src/components/ui/tokens.css')), 'tokens.css must be in src/components/ui in React project');
+  assert(fs.existsSync(path.join(reactProjectDir, 'src/components/ui/components.css')), 'components.css must be in src/components/ui in React project');
+  assert(fs.existsSync(path.join(reactProjectDir, 'src/components/ui/utils/base-element.js')), 'base-element.js must be in src/components/ui/utils in React project');
+  assert(!fs.existsSync(path.join(reactProjectDir, 'components/ui')), 'Should NOT create components/ outside src/');
+
+  const reactConfig = JSON.parse(fs.readFileSync(path.join(reactProjectDir, 'nnui.json'), 'utf-8'));
+  assert.strictEqual(reactConfig.componentsDir, 'src/components/ui', 'componentsDir in nnui.json must be src/components/ui');
+  assert.strictEqual(reactConfig.framework, 'react', 'framework in nnui.json must be react');
+
+  // Test adding component in React project without needing --react flag
+  execSync(`node "${path.join(rootDir, 'bin/nnui.js')}" add dialog`, {
+    cwd: reactProjectDir,
+    encoding: 'utf-8'
+  });
+  assert(fs.existsSync(path.join(reactProjectDir, 'src/components/ui/dialog.jsx')), 'dialog.jsx must be added inside src/components/ui/');
+
+  fs.rmSync(reactProjectDir, { recursive: true, force: true });
+  console.log('  ✓ CLI init & add in React (src/) project passed');
 
   console.log('🎉 ALL CLI & REGISTRY TESTS PASSED!\n');
 } finally {
