@@ -3149,8 +3149,15 @@
     border-radius: var(--ui-radius-lg, 8px);
     padding: 0.75rem;
     box-shadow: var(--ui-shadow-sm, 0 1px 3px rgba(0,0,0,0.3));
-    transition: border-color var(--ui-transition-fast, 150ms);
+    transition: border-color var(--ui-transition-fast, 150ms), background-color var(--ui-transition-fast, 150ms);
     container-type: inline-size;
+  }
+
+  ui-ai-prompt-box[data-dragover],
+  nnui-ai-prompt-box[data-dragover] {
+    border-color: var(--ui-color-brand-500, #6366f1) !important;
+    background: color-mix(in srgb, var(--ui-color-brand-500, #6366f1) 8%, var(--ui-bg-surface, #121214)) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ui-color-brand-500, #6366f1) 30%, transparent) !important;
   }
 
   @container (max-width: 380px) {
@@ -3843,6 +3850,9 @@
     border-radius: 6px;
     font-family: var(--ui-font-mono, monospace);
     word-break: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
   }
 
   :root:not([data-theme="dark"]) ui-ai-reasoning [data-part="stream"] {
@@ -3911,6 +3921,11 @@
   ui-ai-tool-call[data-status="error"],
   nnui-ai-tool-call[data-status="error"] {
     border-color: rgba(244, 63, 94, 0.35);
+  }
+
+  ui-ai-tool-call[data-status="approval-required"],
+  nnui-ai-tool-call[data-status="approval-required"] {
+    border-color: rgba(245, 158, 11, 0.35);
   }
 
   :root:not([data-theme="dark"]) ui-ai-tool-call,
@@ -4041,6 +4056,13 @@
     background: rgba(148, 163, 184, 0.12);
     color: #94a3b8;
     border: 1px solid rgba(148, 163, 184, 0.25);
+  }
+
+  ui-ai-tool-call [data-part="status-badge"][data-status="approval-required"],
+  ui-ai-tool-call [data-part="status-badge"][data-status="requires-approval"] {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
   }
 
   ui-ai-tool-call [data-part="latency"],

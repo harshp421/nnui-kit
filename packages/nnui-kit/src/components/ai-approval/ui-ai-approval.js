@@ -209,6 +209,15 @@ export class UiAiApproval extends BaseLightElement {
     this.listen(this, 'keydown', (e) => {
       if (this.status !== 'pending') return;
 
+      // Ignore modifier combinations (e.g. Ctrl+A / Cmd+A select all text)
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      // Ignore if event originated from an interactive input or editable field
+      const targetTag = e.target?.tagName?.toLowerCase();
+      if (targetTag === 'input' || targetTag === 'textarea' || targetTag === 'select' || e.target?.isContentEditable) {
+        return;
+      }
+
       if (e.key === 'a' || e.key === 'A') {
         e.preventDefault();
         this.approve();

@@ -237,6 +237,10 @@ export class UiAiToolCall extends BaseLightElement {
         case 'running':
           statusBadge.innerHTML = `<span class="ui-tool-spinner"></span> Running`;
           break;
+        case 'approval-required':
+        case 'requires-approval':
+          statusBadge.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Approval Required`;
+          break;
         case 'success':
           statusBadge.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Success`;
           break;
@@ -326,8 +330,21 @@ export class UiAiToolCall extends BaseLightElement {
   }
 
   async _handleCopy() {
-    const args = this._getArgsContent();
-    const output = this._getOutputContent();
+    let args = this._getArgsContent();
+    let output = this._getOutputContent();
+
+    try {
+      if (typeof args === 'string' && (args.startsWith('{') || args.startsWith('['))) {
+        args = JSON.parse(args);
+      }
+    } catch {}
+
+    try {
+      if (typeof output === 'string' && (output.startsWith('{') || output.startsWith('['))) {
+        output = JSON.parse(output);
+      }
+    } catch {}
+
     const payload = JSON.stringify({ name: this.name, status: this.status, latency: this.latency, args, output }, null, 2);
 
     try {

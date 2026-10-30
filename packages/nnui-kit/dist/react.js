@@ -1,19 +1,19 @@
 "use client";
-import i, { forwardRef as u, useRef as oe, useImperativeHandle as ie, useEffect as re } from "react";
+import i, { forwardRef as d, useRef as oe, useImperativeHandle as ie, useEffect as re } from "react";
 import { register as le } from "./index.js";
 import { toast as Pe } from "./index.js";
 typeof window < "u" && typeof window.customElements < "u" && le(["nnui", "ui"]);
 function l(s, t, n = {}) {
-  const a = u(function(o, r) {
+  const a = d(function(o, r) {
     const c = oe(null);
     ie(r, () => c.current);
-    const { children: d, className: m, style: g, ...Y } = o, F = {}, U = {};
+    const { children: u, className: m, style: g, ...Y } = o, j = {}, U = {};
     return Object.entries(Y).forEach(([b, k]) => {
       if (b.startsWith("on") && typeof k == "function") {
         const T = n[b] || b.slice(2).toLowerCase();
         U[T] = k;
       } else
-        F[b] = k;
+        j[b] = k;
     }), re(() => {
       const b = c.current;
       if (!b) return;
@@ -31,22 +31,22 @@ function l(s, t, n = {}) {
         class: m,
         className: m,
         style: g,
-        ...F
+        ...j
       },
-      d
+      u
     );
   });
   return a.displayName = t, a;
 }
 function e(s, t = "div", n = "") {
-  const a = u(function(o, r) {
-    const { as: c = t, className: d, children: m, ...g } = o;
+  const a = d(function(o, r) {
+    const { as: c = t, className: u, children: m, ...g } = o;
     return i.createElement(
       c,
       {
         ref: r,
         "data-part": s,
-        className: d,
+        className: u,
         ...g
       },
       m
@@ -70,7 +70,7 @@ E.Option = E.Item;
 const R = l("ui-dialog", "Dialog", { onOpen: "open", onClose: "close" });
 R.Root = R;
 R.Trigger = e("trigger", "button", "Dialog.Trigger");
-R.Content = u(function({ as: t = "dialog", className: n, children: a, ...o }, r) {
+R.Content = d(function({ as: t = "dialog", className: n, children: a, ...o }, r) {
   return i.createElement(t, { ref: r, "data-ui": "dialog", className: n, ...o }, a);
 });
 R.Content.displayName = "Dialog.Content";
@@ -177,7 +177,14 @@ G.Content = e("content", "div", "NavigationMenu.Content");
 const ne = l("ui-tree-view", "TreeView", { onSelect: "select", onToggle: "toggle" });
 ne.Root = ne;
 ne.Item = e("item", "li", "TreeView.Item");
-const Ee = l("ui-ai-prompt-box", "AiPromptBox", { onSubmit: "submit", onStop: "stop", onInput: "input" }), X = l("ui-color-picker", "ColorPicker", { onChange: "change", onInput: "input", onOpen: "open", onClose: "close" });
+const Ee = l("ui-ai-prompt-box", "AiPromptBox", {
+  onSubmit: "submit",
+  onStop: "stop",
+  onInput: "input",
+  onFilePaste: "filepaste",
+  onFileDrop: "filedrop",
+  onFileAttach: "fileattach"
+}), X = l("ui-color-picker", "ColorPicker", { onChange: "change", onInput: "input", onOpen: "open", onClose: "close" });
 X.Root = X;
 X.Swatch = e("swatch", "button", "ColorPicker.Swatch");
 X.Input = e("input", "input", "ColorPicker.Input");
@@ -236,22 +243,22 @@ v.Actions = e("actions", "div", "AiApproval.Actions");
 v.Approve = e("approve", "button", "AiApproval.Approve");
 v.Reject = e("reject", "button", "AiApproval.Reject");
 v.AuditBadge = e("audit-badge", "div", "AiApproval.AuditBadge");
-const ce = u(function(t, n) {
+const ce = d(function(t, n) {
   const {
     className: a = "",
     size: o = "md",
     icon: r,
     rightIcon: c,
-    kbd: d,
+    kbd: u,
     error: m,
     clearable: g,
     onClear: Y,
-    type: F = "text",
+    type: j = "text",
     disabled: U,
     ...b
-  } = t, k = !!r, T = !!(c || d || g), K = !!m, H = i.createElement("input", {
+  } = t, k = !!r, T = !!(c || u || g), K = !!m, H = i.createElement("input", {
     ref: n,
-    type: F,
+    type: j,
     disabled: U,
     "data-ui": "input",
     "data-size": o !== "md" ? o : void 0,
@@ -275,7 +282,7 @@ const ce = u(function(t, n) {
     )
   ), w.push(i.cloneElement(H, { key: "input" })), T) {
     const W = [];
-    d && W.push(
+    u && W.push(
       i.createElement(
         "kbd",
         {
@@ -283,7 +290,7 @@ const ce = u(function(t, n) {
           "data-part": "input-kbd",
           className: "ui-kbd"
         },
-        d
+        u
       )
     ), g && W.push(
       i.createElement(
@@ -322,7 +329,7 @@ const ce = u(function(t, n) {
   );
 });
 ce.displayName = "Input";
-const se = u(function({ className: t = "", children: n, ...a }, o) {
+const se = d(function({ className: t = "", children: n, ...a }, o) {
   return i.createElement(
     "div",
     {
@@ -336,7 +343,7 @@ const se = u(function({ className: t = "", children: n, ...a }, o) {
   );
 });
 se.displayName = "InputGroup";
-const ue = u(function({ className: t = "", children: n, ...a }, o) {
+const de = d(function({ className: t = "", children: n, ...a }, o) {
   return i.createElement(
     "kbd",
     {
@@ -348,30 +355,30 @@ const ue = u(function({ className: t = "", children: n, ...a }, o) {
     n
   );
 });
-ue.displayName = "Kbd";
-const de = u(function({ as: t = "button", variant: n = "primary", size: a = "md", fullWidth: o, className: r = "", children: c, ...d }, m) {
+de.displayName = "Kbd";
+const ue = d(function({ as: t = "button", variant: n = "primary", size: a = "md", fullWidth: o, className: r = "", children: c, ...u }, m) {
   const g = t === "button";
   return i.createElement(
     t,
     {
       ref: m,
-      type: g ? d.type || "button" : void 0,
+      type: g ? u.type || "button" : void 0,
       "data-ui": "button",
       "data-variant": n,
       "data-size": a !== "md" ? a : void 0,
       "data-full-width": o ? "" : void 0,
       className: `ui-button ${n ? `ui-button--${n}` : ""} ${r}`.trim(),
-      ...d
+      ...u
     },
     c
   );
 });
-de.displayName = "Button";
-const pe = u(function({ as: t = "span", variant: n = "default", size: a = "md", className: o = "", children: r, ...c }, d) {
+ue.displayName = "Button";
+const pe = d(function({ as: t = "span", variant: n = "default", size: a = "md", className: o = "", children: r, ...c }, u) {
   return i.createElement(
     t,
     {
-      ref: d,
+      ref: u,
       "data-ui": "badge",
       "data-variant": n,
       "data-size": a !== "md" ? a : void 0,
@@ -382,7 +389,7 @@ const pe = u(function({ as: t = "span", variant: n = "default", size: a = "md", 
   );
 });
 pe.displayName = "Badge";
-const h = u(function({ as: t = "div", className: n = "", children: a, ...o }, r) {
+const h = d(function({ as: t = "div", className: n = "", children: a, ...o }, r) {
   return i.createElement(
     t,
     {
@@ -402,7 +409,7 @@ h.Description = e("card-description", "p", "Card.Description");
 h.Content = e("card-content", "div", "Card.Content");
 h.Body = h.Content;
 h.Footer = e("card-footer", "div", "Card.Footer");
-const V = u(function({ as: t = "div", variant: n = "info", className: a = "", children: o, ...r }, c) {
+const V = d(function({ as: t = "div", variant: n = "info", className: a = "", children: o, ...r }, c) {
   return i.createElement(
     t,
     {
@@ -420,7 +427,7 @@ V.displayName = "Alert";
 V.Root = V;
 V.Title = e("alert-title", "h5", "Alert.Title");
 V.Description = e("alert-description", "div", "Alert.Description");
-const j = u(function({ as: t = "div", size: n = "md", src: a, alt: o = "", fallback: r, className: c = "", children: d, ...m }, g) {
+const F = d(function({ as: t = "div", size: n = "md", src: a, alt: o = "", fallback: r, className: c = "", children: u, ...m }, g) {
   return i.createElement(
     t,
     {
@@ -432,14 +439,14 @@ const j = u(function({ as: t = "div", size: n = "md", src: a, alt: o = "", fallb
     },
     a ? i.createElement("img", { key: "avatar-img", src: a, alt: o, "data-part": "image" }) : null,
     r ? i.createElement("span", { key: "avatar-fallback", "data-part": "fallback" }, r) : null,
-    d
+    u
   );
 });
-j.displayName = "Avatar";
-j.Root = j;
-j.Image = e("image", "img", "Avatar.Image");
-j.Fallback = e("fallback", "span", "Avatar.Fallback");
-const me = u(function({ label: t, description: n, className: a = "", error: o, ...r }, c) {
+F.displayName = "Avatar";
+F.Root = F;
+F.Image = e("image", "img", "Avatar.Image");
+F.Fallback = e("fallback", "span", "Avatar.Fallback");
+const me = d(function({ label: t, description: n, className: a = "", error: o, ...r }, c) {
   return i.createElement(
     "label",
     {
@@ -457,7 +464,7 @@ const me = u(function({ label: t, description: n, className: a = "", error: o, .
   );
 });
 me.displayName = "Checkbox";
-const ge = u(function({ label: t, className: n = "", ...a }, o) {
+const ge = d(function({ label: t, className: n = "", ...a }, o) {
   return i.createElement(
     "label",
     {
@@ -475,7 +482,7 @@ const ge = u(function({ label: t, className: n = "", ...a }, o) {
   );
 });
 ge.displayName = "Switch";
-const be = u(function({ value: t = 0, max: n = 100, className: a = "", ...o }, r) {
+const be = d(function({ value: t = 0, max: n = 100, className: a = "", ...o }, r) {
   const c = Math.min(100, Math.max(0, t / n * 100));
   return i.createElement(
     "div",
@@ -496,7 +503,7 @@ const be = u(function({ value: t = 0, max: n = 100, className: a = "", ...o }, r
   );
 });
 be.displayName = "Progress";
-const Ce = u(function({ orientation: t = "horizontal", label: n, className: a = "", ...o }, r) {
+const Ce = d(function({ orientation: t = "horizontal", label: n, className: a = "", ...o }, r) {
   return n ? i.createElement(
     "div",
     {
@@ -517,11 +524,11 @@ const Ce = u(function({ orientation: t = "horizontal", label: n, className: a = 
   });
 });
 Ce.displayName = "Separator";
-const ve = u(function({ className: t = "", width: n, height: a, circle: o, style: r, ...c }, d) {
+const ve = d(function({ className: t = "", width: n, height: a, circle: o, style: r, ...c }, u) {
   return i.createElement(
     "div",
     {
-      ref: d,
+      ref: u,
       "data-ui": "skeleton",
       className: `ui-skeleton ${o ? "ui-skeleton--circle" : ""} ${t}`.trim(),
       style: {
@@ -535,7 +542,7 @@ const ve = u(function({ className: t = "", width: n, height: a, circle: o, style
   );
 });
 ve.displayName = "Skeleton";
-const he = u(function({ size: t = "md", className: n = "", ...a }, o) {
+const he = d(function({ size: t = "md", className: n = "", ...a }, o) {
   return i.createElement(
     "div",
     {
@@ -550,7 +557,7 @@ const he = u(function({ size: t = "md", className: n = "", ...a }, o) {
   );
 });
 he.displayName = "Spinner";
-const D = u(function({ className: t = "", children: n, ...a }, o) {
+const D = d(function({ className: t = "", children: n, ...a }, o) {
   return i.createElement(
     "div",
     {
@@ -568,7 +575,7 @@ D.Icon = e("empty-icon", "div", "Empty.Icon");
 D.Title = e("empty-title", "h4", "Empty.Title");
 D.Description = e("empty-description", "p", "Empty.Description");
 D.Action = e("empty-action", "div", "Empty.Action");
-const Te = u(function({ direction: t = "column", gap: n = "md", align: a, justify: o, className: r = "", children: c, ...d }, m) {
+const Te = d(function({ direction: t = "column", gap: n = "md", align: a, justify: o, className: r = "", children: c, ...u }, m) {
   return i.createElement(
     "div",
     {
@@ -579,13 +586,13 @@ const Te = u(function({ direction: t = "column", gap: n = "md", align: a, justif
       "data-align": a,
       "data-justify": o,
       className: `ui-stack ${r}`.trim(),
-      ...d
+      ...u
     },
     c
   );
 });
 Te.displayName = "Stack";
-const ye = u(function({ cols: t = 1, gap: n = "md", className: a = "", children: o, ...r }, c) {
+const ye = d(function({ cols: t = 1, gap: n = "md", className: a = "", children: o, ...r }, c) {
   return i.createElement(
     "div",
     {
@@ -600,7 +607,7 @@ const ye = u(function({ cols: t = 1, gap: n = "md", className: a = "", children:
   );
 });
 ye.displayName = "Grid";
-const fe = u(function({ size: t = "lg", className: n = "", children: a, ...o }, r) {
+const fe = d(function({ size: t = "lg", className: n = "", children: a, ...o }, r) {
   return i.createElement(
     "div",
     {
@@ -614,7 +621,7 @@ const fe = u(function({ size: t = "lg", className: n = "", children: a, ...o }, 
   );
 });
 fe.displayName = "Container";
-const I = u(function({ className: t = "", children: n, ...a }, o) {
+const I = d(function({ className: t = "", children: n, ...a }, o) {
   return i.createElement(
     "table",
     {
@@ -640,9 +647,9 @@ export {
   S as AiReasoning,
   p as AiToolCall,
   V as Alert,
-  j as Avatar,
+  F as Avatar,
   pe as Badge,
-  de as Button,
+  ue as Button,
   Ie as Calendar,
   h as Card,
   me as Checkbox,
@@ -663,7 +670,7 @@ export {
   ye as Grid,
   ce as Input,
   se as InputGroup,
-  ue as Kbd,
+  de as Kbd,
   G as NavigationMenu,
   ee as OtpInput,
   L as Popover,

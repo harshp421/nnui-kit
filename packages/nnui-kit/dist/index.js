@@ -2216,12 +2216,12 @@ function z(u, t = {}) {
   };
 }
 function St(u, t, e, i) {
-  return u === "url" ? tt(t, e, i) : u === "session" ? Y(window.sessionStorage, t) : u === "local" ? Y(window.localStorage, t) : null;
+  return u === "url" ? tt(t, e, i) : u === "session" ? K(window.sessionStorage, t) : u === "local" ? K(window.localStorage, t) : null;
 }
 function wt(u, t, e, i) {
-  u === "url" ? xt(t, e, i) : u === "session" ? K(window.sessionStorage, t, e) : u === "local" && K(window.localStorage, t, e);
+  u === "url" ? xt(t, e, i) : u === "session" ? Y(window.sessionStorage, t, e) : u === "local" && Y(window.localStorage, t, e);
 }
-function Y(u, t) {
+function K(u, t) {
   try {
     const e = u.getItem(`nnui_persist_${t}`);
     return e ? JSON.parse(e) : null;
@@ -2229,7 +2229,7 @@ function Y(u, t) {
     return null;
   }
 }
-function K(u, t, e) {
+function Y(u, t, e) {
   try {
     u.setItem(`nnui_persist_${t}`, JSON.stringify(e));
   } catch {
@@ -4191,24 +4191,69 @@ class qt extends A {
   _autoResize() {
     if (!this._textarea) return;
     this._textarea.style.height = "auto";
-    const t = window.getComputedStyle ? window.getComputedStyle(this._textarea) : null, e = t && parseFloat(t.lineHeight) || 20, i = e * this.maxRows;
+    const t = window.getComputedStyle ? window.getComputedStyle(this._textarea) : null;
+    let e = 20;
+    if (t) {
+      const s = parseFloat(t.lineHeight);
+      if (!isNaN(s) && s > 0)
+        e = s;
+      else {
+        const a = parseFloat(t.fontSize) || 15;
+        e = Math.round(a * 1.35);
+      }
+    }
+    const i = e * this.maxRows;
     this._textarea.scrollHeight > i ? (this._textarea.style.height = `${i}px`, this._textarea.style.overflowY = "auto") : (this._textarea.style.height = `${Math.max(this._textarea.scrollHeight, e)}px`, this._textarea.style.overflowY = "hidden");
   }
   _bindEvents() {
     if (!this._textarea) return;
     this.listen(this._textarea, "input", () => {
-      var i;
-      this._autoResize(), this._syncState(), (i = this._persistState) == null || i.call(this), this.dispatch("input", { value: this.value });
-    }), this.listen(this._textarea, "keydown", (i) => {
-      i.key === "Enter" && !i.shiftKey && (i.preventDefault(), this.submit());
+      var a;
+      this._autoResize(), this._syncState(), (a = this._persistState) == null || a.call(this), this.dispatch("input", { value: this.value });
+    }), this.listen(this._textarea, "keydown", (a) => {
+      a.isComposing || a.keyCode === 229 || a.key === "Enter" && !a.shiftKey && (a.preventDefault(), this.submit());
+    }), this.listen(this._textarea, "paste", (a) => {
+      const r = a.clipboardData;
+      if (!r) return;
+      const n = [];
+      if (r.files && r.files.length > 0)
+        for (let o = 0; o < r.files.length; o++)
+          n.push(r.files[o]);
+      else if (r.items)
+        for (let o = 0; o < r.items.length; o++) {
+          const l = r.items[o];
+          if (l.kind === "file") {
+            const d = l.getAsFile();
+            d && n.push(d);
+          }
+        }
+      n.length > 0 && this.dispatch("filepaste", { files: n });
+    }), this.listen(this, "dragover", (a) => {
+      a.preventDefault(), a.stopPropagation(), !this.disabled && !this.loading && this.setAttributeSafe("data-dragover", "");
+    }), this.listen(this, "dragleave", (a) => {
+      a.preventDefault(), a.stopPropagation(), this.removeAttributeSafe("data-dragover");
+    }), this.listen(this, "drop", (a) => {
+      if (a.preventDefault(), a.stopPropagation(), this.removeAttributeSafe("data-dragover"), this.disabled || this.loading) return;
+      const r = a.dataTransfer;
+      if (r && r.files && r.files.length > 0) {
+        const n = Array.from(r.files);
+        this.dispatch("filedrop", { files: n });
+      }
     });
-    const t = this.querySelector('[data-part="submit-btn"]');
-    t && this.listen(t, "click", (i) => {
-      i.preventDefault(), this.submit();
+    const t = this.querySelector('[data-part="attach-btn"]'), e = this.querySelector('[data-part="file-input"], input[type="file"]');
+    t && e && (this.listen(t, "click", (a) => {
+      a.preventDefault(), e.click();
+    }), this.listen(e, "change", () => {
+      const a = Array.from(e.files || []);
+      a.length > 0 && this.dispatch("fileattach", { files: a });
+    }));
+    const i = this.querySelector('[data-part="submit-btn"]');
+    i && this.listen(i, "click", (a) => {
+      a.preventDefault(), this.submit();
     });
-    const e = this.querySelector('[data-part="stop-btn"]');
-    e && this.listen(e, "click", (i) => {
-      i.preventDefault(), this.stop();
+    const s = this.querySelector('[data-part="stop-btn"]');
+    s && this.listen(s, "click", (a) => {
+      a.preventDefault(), this.stop();
     });
   }
   submit() {
@@ -4647,7 +4692,7 @@ class $t extends A {
 }
 class Pt extends A {
   static get observedAttributes() {
-    return ["status", "duration", "open", "collapsed", "auto-collapse", "collapsible"];
+    return ["status", "duration", "open", "collapsed", "auto-collapse", "collapsible", "auto-scroll"];
   }
   get status() {
     return this.getAttribute("status") || "thinking";
@@ -4686,6 +4731,12 @@ class Pt extends A {
   set collapsible(t) {
     t === !1 ? this.setAttributeSafe("collapsible", "false") : this.removeAttributeSafe("collapsible");
   }
+  get autoScroll() {
+    return this.getAttribute("auto-scroll") !== "false";
+  }
+  set autoScroll(t) {
+    t === !1 ? this.setAttributeSafe("auto-scroll", "false") : this.removeAttributeSafe("auto-scroll");
+  }
   getAiState() {
     return {
       status: this.status,
@@ -4693,22 +4744,38 @@ class Pt extends A {
       open: this.open,
       autoCollapse: this.autoCollapse,
       collapsible: this.collapsible,
+      autoScroll: this.autoScroll,
       streamContentLength: this._getStreamContent().length
     };
   }
   init() {
-    this.setAttributeSafe("data-ui", "ai-reasoning"), this.setAttributeSafe("role", "region"), this.setAttributeSafe("aria-label", "AI Reasoning Thoughts"), this._startTime = Date.now(), this._elapsedSeconds = 0, this._timerId = null, this._scaffoldHeader(), this._syncState(), this._bindEvents(), this.status === "thinking" && this._startTimer();
+    this.setAttributeSafe("data-ui", "ai-reasoning"), this.setAttributeSafe("role", "region"), this.setAttributeSafe("aria-label", "AI Reasoning Thoughts"), this._startTime = Date.now(), this._elapsedSeconds = 0, this._timerId = null, this._userScrolled = !1, this._observer = null, this._scaffoldHeader(), this._syncState(), this._bindEvents(), this._setupAutoScroll(), this.status === "thinking" && this._startTimer();
   }
   attributeChangedCallback(t, e, i) {
     !this._initialized || e === i || (t === "status" ? (i === "done" ? (this._stopTimer(), this.autoCollapse && (this.open = !1)) : i === "thinking" && (this._startTime = Date.now() - this._elapsedSeconds * 1e3, this._startTimer()), this._syncState(), this.dispatch("statuschange", { status: i, duration: this.duration })) : t === "open" || t === "collapsed" ? this._syncOpen() : t === "duration" && this._updateSummaryText());
   }
   disconnectedCallback() {
-    super.disconnectedCallback(), this._stopTimer();
+    super.disconnectedCallback(), this._stopTimer(), this._observer && (this._observer.disconnect(), this._observer = null);
+  }
+  _getStreamElement() {
+    return this.querySelector(':scope > [data-part="stream"], :scope > [data-part="content"], :scope > [data-part="body"]');
   }
   _getStreamContent() {
-    var e;
-    const t = this.querySelector(':scope > [data-part="stream"], :scope > [data-part="content"], :scope > [data-part="body"]');
-    return t && ((e = t.textContent) == null ? void 0 : e.trim()) || "";
+    const t = this._getStreamElement();
+    return t ? (t.innerText || t.textContent || "").trim() : "";
+  }
+  _setupAutoScroll() {
+    const t = this._getStreamElement();
+    t && (this.listen(t, "scroll", () => {
+      const i = t.scrollHeight - t.scrollTop <= t.clientHeight + 16;
+      this._userScrolled = !i;
+    }), typeof MutationObserver < "u" && (this._observer = new MutationObserver(() => {
+      this.open && this.autoScroll && !this._userScrolled && this.status === "thinking" && this.scrollToBottom();
+    }), this._observer.observe(t, { childList: !0, subtree: !0, characterData: !0 })));
+  }
+  scrollToBottom() {
+    const t = this._getStreamElement();
+    t && (t.scrollTop = t.scrollHeight);
   }
   _scaffoldHeader() {
     const t = this.querySelector(':scope > [data-part="trigger"]');
@@ -4921,6 +4988,10 @@ class Lt extends A {
         case "running":
           i.innerHTML = '<span class="ui-tool-spinner"></span> Running';
           break;
+        case "approval-required":
+        case "requires-approval":
+          i.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Approval Required';
+          break;
         case "success":
           i.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Success';
           break;
@@ -4961,7 +5032,16 @@ class Lt extends A {
     });
   }
   async _handleCopy() {
-    const t = this._getArgsContent(), e = this._getOutputContent(), i = JSON.stringify({ name: this.name, status: this.status, latency: this.latency, args: t, output: e }, null, 2);
+    let t = this._getArgsContent(), e = this._getOutputContent();
+    try {
+      typeof t == "string" && (t.startsWith("{") || t.startsWith("[")) && (t = JSON.parse(t));
+    } catch {
+    }
+    try {
+      typeof e == "string" && (e.startsWith("{") || e.startsWith("[")) && (e = JSON.parse(e));
+    } catch {
+    }
+    const i = JSON.stringify({ name: this.name, status: this.status, latency: this.latency, args: t, output: e }, null, 2);
     try {
       typeof navigator < "u" && navigator.clipboard && await navigator.clipboard.writeText(i), this._flashCopiedState(), this.dispatch("copy", { payload: i });
     } catch {
@@ -5078,7 +5158,10 @@ class Nt extends A {
         return;
       }
     }), this.listen(this, "keydown", (t) => {
-      this.status === "pending" && (t.key === "a" || t.key === "A" ? (t.preventDefault(), this.approve()) : (t.key === c.ESCAPE || t.key === "r" || t.key === "R") && (t.preventDefault(), this.reject()));
+      var i, s, a;
+      if (this.status !== "pending" || t.ctrlKey || t.metaKey || t.altKey) return;
+      const e = (s = (i = t.target) == null ? void 0 : i.tagName) == null ? void 0 : s.toLowerCase();
+      e === "input" || e === "textarea" || e === "select" || (a = t.target) != null && a.isContentEditable || (t.key === "a" || t.key === "A" ? (t.preventDefault(), this.approve()) : (t.key === c.ESCAPE || t.key === "r" || t.key === "R") && (t.preventDefault(), this.reject()));
     });
   }
   approve() {

@@ -267,11 +267,13 @@ export interface UiAiReasoningElement extends HTMLElement {
   open: boolean;
   autoCollapse: boolean;
   collapsible: boolean;
+  autoScroll: boolean;
+  scrollToBottom(): void;
 }
 
 export interface UiAiToolCallElement extends HTMLElement {
   name: string;
-  status: 'pending' | 'running' | 'success' | 'error';
+  status: 'pending' | 'running' | 'approval-required' | 'requires-approval' | 'success' | 'error';
   latency: string;
   open: boolean;
   collapsible: boolean;
@@ -764,6 +766,9 @@ declare global {
         onSubmit?: (e: CustomEvent<{ prompt: string }>) => void;
         onStop?: (e: CustomEvent) => void;
         onInput?: (e: CustomEvent<{ value: string }>) => void;
+        onFilePaste?: (e: CustomEvent<{ files: File[] }>) => void;
+        onFileDrop?: (e: CustomEvent<{ files: File[] }>) => void;
+        onFileAttach?: (e: CustomEvent<{ files: File[] }>) => void;
       }, UiAiPromptBoxElement>;
       'ui-ai-prompt-box': React.DetailedHTMLProps<React.HTMLAttributes<UiAiPromptBoxElement> & {
         'max-rows'?: number;
@@ -773,6 +778,9 @@ declare global {
         onSubmit?: (e: CustomEvent<{ prompt: string }>) => void;
         onStop?: (e: CustomEvent) => void;
         onInput?: (e: CustomEvent<{ value: string }>) => void;
+        onFilePaste?: (e: CustomEvent<{ files: File[] }>) => void;
+        onFileDrop?: (e: CustomEvent<{ files: File[] }>) => void;
+        onFileAttach?: (e: CustomEvent<{ files: File[] }>) => void;
       }, UiAiPromptBoxElement>;
 
       'nnui-color-picker': React.DetailedHTMLProps<React.HTMLAttributes<UiColorPickerElement> & {
@@ -798,6 +806,7 @@ declare global {
         open?: boolean;
         'auto-collapse'?: boolean;
         collapsible?: boolean;
+        'auto-scroll'?: boolean;
         onToggle?: (e: CustomEvent<{ open: boolean; duration: number }>) => void;
         onCopy?: (e: CustomEvent<{ text: string }>) => void;
       }, UiAiReasoningElement>;
@@ -807,13 +816,14 @@ declare global {
         open?: boolean;
         'auto-collapse'?: boolean;
         collapsible?: boolean;
+        'auto-scroll'?: boolean;
         onToggle?: (e: CustomEvent<{ open: boolean; duration: number }>) => void;
         onCopy?: (e: CustomEvent<{ text: string }>) => void;
       }, UiAiReasoningElement>;
 
       'nnui-ai-tool-call': React.DetailedHTMLProps<React.HTMLAttributes<UiAiToolCallElement> & {
         name?: string;
-        status?: 'pending' | 'running' | 'success' | 'error';
+        status?: 'pending' | 'running' | 'approval-required' | 'requires-approval' | 'success' | 'error';
         latency?: string;
         open?: boolean;
         collapsible?: boolean;
@@ -822,7 +832,7 @@ declare global {
       }, UiAiToolCallElement>;
       'ui-ai-tool-call': React.DetailedHTMLProps<React.HTMLAttributes<UiAiToolCallElement> & {
         name?: string;
-        status?: 'pending' | 'running' | 'success' | 'error';
+        status?: 'pending' | 'running' | 'approval-required' | 'requires-approval' | 'success' | 'error';
         latency?: string;
         open?: boolean;
         collapsible?: boolean;

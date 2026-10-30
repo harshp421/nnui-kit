@@ -242,7 +242,14 @@ export const TreeView = createReactComponent('ui-tree-view', 'TreeView', { onSel
 TreeView.Root = TreeView;
 TreeView.Item = createPart('item', 'li', 'TreeView.Item');
 
-export const AiPromptBox = createReactComponent('ui-ai-prompt-box', 'AiPromptBox', { onSubmit: 'submit', onStop: 'stop', onInput: 'input' });
+export const AiPromptBox = createReactComponent('ui-ai-prompt-box', 'AiPromptBox', {
+  onSubmit: 'submit',
+  onStop: 'stop',
+  onInput: 'input',
+  onFilePaste: 'filepaste',
+  onFileDrop: 'filedrop',
+  onFileAttach: 'fileattach',
+});
 export const ColorPicker = createReactComponent('ui-color-picker', 'ColorPicker', { onChange: 'change', onInput: 'input', onOpen: 'open', onClose: 'close' });
 ColorPicker.Root = ColorPicker;
 ColorPicker.Swatch = createPart('swatch', 'button', 'ColorPicker.Swatch');

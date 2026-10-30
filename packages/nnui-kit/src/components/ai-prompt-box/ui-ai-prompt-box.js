@@ -149,7 +149,16 @@ export class UiAiPromptBox extends BaseLightElement {
 
     this._textarea.style.height = 'auto';
     const computed = window.getComputedStyle ? window.getComputedStyle(this._textarea) : null;
-    const lineHeight = computed ? parseFloat(computed.lineHeight) || 20 : 20;
+    let lineHeight = 20;
+    if (computed) {
+      const parsedLH = parseFloat(computed.lineHeight);
+      if (!isNaN(parsedLH) && parsedLH > 0) {
+        lineHeight = parsedLH;
+      } else {
+        const fontSize = parseFloat(computed.fontSize) || 15;
+        lineHeight = Math.round(fontSize * 1.35);
+      }
+    }
     const maxHeight = lineHeight * this.maxRows;
 
     if (this._textarea.scrollHeight > maxHeight) {
@@ -172,11 +181,83 @@ export class UiAiPromptBox extends BaseLightElement {
     });
 
     this.listen(this._textarea, 'keydown', (e) => {
+      // Do not submit during IME composition (Chinese, Japanese, Korean, Pinyin)
+      if (e.isComposing || e.keyCode === 229) return;
+
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         this.submit();
       }
     });
+
+    // Multimodal Clipboard Paste (Screenshots, Images, Files)
+    this.listen(this._textarea, 'paste', (e) => {
+      const clipboardData = e.clipboardData;
+      if (!clipboardData) return;
+
+      const files = [];
+      if (clipboardData.files && clipboardData.files.length > 0) {
+        for (let i = 0; i < clipboardData.files.length; i++) {
+          files.push(clipboardData.files[i]);
+        }
+      } else if (clipboardData.items) {
+        for (let i = 0; i < clipboardData.items.length; i++) {
+          const item = clipboardData.items[i];
+          if (item.kind === 'file') {
+            const file = item.getAsFile();
+            if (file) files.push(file);
+          }
+        }
+      }
+
+      if (files.length > 0) {
+        this.dispatch('filepaste', { files });
+      }
+    });
+
+    // Multimodal Drag & Drop onto Prompt Box
+    this.listen(this, 'dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!this.disabled && !this.loading) {
+        this.setAttributeSafe('data-dragover', '');
+      }
+    });
+
+    this.listen(this, 'dragleave', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.removeAttributeSafe('data-dragover');
+    });
+
+    this.listen(this, 'drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.removeAttributeSafe('data-dragover');
+      if (this.disabled || this.loading) return;
+
+      const dt = e.dataTransfer;
+      if (dt && dt.files && dt.files.length > 0) {
+        const files = Array.from(dt.files);
+        this.dispatch('filedrop', { files });
+      }
+    });
+
+    // Optional Attach Button Hookup with file input
+    const attachBtn = this.querySelector('[data-part="attach-btn"]');
+    const fileInput = this.querySelector('[data-part="file-input"], input[type="file"]');
+    if (attachBtn && fileInput) {
+      this.listen(attachBtn, 'click', (e) => {
+        e.preventDefault();
+        fileInput.click();
+      });
+      this.listen(fileInput, 'change', () => {
+        const files = Array.from(fileInput.files || []);
+        if (files.length > 0) {
+          this.dispatch('fileattach', { files });
+        }
+      });
+    }
 
     const submitBtn = this.querySelector('[data-part="submit-btn"]');
     if (submitBtn) {

@@ -20,6 +20,7 @@ import assert from 'node:assert';
 const { UiAiReasoning } = await import('../src/components/ai-reasoning/ui-ai-reasoning.js');
 const { UiAiToolCall } = await import('../src/components/ai-tool-call/ui-ai-tool-call.js');
 const { UiAiApproval } = await import('../src/components/ai-approval/ui-ai-approval.js');
+const { UiAiPromptBox } = await import('../src/components/ai-prompt-box/ui-ai-prompt-box.js');
 
 if (!customElements.get('ui-ai-reasoning')) {
   customElements.define('ui-ai-reasoning', UiAiReasoning);
@@ -29,6 +30,9 @@ if (!customElements.get('ui-ai-tool-call')) {
 }
 if (!customElements.get('ui-ai-approval')) {
   customElements.define('ui-ai-approval', UiAiApproval);
+}
+if (!customElements.get('ui-ai-prompt-box')) {
+  customElements.define('ui-ai-prompt-box', UiAiPromptBox);
 }
 
 console.log('Testing Phase 2: Agentic AI UI Primitives Suite...\n');
@@ -92,6 +96,13 @@ console.log('  Testing <ui-ai-reasoning>...');
   assert.strictEqual(aiState.liveState.status, 'done');
   assert(aiState.liveState.streamContentLength > 0, 'Stream content length must be tracked');
 
+  // Auto-scroll verification
+  assert.strictEqual(reasoning.autoScroll, true, 'Default autoScroll must be true');
+  reasoning.autoScroll = false;
+  assert.strictEqual(reasoning.autoScroll, false, 'autoScroll setter must toggle');
+  assert.strictEqual(typeof reasoning.scrollToBottom, 'function', 'scrollToBottom method must exist');
+  reasoning.scrollToBottom();
+
   document.body.removeChild(reasoning);
   console.log('    ✓ <ui-ai-reasoning> passed (timer, auto-collapse, disclosure, inspectAI)');
 }
@@ -131,6 +142,10 @@ console.log('  Testing <ui-ai-tool-call>...');
   tool.status = 'error';
   assert.strictEqual(tool.status, 'error');
   assert(statusBadge.textContent.includes('Failed'), 'Status badge must show Failed');
+
+  tool.status = 'approval-required';
+  assert.strictEqual(tool.status, 'approval-required');
+  assert(statusBadge.textContent.includes('Approval Required'), 'Status badge must show Approval Required');
 
   // Retry event
   let retried = false;
@@ -226,7 +241,102 @@ console.log('  Testing <ui-ai-approval>...');
 
   document.body.removeChild(approval);
   document.body.removeChild(approval2);
-  console.log('    ✓ <ui-ai-approval> passed (risk severity, approve/reject lifecycle, audit badge, inspectAI)');
+
+  // Hotkey isolation test: ensure typing 'a' or 'r' inside child input does NOT trigger approve/reject
+  const approvalIsolation = document.createElement('ui-ai-approval');
+  approvalIsolation.innerHTML = `
+    <div data-part="payload">
+      <input type="text" id="test-reason-input" value="" />
+    </div>
+  `;
+  document.body.appendChild(approvalIsolation);
+  const inputChild = approvalIsolation.querySelector('#test-reason-input');
+
+  let isolatedApproved = false;
+  approvalIsolation.addEventListener('approve', () => { isolatedApproved = true; });
+
+  // Simulate typing 'a' in input child
+  const keyEventInInput = new window.KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true });
+  Object.defineProperty(keyEventInInput, 'target', { value: inputChild });
+  inputChild.dispatchEvent(keyEventInInput);
+  assert.strictEqual(isolatedApproved, false, 'Typing "a" in child input must NOT approve action');
+
+  // Simulate Ctrl+A (Select All)
+  const ctrlAEvent = new window.KeyboardEvent('keydown', { key: 'a', ctrlKey: true, bubbles: true, cancelable: true });
+  approvalIsolation.dispatchEvent(ctrlAEvent);
+  assert.strictEqual(isolatedApproved, false, 'Pressing Ctrl+A must NOT approve action');
+
+  // Simulate direct hotkey 'a' on container
+  const validHotkeyEvent = new window.KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true });
+  approvalIsolation.dispatchEvent(validHotkeyEvent);
+  assert.strictEqual(isolatedApproved, true, 'Direct hotkey "a" on container must approve action');
+  assert.strictEqual(approvalIsolation.status, 'approved');
+
+  document.body.removeChild(approvalIsolation);
+
+  console.log('    ✓ <ui-ai-approval> passed (risk severity, approve/reject lifecycle, hotkey isolation, audit badge, inspectAI)');
+}
+
+// =========================================================================
+// TEST 4: <ui-ai-prompt-box> (IME, Multimodal paste/drop)
+// =========================================================================
+console.log('  Testing <ui-ai-prompt-box>...');
+{
+  const promptBox = document.createElement('ui-ai-prompt-box');
+  document.body.appendChild(promptBox);
+  promptBox.init();
+
+  const textarea = promptBox.querySelector('textarea');
+  assert(textarea, 'Textarea must be scaffolded');
+
+  // IME composition test
+  let submitted = false;
+  promptBox.addEventListener('submit', () => { submitted = true; });
+
+  promptBox.value = 'nihao';
+  const imeEnter = new window.KeyboardEvent('keydown', { key: 'Enter', isComposing: true, bubbles: true, cancelable: true });
+  textarea.dispatchEvent(imeEnter);
+  assert.strictEqual(submitted, false, 'IME Enter must NOT submit prompt');
+
+  // Standard Enter test
+  const standardEnter = new window.KeyboardEvent('keydown', { key: 'Enter', isComposing: false, bubbles: true, cancelable: true });
+  textarea.dispatchEvent(standardEnter);
+  assert.strictEqual(submitted, true, 'Standard Enter must submit prompt');
+
+  // Multimodal File Paste test
+  let pastedFiles = null;
+  promptBox.addEventListener('filepaste', (e) => {
+    pastedFiles = e.detail.files;
+  });
+
+  const fakeFile = { name: 'screenshot.png', type: 'image/png', size: 1024 };
+  const pasteEvent = new window.Event('paste', { bubbles: true, cancelable: true });
+  pasteEvent.clipboardData = { files: [fakeFile], items: [] };
+  textarea.dispatchEvent(pasteEvent);
+
+  assert(pastedFiles, 'Pasting files must dispatch filepaste event');
+  assert.strictEqual(pastedFiles.length, 1);
+  assert.strictEqual(pastedFiles[0].name, 'screenshot.png');
+
+  // Drag & Drop test
+  const dragoverEvent = new window.Event('dragover', { bubbles: true, cancelable: true });
+  promptBox.dispatchEvent(dragoverEvent);
+  assert(promptBox.hasAttribute('data-dragover'), 'dragover must set data-dragover');
+
+  let droppedFiles = null;
+  promptBox.addEventListener('filedrop', (e) => {
+    droppedFiles = e.detail.files;
+  });
+
+  const dropEvent = new window.Event('drop', { bubbles: true, cancelable: true });
+  dropEvent.dataTransfer = { files: [fakeFile] };
+  promptBox.dispatchEvent(dropEvent);
+  assert(!promptBox.hasAttribute('data-dragover'), 'drop must clear data-dragover');
+  assert(droppedFiles, 'drop must dispatch filedrop event');
+  assert.strictEqual(droppedFiles[0].name, 'screenshot.png');
+
+  document.body.removeChild(promptBox);
+  console.log('    ✓ <ui-ai-prompt-box> passed (IME guard, standard Enter, filepaste, filedrop)');
 }
 
 console.log('\n🎉 ALL AGENTIC AI UI PRIMITIVES PASSED SUCCESSFULLY!\n');

@@ -15,7 +15,7 @@ import { Keys } from '../../utils/a11y.js';
  */
 export class UiAiReasoning extends BaseLightElement {
   static get observedAttributes() {
-    return ['status', 'duration', 'open', 'collapsed', 'auto-collapse', 'collapsible'];
+    return ['status', 'duration', 'open', 'collapsed', 'auto-collapse', 'collapsible', 'auto-scroll'];
   }
 
   get status() {
@@ -84,6 +84,15 @@ export class UiAiReasoning extends BaseLightElement {
     else this.removeAttributeSafe('collapsible');
   }
 
+  get autoScroll() {
+    return this.getAttribute('auto-scroll') !== 'false';
+  }
+
+  set autoScroll(val) {
+    if (val === false) this.setAttributeSafe('auto-scroll', 'false');
+    else this.removeAttributeSafe('auto-scroll');
+  }
+
   getAiState() {
     return {
       status: this.status,
@@ -91,6 +100,7 @@ export class UiAiReasoning extends BaseLightElement {
       open: this.open,
       autoCollapse: this.autoCollapse,
       collapsible: this.collapsible,
+      autoScroll: this.autoScroll,
       streamContentLength: this._getStreamContent().length,
     };
   }
@@ -103,10 +113,13 @@ export class UiAiReasoning extends BaseLightElement {
     this._startTime = Date.now();
     this._elapsedSeconds = 0;
     this._timerId = null;
+    this._userScrolled = false;
+    this._observer = null;
 
     this._scaffoldHeader();
     this._syncState();
     this._bindEvents();
+    this._setupAutoScroll();
 
     if (this.status === 'thinking') {
       this._startTimer();
@@ -138,11 +151,46 @@ export class UiAiReasoning extends BaseLightElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     this._stopTimer();
+    if (this._observer) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+  }
+
+  _getStreamElement() {
+    return this.querySelector(':scope > [data-part="stream"], :scope > [data-part="content"], :scope > [data-part="body"]');
   }
 
   _getStreamContent() {
-    const stream = this.querySelector(':scope > [data-part="stream"], :scope > [data-part="content"], :scope > [data-part="body"]');
-    return stream ? stream.textContent?.trim() || '' : '';
+    const stream = this._getStreamElement();
+    return stream ? (stream.innerText || stream.textContent || '').trim() : '';
+  }
+
+  _setupAutoScroll() {
+    const stream = this._getStreamElement();
+    if (!stream) return;
+
+    this.listen(stream, 'scroll', () => {
+      const threshold = 16;
+      const isAtBottom = stream.scrollHeight - stream.scrollTop <= stream.clientHeight + threshold;
+      this._userScrolled = !isAtBottom;
+    });
+
+    if (typeof MutationObserver !== 'undefined') {
+      this._observer = new MutationObserver(() => {
+        if (this.open && this.autoScroll && !this._userScrolled && this.status === 'thinking') {
+          this.scrollToBottom();
+        }
+      });
+      this._observer.observe(stream, { childList: true, subtree: true, characterData: true });
+    }
+  }
+
+  scrollToBottom() {
+    const stream = this._getStreamElement();
+    if (stream) {
+      stream.scrollTop = stream.scrollHeight;
+    }
   }
 
   _scaffoldHeader() {
